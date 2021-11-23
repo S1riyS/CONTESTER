@@ -2,6 +2,7 @@
 :root {
     --background-color: #212121;
     --text-color: #eeffff;
+    --header-color: #323232;
     --footer-color: #1A1A1A;
 
     --green-color: #c3e88d;
@@ -54,4 +55,46 @@ input:focus {
 
 .container-fluid {
     width: 90%;
+}
+/* Header */
+.header {
+    padding: 10px 0;
+    margin-bottom: 20px;
+    background: var(--header-color);
+}
+
+.header .row {
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Page content */
+.main {
+    flex-grow: 1;
+}
+
+/* Footer */
+.footer {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--footer-color);
+    text-align: center;
+    flex-shrink: 0;
+    margin-top: 20px;
+}
+
+.footer .row {
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+}
+
+.footer .row p {
+    display: inline;
+}
+
+.footer .row span {
+    color: var(--cyan-color);
+    font-size: 17px;
+    margin-left: 3px;
 }

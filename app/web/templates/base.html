@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="{{ LANGUAGE }}">
 <head>
     <link rel="apple-touch-icon" sizes="180x180"
           href="{{ url_for('static', filename='images/favicon/apple-touch-icon.png') }}">
@@ -31,7 +31,7 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
     <script type="module" src="{{ url_for('static', filename='js/base.js') }}"></script>
-    <title>{{ title }}</title>
+    <title>Главная</title>
 
     {% block scripts %}
 
@@ -43,9 +43,10 @@
 <header class="header">
     <div class="container-fluid">
         <div class="row header-row">
-            <div class="header__logo">
+            <a href="{{ url_for('home_page') }}" class="header__logo">
                 <h2 class="header__project_name">CONTESTER17</h2>
-            </div>
+            </a>
+            <a href="{{ url_for('lessons_page') }}">Задачи</a>
         </div>
     </div>
 </header>
@@ -59,7 +60,16 @@
 
 {# Footer #}
 <footer class="footer" id="footer">
-
+    <div class="container-fluid">
+        <div class="row">
+            <p class="col-xl-3 col-12">Copyright © 2021 <span>{{ WEBSITE_URL }}</span></p>
+            <p class="col-xl-3 col-12">Developed by
+                <span>
+                    <i class="fa fa-code" aria-hidden="true"></i> {{ DEVELOPER }}
+                </span>
+            </p>
+        </div>
+    </div>
 </footer>
 </body>
 </html>

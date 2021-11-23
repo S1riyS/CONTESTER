@@ -1,0 +1,21 @@
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/lessons.css') }}">
+    <title>Задания</title>
+</head>
+
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="lessons_section">
+                <ul>
+                    <li><a href="{{ url_for('home_page') }}">Задача №1</a></li>
+                    <li><a href="{{ url_for('home_page') }}">Задача №2</a></li>
+                    <li><a href="{{ url_for('home_page') }}">Задача №3</a></li>
+                    <li><a href="{{ url_for('home_page') }}">Задача №4</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
