@@ -1,0 +1,57 @@
+/* Colors */
+:root {
+    --background-color: #212121;
+    --text-color: #eeffff;
+    --footer-color: #1A1A1A;
+
+    --green-color: #c3e88d;
+    --yellow-color: #ffcb6b;
+    --blue-color: #82aaff;
+    --red-color: #f07178;
+    --purple-color: #c792ea;
+    --orange-color: #f78c6c;
+    --cyan-color: #89ddff;
+    --gray-color: #616161;
+    --white-color: #eeffff;
+    --error-color: #ff5370;
+}
+
+/* Default HTML elements */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    max-width: 100vw;
+    background-color: var(--background-color);
+    font-size: 15px;
+    font-family: 'Raleway', sans-serif;
+    color: var(--text-color);
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+}
+
+a, a:hover {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+button,
+button:active,
+button:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+input,
+input:active,
+input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.container-fluid {
+    width: 90%;
+}
