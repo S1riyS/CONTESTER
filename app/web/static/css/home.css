@@ -41,6 +41,7 @@
 
 .list_item .item__title {
     font-size: 100px;
+    font-weight: 400;
 }
 
 .list_item .item__text {
