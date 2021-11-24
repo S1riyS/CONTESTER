@@ -1,0 +1,22 @@
+<head>
+    <title>Сложение двух чисел</title>
+</head>
+
+{% extends "base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/task.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="info">
+                <p>Класс: {{ grade }}</p>
+                <p>Тема урока: {{ topic }}</p>
+                <p>Задание №{{ task_number }}</p>
+            </div>
+            <h3>Условие:</h3>
+        </div>
+    </div>
+{% endblock %}
