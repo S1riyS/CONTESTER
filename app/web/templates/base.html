@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE }}">
 <head>
-    <title></title>
+    <title>CONTESTER</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -62,6 +62,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
     <script type="module" src="{{ url_for('static', filename='js/base.js') }}"></script>
 
+    {# CSS #}
+    {% block css %}{% endblock %}
+    {# JS #}
     {% block scripts %}{% endblock %}
 
 </head>

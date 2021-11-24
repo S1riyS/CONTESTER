@@ -1,9 +1,12 @@
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/lessons.css') }}">
     <title>Задания</title>
 </head>
 
 {% extends "base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/lessons.css') }}">
+{% endblock %}
 
 {% block content %}
     <div class="container-fluid">
