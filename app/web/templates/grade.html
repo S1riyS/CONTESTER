@@ -1,0 +1,20 @@
+<head>
+    <title>{{ grade }} класс</title>
+</head>
+
+{% extends "base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/grade.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="info">
+                <p>Класс: {{ grade }}</p>
+            </div>
+            <h3>Список тем:</h3>
+        </div>
+    </div>
+{% endblock %}
