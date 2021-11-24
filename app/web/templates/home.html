@@ -11,7 +11,44 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <h1>Booba</h1>
+            <h2 class="main__title">Выберите класс:</h2>
+            <div class="classes_list">
+                <a href="{{ url_for('task_page', grade=5, topic='arithmetic', task_number=1) }}"
+                   class="list_item item_1 box-shadow">
+                    <h3 class="item__title">5</h3>
+                    <p class="item__text">класс</p>
+                </a>
+                <a href="{{ url_for('task_page', grade=6, topic='arithmetic', task_number=1) }}"
+                   class="list_item item_1 box-shadow">
+                    <h3 class="item__title">6</h3>
+                    <p class="item__text">класс</p>
+                </a>
+                <a href="{{ url_for('task_page', grade=7, topic='arithmetic', task_number=1) }}"
+                   class="list_item item_1 box-shadow">
+                    <h3 class="item__title">7</h3>
+                    <p class="item__text">класс</p>
+                </a>
+                <a href="{{ url_for('task_page', grade=8, topic='arithmetic', task_number=1) }}"
+                   class="list_item item_1 box-shadow">
+                    <h3 class="item__title">8</h3>
+                    <p class="item__text">класс</p>
+                </a>
+                <a href="{{ url_for('task_page', grade=9, topic='arithmetic', task_number=1) }}"
+                   class="list_item item_1 box-shadow">
+                    <h3 class="item__title">9</h3>
+                    <p class="item__text">класс</p>
+                </a>
+                <a href="{{ url_for('task_page', grade=10, topic='arithmetic', task_number=1) }}"
+                   class="list_item item_1 box-shadow">
+                    <h3 class="item__title">10</h3>
+                    <p class="item__text">класс</p>
+                </a>
+                <a href="{{ url_for('task_page', grade=11, topic='arithmetic', task_number=1) }}"
+                   class="list_item item_1 box-shadow">
+                    <h3 class="item__title">11</h3>
+                    <p class="item__text">класс</p>
+                </a>
+            </div>
         </div>
     </div>
 {% endblock %}
