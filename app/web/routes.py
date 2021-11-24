@@ -4,6 +4,7 @@ from . import app
 
 
 @app.route('/')
+@app.route('/home')
 def home_page():
     return render_template('home.html')
 
@@ -12,6 +13,13 @@ def home_page():
 def lessons_page():
     return render_template('lessons.html')
 
+@app.route('/lessons/<int:grade>-grade')
+def grade_page(grade):
+    return render_template('grade.html', grade=grade)
+
+@app.route('/lessons/<int:grade>-grade/<string:topic>')
+def topic_page(grade, topic):
+    return render_template('topic.html', grade=grade, topic=topic)
 
 @app.route('/lessons/<int:grade>-grade/<string:topic>/<int:task_number>')
 def task_page(grade, topic, task_number):
