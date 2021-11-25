@@ -6,17 +6,48 @@
 
 {% block css %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/task.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
+{% endblock %}
+
+{% block js %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='js/task.js') }}">
 {% endblock %}
 
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div class="info">
-                <p>Класс: {{ grade }}</p>
-                <p>Тема урока: {{ topic }}</p>
-                <p>Задание №{{ task_number }}</p>
+            <div class="sidebar box-shadow col-xl-2 col-lg-3 col-md-4 col-sm-12 col-xs-12">
+                <h3 class="sidebar__title"><i class="sidebar__title__icon fas fa-tasks"></i> Задачи:</h3>
+                <ul class="nav sidebar_nav">
+                    <li class="sidebar__item">
+                        <a href="{{ url_for('task_page', grade=grade, topic=topic, task_number=1) }}"
+                           class="item__link">Сложение</a>
+                    </li>
+                    <li class="sidebar__item">
+                        <a href="{{ url_for('task_page', grade=grade, topic=topic, task_number=2) }}"
+                           class="item__link">Вычитание</a>
+                    </li>
+                    <li class="sidebar__item">
+                        <a href="{{ url_for('task_page', grade=grade, topic=topic, task_number=3) }}"
+                           class="item__link">Умножение</a>
+                    </li>
+                    <li class="sidebar__item">
+                        <a href="{{ url_for('task_page', grade=grade, topic=topic, task_number=4) }}"
+                           class="item__link">Деление</a>
+                    </li>
+                </ul>
             </div>
-            <h3>Условие:</h3>
+            <div class="task__body col-lg-8 col-md-7 col-xl-offset-2 col-lg-offset-3 col-md-offset-4 col-sm-11 col-sm-offset-1 col-xs-offset-1">
+                <div class="task__header">
+                    <p class="task__title">Задание №{{ task_number }}</p>
+                    <div class="condition">
+                        <h3 class="condition__title">Условие:</h3>
+                        <p class="condition__text">На вход программы подаются 2 числа: a и b.
+                            Вывести в консоль сумму этих чисел.</p>
+                        {# Сюда вставить картинку #}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

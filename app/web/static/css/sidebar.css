@@ -1,0 +1,49 @@
+:root {
+    --sidebar-background: #181a27;
+    --sidebar-item-hover: #4c78f2;
+}
+
+.sidebar {
+    padding: 10px 0 0 0;
+    background-color: var(--sidebar-background);
+    border-radius: 0 15px 15px 0;
+}
+
+.sidebar .sidebar__title {
+    position: relative;
+    padding: 10px 10px 15px 20px;
+}
+
+.sidebar .sidebar__title::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 95%;
+    content: '';
+    color: transparent;
+    background: var(--cyan-color);
+    height: 1px;
+    z-index: 99;
+    opacity: 0.3;
+}
+
+.sidebar .sidebar__title .sidebar__title__icon {
+    margin-right: 3px;
+}
+
+.sidebar_nav {
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sidebar .sidebar__item:hover {
+    background-color: var(--sidebar-item-hover);
+}
+
+.sidebar .sidebar__item .item__link {
+    display: block;
+    padding: 15px 20px;
+    font-size: 16;
+}

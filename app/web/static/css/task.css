@@ -1,5 +1,21 @@
-.info {
-    display: inline-flex;
-    flex-direction: column;
+.container-fluid {
     width: 100%;
+}
+
+.task__body {
+    margin-left: 15px;
+}
+
+.task__header .task__title {
+    font-size: 25px;
+    margin-bottom: 15px;
+}
+
+.task__header .condition .condition__title {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.task__header .condition .condition__text {
+    font-size: 18px;
 }
