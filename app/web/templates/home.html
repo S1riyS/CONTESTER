@@ -11,43 +11,45 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <h2 class="main__title">Выберите класс:</h2>
-            <div class="classes_list">
-                <a href="{{ url_for('grade_page', grade=5) }}"
-                   class="list_item item_1 box-shadow">
-                    <h3 class="item__title">5</h3>
-                    <p class="item__text">класс</p>
-                </a>
-                <a href="{{ url_for('grade_page', grade=6) }}"
-                   class="list_item item_1 box-shadow">
-                    <h3 class="item__title">6</h3>
-                    <p class="item__text">класс</p>
-                </a>
-                <a href="{{ url_for('grade_page', grade=7) }}"
-                   class="list_item item_1 box-shadow">
-                    <h3 class="item__title">7</h3>
-                    <p class="item__text">класс</p>
-                </a>
-                <a href="{{ url_for('grade_page', grade=8) }}"
-                   class="list_item item_1 box-shadow">
-                    <h3 class="item__title">8</h3>
-                    <p class="item__text">класс</p>
-                </a>
-                <a href="{{ url_for('grade_page', grade=9) }}"
-                   class="list_item item_1 box-shadow">
-                    <h3 class="item__title">9</h3>
-                    <p class="item__text">класс</p>
-                </a>
-                <a href="{{ url_for('grade_page', grade=11) }}"
-                   class="list_item item_1 box-shadow">
-                    <h3 class="item__title">10</h3>
-                    <p class="item__text">класс</p>
-                </a>
-                <a href="{{ url_for('grade_page', grade=11) }}"
-                   class="list_item item_1 box-shadow">
-                    <h3 class="item__title">11</h3>
-                    <p class="item__text">класс</p>
-                </a>
+            <div class="choose_grade block box-shadow">
+                <h2 class="block__title">&lt; Выберите класс /&gt;</h2>
+                <div class="classes_list">
+                    <a href="{{ url_for('grade_page', grade=5) }}"
+                       class="list_item item_1 box-shadow">
+                        <h3 class="item__title">5</h3>
+                        <p class="item__text">класс</p>
+                    </a>
+                    <a href="{{ url_for('grade_page', grade=6) }}"
+                       class="list_item item_1 box-shadow">
+                        <h3 class="item__title">6</h3>
+                        <p class="item__text">класс</p>
+                    </a>
+                    <a href="{{ url_for('grade_page', grade=7) }}"
+                       class="list_item item_1 box-shadow">
+                        <h3 class="item__title">7</h3>
+                        <p class="item__text">класс</p>
+                    </a>
+                    <a href="{{ url_for('grade_page', grade=8) }}"
+                       class="list_item item_1 box-shadow">
+                        <h3 class="item__title">8</h3>
+                        <p class="item__text">класс</p>
+                    </a>
+                    <a href="{{ url_for('grade_page', grade=9) }}"
+                       class="list_item item_1 box-shadow">
+                        <h3 class="item__title">9</h3>
+                        <p class="item__text">класс</p>
+                    </a>
+                    <a href="{{ url_for('grade_page', grade=11) }}"
+                       class="list_item item_1 box-shadow">
+                        <h3 class="item__title">10</h3>
+                        <p class="item__text">класс</p>
+                    </a>
+                    <a href="{{ url_for('grade_page', grade=11) }}"
+                       class="list_item item_1 box-shadow">
+                        <h3 class="item__title">11</h3>
+                        <p class="item__text">класс</p>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
