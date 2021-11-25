@@ -12,7 +12,7 @@
     ╚█████╔╝╚█████╔╝██║ ╚███║   ██║   ███████╗██████╔╝   ██║   ███████╗██║  ██║
      ╚════╝  ╚════╝ ╚═╝  ╚══╝   ╚═╝   ╚══════╝╚═════╝    ╚═╝   ╚══════╝╚═╝  ╚═╝
 ## 📝 About project
-**[Contester](https://github.com/S1riyS/CONTESTER)** - is a system for testing  students' code
+**[CONTESTER](https://github.com/S1riyS/CONTESTER)** - is a system for testing  students' code
 
 ## 🎞 Preview
 ![image.png](https://i.postimg.cc/VNCQFNyH/image.png)
