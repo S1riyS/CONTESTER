@@ -1,9 +1,17 @@
+:root {
+    --code-preview-color: #3b444d
+}
+
 .container-fluid {
     width: 100%;
 }
 
-.task__body {
+.task {
     margin-left: 15px;
+}
+
+.task__header {
+    margin-bottom: 15px;
 }
 
 .task__header .task__title {
@@ -18,4 +26,25 @@
 
 .task__header .condition .condition__text {
     font-size: 18px;
+    color: var(--darker-text-color);
+}
+
+.example .example__title {
+    margin-bottom: 10px;
+}
+
+.example .example__subtitle {
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: var(--gray-color);
+}
+
+pre {
+    padding: 15px;
+    background: var(--code-preview-color);
+    white-space: pre-line;
+    line-height: 1.5;
+    border-radius: 3px;
+    color: var(--text-color);
+    font-size: 16px;
 }

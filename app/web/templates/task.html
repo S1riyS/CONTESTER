@@ -16,7 +16,7 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div class="sidebar box-shadow col-xl-2 col-lg-3 col-md-4 col-sm-12 col-xs-12">
+            <div class="sidebar col-xl-2 col-lg-3 col-md-4 col-sm-12 col-xs-12">
                 <h3 class="sidebar__title"><i class="sidebar__title__icon fas fa-tasks"></i> Задачи:</h3>
                 <ul class="nav sidebar_nav">
                     <li class="sidebar__item">
@@ -37,14 +37,31 @@
                     </li>
                 </ul>
             </div>
-            <div class="task__body col-lg-8 col-md-7 col-xl-offset-2 col-lg-offset-3 col-md-offset-4 col-sm-11 col-sm-offset-1 col-xs-offset-1">
+            <div class="task col-lg-8 col-md-7 col-xl-offset-2 col-lg-offset-3 col-md-offset-4 col-sm-11 col-sm-offset-1 col-xs-offset-1">
                 <div class="task__header">
                     <p class="task__title">Задание №{{ task_number }}</p>
                     <div class="condition">
                         <h3 class="condition__title">Условие:</h3>
-                        <p class="condition__text">На вход программы подаются 2 числа: a и b.
+                        <p class="condition__text">С клавиатуры вводятся 2 числа: a и b.
                             Вывести в консоль сумму этих чисел.</p>
                         {# Сюда вставить картинку #}
+                    </div>
+                </div>
+                <div class="task__body">
+                    <div class="example">
+                        <h3 class="example__title">Пример:</h3>
+                        <div class="input">
+                            <p class="example__subtitle">Ввод:</p>
+                            <pre>
+                                <span>1 2</span>
+                            </pre>
+                        </div>
+                        <div class="output">
+                            <p class="example__subtitle">Вывод:</p>
+                            <pre>
+                                <span>3</span>
+                            </pre>
+                        </div>
                     </div>
                 </div>
             </div>
