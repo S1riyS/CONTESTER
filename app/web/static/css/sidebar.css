@@ -1,5 +1,5 @@
 :root {
-    --sidebar-background: #181a27;
+    --sidebar-background: #1b1f23;
     --sidebar-item-hover: #4c78f2;
 }
 
@@ -7,6 +7,7 @@
     padding: 10px 0 0 0;
     background-color: var(--sidebar-background);
     border-radius: 0 15px 15px 0;
+    height: 100%;
 }
 
 .sidebar .sidebar__title {
@@ -20,7 +21,7 @@
     left: 0;
     right: 0;
     margin: auto;
-    width: 95%;
+    width: 94%;
     content: '';
     color: transparent;
     background: var(--cyan-color);
@@ -38,12 +39,22 @@
     overflow: hidden;
 }
 
+.sidebar .sidebar__item {
+    margin: 10px 10px 0 10px;
+    border-radius: 10px;
+    transition: all .2s ease;
+}
+
+.sidebar .sidebar__item:last-child {
+    margin: 10px;
+}
+
 .sidebar .sidebar__item:hover {
     background-color: var(--sidebar-item-hover);
 }
 
 .sidebar .sidebar__item .item__link {
     display: block;
-    padding: 15px 20px;
-    font-size: 16;
+    padding: 12px;
+    font-size: 18px;
 }
