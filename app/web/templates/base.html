@@ -50,14 +50,13 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-    <script type="module" src="{{ url_for('static', filename='js/base.js') }}"></script>
 
     {# CSS #}
     {% block css %}{% endblock %}
 </head>
 <body>
 {# Header #}
-<header class="header box-shadow">
+<header class="header">
     <div class="container-fluid">
         <div class="row header-row">
             {# Logo #}
@@ -114,7 +113,9 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 {% block scripts %}{% endblock %}
+
 {# JS #}
+<script type="module" src="{{ url_for('static', filename='js/base.js') }}"></script>
 {% block js %}{% endblock %}
 </body>
 </html>
