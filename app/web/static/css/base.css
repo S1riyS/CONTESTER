@@ -192,6 +192,5 @@ input:focus {
 
 .footer .row span {
     color: var(--cyan-color);
-    font-size: 17px;
     margin-left: 3px;
 }

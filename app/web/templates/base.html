@@ -59,19 +59,24 @@
 <header class="header">
     <div class="container-fluid">
         <div class="row header-row">
-            {# Logo #}
-            <a href="{{ url_for('home_page') }}" class="header__logo">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo" class="img">
-                <h2 class="name">CONTESTER<span class="name__dot">.</span></h2>
-            </a>
+            <div class="header__left_side">
+                {# Logo #}
+                <a href="{{ url_for('home_page') }}" class="header__logo">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo" class="img">
+                    <h2 class="name">CONTESTER<span class="name__dot">.</span></h2>
+                </a>
 
-            {# Navigation #}
-            <div id="header__nav" class="header__nav">
-                <nav class="navigation">
-                    <a href="{{ url_for('lessons_page') }}" class="item">
-                        <i class="fas fa-tasks"></i> Все задачи
-                    </a>
-                </nav>
+            </div>
+
+            <div class="header__right_side">
+                {# Navigation #}
+                <div id="header__nav" class="header__nav">
+                    <nav class="navigation">
+                        <a href="{{ url_for('lessons_page') }}" class="item">
+                            <i class="fas fa-tasks"></i> Все задачи
+                        </a>
+                    </nav>
+                </div>
             </div>
         </div>
     </div>
@@ -88,14 +93,19 @@
 <footer class="footer" id="footer">
     <div class="container-fluid">
         <div class="row">
-            <p class="col-12">Разработик
-                <a href="https://github.com/S1riyS" target="_blank">
-                    <span>
-                        <i class="fas fa-code" aria-hidden="true"></i> {{ DEVELOPER }}
-                    </span>
-                </a>
-            </p>
+            {#            <p class="col-12">Разработчик#}
+            {#                <a href="https://github.com/S1riyS" target="_blank">#}
+            {#                    <span>#}
+            {#                        <i class="fas fa-code" aria-hidden="true"></i> {{ DEVELOPER }}#}
+            {#                    </span>#}
+            {#                </a>#}
+            {#            </p>#}
             <p class="col-12">© 2021, Гимназия № 17</p>
+            <p class="col-12">614000, г. Пермь, ул. Ленина, 31</p>
+            <p class="col-12">
+                E-mail: <span>Gimnaziya17@obrazovanie.perm.ru</span>
+                Телефоны: <span>+7 (342) 210–88–55</span>
+            </p>
         </div>
 
     </div>
