@@ -10,13 +10,13 @@
 {% endblock %}
 
 {% block js %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='js/task.js') }}">
+    <script type="module" src="{{ url_for('static', filename='js/task.js') }}"></script>
 {% endblock %}
 
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div class="sidebar col-xl-2 col-lg-3 col-md-4 col-sm-12 col-xs-12">
+            <div class="sidebar col-xl-2" id="sidebar">
                 <h3 class="sidebar__title"><i class="sidebar__title__icon fas fa-tasks"></i> Задачи:</h3>
                 <ul class="nav sidebar_nav">
                     <li class="sidebar__item">
@@ -37,7 +37,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="task col-lg-8 col-md-7 col-xl-offset-2 col-lg-offset-3 col-md-offset-4 col-sm-11 col-sm-offset-1 col-xs-offset-1">
+            <div class="task col-xl-8" id="task">
                 <div class="task__header">
                     <p class="task__title">Задание №{{ task_number }}</p>
                     <div class="condition">
