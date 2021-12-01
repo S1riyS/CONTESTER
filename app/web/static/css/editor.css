@@ -4,8 +4,15 @@
 
 /* Editor header */
 .editor__header {
+    display: flex;
+    align-items: center;
     padding: 10px;
     background-color: var(--editor-header-color);
+}
+
+.editor__header .select-language {
+    font-size: 16px;
+    margin-right: 10px;
 }
 
 .editor__header .dropdown-toggle {
@@ -26,9 +33,39 @@
     transform: rotateZ(180deg);
 }
 
+/* Editor footer */
+.editor__footer {
+    padding: 12px;
+    background: #1a1d28;
+}
+
+.editor__footer .submit-code__btn {
+    padding: 8px 12px;
+    border-radius: 5px;
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 600;
+    background-color: var(--green-color);
+    box-shadow: 0 0 10px 1px var(--green-color);
+    transition: all .2s ease
+}
+
+.editor__footer .submit-code__btn:hover {
+    box-shadow: none;
+}
+
 /* CodeMirror editor */
+.CodeMirror-gutters {
+    border-right: 1px solid !important;
+    background-color: var(--editor-header-color) !important;
+}
+
 .CodeMirror-activeline .CodeMirror-linenumber {
     color: var(--text-color)
+}
+
+.CodeMirror pre.CodeMirror-line {
+    padding: 0 6px;
 }
 
 .CodeMirror-simplescroll-vertical {
