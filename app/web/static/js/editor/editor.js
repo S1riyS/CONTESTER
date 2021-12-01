@@ -16,5 +16,7 @@ window.onload = function () {
         matchBrackets: true, // Match end symbols, such as "],}"
         autoCloseBrackets: true, // Auto close symbol
         styleActiveLine: true, // Display the style of the selected row
+        scrollbarStyle: 'simple' // Scrollbar style
+
     });
 };

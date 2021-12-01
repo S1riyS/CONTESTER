@@ -26,7 +26,17 @@
     transform: rotateZ(180deg);
 }
 
-/* Editor */
+/* CodeMirror editor */
 .CodeMirror-activeline .CodeMirror-linenumber {
     color: var(--text-color)
+}
+
+.CodeMirror-simplescroll-vertical {
+    background: var(--editor-header-color);
+}
+
+.CodeMirror-simplescroll-horizontal div, .CodeMirror-simplescroll-vertical div {
+    background: var(--purple-color);
+    border: none;
+    border-radius: 5px;
 }
