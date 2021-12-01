@@ -15,6 +15,17 @@
     margin-right: 10px;
 }
 
+.editor__header .dropdown-menu {
+    padding: 0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.editor__header .dropdown-menu .dropdown-item:hover,
+.editor__header .dropdown-menu .dropdown-item:focus {
+    background-color: var(--blue-color);
+}
+
 .editor__header .dropdown-toggle {
     border: none !important;
     outline: none !important;
