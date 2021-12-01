@@ -1,0 +1,32 @@
+:root {
+    --editor-header-color: #212432
+}
+
+/* Editor header */
+.editor__header {
+    padding: 10px;
+    background-color: var(--editor-header-color);
+}
+
+.editor__header .dropdown-toggle {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: linear-gradient(135deg, var(--darker-purple-color), var(--purple-color)) !important;
+}
+
+.editor__header .dropdown-toggle::after {
+    vertical-align: middle;
+    transition: 150ms;
+    opacity: 0.7;
+}
+
+.editor__header .dropdown-toggle[aria-expanded="true"]::after {
+    vertical-align: middle;
+    transform: rotateZ(180deg);
+}
+
+/* Editor */
+.CodeMirror-activeline .CodeMirror-linenumber {
+    color: var(--text-color)
+}

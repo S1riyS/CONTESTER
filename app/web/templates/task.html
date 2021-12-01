@@ -5,17 +5,70 @@
 {% extends "base.html" %}
 
 {% block css %}
+    {#  CodeMirror  #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/codemirror.min.css"
+          integrity="sha512-CCnciBUnVXwa6IQT9q8EmGcarNit9GdKI5nJnj56B1iu0LuD13Qn/GZ+IUkrZROZaBdutN718NK6mIXdUjZGqg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/theme/material-palenight.min.css"
+          integrity="sha512-uIAyXysSwPKYTS4BrBQGkt7i9ozdNjNA4jXfjFDl6fWIc2zDllleoiY5EkH7Ib2j+Qb8YJx4a5qy192JZqxqVg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/fold/foldgutter.min.css"
+          integrity="sha512-YwkMTlTHn8dBnwa47IF+cKsS00HPiiVhQ4DpwT1KF2gUftfFR7aefepabSPLAs6zrMyD89M3w0Ow6mQ5XJEUCw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    {#  Local CSS  #}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/task.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/editor.css') }}">
 {% endblock %}
 
 {% block js %}
+    {#  ===== CodeMirror =====  #}
+    {#  Codemirror.js  #}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/codemirror.min.js"
+            integrity="sha512-4DlmQ+aBOfYTZ3uzRKCDXdyL7y8IlopnVChhXG0pRFgyvhwONVQW3JX8e5DYoXUNr3evQpLZz7S3O1XxMH4WKA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {# == Mods == #}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/mode/python/python.min.js"
+            integrity="sha512-/mavDpedrvPG/0Grj2Ughxte/fsm42ZmZWWpHz1jCbzd5ECv8CB7PomGtw0NAnhHmE/lkDFkRMupjoohbKNA1Q=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {#  == Addons == #}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/comment/comment.min.js"
+            integrity="sha512-U0udq4Tvwzb+OiL6f7aak/n07mlIutTl+pEPtKoK0oOTF4Q9SkLOQYvKpIaCIM8CKTufd7szgeN9VDcgXDVvWg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/selection/active-line.min.js"
+            integrity="sha512-UNVAZmixdjeBtJVQcH5eSKXuVdzbSV6rzfTfNVyYWUIIDCdI9/G8/Z/nWplnSHXXxz9U8TA1BiJ1trK7abL/dg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/edit/closebrackets.min.js"
+            integrity="sha512-cCnOU69ESswPmMV3f9TR7WgctoJZliqGbJ8WeLn0VlUrngSsmtVopRf6OG/epbURGfNmY4RY6RzZ/mWkPQ/onw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {#  Addons/fold  #}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/fold/foldcode.min.js"
+            integrity="sha512-zpi1i9GnOG8aQI/E3vqtH5+mZ/U6heNGndQ/xZO4QL1Utt4XYXQzM69EaeheYAO12i6mDxSZ2a6IMEOACvUydQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/fold/foldgutter.min.js"
+            integrity="sha512-Yhrn0zU9jQBETdu3RUw6Rl+pSPWNl8xDxjiJkds2xNQapiaCiBX0et1ecl8VqUM421uWRwoa0ynzZ5knY8zt9w=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/fold/brace-fold.min.js"
+            integrity="sha512-vVV3x/YFatpYt7XhLDJoOL40Z0s5g5q/VXLYDxEw8J5zSatMvfKndmqBSzn9CNe5esCDZSu6003G0DYkyS80ww=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/fold/indent-fold.min.js"
+            integrity="sha512-Q6g5qQfa6ko+Y+0BwAciUAq01qxgfScTPFP2Fsrr+zIrTe5Yq3tN5xaA919MmBs/1RMz/jyctknYavjc3k+/xg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/fold/comment-fold.min.js"
+            integrity="sha512-UKU458xnHR+JuKmlgf/jsYBq4/JJVipuY9wJ0CzS4E2xe5lETTWothmsd9afiH2i114eEKupsFP7Zer+CqWEWg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    {#  Local scripts #}
     <script type="module" src="{{ url_for('static', filename='js/task.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/editor/editor.js') }}"></script>
+
 {% endblock %}
 
 {% block content %}
     <div class="container-fluid">
         <div class="row">
+            {# Sidebar #}
             <div class="sidebar col-xl-2" id="sidebar">
                 <h3 class="sidebar__title"><i class="sidebar__title__icon fas fa-tasks"></i> Задачи:</h3>
                 <ul class="nav sidebar_nav">
@@ -37,6 +90,7 @@
                     </li>
                 </ul>
             </div>
+            {# Task #}
             <div class="task col-xl-8" id="task">
                 <div class="task__header">
                     <p class="task__title">Задание №{{ task_number }}</p>
@@ -62,6 +116,25 @@
                                 <span>3</span>
                             </pre>
                         </div>
+                    </div>
+                    {# Editor #}
+                    <div class="editor">
+                        <div class="editor__header">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Выберите язык
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">PascalABC</a>
+                                    <a class="dropdown-item" href="#">Python 3</a>
+                                    <a class="dropdown-item" href="#">C++</a>
+                                    <a class="dropdown-item" href="#">Java</a>
+                                    <a class="dropdown-item" href="#">C#</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="editor__body" id="editor__body"></div>
                     </div>
                 </div>
             </div>
