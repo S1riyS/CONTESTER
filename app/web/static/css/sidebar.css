@@ -61,7 +61,7 @@
 }
 
 /* Media */
-@media (max-width: 991px) {
+@media (max-width: 1201px) {
     .sidebar {
         display: none;
     }
