@@ -13,14 +13,14 @@ def home_page():
 def lessons_page():
     return render_template('lessons.html')
 
-@app.route('/<int:grade>-grade')
+@app.route('/<int:grade>')
 def grade_page(grade):
     return render_template('grade.html', grade=grade)
 
-@app.route('/<int:grade>-grade/<string:topic>')
+@app.route('/<int:grade>/<string:topic>')
 def topic_page(grade, topic):
     return render_template('topic.html', grade=grade, topic=topic)
 
-@app.route('/<int:grade>-grade/<string:topic>/<int:task_number>')
+@app.route('/<int:grade>/<string:topic>/<int:task_number>')
 def task_page(grade, topic, task_number):
     return render_template('task.html', grade=grade, topic=topic, task_number=task_number)
