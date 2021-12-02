@@ -1,12 +1,13 @@
 :root {
-    --editor-header-color: #212432
+    --editor-header-color: #212432;
+    --editor-footer-color: #1a1d28;
 }
 
 /* Editor header */
 .editor__header {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 11px;
     background-color: var(--editor-header-color);
 }
 
@@ -47,7 +48,7 @@
 /* Editor footer */
 .editor__footer {
     padding: 12px;
-    background: #1a1d28;
+    background: var(--editor-footer-color);
 }
 
 .editor__footer .submit-code__btn {
@@ -63,6 +64,31 @@
 
 .editor__footer .submit-code__btn:hover {
     box-shadow: none;
+}
+
+.code-response {
+    background: var(--editor-header-color);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.code-response .status {
+    padding: 18px;
+    font-size: 20px;
+}
+
+.code-response .tests-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.code-response .tests-list .tests-list__item {
+    padding: 15px 30px;
+    font-size: 16px;
+    transition: all .2s ease;
+}
+
+.code-response .tests-list .tests-list__item:hover {
+    background-color: var(--editor-footer-color);
 }
 
 /* CodeMirror editor */

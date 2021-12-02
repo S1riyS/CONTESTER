@@ -1,0 +1,35 @@
+{% set passed_tests = response['passed_tests'] %}
+{% set number_of_tests = response['tests']|length %}
+
+{% if passed_tests == number_of_tests %}
+    {% set status_color = '#1ba94c' %}
+{% elif passed_tests == 0 %}
+    {% set status_color = '#ff5370' %}
+{% else %}
+    {% set status_color = '#ffcb6b' %}
+{% endif %}
+
+<div class="code-response" id="code-response">
+    <p class="status" style="color: {{ status_color }};">Пройдено тестов {{ passed_tests }}/{{ number_of_tests }}</p>
+    <div class="tests-list">
+        {% for key, value in response['tests'].items() %}
+
+            {% if value %}
+                {% set test_color = '#1ba94c' %}
+            {% else %}
+                {% set test_color = '#ff5370' %}
+            {% endif %}
+
+            <div class="tests-list__item">
+                <p style="color: {{ test_color }};" class="item__text">
+                    {% if value %}
+                        <i class="far fa-check-circle"></i>
+                    {% else %}
+                        <i class="far fa-times-circle"></i>
+                    {% endif %}
+                    Тест №{{ key }}
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
