@@ -4,7 +4,6 @@ $(function () {
     $(window).scroll(function () {
         let sidebar = $('#sidebar');
         let task = $('#task');
-        console.log(currentSidebarY)
 
         if (currentSidebarY <= 15) currentSidebarY = findPosY(sidebar);
 
