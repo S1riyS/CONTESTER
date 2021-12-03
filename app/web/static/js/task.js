@@ -1,32 +1,37 @@
 let currentSidebarY = -1;
 
-$(function () {
-    $(window).scroll(function () {
-        let sidebar = $('#sidebar');
-        let task = $('#task');
+function setScrollBarAttributes() {
+    let sidebar = $('#sidebar');
+    let task = $('#task');
 
-        if (currentSidebarY <= 15) currentSidebarY = findPosY(sidebar);
+    if (currentSidebarY <= 0) currentSidebarY = findPosY(sidebar);
+    console.log(currentSidebarY, pageYOffset)
 
-        if (pageYOffset > currentSidebarY - 15) {
-            sidebar.css({
-                position: 'fixed',
-                top: 15,
-                height: 'auto',
-            })
-            task.addClass("offset-xl-2");
-        } else {
-            sidebar.css({
-                position: 'relative',
-                top: 0,
-                height: '100%',
-            })
-            task.removeClass("offset-xl-2");
-        }
-
-    });
-});
+    if (pageYOffset > 70) {
+        sidebar.css({
+            position: 'fixed',
+            top: 15,
+            height: 'auto',
+        })
+        task.addClass("offset-xl-2");
+    } else {
+        sidebar.css({
+            position: 'relative',
+            top: 0,
+            height: '100%',
+        })
+        task.removeClass("offset-xl-2");
+    }
+}
 
 function findPosY(obj) {
     let offset = obj.offset()
     return offset.top - $(window).scrollTop()
 }
+
+window.onload = function () {
+    setScrollBarAttributes()
+}
+$(window).scroll(function () {
+    setScrollBarAttributes()
+});
