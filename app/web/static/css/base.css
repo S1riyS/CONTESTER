@@ -118,10 +118,17 @@ input:focus {
 .header .header__logo .name {
     display: inline;
     font-size: 26px;
+    transition: all .2s ease;
+
+}
+
+.header .header__logo .name:hover {
+    color: var(--blue-color);
+
 }
 
 .header .header__logo .name__dot {
-    color: var(--cyan-color);
+    color: var(--blue-color);
 }
 
 .header .header__nav .navigation {
