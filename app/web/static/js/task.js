@@ -5,7 +5,6 @@ function setScrollBarAttributes() {
     let task = $('#task');
 
     if (currentSidebarY <= 0) currentSidebarY = findPosY(sidebar);
-    console.log(currentSidebarY, pageYOffset)
 
     if (pageYOffset > 70) {
         sidebar.css({
