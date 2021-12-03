@@ -22,17 +22,17 @@ function loadCodeMirror(config) {
     let myCodeMirror = CodeMirror(editor, config);
 
     // Loading code from local storage
-    let codeMirrorText = localStorage.getItem('codeMirrorText');
     let initEditorValue;
+    let codeMirrorText = localStorage.getItem('codeMirrorText');
     if (codeMirrorText) {
         initEditorValue = codeMirrorText
     } else {
         initEditorValue = ''
     }
     // Setting saved code
-    myCodeMirror.setOption("value", initEditorValue);
+    myCodeMirror.setValue(initEditorValue);
 
-    // Saving code everytime code changes
+    // Saving code everytime it changes
     myCodeMirror.on('change', function () {
         localStorage.setItem('codeMirrorText', myCodeMirror.getValue())
     })
@@ -40,12 +40,28 @@ function loadCodeMirror(config) {
     return myCodeMirror
 }
 
-myCodeMirror = loadCodeMirror(codeMirrorConfig)
+function scrollTo(obj) {
+    // Scrolling
+    $('html, body').animate({
+        scrollTop: obj.offset().top
+    });
+}
 
-// On click on submit button
+myCodeMirror = loadCodeMirror(codeMirrorConfig) // Creating CodeMirror variable
+
+// On click on "reset code" button
+$('#reset-code__btn').click(function () {
+    myCodeMirror.setValue('');
+    myCodeMirror.focus();
+    myCodeMirror.setCursor({line: 1, ch: 1});
+})
+
+// On click on "submit" button
 $('#submit-code__btn').click(function () {
     let language = $('#dropdownMenuLanguage').find('.active')[0];
     let path = window.location.pathname.split('/')
+
+    // Collecting request
     let request = {
         code: myCodeMirror.getValue(),
         lang: language.innerHTML,
@@ -56,21 +72,25 @@ $('#submit-code__btn').click(function () {
         }
     }
 
-    // Sending AJAX response to server
+    // Sending AJAX request to server
+    let codeResponse = $('#code-response')
     $.ajax({
         url: '/api/send_code',
         type: 'POST',
-        async: true,
         contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify(request),
         // Before send
         beforeSend: function () {
-            $('#code-response').html('');
+            codeResponse.html('');
         },
-        // Everything OK
+        // Success
         success: function (response) {
-            $('#code-response').replaceWith(response)
+            codeResponse.replaceWith(response) // setting generated HTML
+
+            // Scrolling to response
+            scrollTo($('#code-response'))
         },
+        // Error
         error: function () {
             console.log('Error')
         }

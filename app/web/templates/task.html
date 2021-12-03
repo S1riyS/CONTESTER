@@ -127,20 +127,28 @@
                     {# Editor #}
                     <div class="editor">
                         <div class="editor__header">
-                            <p class="select-language">Язык:</p>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Python 3
-                                </button>
-                                <div class="dropdown-menu" id="dropdownMenuLanguage"
-                                     aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item active" href="#">Python 3</a>
-                                    {# <a class="dropdown-item" href="#">PascalABC</a> #}
-                                    {# <a class="dropdown-item" href="#">C++</a> #}
-                                    {# <a class="dropdown-item" href="#">Java</a> #}
-                                    {# <a class="dropdown-item" href="#">C#</a> #}
+                            <div class="header__left_side">
+                                <p class="select-language">Язык:</p>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Python 3
+                                    </button>
+                                    <div class="dropdown-menu" id="dropdownMenuLanguage"
+                                         aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item active" href="#">Python 3</a>
+                                        {# <a class="dropdown-item" href="#">PascalABC</a> #}
+                                        {# <a class="dropdown-item" href="#">C++</a> #}
+                                        {# <a class="dropdown-item" href="#">Java</a> #}
+                                        {# <a class="dropdown-item" href="#">C#</a> #}
+                                    </div>
                                 </div>
+                            </div>
+                            <div class="header__right_side">
+                                <button title="Сбросить код" class="reset-code__btn" id="reset-code__btn">
+                                    <i class="reset-code__icon fas fa-1x fa-redo fa-flip-horizontal"></i>
+                                </button>
                             </div>
                         </div>
                         <div class="editor__body" id="editor__body"></div>

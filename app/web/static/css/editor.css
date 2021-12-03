@@ -6,9 +6,15 @@
 /* Editor header */
 .editor__header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    padding: 11px;
+    padding: 12px 18px 12px 12px;
     background-color: var(--editor-header-color);
+}
+
+.editor__header .header__left_side {
+    display: flex;
+    align-items: center;
 }
 
 .editor__header .select-language {
@@ -20,6 +26,21 @@
     padding: 0;
     border-radius: 5px;
     overflow: hidden;
+}
+
+.editor__header .reset-code__btn {
+    background-color: transparent;
+
+}
+
+.editor__header .reset-code__icon {
+    color: var(--gray-color);
+    font-size: 1.2em;
+    transition: all .1s ease;
+}
+
+.editor__header .reset-code__btn:hover .reset-code__icon {
+    color: var(--darker-text-color);
 }
 
 .editor__header .dropdown-menu .dropdown-item:hover,
