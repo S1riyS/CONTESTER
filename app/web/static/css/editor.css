@@ -72,8 +72,18 @@
 }
 
 .code-response .status {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
     padding: 18px;
+}
+
+.code-response .status .status__text {
     font-size: 20px;
+}
+
+.code-response .status .status__icon {
+    margin-right: 10px;
 }
 
 .code-response .tests-list {

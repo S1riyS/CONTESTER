@@ -10,7 +10,10 @@
 {% endif %}
 
 <div class="code-response" id="code-response">
-    <p class="status" style="color: {{ status_color }};">Пройдено тестов {{ passed_tests }}/{{ number_of_tests }}</p>
+    <div class="status" style="color: {{ status_color }};">
+        <i class="status__icon fas fa-2x fa-poll"></i>
+        <p class="status__text">Пройдено тестов {{ passed_tests }}/{{ number_of_tests }}</p>
+    </div>
     <div class="tests-list">
         {% for key, value in response['tests'].items() %}
 
