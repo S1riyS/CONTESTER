@@ -45,25 +45,47 @@
 
 .editor__header .dropdown-menu .dropdown-item:hover,
 .editor__header .dropdown-menu .dropdown-item:focus {
+    cursor: pointer;
     background-color: var(--blue-color);
 }
 
-.editor__header .dropdown-toggle {
+.editor__header .dropdown-btn {
+    display: flex;
+    min-width: 120px;
+    text-align: left;
     border: none !important;
     outline: none !important;
     box-shadow: none !important;
     background: linear-gradient(135deg, var(--darker-purple-color), var(--purple-color)) !important;
 }
 
-.editor__header .dropdown-toggle::after {
-    vertical-align: middle;
-    transition: 150ms;
-    opacity: 0.7;
+.arrow {
+    width: 1.25rem;
+    height: 1.25rem;
+    display: inline-block;
+    position: absolute;
+    right: 10px;
 }
 
-.editor__header .dropdown-toggle[aria-expanded="true"]::after {
-    vertical-align: middle;
-    transform: rotateZ(180deg);
+.arrow span {
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+    width: 0.75rem;
+    height: 0.1rem;
+    background-color: var(--text-color);
+    display: inline-block;
+    transition: all 0.2s ease;
+}
+
+.arrow span:first-of-type {
+    left: 0;
+    transform: rotate(45deg);
+}
+
+.arrow span:last-of-type {
+    right: 0;
+    transform: rotate(-45deg);
 }
 
 /* Editor footer */

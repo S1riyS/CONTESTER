@@ -36,6 +36,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/mode/python/python.min.js"
             integrity="sha512-/mavDpedrvPG/0Grj2Ughxte/fsm42ZmZWWpHz1jCbzd5ECv8CB7PomGtw0NAnhHmE/lkDFkRMupjoohbKNA1Q=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/mode/pascal/pascal.min.js"
+            integrity="sha512-FskTD6xtu02tgjmJwbLeNzLpNRChqnWgcB3/yALsIuPp3Y6dpCx6O8HPFiOMBdzq6Bc82cBKantPm/rVy2yukQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/mode/clike/clike.min.js"
+            integrity="sha512-GAled7oA9WlRkBaUQlUEgxm37hf43V2KEMaEiWlvBO/ueP2BLvBLKN5tIJu4VZOTwo6Z4XvrojYngoN9dJw2ug=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {#  == Addons == #}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/comment/comment.min.js"
             integrity="sha512-U0udq4Tvwzb+OiL6f7aak/n07mlIutTl+pEPtKoK0oOTF4Q9SkLOQYvKpIaCIM8CKTufd7szgeN9VDcgXDVvWg=="
@@ -61,6 +67,9 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/fold/indent-fold.min.js"
             integrity="sha512-Q6g5qQfa6ko+Y+0BwAciUAq01qxgfScTPFP2Fsrr+zIrTe5Yq3tN5xaA919MmBs/1RMz/jyctknYavjc3k+/xg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/comment/comment.min.js"
+            integrity="sha512-U0udq4Tvwzb+OiL6f7aak/n07mlIutTl+pEPtKoK0oOTF4Q9SkLOQYvKpIaCIM8CKTufd7szgeN9VDcgXDVvWg=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/fold/comment-fold.min.js"
             integrity="sha512-UKU458xnHR+JuKmlgf/jsYBq4/JJVipuY9wJ0CzS4E2xe5lETTWothmsd9afiH2i114eEKupsFP7Zer+CqWEWg=="
@@ -130,18 +139,28 @@
                             <div class="header__left_side">
                                 <p class="select-language">Язык:</p>
                                 <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                    <button class="btn btn-secondary dropdown-btn" type="button"
                                             id="dropdownMenuButton"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Python 3
+                                        <span class="dropdownBtn__text" id="dropdownBtn__text">Python 3</span>
+                                        <span class="arrow">
+                                            <span></span><span></span>
+                                        </span>
                                     </button>
                                     <div class="dropdown-menu" id="dropdownMenuLanguage"
                                          aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item active" href="#">Python 3</a>
-                                        {# <a class="dropdown-item" href="#">PascalABC</a> #}
-                                        {# <a class="dropdown-item" href="#">C++</a> #}
-                                        {# <a class="dropdown-item" href="#">Java</a> #}
-                                        {# <a class="dropdown-item" href="#">C#</a> #}
+                                        {% for key, value in languages.items() %}
+                                            {% if value['is_default'] %}
+                                                {% set is_active = 'active' %}
+                                            {% else %}
+                                                {% set is_active = '' %}
+                                            {% endif %}
+
+                                            <a class="dropdown-item {{ is_active }}" data-value="{{ key }}"
+                                               data-mode="{{ value['mode'] }}">
+                                                {{ value['name'] }}
+                                            </a>
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>

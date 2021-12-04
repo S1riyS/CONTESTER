@@ -1,5 +1,5 @@
 let codeMirrorConfig = {
-    mode: "python", // Language mode
+    mode: "text/x-pascal", // Language mode
     theme: "material-palenight", // theme
     lineNumbers: true, // set number
     smartIndent: true, // smart indent
@@ -14,6 +14,19 @@ let codeMirrorConfig = {
     autoCloseBrackets: true, // Auto close symbol
     styleActiveLine: true, // Display the style of the selected row
     scrollbarStyle: 'simple' // Scrollbar style
+}
+
+function getCurrentPath() {
+    let path = window.location.pathname.split('/');
+    return {
+        grade: path[1],
+        topic: path[2],
+        task_number: path[3]
+    }
+}
+
+function getCurrentLanguage() {
+    return language = $('#dropdownMenuLanguage').find('.active')[0];
 }
 
 function loadCodeMirror(config) {
@@ -32,6 +45,10 @@ function loadCodeMirror(config) {
     // Setting saved code
     myCodeMirror.setValue(initEditorValue);
 
+    // Setting current mode
+    let currentLanguage = getCurrentLanguage()
+    myCodeMirror.setOption('mode', currentLanguage.dataset.mode)
+
     // Saving code everytime it changes
     myCodeMirror.on('change', function () {
         localStorage.setItem('codeMirrorText', myCodeMirror.getValue())
@@ -47,14 +64,6 @@ function scrollTo(obj) {
     });
 }
 
-function getCurrentPath() {
-    let path = window.location.pathname.split('/');
-    return {
-        grade: path[1],
-        topic: path[2],
-        task_number: path[3]
-    }
-}
 
 myCodeMirror = loadCodeMirror(codeMirrorConfig) // Creating CodeMirror variable
 
@@ -67,15 +76,14 @@ $('#reset-code__btn').click(function () {
 
 // On click on "submit" button
 $('#submit-code__btn').click(function () {
-    let language = $('#dropdownMenuLanguage').find('.active')[0];
-    let path = window.location.pathname.split('/')
+    let language = getCurrentLanguage();
 
     // Collecting request
     let request = {
         code: myCodeMirror.getValue(),
-        lang: language.innerHTML,
+        lang: language.dataset.value,
         task: getCurrentPath()
-    }
+    };
 
     // Sending AJAX request to server
     let codeResponse = $('#code-response')
@@ -100,20 +108,6 @@ $('#submit-code__btn').click(function () {
             console.log('Error')
         }
     })
-
-    $.ajax({
-        url: 'https://wandbox.org/api/compile.json',
-        type: 'POST',
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify({
-            code: myCodeMirror.getValue(),
-            compiler: 'cpython-head',
-            stdin: '1 2'
-        }),
-        success: function (response) {
-            console.log(response)
-        }
-    })
 })
 
 // On dropdown child click do...
@@ -122,4 +116,10 @@ $(".dropdown-menu a").click(function () {
     $(this).closest('.dropdown-menu').find('a').removeClass('active');
     // Add 'active' class to clicked element...
     $(this).addClass('active');
+
+    // Setting chosen language mode to CodeMirror
+    let currentLanguage = $(this)[0]
+    let dropdownMenuText = $('#dropdownBtn__text')
+    myCodeMirror.setOption("mode", currentLanguage.dataset.mode)
+    dropdownMenuText.html(currentLanguage.text)
 });
