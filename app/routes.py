@@ -1,7 +1,7 @@
 import subprocess
 import sys
 
-from flask import render_template, request, flash, redirect, url_for, session, jsonify
+from flask import render_template, jsonify
 
 from . import app
 from app.contester.contester import Contester, languages
