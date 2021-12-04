@@ -7,7 +7,7 @@ languages = {
         'mode': 'text/x-c++src'},
     'csharp': {
         'name': 'C#',
-        'compiler': 'dotnetcore-head',
+        'compiler': 'mono-head',
         'mode': 'text/x-csharp'},
     'java': {
         'name': 'Java',
@@ -53,6 +53,7 @@ class Contester:
                     if 'program_message' in result_json:
                         answer = result_json['program_message'].strip()
                     else:
+                        print(result_json)
                         answer = None
 
                 print(answer, output_value)
