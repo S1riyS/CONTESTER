@@ -1,3 +1,20 @@
+$(document).ready(function () {
+    let languages = $('.dropdown-menu').closest('.dropdown-menu').find('a');
+    let currentLanguage = localStorage.getItem('currentLanguage');
+    languages.each(function () {
+        // Remove any existing 'active' classes...
+        if ($(this)[0].dataset.value === currentLanguage) {
+            languages.removeClass('active');
+
+            // Add 'active' class to clicked element...
+            $(this).addClass('active');
+
+            // Setting language
+            setLanguage($(this))
+        }
+    })
+});
+
 let codeMirrorConfig = {
     mode: "text/x-pascal", // Language mode
     theme: "material-palenight", // theme
@@ -64,6 +81,19 @@ function scrollTo(obj) {
     });
 }
 
+function setLanguage(language) {
+    // Setting chosen language mode to CodeMirror
+    let currentLanguage = language[0]
+    let dropdownMenuText = $('#dropdownBtn__text')
+    myCodeMirror.setOption("mode", currentLanguage.dataset.mode)
+
+    // Setting text
+    dropdownMenuText.html(currentLanguage.text)
+
+    // Saving current language to localStorage
+    localStorage.setItem('currentLanguage', currentLanguage.dataset.value)
+}
+
 
 myCodeMirror = loadCodeMirror(codeMirrorConfig) // Creating CodeMirror variable
 
@@ -119,12 +149,10 @@ $('#submit-code__btn').click(function () {
 $(".dropdown-menu a").click(function () {
     // Remove any existing 'active' classes...
     $(this).closest('.dropdown-menu').find('a').removeClass('active');
+
     // Add 'active' class to clicked element...
     $(this).addClass('active');
 
-    // Setting chosen language mode to CodeMirror
-    let currentLanguage = $(this)[0]
-    let dropdownMenuText = $('#dropdownBtn__text')
-    myCodeMirror.setOption("mode", currentLanguage.dataset.mode)
-    dropdownMenuText.html(currentLanguage.text)
+    // Setting language
+    setLanguage($(this))
 });
