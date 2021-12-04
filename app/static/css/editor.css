@@ -109,6 +109,15 @@
     box-shadow: none;
 }
 
+/* Code response loader */
+.code-response__loader {
+    background-color: var(--editor-header-color);
+    padding: 20px;
+    display: none;
+    text-align: center;
+}
+
+/* Code response */
 .code-response {
     background: var(--editor-header-color);
     font-family: 'JetBrains Mono', monospace;

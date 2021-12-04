@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/task.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/editor.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loader.css') }}">
 {% endblock %}
 
 {% block js %}
@@ -173,6 +174,18 @@
                         <div class="editor__body" id="editor__body"></div>
                         <div class="editor__footer">
                             <button class="submit-code__btn" id="submit-code__btn">Отправить</button>
+                        </div>
+                        <div class="code-response__loader" id="code-response__loader">
+                            <div class="lds-roller">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
                         </div>
                         <div class="code-response" id="code-response">
                         </div>

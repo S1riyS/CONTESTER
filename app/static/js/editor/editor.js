@@ -87,6 +87,7 @@ $('#submit-code__btn').click(function () {
 
     // Sending AJAX request to server
     let codeResponse = $('#code-response')
+    let codeResponseLoader = $('#code-response__loader')
     $.ajax({
         url: '/api/send_code',
         type: 'POST',
@@ -94,14 +95,18 @@ $('#submit-code__btn').click(function () {
         data: JSON.stringify(request),
         // Before send
         beforeSend: function () {
+            codeResponseLoader.css({'display': 'block'});
+            scrollTo(codeResponseLoader);
             codeResponse.html('');
+        },
+        // Complete
+        complete: function () {
+            codeResponseLoader.css({'display': 'none'})
         },
         // Success
         success: function (response) {
             codeResponse.replaceWith(response) // setting generated HTML
-
-            // Scrolling to response
-            scrollTo($('#code-response'))
+            scrollTo($('#code-response')) // Scrolling to response
         },
         // Error
         error: function () {
