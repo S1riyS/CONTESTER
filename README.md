@@ -7,10 +7,10 @@
 
 ![License](https://img.shields.io/github/license/S1riyS/CONTESTER)
 ![Python quality](https://img.shields.io/lgtm/grade/python/github/S1riyS/CONTESTER?logo=LGTM)
-![JavaScript quality](https://img.shields.io/lgtm/grade/javascript/github/S1riyS/CONTESTER)
+![JavaScript quality](https://img.shields.io/lgtm/grade/javascript/github/S1riyS/CONTESTER?logo=LGTM)
 ![Alerts](https://img.shields.io/lgtm/alerts/github/S1riyS/CONTESTER?logo=LGTM)
 ![Last commit](https://img.shields.io/github/last-commit/S1riyS/CONTESTER?logo=GitHub)
-![GitHub repo size](https://img.shields.io/github/repo-size/S1riyS/CONTESTER)
+![GitHub repo size](https://img.shields.io/github/repo-size/S1riyS/CONTESTER?logo=GitHub)
 
      █████╗  █████╗ ███╗  ██╗████████╗███████╗ ██████╗████████╗███████╗██████╗ 
     ██╔══██╗██╔══██╗████╗ ██║╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝██╔════╝██╔══██╗
