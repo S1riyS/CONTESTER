@@ -3,8 +3,8 @@ import sys
 
 from flask import render_template, request, flash, redirect, url_for, session, jsonify
 
-from . import app
-
+from web import app
+from app.contester import contester
 
 @app.route('/')
 @app.route('/home')
@@ -40,10 +40,10 @@ def send_code():
     print(data['code'])
 
     tests = {
-        '1 2': '3',
-        '1 5': '6',
-        '2 5': '7',
-        '5 6': '11',
+        '1\n2': '3',
+        '1\n5': '6',
+        '2\n5': '7',
+        '5\n6': '11',
     }
     response = {'tests': {}}
 

@@ -47,6 +47,15 @@ function scrollTo(obj) {
     });
 }
 
+function getCurrentPath() {
+    let path = window.location.pathname.split('/');
+    return {
+        grade: path[1],
+        topic: path[2],
+        task_number: path[3]
+    }
+}
+
 myCodeMirror = loadCodeMirror(codeMirrorConfig) // Creating CodeMirror variable
 
 // On click on "reset code" button
@@ -65,11 +74,7 @@ $('#submit-code__btn').click(function () {
     let request = {
         code: myCodeMirror.getValue(),
         lang: language.innerHTML,
-        task: {
-            grade: path[1],
-            topic: path[2],
-            task_number: path[3]
-        }
+        task: getCurrentPath()
     }
 
     // Sending AJAX request to server
@@ -93,6 +98,20 @@ $('#submit-code__btn').click(function () {
         // Error
         error: function () {
             console.log('Error')
+        }
+    })
+
+    $.ajax({
+        url: 'https://wandbox.org/api/compile.json',
+        type: 'POST',
+        contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify({
+            code: myCodeMirror.getValue(),
+            compiler: 'cpython-head',
+            stdin: '1 2'
+        }),
+        success: function (response) {
+            console.log(response)
         }
     })
 })

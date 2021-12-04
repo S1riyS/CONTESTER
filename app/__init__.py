@@ -13,4 +13,4 @@ for key, value in variables.items():
 
 # Import routes
 with app.app_context():
-    from . import routes
+    from web import routes
