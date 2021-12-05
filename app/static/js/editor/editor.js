@@ -118,7 +118,7 @@ $('#submit-code__btn').click(function () {
             task: getCurrentPath()
         };
 
-        let codeResponse = $('#code-response')
+        let codeResponse = $('#code-response__body')
         let codeResponseLoader = $('#code-response__loader')
 
         // Sending AJAX request to server
@@ -144,7 +144,7 @@ $('#submit-code__btn').click(function () {
             // Success
             success: function (response) {
                 codeResponse.replaceWith(response) // setting generated HTML
-                scrollTo($('#code-response')) // Scrolling to response
+                scrollTo($('#code-response__body')) // Scrolling to response
             },
             // Error
             error: function () {
