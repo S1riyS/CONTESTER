@@ -104,6 +104,21 @@ $('#reset-code__btn').click(function () {
     myCodeMirror.setCursor({line: 1, ch: 1});
 })
 
+// ON click on "copy code" button
+function copyToClipboard(str) {
+    let area = document.createElement('textarea');
+
+    document.body.appendChild(area);
+    area.value = str;
+    area.select();
+    document.execCommand("copy");
+    document.body.removeChild(area);
+}
+
+$('#copy-code__btn').click(function () {
+    copyToClipboard(myCodeMirror.getValue())
+})
+
 let isRequestInProgress = false;
 // On click on "submit" button
 $('#submit-code__btn').click(function () {

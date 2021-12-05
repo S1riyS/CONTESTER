@@ -8,7 +8,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 18px 12px 12px;
+    padding: 12px;
     background-color: var(--editor-header-color);
 }
 
@@ -28,18 +28,26 @@
     overflow: hidden;
 }
 
-.editor__header .reset-code__btn {
-    background-color: transparent;
-
+.editor__header .editor__header__btn {
+    min-width: 38px;
+    height: auto;
+    padding: 10px;
+    margin-right: 5px;
+    background: var(--editor-footer-color);
+    border-radius: 5px;
 }
 
-.editor__header .reset-code__icon {
+.editor__header .editor__header__btn:last-child{
+    margin: 0;
+}
+
+.editor__header .editor__header__icon {
     color: var(--gray-color);
     font-size: 1.2em;
     transition: all .1s ease;
 }
 
-.editor__header .reset-code__btn:hover .reset-code__icon {
+.editor__header .editor__header__btn:hover .editor__header__icon {
     color: var(--darker-text-color);
 }
 
