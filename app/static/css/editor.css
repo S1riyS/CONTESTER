@@ -109,6 +109,13 @@
     box-shadow: none;
 }
 
+.editor__footer .submit-code__btn:disabled,
+.editor__footer .submit-code__btn[disabled] {
+    box-shadow: none;
+    cursor: not-allowed;
+    background-color: var(--darker-green-color);
+}
+
 /* Code response loader */
 .code-response__loader {
     background-color: var(--editor-header-color);

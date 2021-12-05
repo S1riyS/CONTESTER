@@ -104,45 +104,54 @@ $('#reset-code__btn').click(function () {
     myCodeMirror.setCursor({line: 1, ch: 1});
 })
 
+let isRequestInProgress = false;
 // On click on "submit" button
 $('#submit-code__btn').click(function () {
-    let language = getCurrentLanguage();
+    if (!isRequestInProgress) {
+        let submitCodeButton = $('#submit-code__btn')
 
-    // Collecting request
-    let request = {
-        code: myCodeMirror.getValue(),
-        lang: language.dataset.value,
-        task: getCurrentPath()
-    };
+        // Collecting request
+        let language = getCurrentLanguage();
+        let request = {
+            code: myCodeMirror.getValue(),
+            lang: language.dataset.value,
+            task: getCurrentPath()
+        };
 
-    // Sending AJAX request to server
-    let codeResponse = $('#code-response')
-    let codeResponseLoader = $('#code-response__loader')
-    $.ajax({
-        url: '/api/send_code',
-        type: 'POST',
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(request),
-        // Before send
-        beforeSend: function () {
-            codeResponseLoader.css({'display': 'block'});
-            scrollTo(codeResponseLoader);
-            codeResponse.html('');
-        },
-        // Complete
-        complete: function () {
-            codeResponseLoader.css({'display': 'none'})
-        },
-        // Success
-        success: function (response) {
-            codeResponse.replaceWith(response) // setting generated HTML
-            scrollTo($('#code-response')) // Scrolling to response
-        },
-        // Error
-        error: function () {
-            console.log('Error')
-        }
-    })
+        let codeResponse = $('#code-response')
+        let codeResponseLoader = $('#code-response__loader')
+
+        // Sending AJAX request to server
+        $.ajax({
+            url: '/api/send_code',
+            type: 'POST',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(request),
+            // Before send
+            beforeSend: function () {
+                codeResponse.html('');
+                isRequestInProgress = true;
+                submitCodeButton.prop("disabled", true);
+                codeResponseLoader.css({'display': 'block'});
+                scrollTo(codeResponseLoader);
+            },
+            // Complete
+            complete: function () {
+                isRequestInProgress = false;
+                submitCodeButton.prop("disabled", false);
+                codeResponseLoader.css({'display': 'none'});
+            },
+            // Success
+            success: function (response) {
+                codeResponse.replaceWith(response) // setting generated HTML
+                scrollTo($('#code-response')) // Scrolling to response
+            },
+            // Error
+            error: function () {
+                console.log('Error')
+            }
+        })
+    }
 })
 
 // On dropdown child click do...
