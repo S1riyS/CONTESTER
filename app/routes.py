@@ -1,6 +1,3 @@
-import subprocess
-import sys
-
 from flask import render_template, request, jsonify
 
 from . import app
