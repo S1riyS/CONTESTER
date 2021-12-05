@@ -36,6 +36,13 @@ class Contester:
             'Content-Type': "application/json;charset=UTF-8",
         }
 
+    def _send_wandbox_request(self, content):
+        # Sending request to WandBox
+        return requests.post(url=self.WANDBOX_COMPILE_URL,
+                             json=content,
+                             headers=self.HEADERS,
+                             timeout=self.DEFAULT_TIMEOUT)
+
     def run_tests(self, code_value: str, language: str, tests: dict) -> dict:
         response = {'tests': {}}  # Base of response
         compiler = languages[language]['compiler']  # Getting compiler
@@ -50,10 +57,7 @@ class Contester:
                 }
 
                 # Sending request to WandBox
-                wandbox_response = requests.post(url=self.WANDBOX_COMPILE_URL,
-                                                 json=data,
-                                                 headers=self.HEADERS,
-                                                 timeout=self.DEFAULT_TIMEOUT)
+                wandbox_response = self._send_wandbox_request(content=data)
 
                 # Checking status code
                 if wandbox_response.status_code != 200:
