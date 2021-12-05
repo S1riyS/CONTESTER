@@ -16,8 +16,7 @@
     </div>
     <div class="tests-list">
         {% for key, value in response['tests'].items() %}
-
-            {% if value %}
+            {% if value['status'] == 'OK' %}
                 {% set test_color = '#1ba94c' %}
             {% else %}
                 {% set test_color = '#ff5370' %}
@@ -25,13 +24,16 @@
 
             <div class="tests-list__item">
                 <p style="color: {{ test_color }};" class="item__text">
-                    {% if value %}
+                    {% if value['status'] == 'OK' %}
                         <i class="far fa-check-circle"></i>
                     {% else %}
                         <i class="far fa-times-circle"></i>
                     {% endif %}
                     Тест №{{ key }}
                 </p>
+                {% if value['status'] != 'OK' %}
+                    <p style="color: #ff5370" class="error__message">{{ value['error'] }}</p>
+                {% endif %}
             </div>
         {% endfor %}
     </div>

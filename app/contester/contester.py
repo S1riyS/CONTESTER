@@ -1,4 +1,7 @@
 import requests
+import pprint
+
+from .errors import ServerResponseException, ExecutionException
 
 languages = {
     'cpp': {
@@ -28,48 +31,71 @@ languages = {
 class Contester:
     def __init__(self):
         self.WANDBOX_COMPILE_URL = 'https://wandbox.org/api/compile.json'
-
-    def run_tests(self, code_value: str, language: str, tests: dict) -> dict:
-        response = {'tests': {}}
-
-        headers = {
+        self.DEFAULT_TIMEOUT = 2.75
+        self.HEADERS = {
             'Content-Type': "application/json;charset=UTF-8",
         }
-        compiler = languages[language]['compiler']
+
+    def run_tests(self, code_value: str, language: str, tests: dict) -> dict:
+        response = {'tests': {}}  # Base of response
+        compiler = languages[language]['compiler']  # Getting compiler
+
         for index, (input_value, output_value) in enumerate(tests.items()):
             try:
+                # Forming content of request
                 data = {
                     'code': code_value,
                     'compiler': compiler,
                     'stdin': input_value
                 }
 
-                result = requests.post(url=self.WANDBOX_COMPILE_URL, json=data, headers=headers)
+                # Sending request to WandBox
+                wandbox_response = requests.post(url=self.WANDBOX_COMPILE_URL,
+                                                 json=data,
+                                                 headers=self.HEADERS,
+                                                 timeout=self.DEFAULT_TIMEOUT)
 
-                if result.status_code != 200:
-                    answer = None
+                # Checking status code
+                if wandbox_response.status_code != 200:
+                    raise ServerResponseException  # Raising 'ServerResponseException'
+
                 else:
-                    result_json = result.json()
-                    if 'program_message' in result_json:
-                        answer = result_json['program_message'].strip()
+                    # Getting JSON
+                    result_json = wandbox_response.json()  # JSON
+
+                    # Checking status
+                    if result_json['status'] == '0':
+                        answer = result_json['program_output'].strip()  # Getting Answer
+                        assert answer == output_value  # Checking answer
+
+                        # If everything OK
+                        response['tests'][index + 1] = {'status': 'OK', 'error': None}
+                        print(f'Passed test number {index + 1}')
                     else:
-                        print(result_json)
-                        answer = None
+                        raise ExecutionException  # Raising 'ExecutionException'
 
-                print(answer, output_value)
 
-                assert answer == output_value
+            except ServerResponseException:
+                response['tests'][index + 1] = {'status': 'ERROR', 'error': 'Server Response Error'}
+                print(f'Failed test number {index + 1}, Server Response Error')
 
-                print(f'Passed test number {index}')
-                response['tests'][index + 1] = True
+            except ExecutionException:
+                response['tests'][index + 1] = {'status': 'ERROR', 'error': 'Execution Error'}
+                print(f'Failed test number {index + 1}, Execution Error')
+
+            except requests.Timeout:
+                response['tests'][index + 1] = {'status': 'ERROR', 'error': 'Timeout Error'}
+                print(f'Failed test number {index + 1}, Timeout Error')
 
             except AssertionError:
-                print(f'Failed test number {index}, incorrect answer')
-                response['tests'][index + 1] = False
+                response['tests'][index + 1] = {'status': 'ERROR', 'error': 'Wrong Answer'}
+                print(f'Failed test number {index + 1}, Wrong Answer')
 
-        passed_tests = len([result for result in response['tests'].values() if result])
+        # Calculating total number of passed tests
+        passed_tests = len([result for result in response['tests'].values() if result['status'] == 'OK'])
         response['passed_tests'] = passed_tests
 
+        pprint.pprint(response, width=1)
         return response
 
     @staticmethod
