@@ -48,7 +48,7 @@
 }
 
 .editor__header .editor__header__btn:hover .editor__header__icon {
-    color: var(--darker-text-color);
+    color: var(--blue-color);
 }
 
 .editor__header .dropdown-menu .dropdown-item:hover,
