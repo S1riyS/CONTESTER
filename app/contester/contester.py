@@ -1,4 +1,5 @@
 import requests
+from typing import Optional
 import pprint
 
 from .errors import ServerResponseException, ExecutionException
@@ -36,12 +37,16 @@ class Contester:
             'Content-Type': "application/json;charset=UTF-8",
         }
 
-    def _send_wandbox_request(self, content):
+    def _send_wandbox_request(self, content: dict) -> requests.models.Response:
         # Sending request to WandBox
         return requests.post(url=self.WANDBOX_COMPILE_URL,
                              json=content,
                              headers=self.HEADERS,
                              timeout=self.DEFAULT_TIMEOUT)
+
+    @staticmethod
+    def _compare_answers(program_output: str, expected_output: str) -> Optional[AssertionError]:
+        assert program_output.strip() == expected_output.strip()  # Checking answer
 
     def run_tests(self, code_value: str, language: str, tests: dict) -> dict:
         response = {'tests': {}}  # Base of response
@@ -49,6 +54,8 @@ class Contester:
 
         for index, (input_value, output_value) in enumerate(tests.items()):
             try:
+                test_number = index + 1  # Calculating current test number
+
                 # Forming content of request
                 data = {
                     'code': code_value,
@@ -69,31 +76,41 @@ class Contester:
 
                     # Checking status
                     if result_json['status'] == '0':
-                        answer = result_json['program_output'].strip()  # Getting Answer
-                        assert answer == output_value  # Checking answer
+                        self._compare_answers(program_output=result_json['program_output'],
+                                              expected_output=output_value)
 
                         # If everything OK
-                        response['tests'][index + 1] = {'status': 'OK', 'error': None}
-                        print(f'Passed test number {index + 1}')
+                        test_result = {'status': 'OK', 'error': None}
+                        print(f'Passed test number {test_number}')
+
                     else:
                         raise ExecutionException  # Raising 'ExecutionException'
 
-
+            # Exceptions block
             except ServerResponseException:
-                response['tests'][index + 1] = {'status': 'ERROR', 'error': 'Server Response Error'}
-                print(f'Failed test number {index + 1}, Server Response Error')
+                test_result = {'status': 'ERROR', 'error': 'Server Response Error'}
+                print(f'Failed test number {test_number}, Server Response Error')
 
             except ExecutionException:
-                response['tests'][index + 1] = {'status': 'ERROR', 'error': 'Execution Error'}
-                print(f'Failed test number {index + 1}, Execution Error')
+                test_result = {'status': 'ERROR', 'error': 'Execution Error'}
+                print(f'Failed test number {test_number}, Execution Error')
 
             except requests.Timeout:
-                response['tests'][index + 1] = {'status': 'ERROR', 'error': 'Timeout Error'}
-                print(f'Failed test number {index + 1}, Timeout Error')
+                test_result = {'status': 'ERROR', 'error': 'Timeout Error'}
+                print(f'Failed test number {test_number}, Timeout Error')
 
             except AssertionError:
-                response['tests'][index + 1] = {'status': 'ERROR', 'error': 'Wrong Answer'}
-                print(f'Failed test number {index + 1}, Wrong Answer')
+                test_result = {'status': 'ERROR', 'error': 'Wrong Answer'}
+                print(f'Failed test number {test_number}, Wrong Answer')
+
+            finally:
+                # Checking structure of result
+                if test_result['status'] and (test_result['error'] is None or test_result['error']):
+                    pass
+                else:
+                    test_result = {'status': 'ERROR', 'error': 'Testing System Error'}
+
+                response['tests'][test_number] = test_result  # Writing result to response dictionary
 
         # Calculating total number of passed tests
         passed_tests = len([result for result in response['tests'].values() if result['status'] == 'OK'])
