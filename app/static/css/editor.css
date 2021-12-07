@@ -28,27 +28,8 @@
     overflow: hidden;
 }
 
-.editor__header .editor__header__btn {
-    min-width: 38px;
-    height: auto;
-    padding: 10px;
+.editor__header .header__button:not(:last-of-type) {
     margin-right: 5px;
-    background: var(--editor-footer-color);
-    border-radius: 5px;
-}
-
-.editor__header .editor__header__btn:last-child{
-    margin: 0;
-}
-
-.editor__header .editor__header__icon {
-    color: var(--gray-color);
-    font-size: 1.2em;
-    transition: all .1s ease;
-}
-
-.editor__header .editor__header__btn:hover .editor__header__icon {
-    color: var(--blue-color);
 }
 
 .editor__header .dropdown-menu .dropdown-item:hover,
@@ -98,6 +79,9 @@
 
 /* Editor footer */
 .editor__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 12px;
     background: var(--editor-footer-color);
 }
@@ -154,6 +138,9 @@
 }
 
 .code-response__body .tests-list {
+    min-height: 430px;
+    max-height: 430px;
+    height: 100%;
     display: flex;
     flex-direction: column;
 }
@@ -166,8 +153,68 @@
     transition: all .2s ease;
 }
 
+.code-response__body .tests-list .tests-list__item.active {
+    background-color: var(--editor-footer-color);
+
+}
+
 .code-response__body .tests-list .tests-list__item:hover {
     background-color: var(--editor-footer-color);
+}
+
+.code-response__body .tests-list .tests-list_row {
+    height: 100%;
+}
+
+.code-response__body .nav_col {
+    padding-right: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+.code-response__body .nav_col::-webkit-scrollbar-track {
+    background: var(--editor-footer-color);
+}
+
+
+.code-response__body .tab-content_col {
+    padding-left: 0;
+}
+
+
+.code-response__body .tab-content {
+    height: 100%;
+    background-color: var(--editor-footer-color);
+    padding: 15px 30px;
+}
+
+.code-response__body .tab-content .tab-content__block {
+    margin-bottom: 25px;
+}
+
+.code-response__body .tab-content .tab-content__title {
+    color: var(--gray-color);
+    margin-bottom: 5px;
+}
+
+.code-response__body .tab-content .compiler__message__text {
+    font-size: 25px;
+}
+
+.code-response__body .tab-content .locked-test {
+    text-align: center;
+    color: var(--gray);
+    padding: 60px;
+}
+
+.code-response__body .tab-content .locked-test__icon {
+    font-size: 4em;
+    margin-bottom: 15px;
+}
+
+.code-response__body .tab-content .locked-test__text {
+    font-size: 25px;
 }
 
 /* CodeMirror editor */

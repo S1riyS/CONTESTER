@@ -48,19 +48,21 @@ class Contester:
     def _compare_answers(program_output: str, expected_output: str) -> Optional[AssertionError]:
         assert program_output.strip() == expected_output.strip()  # Checking answer
 
-    def run_tests(self, code_value: str, language: str, tests: dict) -> dict:
+    def run_tests(self, code_value: str, language: str, tests: list) -> dict:
+        is_tab_to_show = False
         response = {'tests': {}}  # Base of response
         compiler = languages[language]['compiler']  # Getting compiler
 
-        for index, (input_value, output_value) in enumerate(tests.items()):
+        for index, current_test in enumerate(tests):
             try:
+                print(current_test)
                 test_number = index + 1  # Calculating current test number
 
                 # Forming content of request
                 data = {
                     'code': code_value,
                     'compiler': compiler,
-                    'stdin': input_value
+                    'stdin': current_test['stdin']
                 }
 
                 # Sending request to WandBox
@@ -77,10 +79,10 @@ class Contester:
                     # Checking status
                     if result_json['status'] == '0':
                         self._compare_answers(program_output=result_json['program_output'],
-                                              expected_output=output_value)
+                                              expected_output=current_test['output'])
 
                         # If everything OK
-                        test_result = {'status': 'OK', 'error': None}
+                        test_result = {'status': 'OK', 'message': 'Success'}
                         print(f'Passed test number {test_number}')
 
                     else:
@@ -88,27 +90,39 @@ class Contester:
 
             # Exceptions block
             except ServerResponseException:
-                test_result = {'status': 'ERROR', 'error': 'Server Response Error'}
+                test_result = {'status': 'ERROR', 'message': 'Server Response Error'}
                 print(f'Failed test number {test_number}, Server Response Error')
 
             except ExecutionException:
-                test_result = {'status': 'ERROR', 'error': 'Execution Error'}
+                test_result = {'status': 'ERROR', 'message': 'Execution Error'}
                 print(f'Failed test number {test_number}, Execution Error')
 
             except requests.Timeout:
-                test_result = {'status': 'ERROR', 'error': 'Timeout Error'}
+                test_result = {'status': 'ERROR', 'message': 'Timeout Error'}
                 print(f'Failed test number {test_number}, Timeout Error')
 
             except AssertionError:
-                test_result = {'status': 'ERROR', 'error': 'Wrong Answer'}
+                test_result = {'status': 'ERROR', 'message': 'Wrong Answer'}
                 print(f'Failed test number {test_number}, Wrong Answer')
 
             finally:
                 # Checking structure of result
-                if test_result['status'] and (test_result['error'] is None or test_result['error']):
+                if test_result['status'] and test_result['message']:
                     pass
                 else:
-                    test_result = {'status': 'ERROR', 'error': 'Testing System Error'}
+                    test_result = {'status': 'ERROR', 'message': 'Testing System Error'}
+
+                # Checking if test can be shown
+                if not current_test['hidden']:
+                    test_result['info'] = {
+                        'stdin': current_test['stdin'],
+                        'expected-output': current_test['output']
+                    }
+                    if not is_tab_to_show:
+                        test_result['to_show'] = True
+                        is_tab_to_show = True
+                else:
+                    test_result['info'] = None
 
                 response['tests'][test_number] = test_result  # Writing result to response dictionary
 
@@ -121,9 +135,34 @@ class Contester:
 
     @staticmethod
     def get_tests(task: dict) -> dict:
-        return {
-            '1 2': '3',
-            '1 5': '6',
-            '2 5': '7',
-            '5 6': '11',
-        }
+        tests = [
+            {
+                'stdin': '1 2',
+                'output': '3',
+                'hidden': False
+            },
+            {
+                'stdin': '1 5',
+                'output': '6',
+                'hidden': False
+            },
+            {
+                'stdin': '2 5',
+                'output': '7',
+                'hidden': True
+            },
+            {
+                'stdin': '5 6',
+                'output': '11',
+                'hidden': True
+            }
+        ]
+
+        # {
+        #     '1 2': '3',
+        #     '1 5': '6',
+        #     '2 5': '7',
+        #     '5 6': '11',
+        # }
+
+        return tests
