@@ -23,7 +23,9 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    -moz-box-sizing: border-box; /* Для Firefox */
+    -webkit-box-sizing: border-box; /* Для Safari и Chrome */
+    box-sizing: border-box; /* Для IE и Opera */
 }
 
 /*Default HTML elements */
@@ -40,23 +42,23 @@ body {
 }
 
 /*  Scrollbar  */
-body::-webkit-scrollbar {
+::-webkit-scrollbar {
     width: 15px;
     /* ширина scrollbar */
 }
 
-body::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     background: var(--background-color);
 }
 
-body::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background-color: var(--purple-color);
     border: 3px solid var(--background-color);
     border-radius: 15px;
     transition: all .2s ease;
 }
 
-body::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
     background-color: var(--blue-color);
 }
 
@@ -108,6 +110,32 @@ input:focus {
 
 .container-fluid {
     width: 90%;
+}
+
+/* Buttons */
+.default_button__btn {
+    min-width: 38px;
+    height: auto;
+    padding: 10px;
+    background: var(--editor-footer-color);
+    border: 1px solid var(--editor-footer-color);
+    border-radius: 5px;
+    transition: all .1s ease;
+
+}
+
+.default_button__icon {
+    color: var(--gray-color);
+    font-size: 1.2em;
+    transition: all .1s ease;
+}
+
+.default_button__btn:hover {
+    border: 1px solid var(--blue-color);
+}
+
+.default_button__btn:hover .default_button__icon {
+    color: var(--blue-color);
 }
 
 /* Header */
