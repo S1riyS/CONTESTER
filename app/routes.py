@@ -3,11 +3,14 @@ from flask import render_template
 from . import app
 from app.admin.admin import admin
 from app.api.api import api
+from app.errors.handler import errors
+
 from app.contester.contester import languages
 
 
 app.register_blueprint(admin, url_prefix='/admin')
 app.register_blueprint(api, url_prefix='/api')
+app.register_blueprint(errors, url_prefix='/error')
 
 
 @app.route('/')

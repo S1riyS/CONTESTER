@@ -1,0 +1,33 @@
+.row {
+    height: 100%;
+    align-items: center;
+}
+
+.error_block {
+    width: 100%;
+    text-align: center;
+}
+
+.error_block .error__number {
+    font-size: 150px;
+    color: var(--error-color);
+}
+
+.error_block .error__text {
+    font-size: 25px;
+    margin-bottom: 35px;
+}
+
+.error_block .go_home__button {
+    background: transparent;
+    color: var(--text-color);
+    font-size: 18px;
+    padding: 12px 14px;
+    border: 2px solid var(--error-color);
+    border-radius: 10px;
+    transition: all .2s ease;
+}
+
+.error_block .go_home__button:hover {
+    background: var(--error-color);
+}
