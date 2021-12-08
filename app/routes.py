@@ -1,9 +1,14 @@
-from flask import render_template, request, jsonify
+from flask import render_template
 
 from . import app
-from app.contester.contester import Contester, languages
+from app.admin.admin import admin
+from app.api.api import api
+from app.contester.contester import languages
 
-contester = Contester()
+
+app.register_blueprint(admin, url_prefix='/admin')
+app.register_blueprint(api, url_prefix='/api')
+
 
 @app.route('/')
 @app.route('/home')
@@ -30,13 +35,3 @@ def topic_page(grade, topic):
 def task_page(grade, topic, task_number):
     return render_template('task.html', grade=grade, topic=topic, task_number=task_number, languages=languages)
 
-
-# API
-@app.route('/api/send_code', methods=['POST'])
-def send_code():
-    data = request.json
-
-    tests = contester.get_tests({})
-    response = contester.run_tests(code_value=data['code'], language=data['lang'], tests=tests)
-
-    return jsonify('', render_template('code_response_model.html', response=response))
