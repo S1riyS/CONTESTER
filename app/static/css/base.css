@@ -5,6 +5,8 @@
     --footer-color: #0e1012;
     --text-color: #e2e5ed;
     --darker-text-color: #8e9fbf;
+    --defaul-button-color: #212432;
+    --defaul-icon-color: #1a1d28;
 
     --green-color: #1ba94c;
     --darker-green-color: #10652e;
@@ -117,8 +119,8 @@ input:focus {
     min-width: 38px;
     height: auto;
     padding: 10px;
-    background: var(--editor-footer-color);
-    border: 1px solid var(--editor-footer-color);
+    background: var(--defaul-button-color);
+    border: 1px solid var(--defaul-button-color);
     border-radius: 5px;
     transition: all .1s ease;
 
@@ -154,10 +156,15 @@ input:focus {
     justify-content: space-between;
 }
 
+.header .header__left_side {
+    display: flex;
+    align-items: center;
+}
+
 .header .header__logo {
     display: flex;
     align-items: center;
-    margin-right: 70px;
+    margin-right: 30px;
 }
 
 .header .header__logo .img {
