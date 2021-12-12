@@ -4,12 +4,14 @@
 
 {% extends "admin/admin.html" %}
 
-{% block admin_css %}
+{% block css %}
+    {{ super() }}
     <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/task.css') }}">
     <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/switch_button.css') }}">
 {% endblock %}
 
-{% block admin_js %}
+{% block js %}
+    {{ super() }}
     <script src="{{ url_for('admin.static', filename='js/task.js') }}"></script>
 {% endblock %}
 
