@@ -75,10 +75,15 @@
 
 .sidebar .menu .item .sub-menu {
     display: none;
+    padding: 5px;
 }
 
 .sidebar .menu .item .sub-menu .sub-item {
     margin-bottom: 5px;
+}
+
+.sidebar .menu .item .sub-menu .sub-item:last-child {
+    margin-bottom: 0;
 }
 
 .sidebar .menu .item .sub-menu .sub-item:hover {
