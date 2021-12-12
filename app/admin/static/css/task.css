@@ -1,0 +1,82 @@
+.task .task__title {
+    margin-bottom: 15px;
+}
+
+.task .task__subtitle {
+    font-size: 26px;
+    margin-bottom: 15px;
+}
+
+.task .task__block {
+    margin-bottom: 25px;
+    background: var(--defaul-button-color);
+    padding: 15px 20px;
+    border-radius: 10px;
+}
+
+.task .path_dropdown {
+    display: flex;
+}
+
+.task .path_dropdown .path_dropdown__grade .dropdown-btn {
+    min-width: 80px;
+}
+
+.task .path_dropdown .path_dropdown__topic .dropdown-btn {
+    width: 120%;
+    position: relative;
+}
+
+.task .path_dropdown .path_dropdown__item {
+    display: flex;
+    align-items: center;
+}
+
+.task .path_dropdown .path_dropdown__item:not(:last-of-type)::after {
+    content: '/';
+    margin: 0 5px;
+    font-size: 22px;
+    color: var(--darker-text-color);
+}
+
+.task .tests__main .create_task__test_block {
+    padding: 15px;
+    border-radius: 5px;
+    background: var(--defaul-icon-color);
+    margin-bottom: 15px;
+}
+
+.task .tests__main .test_block__title {
+    font-size: 20px;
+}
+
+.task .tests__main .create_test_button {
+    display: block;
+    margin: auto;
+    padding: 8px 10px;
+    background: transparent;
+    color: var(--text-color);
+    font-size: 18px;
+    border: 2px solid var(--blue-color);
+    border-radius: 10px;
+    transition: all .2s ease;
+}
+
+.task .tests__main .create_test_button:hover {
+    background-color: var(--blue-color);
+}
+
+.tests__main .test_block__footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tests__main .test_block__footer .footer__left {
+    display: flex;
+    align-items: center;
+}
+
+.is_hidden__label {
+    font-size: 18px;
+    margin: 0;
+}

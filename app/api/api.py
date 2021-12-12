@@ -15,3 +15,15 @@ def send_code():
     response = contester.run_tests(code_value=data['code'], language=data['lang'], tests=tests)
 
     return jsonify('', render_template('code_response_model.html', response=response))
+
+@api.route('/create_task', methods=['POST'])
+def create_task():
+    data = request.json
+    print(data)
+
+    return jsonify('', 'OK')
+
+@api.route('/get_task_input_block', methods=['POST'])
+def get_task_input_block():
+    data = request.json
+    return jsonify('', render_template('admin/test_block_model.html', test_number=data['test_number']))

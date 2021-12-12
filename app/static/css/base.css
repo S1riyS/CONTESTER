@@ -145,6 +145,7 @@ input:focus {
     padding: 15px 0;
     margin-bottom: 20px;
     background: var(--header-color);
+    z-index: 100;
 }
 
 .header .container-fluid {

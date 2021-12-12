@@ -5,20 +5,23 @@
 {% extends "base.html" %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/admin_sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/admin.css') }}">
+    {% block admin_css %}{% endblock %}
 {% endblock %}
 
 {% block js %}
     <script type="module" src="{{ url_for('admin.static', filename='js/admin.js') }}"></script>
+    {% block admin_js %}{% endblock %}
 {% endblock %}
 
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div class="side-bar col-xl-2">
+            <div class="sidebar col-2">
                 <div class="menu">
-                    <div class="item sidebar__header">
-                        <h3 class="sidebar__title"><i class="fas fa-home"></i> Главное:</h3>
+                    <div class="item">
+                        <a class="sub-btn" href="{{ url_for('admin.home_page') }}"><i class="fas fa-tools"></i>Админ панель</a>
                     </div>
 
                     <div class="item">
@@ -37,15 +40,15 @@
                         <a class="sub-btn"><i class="fas fa-cogs"></i>Изменение контента
                             <i class="fas fa-angle-right dropdown"></i></a>
                         <div class="sub-menu">
-                            <a href="#" class="sub-item">Добавить задачу</a>
+                            <a href="{{ url_for('admin.create_task_page') }}" class="sub-item">Добавить задачу</a>
                             <a href="#" class="sub-item">Изменить задачу</a>
                             <a href="#" class="sub-item">Удалить задачу</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-8 offset-xl-2">
-                <p>Админ панель!</p>
+            <div class="col-7 offset-3">
+                {% block admin_content %}{% endblock %}
             </div>
         </div>
     </div>

@@ -1,0 +1,116 @@
+<head>
+    <title>Админ панель</title>
+</head>
+
+{% extends "admin/admin.html" %}
+
+{% block admin_css %}
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/task.css') }}">
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/switch_button.css') }}">
+{% endblock %}
+
+{% block admin_js %}
+    <script src="{{ url_for('admin.static', filename='js/task.js') }}"></script>
+{% endblock %}
+
+{% block admin_content %}
+    <div class="task">
+        <form id="task_from" method="post" role="form">
+            <h2 class="task__title">Создание задачи</h2>
+            <div class="path_to_task task__block">
+                <p class="task__subtitle">Путь до задачи:</p>
+                <div class="path_dropdown">
+                    <div class="path_dropdown__grade path_dropdown__item">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-btn" type="button"
+                                    id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="dropdownBtn__text" id="dropdown_grade__text">10</span>
+                                <span class="arrow">
+                                <span></span><span></span>
+                            </span>
+                            </button>
+                            <div class="dropdown-menu" id="dropdownMenuGrade"
+                                 aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">6</a>
+                                <a class="dropdown-item" href="#">7</a>
+                                <a class="dropdown-item" href="#">8</a>
+                                <a class="dropdown-item" href="#">9</a>
+                                <a class="dropdown-item" href="#">10</a>
+                                <a class="dropdown-item" href="#">11</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="path_dropdown__topic path_dropdown__item">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-btn" type="button"
+                                    id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="dropdownBtn__text" id="dropdown_topic__text">Арифметика</span>
+                                <span class="arrow">
+                                <span></span><span></span>
+                            </span>
+                            </button>
+                            <div class="dropdown-menu" id="dropdownMenuTopic"
+                                 aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Арифметика</a>
+                                <a class="dropdown-item" href="#">Циклы</a>
+                                <a class="dropdown-item" href="#">Функции</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="basic_information task__block">
+                <p class="task__subtitle">Основная информация:</p>
+                <div class="basic_information__main">
+                    <div class="input_block">
+                        <p class="input_block__title">Название:</p>
+                        <textarea class="input_block__textarea" id="task__name"
+                                  name="example_input" placeholder="Название задачи" required="" spellcheck="false"
+                                  type="text"></textarea>
+
+                    </div>
+                    <div class="input_block">
+                        <p class="input_block__title">Условие:</p>
+                        <textarea class="input_block__textarea textarea_auto_expand" id="task__condition"
+                                  name="name" placeholder="Условие задачи" required="" spellcheck="false"
+                                  type="text"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="example task__block">
+                <p class="task__subtitle">Пример:</p>
+                <div class="example__main">
+                    <div class="input_block">
+                        <p class="input_block__title">Ввод:</p>
+                        <textarea class="input_block__textarea textarea_auto_expand" id="task__input"
+                                  name="condition" placeholder="Ввод" required="" spellcheck="false"
+                                  type="text"></textarea>
+
+                    </div>
+                    <div class="input_block">
+                        <p class="input_block__title">Вывод:</p>
+                        <textarea class="input_block__textarea textarea_auto_expand" id="task__output"
+                                  name="example_input" placeholder="Вывод" required="" spellcheck="false"
+                                  type="text"></textarea>
+
+                    </div>
+                </div>
+            </div>
+            <div class="tests task__block">
+                <p class="task__subtitle">Тесты:</p>
+                <div class="tests__main" id="tests__main">
+                    <div id="all_tests">
+                        {# Tests' inputs will be here #}
+                    </div>
+
+                    <button class="create_test_button" id="create_test_button" type="button">
+                        Добавить тест
+                    </button>
+                </div>
+            </div>
+            <input class="submit_button" id="submit" name="submit" type="submit" value="Создать задачу">
+        </form>
+    </div>
+{% endblock %}
