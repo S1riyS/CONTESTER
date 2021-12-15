@@ -2,5 +2,5 @@ Flask_Moment==1.0.2
 Flask_Login==0.5.0
 Flask_Migrate==3.1.0
 Flask_SQLAlchemy==2.5.1
-requests==2.26.0
+aiohttp==3.8.1
 Flask==2.0.2
