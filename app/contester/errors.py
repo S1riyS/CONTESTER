@@ -1,13 +1,13 @@
 # General exception of testing
-class TestingException(Exception):
+class TestingError(Exception):
     ...
 
 
 # Server response exception
-class ServerResponseException(TestingException):
+class ServerResponseError(TestingError):
     ...
 
 
 # Execution exception
-class ExecutionException(TestingException):
+class ExecutionError(TestingError):
     ...
