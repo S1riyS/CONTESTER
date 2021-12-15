@@ -25,7 +25,7 @@
                             {% set test_color = '#ff5370' %}
                         {% endif %}
 
-                        {% if value['to_show'] %}
+                        {% if key == 1 %}
                             <a class="tests-list__item active" id="response_tab_{{ key }}" data-toggle="pill"
                                href="#response_tab_content_{{ key }}" role="tab"
                                aria-controls="response_tab_content_{{ key }}" aria-selected="true">
@@ -54,7 +54,7 @@
             <div class="col-9 tab-content_col">
                 <div class="tab-content" id="v-pills-tabContent">
                     {% for key, value in response['tests'].items() %}
-                        {% if value['to_show'] %}
+                        {% if key == 1 %}
                             <div class="tab-pane fade show active" id="response_tab_content_{{ key }}" role="tabpanel"
                                  aria-labelledby="response_tab_{{ key }}">
                         {% else %}
