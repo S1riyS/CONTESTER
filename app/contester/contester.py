@@ -6,6 +6,7 @@ import aiohttp
 
 from .errors import ServerResponseError, ExecutionError
 
+# Dictionary with programming languages (name, compiler, CodeMirror mode)
 languages = {
     'cpp': {
         'name': 'C++',
@@ -34,34 +35,10 @@ languages = {
 class Contester:
     def __init__(self):
         self.COMPILER_URL = 'https://wandbox.org/api/compile.json'  # Compiler URL
-        self.AIOHTTP_TIMEOUT = aiohttp.ClientTimeout(total=2.5)  # Timeout value
+        self.AIOHTTP_TIMEOUT = aiohttp.ClientTimeout(total=3)  # Timeout value
         # Request headers
         self.HEADERS = {
             'Content-Type': "application/json;charset=UTF-8",
-        }
-        # Dictionary with programming languages (name, compiler, CodeMirror mode)
-        self.LANGUAGES = {
-            'cpp': {
-                'name': 'C++',
-                'compiler': 'gcc-head',
-                'mode': 'text/x-c++src'},
-            'csharp': {
-                'name': 'C#',
-                'compiler': 'mono-head',
-                'mode': 'text/x-csharp'},
-            'java': {
-                'name': 'Java',
-                'compiler': 'openjdk-head',
-                'mode': 'text/x-java'},
-            'python': {
-                'name': 'Python 3',
-                'compiler': 'cpython-head',
-                'mode': 'text/x-python',
-                'is_default': True},
-            'pascal': {
-                'name': 'Pascal',
-                'compiler': 'fpc-head',
-                'mode': 'text/x-pascal'},
         }
 
     @staticmethod
@@ -73,7 +50,7 @@ class Contester:
         assert program_output.strip() == expected_output.strip()  # Checking answer
 
     @staticmethod
-    def _get_number_of_passed_tests(tests):
+    def _get_number_of_passed_tests(tests) -> int:
         return len([result for result in tests.values() if result['status'] == 'OK'])
 
     async def _run_test(self, session, data, current_test, test_number) -> dict:
@@ -90,7 +67,7 @@ class Contester:
             async with session.post(url=self.COMPILER_URL, headers=self.HEADERS, json=data) as wandbox_response:
                 # Checking status code
                 if wandbox_response.status != 200:
-                    raise ServerResponseException  # Raising 'ServerResponseException'
+                    raise ServerResponseError  # Raising 'ServerResponseError'
                 else:
                     result_json = await wandbox_response.json()  # Getting JSON
 
@@ -104,7 +81,7 @@ class Contester:
                         print(f'Passed test number {test_number}')
 
                     else:
-                        raise ExecutionException  # Raising 'ExecutionException'
+                        raise ExecutionError  # Raising 'ExecutionError'
 
         # Exceptions block
         except ServerResponseError:
@@ -252,4 +229,3 @@ class Contester:
                 'hidden': True
             }
         ]
-
