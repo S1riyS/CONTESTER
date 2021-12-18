@@ -35,7 +35,7 @@ languages = {
 class Contester:
     def __init__(self):
         self.COMPILER_URL = 'https://wandbox.org/api/compile.json'  # Compiler URL
-        self.AIOHTTP_TIMEOUT = aiohttp.ClientTimeout(total=3)  # Timeout value
+        # self.AIOHTTP_TIMEOUT = aiohttp.ClientTimeout(connect=3)  # Timeout value
         # Request headers
         self.HEADERS = {
             'Content-Type': "application/json;charset=UTF-8",
@@ -64,11 +64,9 @@ class Contester:
         result = {'status': None, 'message': None}
 
         try:
-            async with session.post(url=self.COMPILER_URL, headers=self.HEADERS, json=data) as wandbox_response:
+            async with session.post(url=self.COMPILER_URL, headers=self.HEADERS, json=data, timeout=3) as wandbox_response:
                 # Checking status code
-                if wandbox_response.status != 200:
-                    raise ServerResponseError  # Raising 'ServerResponseError'
-                else:
+                if wandbox_response.status == 200:
                     result_json = await wandbox_response.json()  # Getting JSON
 
                     # Checking status
@@ -82,6 +80,9 @@ class Contester:
 
                     else:
                         raise ExecutionError  # Raising 'ExecutionError'
+                else:
+                    raise ServerResponseError  # Raising 'ServerResponseError'
+
 
         # Exceptions block
         except ServerResponseError:
@@ -126,7 +127,7 @@ class Contester:
         response = {'tests': {}}  # Base of response
         compiler = self._get_compiler(language)  # Getting compiler
 
-        async with aiohttp.ClientSession(timeout=self.AIOHTTP_TIMEOUT) as session:
+        async with aiohttp.ClientSession() as session:
             tasks = []
 
             for index, current_test in enumerate(tests):
@@ -144,7 +145,7 @@ class Contester:
                 task = asyncio.ensure_future(self._run_test(session, data, test, index))
                 tasks.append(task)
 
-            test_results = await asyncio.gather(*tasks)  # Running tasks
+            test_results = await asyncio.gather(*tasks, return_exceptions=False)  # Running tasks
 
             # Writing sub-dictionary with results of testing to response
             for test_result in test_results:
@@ -154,7 +155,7 @@ class Contester:
             # Calculating total number of passed tests
             response['passed_tests'] = self._get_number_of_passed_tests(response['tests'])
 
-            return response
+        return response
 
     def run_tests(self, code, language, tests) -> dict:
         """
@@ -171,7 +172,7 @@ class Contester:
         return response
 
     @staticmethod
-    def get_tests(task=None):
+    def get_tests(task=None) -> dict:
         return [
             {
                 'stdin': '1 2',
