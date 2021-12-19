@@ -217,6 +217,16 @@
     font-size: 25px;
 }
 
+.code-response__body .response_error {
+    padding: 20px;
+    text-align: center;
+    color: var(--error-color);
+}
+
+.code-response__body .response_error .response_error__icon {
+    margin-right: 10px;
+}
+
 /* CodeMirror editor */
 .CodeMirror-gutters {
     border-right: 1px solid !important;

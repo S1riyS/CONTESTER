@@ -14,16 +14,25 @@ def send_code():
     tests = contester.get_tests({})
     response = contester.run_tests(code=data['code'], language=data['lang'], tests=tests)
 
-    return jsonify('', render_template('code_response_model.html', response=response))
+    if response is not None:
+        return jsonify(render_template('code_response_model.html', response=response))
+    else:
+        return jsonify(render_template('response_error_model.html'))
+
 
 @api.route('/create_task', methods=['POST'])
 def create_task():
     data = request.json
     print(data)
 
-    return jsonify('', 'OK')
+    for program_input, program_output in zip(data['tests']['inputsArray'], data['tests']['outputsArray']):
+        # Do something with input and output
+        ...
+
+    return jsonify('OK')
+
 
 @api.route('/get_task_input_block', methods=['POST'])
 def get_task_input_block():
     data = request.json
-    return jsonify('', render_template('admin/test_block_model.html', test_number=data['test_number']))
+    return jsonify(render_template('admin/test_block_model.html', test_number=data['test_number']))

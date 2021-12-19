@@ -43,7 +43,10 @@ class Contester:
 
     @staticmethod
     def _get_compiler(language) -> str:
-        return languages[language]['compiler']
+        if language in languages:
+            return languages[language]['compiler']
+        else:
+            return None
 
     @staticmethod
     def _compare_answers(program_output, expected_output) -> Optional[AssertionError]:
@@ -64,7 +67,10 @@ class Contester:
         result = {'status': None, 'message': None}
 
         try:
-            async with session.post(url=self.COMPILER_URL, headers=self.HEADERS, json=data, timeout=3) as wandbox_response:
+            async with session.post(url=self.COMPILER_URL,
+                                    headers=self.HEADERS,
+                                    json=data,
+                                    timeout=3) as wandbox_response:
                 # Checking status code
                 if wandbox_response.status == 200:
                     result_json = await wandbox_response.json()  # Getting JSON
@@ -124,36 +130,40 @@ class Contester:
         :param tests: Dictionary with tests
         :return: None
         """
-        response = {'tests': {}}  # Base of response
         compiler = self._get_compiler(language)  # Getting compiler
 
-        async with aiohttp.ClientSession() as session:
-            tasks = []
+        if compiler is not None:
+            response = {'tests': {}}  # Base of response
+            async with aiohttp.ClientSession() as session:
+                tasks = []
 
-            for index, current_test in enumerate(tests):
-                # Forming content of request
-                data = {
-                    'code': code,
-                    'compiler': compiler,
-                    'stdin': current_test['stdin']
-                }
+                for index, current_test in enumerate(tests):
+                    # Forming content of request
+                    data = {
+                        'code': code,
+                        'compiler': compiler,
+                        'stdin': current_test['stdin']
+                    }
 
-                # Getting current test
-                test = tests[index]
+                    # Getting current test
+                    test = tests[index]
 
-                # Creating asyncio task
-                task = asyncio.ensure_future(self._run_test(session, data, test, index))
-                tasks.append(task)
+                    # Creating asyncio task
+                    task = asyncio.ensure_future(self._run_test(session, data, test, index))
+                    tasks.append(task)
 
-            test_results = await asyncio.gather(*tasks, return_exceptions=False)  # Running tasks
+                test_results = await asyncio.gather(*tasks, return_exceptions=False)  # Running tasks
 
-            # Writing sub-dictionary with results of testing to response
-            for test_result in test_results:
-                test_number = test_result['test_number'] + 1
-                response['tests'][test_number] = test_result['result']
+                # Writing sub-dictionary with results of testing to response
+                for test_result in test_results:
+                    test_number = test_result['test_number'] + 1
+                    response['tests'][test_number] = test_result['result']
 
-            # Calculating total number of passed tests
-            response['passed_tests'] = self._get_number_of_passed_tests(response['tests'])
+                # Calculating total number of passed tests
+                response['passed_tests'] = self._get_number_of_passed_tests(response['tests'])
+
+        else:
+            response = None
 
         return response
 
