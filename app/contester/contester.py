@@ -4,7 +4,7 @@ import pprint
 import asyncio
 import aiohttp
 
-from .errors import ServerResponseError, ExecutionError
+from .errors import TestingSystemError, ServerResponseError, ExecutionError, WrongAnswerError, ExecutionTimeoutError
 
 # Dictionary with programming languages (name, compiler, CodeMirror mode)
 languages = {
@@ -34,8 +34,8 @@ languages = {
 
 class Contester:
     def __init__(self):
-        self.COMPILER_URL = 'https://wandbox.org/api/compile.json'  # Compiler URL
-        # self.AIOHTTP_TIMEOUT = aiohttp.ClientTimeout(connect=3)  # Timeout value
+        # Compiler URL
+        self.COMPILER_URL = 'https://wandbox.org/api/compile.json'
         # Request headers
         self.HEADERS = {
             'Content-Type': "application/json;charset=UTF-8",
@@ -49,14 +49,15 @@ class Contester:
             return None
 
     @staticmethod
-    def _compare_answers(program_output, expected_output) -> Optional[AssertionError]:
-        assert program_output.strip() == expected_output.strip()  # Checking answer
+    def _compare_answers(program_output, expected_output) -> Optional[WrongAnswerError]:
+        if not program_output.strip() == expected_output.strip():
+            raise WrongAnswerError
 
     @staticmethod
     def _get_number_of_passed_tests(tests) -> int:
         return len([result for result in tests.values() if result['status'] == 'OK'])
 
-    async def _run_test(self, session, data, current_test, test_number) -> dict:
+    async def _run_single_test(self, session, data, current_test, test_number) -> dict:
         """
         :param session: aiohttp.ClientSession() object
         :param data: params which will be passed in the request
@@ -67,51 +68,35 @@ class Contester:
         result = {'status': None, 'message': None}
 
         try:
-            async with session.post(url=self.COMPILER_URL,
-                                    headers=self.HEADERS,
-                                    json=data,
-                                    timeout=3) as wandbox_response:
-                # Checking status code
-                if wandbox_response.status == 200:
-                    result_json = await wandbox_response.json()  # Getting JSON
+            try:
+                async with session.post(url=self.COMPILER_URL, headers=self.HEADERS, json=data, timeout=3) as wandbox_response:
+                    # Checking status code
+                    if wandbox_response.status == 200:
+                        result_json = await wandbox_response.json()  # Getting JSON
 
-                    # Checking status
-                    if result_json['status'] == '0':
-                        self._compare_answers(program_output=result_json['program_output'],
-                                              expected_output=current_test['output'])
-
-                        # If everything OK
-                        result = {'status': 'OK', 'message': 'Success'}
-                        print(f'Passed test number {test_number}')
-
+                        # Checking status
+                        if result_json['status'] == '0':
+                            self._compare_answers(program_output=result_json['program_output'],
+                                                  expected_output=current_test['output'])
+                        else:
+                            raise ExecutionError  # Raising 'ExecutionError'
                     else:
-                        raise ExecutionError  # Raising 'ExecutionError'
-                else:
-                    raise ServerResponseError  # Raising 'ServerResponseError'
+                        raise ServerResponseError  # Raising 'ServerResponseError'
 
+            except asyncio.TimeoutError:
+                raise ExecutionTimeoutError
 
-        # Exceptions block
-        except ServerResponseError:
-            result = {'status': 'ERROR', 'message': 'Server Response Error'}
-            print(f'Failed test number {test_number}, Server Response Error')
+        # Handling errors
+        except (ServerResponseError, ExecutionError, WrongAnswerError, ExecutionTimeoutError) as error:
+            result = {'status': 'ERROR', 'message': error.message}
+            print(f'Failed test number {test_number}, {error.message}')
 
-        except ExecutionError:
-            result = {'status': 'ERROR', 'message': 'Execution Error'}
-            print(f'Failed test number {test_number}, Execution Error')
-
-        except asyncio.TimeoutError:
-            result = {'status': 'ERROR', 'message': 'Timeout Error'}
-            print(f'Failed test number {test_number}, Timeout Error')
-
-        except AssertionError:
-            result = {'status': 'ERROR', 'message': 'Wrong Answer'}
-            print(f'Failed test number {test_number}, Wrong Answer')
+        # If everything OK
+        else:
+            result = {'status': 'OK', 'message': 'Success'}
+            print(f'Passed test number {test_number}')
 
         finally:
-            # Checking structure of result
-            if not (result['status'] and result['message']):
-                result = {'status': 'ERROR', 'message': 'Testing System Error'}
-
             # Checking if test can be shown
             if not current_test['hidden']:
                 result['info'] = {'stdin': current_test['stdin'], 'expected-output': current_test['output']}
@@ -145,14 +130,11 @@ class Contester:
                         'stdin': current_test['stdin']
                     }
 
-                    # Getting current test
-                    test = tests[index]
-
                     # Creating asyncio task
-                    task = asyncio.ensure_future(self._run_test(session, data, test, index))
+                    task = asyncio.ensure_future(self._run_single_test(session, data, current_test, index))
                     tasks.append(task)
 
-                test_results = await asyncio.gather(*tasks, return_exceptions=False)  # Running tasks
+                test_results = await asyncio.gather(*tasks)  # Running tasks
 
                 # Writing sub-dictionary with results of testing to response
                 for test_result in test_results:
