@@ -14,32 +14,24 @@ languages = {
         'mode': 'text/x-c++src'},
     'csharp': {
         'name': 'C#',
-        'compiler': 'mono-head',
+        'compiler': 'mono-6.12.0.122',
         'mode': 'text/x-csharp'},
-    'java': {
-        'name': 'Java',
-        'compiler': 'openjdk-head',
-        'mode': 'text/x-java'},
     'python': {
-        'name': 'Python 3',
-        'compiler': 'cpython-head',
+        'name': 'Python 3.8.9',
+        'compiler': 'cpython-3.8.9',
         'mode': 'text/x-python',
         'is_default': True},
     'pascal': {
         'name': 'Pascal',
-        'compiler': 'fpc-head',
+        'compiler': 'fpc-3.2.0',
         'mode': 'text/x-pascal'},
 }
 
 
 class Contester:
     def __init__(self):
-        # Compiler URL
-        self.COMPILER_URL = 'https://wandbox.org/api/compile.json'
-        # Request headers
-        self.HEADERS = {
-            'Content-Type': "application/json;charset=UTF-8",
-        }
+        self.API_URL = 'https://wandbox.org/api/compile.json'  # Compiler URL
+        self.HEADERS = {'Content-Type': "application/json;charset=UTF-8"}  # Request headers
 
     @staticmethod
     def _get_compiler(language) -> str:
@@ -69,7 +61,7 @@ class Contester:
 
         try:
             try:
-                async with session.post(url=self.COMPILER_URL, headers=self.HEADERS, json=data, timeout=3) as wandbox_response:
+                async with session.post(url=self.API_URL, headers=self.HEADERS, json=data, timeout=10) as wandbox_response:
                     # Checking status code
                     if wandbox_response.status == 200:
                         result_json = await wandbox_response.json()  # Getting JSON
