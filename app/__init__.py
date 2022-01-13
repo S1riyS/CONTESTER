@@ -4,11 +4,11 @@ from flask_login import LoginManager, login_user, login_required, logout_user, c
 from flask_moment import Moment
 from flask_migrate import Migrate
 
-from config import Config
+from config import DevConfig
 
 # Initialization of app
 app = Flask(__name__)
-app.config.from_object(Config)
+app.config.from_object(DevConfig)
 
 # db = SQLAlchemy(app)
 # migrate = Migrate(app, db)

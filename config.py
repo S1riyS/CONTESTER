@@ -1,10 +1,22 @@
-import os
+from os import environ, path
+from dotenv import load_dotenv
 
-basedir = os.path.abspath(os.path.dirname(__file__))
+basedir = path.abspath(path.dirname(__file__)) # Getting base directory
+load_dotenv(path.join(basedir, '.env')) # Loading env
 
+# Base Config
 class Config(object):
-    DEBUG = True
-    SECRET_KEY = '1qaz2wsx3edc4rfv'
+    SECRET_KEY = environ.get('SECRET_KEY')
 
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app', 'db', 'app.db')
+    STATIC_FOLDER = 'static'
+    TEMPLATES_FOLDER = 'templates'
+
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + path.join(basedir, 'app', 'db', 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+# Developing Config
+class DevConfig(Config):
+    FLASK_ENV = 'development'
+    DEBUG = True
+    TESTING = True
+    DATABASE_URI = environ.get('DEV_DATABASE_URI')
