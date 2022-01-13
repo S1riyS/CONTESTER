@@ -186,10 +186,6 @@ input:focus {
 
 }
 
-.header .header__logo .name__dot {
-    color: var(--blue-color);
-}
-
 .header .header__nav .navigation {
     display: flex;
     align-items: center;
