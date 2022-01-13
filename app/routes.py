@@ -1,9 +1,9 @@
 from flask import render_template
 
 from . import app
-from app.admin.admin import admin
-from app.api.api import api
-from app.errors.handler import errors
+from app.blueprints.admin.admin import admin
+from app.blueprints.api.api import api
+from app.blueprints.errors.handler import errors
 
 from app.contester.contester import languages
 
