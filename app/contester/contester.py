@@ -1,5 +1,6 @@
-from typing import Optional
+import time
 import pprint
+from typing import Optional
 
 import asyncio
 import aiohttp
@@ -30,7 +31,7 @@ languages = {
 
 class Contester:
     def __init__(self):
-        self.API_URL = 'https://wandbox.org/api/compile.json'  # Compiler URL
+        self.API_URL = 'https://wandbox.org/api/compile.json'  # API URL
         self.HEADERS = {'Content-Type': "application/json;charset=UTF-8"}  # Request headers
 
     @staticmethod
@@ -111,6 +112,9 @@ class Contester:
 
         if compiler is not None:
             response = {'tests': {}}  # Base of response
+
+            start_time = time.time() # Getting time when tests were started
+
             async with aiohttp.ClientSession() as session:
                 tasks = []
 
@@ -133,13 +137,17 @@ class Contester:
                     test_number = test_result['test_number'] + 1
                     response['tests'][test_number] = test_result['result']
 
-                # Calculating total number of passed tests
+                end_time = time.time() # Getting time when tests were finished
+
+                # Total time of testing
+                response['time'] = end_time - start_time
+                # Compiler
+                response['compiler'] = compiler
+                # Total number of passed tests
                 response['passed_tests'] = self._get_number_of_passed_tests(response['tests'])
+                return response
 
-        else:
-            response = None
-
-        return response
+        return None
 
     def run_tests(self, code, language, tests) -> dict:
         """
