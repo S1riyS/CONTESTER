@@ -10,10 +10,26 @@
 {% endif %}
 
 <div class="code-response__body" id="code-response__body">
-    <div class="status" style="color: {{ status_color }};">
-        <i class="status__icon fas fa-2x fa-poll"></i>
-        <p class="status__text">Пройдено тестов {{ passed_tests }}/{{ number_of_tests }}</p>
+    <div class="code-response__header">
+        <div class="status" style="color: {{ status_color }};">
+            <i class="status__icon fas fa-2x fa-poll"></i>
+            <p class="status__text">Пройдено тестов {{ passed_tests }}/{{ number_of_tests }}</p>
+        </div>
+        <div class="info">
+            <button class="info__button default_button__btn">
+                <i class="default_button__icon fas fa-info-circle"></i>
+            </button>
+            <div class="info__content box-shadow">
+                <p class="info__content__item">
+                    <span>Общее время тестирования: </span><br>{{ response['time'] }}
+                </p>
+                <p class="info__content__item">
+                    <span>Язык программирования: </span><br>{{ response['language'] }}
+                </p>
+            </div>
+        </div>
     </div>
+
     <div class="tests-list">
         <div class="row tests-list_row">
             <div class="col-3 nav_col">
