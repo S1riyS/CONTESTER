@@ -11,19 +11,23 @@ from .errors import TestingSystemError, ServerResponseError, ExecutionError, Wro
 languages = {
     'cpp': {
         'name': 'C++',
-        'compiler': 'gcc-head',
+        'fullname': 'GNU C++ 11.1',
+        'compiler': 'gcc-11.1.0',
         'mode': 'text/x-c++src'},
     'csharp': {
         'name': 'C#',
+        'fullname': 'C# Mono 6.12',
         'compiler': 'mono-6.12.0.122',
         'mode': 'text/x-csharp'},
     'python': {
-        'name': 'Python 3.8.9',
+        'name': 'Python 3',
+        'fullname': 'Python 3.8.9',
         'compiler': 'cpython-3.8.9',
         'mode': 'text/x-python',
         'is_default': True},
     'pascal': {
         'name': 'Pascal',
+        'fullname': 'Free Pascal 3.2.0',
         'compiler': 'fpc-3.2.0',
         'mode': 'text/x-pascal'},
 }
@@ -140,9 +144,9 @@ class Contester:
                 end_time = time.time() # Getting time when tests were finished
 
                 # Total time of testing
-                response['time'] = end_time - start_time
-                # Compiler
-                response['compiler'] = compiler
+                response['time'] = "{0:.3f} sec".format(end_time - start_time)
+                # Language
+                response['language'] = languages[language]['fullname']
                 # Total number of passed tests
                 response['passed_tests'] = self._get_number_of_passed_tests(response['tests'])
                 return response
