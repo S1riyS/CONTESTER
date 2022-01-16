@@ -145,14 +145,16 @@
     position: absolute;
     right: 0;
     width: 260px;
-    padding: 15px;
+    padding: 12px;
     z-index: 1;
     margin-top: 5px;
     background: #6610f2;
     border-radius: 5px;
 }
 
-.code-response__body .info__button:hover + .info__content {
+.code-response__body .info__button:hover + .info__content,
+.code-response__body .code-response__header .info__content:hover
+{
     display: block;
 }
 

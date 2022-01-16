@@ -3,7 +3,7 @@
     --background-color: #14171a;
     --header-color: #1d2226;
     --footer-color: #0e1012;
-    --text-color: #e2e5ed;
+    --text-color: #e7eaef;
     --darker-text-color: #8e9fbf;
     --defaul-button-color: #292d3e;
     --defaul-icon-color: #1a1d28;
@@ -140,6 +140,24 @@ input:focus {
     color: var(--blue-color);
 }
 
+/* Breadcrumbs */
+.breadcrumbs__body {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 16px;
+}
+
+.breadcrumbs__body .breadcrumbs__item:not(:last-child):after {
+    content: '/';
+    margin: 0 10px;
+    color: var(--gray-color);
+    font-size: 18px;
+}
+.breadcrumbs__body .breadcrumbs__item .breadcrumbs__item__endpoint {
+    color: var(--darker-text-color);
+}
+
 /* Header */
 .header {
     padding: 15px 0;
@@ -165,7 +183,7 @@ input:focus {
 .header .header__logo {
     display: flex;
     align-items: center;
-    margin-right: 30px;
+    margin-right: 40px;
 }
 
 .header .header__logo .img {
