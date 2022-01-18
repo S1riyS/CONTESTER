@@ -19,21 +19,24 @@
     margin-bottom: 15px;
 }
 
-.task__header .condition .condition__title {
-    font-size: 35px;
+.task__header .task__condition {
+    margin-bottom: 15px;
+}
+
+.task__header .task__condition .condition__title {
     margin-bottom: 10px;
 }
 
-.task__header .condition .condition__text {
+.task__header .task__condition .condition__text {
     font-size: 18px;
     color: var(--darker-text-color);
 }
 
-.example .example__title {
+.task__header .task__example .example__title {
     margin-bottom: 10px;
 }
 
-.example .example__subtitle {
+.task__header .task__example .example__subtitle {
     font-size: 20px;
     margin-bottom: 5px;
     color: var(--gray-color);

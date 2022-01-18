@@ -84,6 +84,8 @@
     justify-content: space-between;
     padding: 12px;
     background: var(--editor-footer-color);
+    box-shadow: 0 -10px 15px rgba(26, 29, 40, 0.3);
+    position: relative;
 }
 
 .editor__footer .submit-code__btn {
@@ -269,6 +271,10 @@
 }
 
 /* CodeMirror editor */
+.CodeMirror {
+    height: 500px;
+}
+
 .CodeMirror-gutters {
     border-right: 1px solid !important;
     background-color: var(--editor-header-color) !important;
