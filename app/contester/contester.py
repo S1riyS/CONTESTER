@@ -25,6 +25,11 @@ languages = {
         'compiler': 'cpython-3.8.9',
         'mode': 'text/x-python',
         'is_default': True},
+    'pypy': {
+        'name': 'Pypy 3',
+        'fullname': 'Pypy 3.7 (7.3.4)',
+        'compiler': 'pypy-3.7-v7.3.4',
+        'mode': 'text/x-python'},
     'pascal': {
         'name': 'Pascal',
         'fullname': 'Free Pascal 3.2.0',
