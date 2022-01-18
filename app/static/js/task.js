@@ -9,7 +9,7 @@ function setScrollBarAttributes() {
     if (pageYOffset > 70) {
         sidebar.css({
             position: 'fixed',
-            top: 15,
+            top: 20,
             height: 'auto',
         })
         task.addClass("offset-xl-2");
