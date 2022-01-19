@@ -158,6 +158,7 @@ pre {
     color: var(--gray-color);
     font-size: 18px;
 }
+
 .breadcrumbs__body .breadcrumbs__item .breadcrumbs__item__endpoint {
     color: var(--darker-text-color);
 }
@@ -194,18 +195,18 @@ pre {
     width: 40px;
     height: auto;
     margin-right: 10px;
+    transition: all .2s ease;
 }
 
 .header .header__logo .name {
     display: inline;
     font-size: 26px;
     transition: all .2s ease;
-
+    align-self: center;
 }
 
-.header .header__logo .name:hover {
-    color: var(--blue-color);
-
+.header .header__logo:hover .img {
+    transform: rotateZ(120deg);
 }
 
 .header .header__nav .navigation {
@@ -214,7 +215,6 @@ pre {
     justify-content: flex-end;
     flex-wrap: wrap;
 }
-
 
 .header .header__nav .navigation .item {
     font-size: 20px;
