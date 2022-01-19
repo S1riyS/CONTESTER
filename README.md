@@ -23,6 +23,6 @@
 
 ## 🎞 Preview
 ![Image 1](https://i.postimg.cc/G3k7RV15/image.png)
-![Image 2](https://i.postimg.cc/Znhkscfd/image.png)
-
+![Image 2](https://i.postimg.cc/mZPWRvf9/19-01-2022-224700.png)
+![Image 3](https://i.postimg.cc/Y9JntyYN/19-01-2022-225030.png)
 *Remaining description will be added later...*
