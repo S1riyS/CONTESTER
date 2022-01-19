@@ -1,7 +1,7 @@
 /* Colors */
 :root {
-    --background-color: #14171a;
-    --header-color: #1d2226;
+    --background-color: #14161a;
+    --header-color: #222432;
     --footer-color: #0e1012;
     --text-color: #e7eaef;
     --darker-text-color: #8e9fbf;
@@ -87,6 +87,10 @@ input:active,
 input:focus {
     outline: none;
     box-shadow: none;
+}
+
+pre {
+    margin: 0;
 }
 
 .block {

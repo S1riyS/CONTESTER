@@ -13,28 +13,33 @@ languages = {
         'name': 'C++',
         'fullname': 'GNU C++ 11.1',
         'compiler': 'gcc-11.1.0',
-        'mode': 'text/x-c++src'},
+        'mode': 'text/x-c++src',
+        'icon': '/static/svg/cpp.svg'},
     'csharp': {
         'name': 'C#',
         'fullname': 'C# Mono 6.12',
         'compiler': 'mono-6.12.0.122',
-        'mode': 'text/x-csharp'},
+        'mode': 'text/x-csharp',
+        'icon': '/static/svg/csharp.svg'},
     'python': {
         'name': 'Python 3',
         'fullname': 'Python 3.8.9',
         'compiler': 'cpython-3.8.9',
         'mode': 'text/x-python',
+        'icon': '/static/svg/python.svg',
         'is_default': True},
     'pypy': {
         'name': 'Pypy 3',
         'fullname': 'Pypy 3.7 (7.3.4)',
         'compiler': 'pypy-3.7-v7.3.4',
-        'mode': 'text/x-python'},
+        'mode': 'text/x-python',
+        'icon': '/static/svg/python.svg'},
     'pascal': {
         'name': 'Pascal',
         'fullname': 'Free Pascal 3.2.0',
         'compiler': 'fpc-3.2.0',
-        'mode': 'text/x-pascal'},
+        'mode': 'text/x-pascal',
+        'icon': '/static/svg/default.svg'},
 }
 
 
@@ -71,7 +76,8 @@ class Contester:
 
         try:
             try:
-                async with session.post(url=self.API_URL, headers=self.HEADERS, json=data, timeout=10) as wandbox_response:
+                async with session.post(url=self.API_URL, headers=self.HEADERS, json=data,
+                                        timeout=10) as wandbox_response:
                     # Checking status code
                     if wandbox_response.status == 200:
                         result_json = await wandbox_response.json()  # Getting JSON
@@ -122,7 +128,7 @@ class Contester:
         if compiler is not None:
             response = {'tests': {}}  # Base of response
 
-            start_time = time.time() # Getting time when tests were started
+            start_time = time.time()  # Getting time when tests were started
 
             async with aiohttp.ClientSession() as session:
                 tasks = []
@@ -146,14 +152,13 @@ class Contester:
                     test_number = test_result['test_number'] + 1
                     response['tests'][test_number] = test_result['result']
 
-                end_time = time.time() # Getting time when tests were finished
+                end_time = time.time()  # Getting time when tests were finished
 
-                # Total time of testing
-                response['time'] = "{0:.3f} sec".format(end_time - start_time)
-                # Language
-                response['language'] = languages[language]['fullname']
-                # Total number of passed tests
-                response['passed_tests'] = self._get_number_of_passed_tests(response['tests'])
+                response['time'] = "{0:.3f} sec".format(end_time - start_time) # Total time of testing
+                response['language'] = languages[language]['fullname'] # Language
+                response['icon'] = languages[language]['icon'] # Icon
+                response['passed_tests'] = self._get_number_of_passed_tests(response['tests']) # Number of passed tests
+
                 return response
 
         return None

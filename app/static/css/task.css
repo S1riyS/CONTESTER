@@ -1,5 +1,5 @@
 :root {
-    --code-preview-background: #292d3e
+    --code-preview-background: #33384e
 }
 
 .container-fluid {
@@ -11,7 +11,9 @@
 }
 
 .task__header {
-    margin-bottom: 15px;
+    margin-bottom: 35px;
+    padding: 20px 30px;
+    background-color: #212432;
 }
 
 .task__header .task__title {
@@ -40,6 +42,9 @@
     font-size: 20px;
     margin-bottom: 5px;
     color: var(--gray-color);
+}
+.task__header .task__example .output {
+    margin-top: 10px;
 }
 
 pre {
