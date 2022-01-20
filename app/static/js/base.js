@@ -10,4 +10,10 @@ window.addEventListener('load', e => {
         // удаляем данные с localStorage
         cords.forEach(cord => localStorage.removeItem(cord));
     }
-}); 
+});
+
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip({
+        delay: {"show": 400, "hide": 0},
+    })
+})

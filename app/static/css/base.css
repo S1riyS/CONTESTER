@@ -7,6 +7,8 @@
     --darker-text-color: #8e9fbf;
     --defaul-button-color: #292d3e;
     --defaul-icon-color: #1a1d28;
+    --tooltip-backgroung: #ffffff;
+    --tooltip-text: #0e1012;
 
     --green-color: #1ba94c;
     --darker-green-color: #10652e;
@@ -91,6 +93,17 @@ input:focus {
 
 pre {
     margin: 0;
+}
+
+.tooltip-inner {
+    color: var(--tooltip-text);
+    background-color: var(--tooltip-backgroung);
+    border-radius: .35rem;
+    font-size: 15px;
+}
+
+.tooltip .arrow::before {
+    border-top-color: var(--tooltip-backgroung);
 }
 
 .block {
