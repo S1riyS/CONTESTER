@@ -174,7 +174,7 @@ class Contester:
         loop = asyncio.new_event_loop()  # Creating async loop
         response = loop.run_until_complete(self._get_testing_results(code, language, tests))
 
-        pprint.pprint(response, width=1)
+        pprint.pprint(response, indent=4)
         return response
 
     @staticmethod
