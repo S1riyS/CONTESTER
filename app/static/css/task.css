@@ -6,14 +6,80 @@
     width: 100%;
 }
 
-.task {
+.task__main {
     padding: 0 20px;
 }
 
+/* Tabs */
+.nav-tabs {
+    border-bottom: 1px solid transparent;
+}
+
+.nav-tabs .nav-link {
+    padding: 15px 30px;
+    width: 150px;
+    text-align: center;
+    font-size: 18px;
+    color: var(--darker-text-color);
+    border: none;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+.nav-tabs .nav-item {
+    position: relative;
+}
+
+.nav-tabs .nav-item:not(:first-child) .nav-link::after {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: block;
+    width: 1px;
+    height: 20px;
+    background-color: #b7c9cc;
+    content: "";
+    transform: translateY(-50%);
+}
+
+.nav-tabs .nav-item .nav-link.hide_after::after {
+    display: none;
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--text-color);
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #212432;
+    color: var(--text-color);
+    border: none;
+}
+
+
 .task__header {
+    position: relative;
     margin-bottom: 35px;
     padding: 20px 30px;
     background-color: #212432;
+}
+
+.task__header .task__header__buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.task__header .task__header__buttons button:not(:last-child) {
+    margin-right: 7px;
+}
+
+.task__header .task__header__block:not(:last-child) {
+    margin-bottom: 20px;
 }
 
 .task__header .task__title {
@@ -21,12 +87,9 @@
     margin-bottom: 15px;
 }
 
-.task__header .task__condition {
-    margin-bottom: 15px;
-}
-
-.task__header .task__condition .condition__title {
+.task__header .task__sub_title {
     margin-bottom: 10px;
+    font-size: 22px;
 }
 
 .task__header .task__condition .condition__text {
@@ -34,15 +97,12 @@
     color: var(--darker-text-color);
 }
 
-.task__header .task__example .example__title {
-    margin-bottom: 10px;
-}
-
 .task__header .task__example .example__subtitle {
     font-size: 20px;
     margin-bottom: 5px;
     color: var(--gray-color);
 }
+
 .task__header .task__example .output {
     margin-top: 10px;
 }

@@ -17,3 +17,9 @@ $(function () {
         delay: {"show": 400, "hide": 0},
     })
 })
+
+$(function () {
+    $('ul.tabs_caption').on('click', 'li:not(.active)', function () {
+        $(this).addClass('active').siblings().removeClass('active').closest('div.tabs').children('div.tabs_content').removeClass('active').eq($(this).index()).addClass('active');
+    });
+});

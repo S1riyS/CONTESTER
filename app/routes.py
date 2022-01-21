@@ -42,4 +42,4 @@ def task_page(grade, topic, task_number):
     breadcrumbs_html = render_template('breadcrumbs.html', breadcrumbs=breadcrumbs_args)
 
     return render_template('task.html', grade=grade, topic=topic, task_number=task_number,
-                           languages=languages, breadcrumbs=breadcrumbs_html)
+                           languages=languages, breadcrumbs=breadcrumbs_html, is_admin=True)
