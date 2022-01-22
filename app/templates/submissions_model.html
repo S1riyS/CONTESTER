@@ -1,0 +1,31 @@
+<div class="submissions_table box-shadow">
+    <div class="table_header__wrapper">
+        <div class="table_header">
+            {# Result #}
+            <div class="table_header_column result"><p>РЕЗУЛЬТАТ</p></div>
+            {# Language #}
+            <div class="table_header_column language"><p>ЯЗЫК</p></div>
+            {# Time #}
+            <div class="table_header_column time"><p>ВРЕМЯ</p></div>
+            {# View result #}
+            <div class="table_header_column view_result"><p></p></div>
+        </div>
+    </div>
+
+    <div class="table_body">
+        {% for index in range(7) %}
+            <div class="table_row__wrapper">
+                <div class="table_row">
+                    {# Result #}
+                    <div class="table_row_column result"><p>{{ index }} Wrong Answer</p></div>
+                    {# Language #}
+                    <div class="table_row_column language">Python 3.8.9</div>
+                    {# Time #}
+                    <div class="table_row_column time">1 minute age</div>
+                    {# View result #}
+                    <div class="table_row_column view_result">View Result</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify
-
+import time
 from app.contester.contester import Contester
 
 api = Blueprint('api', __name__)
@@ -17,7 +17,12 @@ def send_code():
     if response is not None:
         return jsonify(render_template('code_response_model.html', response=response))
     else:
-        return jsonify(render_template('response_error_model.html'))
+        return jsonify(render_template('response_error_model.html'), count=5)
+
+
+@api.route('/get_submissions', methods=['POST'])
+def get_submissions():
+    return jsonify(render_template('submissions_model.html'))
 
 
 @api.route('/create_task', methods=['POST'])

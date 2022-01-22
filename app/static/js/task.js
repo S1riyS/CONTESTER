@@ -53,3 +53,32 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     hideDelimiters([currentTab, nextTab])
 })
 
+$('#submissions-tab').on('shown.bs.tab', function (e) {
+    let submissions = $('#submissions__body')
+    let submissionsLoader = $('#submissions__loader')
+
+    $.ajax({
+        url: '/api/get_submissions',
+        type: 'POST',
+        contentType: 'application/json;charset=UTF-8',
+        // Before send
+        beforeSend(jqXHR, settings) {
+            submissions.html('')
+            submissionsLoader.css({'display': 'flex'});
+        },
+        // Complete
+        complete: function () {
+            submissionsLoader.css({'display': 'none'});
+        },
+        // Success
+        success: function (response) {
+            console.log(response)
+            submissions.html(response) // Setting generated HTML
+        },
+        // Error
+        error: function () {
+            console.log('Error')
+        }
+    })
+})
+
