@@ -38,7 +38,7 @@
     display: block;
     width: 1px;
     height: 20px;
-    background-color: #b7c9cc;
+    background-color: var(--gray-color);
     content: "";
     transform: translateY(-50%);
 }

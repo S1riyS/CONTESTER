@@ -28,8 +28,20 @@ function findPosY(obj) {
     return offset.top - $(window).scrollTop()
 }
 
+function hideDelimiters(tabs) {
+    $('#task_tabs .nav-link').removeClass('hide_after')
+
+    $(tabs).each(function () {
+        $(this).addClass('hide_after')
+    })
+}
+
 window.onload = function () {
+    let activeTab = $('#task_tabs .nav-link.active').first()
+    let nextAfterActiveTab = activeTab.parent().next('.nav-item').children('.nav-link')
+    hideDelimiters([activeTab, nextAfterActiveTab])
     setScrollBarAttributes()
+    $(".loader_wrapper").fadeOut("slow");
 }
 $(window).scroll(function () {
     setScrollBarAttributes()
@@ -38,10 +50,6 @@ $(window).scroll(function () {
 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     let currentTab = $(this)
     let nextTab = $(this).parent().next('.nav-item').children('.nav-link')
-
-    $('#task_tabs .nav-link').removeClass('hide_after')
-
-    currentTab.addClass('hide_after')
-    nextTab.addClass('hide_after')
-    console.log(currentTab, nextTab)
+    hideDelimiters([currentTab, nextTab])
 })
+
