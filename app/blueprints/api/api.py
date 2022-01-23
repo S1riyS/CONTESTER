@@ -10,6 +10,7 @@ contester = Contester()
 @api.route('/send_code', methods=['POST'])
 def send_code():
     data = request.json
+    print(data)
 
     tests = contester.get_tests({})
     response = contester.run_tests(code=data['code'], language=data['lang'], tests=tests)
@@ -24,7 +25,13 @@ def send_code():
 def get_submissions():
     return jsonify(render_template('response_models/submissions.html'))
 
+@api.route('/send_report', methods=['POST'])
+def send_report():
+    data = request.json
+    print(data)
+    return jsonify({'status': 'OK'})
 
+# Admin API
 @api.route('/create_task', methods=['POST'])
 def create_task():
     data = request.json

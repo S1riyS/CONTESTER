@@ -13,7 +13,7 @@ window.addEventListener('load', e => {
 });
 
 $(function () {
-    $('[data-toggle="tooltip"]').tooltip({
+    $('[data-tooltip="tooltip"]').tooltip({
         delay: {"show": 400, "hide": 0},
     })
 })

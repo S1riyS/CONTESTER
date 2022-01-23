@@ -1,3 +1,5 @@
+import {getCurrentTask} from "../modules/current_task.js";
+
 $(document).ready(function () {
     let languages = $('.dropdown-menu').closest('.dropdown-menu').find('a');
     let currentLanguage = localStorage.getItem('currentLanguage');
@@ -33,17 +35,8 @@ let codeMirrorConfig = {
     scrollbarStyle: 'simple' // Scrollbar style
 }
 
-function getCurrentPath() {
-    let path = window.location.pathname.split('/');
-    return {
-        grade: path[1],
-        topic: path[2],
-        task_number: path[3]
-    }
-}
-
 function getCurrentLanguage() {
-    return language = $('#dropdownMenuLanguage').find('.active')[0];
+    return $('#dropdownMenuLanguage').find('.active')[0];
 }
 
 function loadCodeMirror(config) {
@@ -95,7 +88,7 @@ function setLanguage(language) {
 }
 
 
-myCodeMirror = loadCodeMirror(codeMirrorConfig) // Creating CodeMirror variable
+let myCodeMirror = loadCodeMirror(codeMirrorConfig) // Creating CodeMirror variable
 
 // On click on "reset code" button
 $('#reset-code__btn').click(function () {
@@ -130,7 +123,7 @@ $('#submit-code__btn').click(function () {
         let request = {
             code: myCodeMirror.getValue(),
             lang: language.dataset.value,
-            task: getCurrentPath()
+            task: getCurrentTask()
         };
 
         let codeResponse = $('#code-response__body')

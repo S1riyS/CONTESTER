@@ -1,3 +1,5 @@
+import {getCurrentTask} from "./modules/current_task.js";
+
 let currentSidebarY = -1;
 
 function setScrollBarAttributes() {
@@ -28,7 +30,7 @@ function findPosY(obj) {
     return offset.top - $(window).scrollTop()
 }
 
-function hideDelimiters(tabs) {
+function hideSeparators(tabs) {
     $('#task_tabs .nav-link').removeClass('hide_after')
 
     $(tabs).each(function () {
@@ -36,23 +38,28 @@ function hideDelimiters(tabs) {
     })
 }
 
+// Hiding tabs separators, setting attributes to scrollbar (on load)
 window.onload = function () {
     let activeTab = $('#task_tabs .nav-link.active').first()
     let nextAfterActiveTab = activeTab.parent().next('.nav-item').children('.nav-link')
-    hideDelimiters([activeTab, nextAfterActiveTab])
+    hideSeparators([activeTab, nextAfterActiveTab])
     setScrollBarAttributes()
     $(".loader_wrapper").fadeOut("slow");
 }
+
+// Setting attributes to scrollbar (on scroll)
 $(window).scroll(function () {
     setScrollBarAttributes()
 });
 
+// Hiding tabs separators
 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     let currentTab = $(this)
     let nextTab = $(this).parent().next('.nav-item').children('.nav-link')
-    hideDelimiters([currentTab, nextTab])
+    hideSeparators([currentTab, nextTab])
 })
 
+// Get submissions tabe
 $('#submissions-tab').on('shown.bs.tab', function (e) {
     let submissions = $('#submissions__body')
     let submissionsLoader = $('#submissions__loader')
@@ -72,7 +79,6 @@ $('#submissions-tab').on('shown.bs.tab', function (e) {
         },
         // Success
         success: function (response) {
-            console.log(response)
             submissions.html(response) // Setting generated HTML
         },
         // Error
@@ -82,3 +88,32 @@ $('#submissions-tab').on('shown.bs.tab', function (e) {
     })
 })
 
+// Sending report
+$('#report_form').submit(function (event) {
+    event.preventDefault();
+    $('#reportModal').modal('hide') // Hiding modal
+
+    let reportText = $('#report_text')
+
+    //Forming dict with data
+    let data = {
+        text: reportText.val(),
+        task: getCurrentTask()
+    }
+
+    reportText.val('') // Clearing textarea
+
+    // Sending AJAX
+    $.ajax({
+        type: 'POST',
+        url: '/api/send_report',
+        contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify(data),
+        success: function (response) {
+            console.log(response);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+})
