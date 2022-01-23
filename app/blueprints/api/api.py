@@ -15,14 +15,15 @@ def send_code():
     response = contester.run_tests(code=data['code'], language=data['lang'], tests=tests)
 
     if response is not None:
-        return jsonify(render_template('code_response_model.html', response=response))
+        return jsonify(render_template('response_models/code_success.html', response=response))
     else:
-        return jsonify(render_template('response_error_model.html'), count=5)
+        return jsonify(render_template('response_models/code_error.html'), count=5)
 
 
 @api.route('/get_submissions', methods=['POST'])
 def get_submissions():
-    return jsonify(render_template('submissions_model.html'))
+    time.sleep(1)
+    return jsonify(render_template('response_models/submissions.html'))
 
 
 @api.route('/create_task', methods=['POST'])
