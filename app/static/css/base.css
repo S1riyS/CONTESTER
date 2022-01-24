@@ -131,7 +131,6 @@ pre {
 
 .modal .modal-body .form__title {
     font-size: 16px;
-    margin-bottom: 10px;
 }
 
 .modal .modal-body .modal_textarea {
@@ -140,6 +139,7 @@ pre {
     height: 250px;
     outline: none;
     padding: 10px;
+    margin-top: 10px;
     font-size: 16px;
     border-radius: 5px;
     max-height: 330px;
@@ -157,6 +157,12 @@ pre {
 .modal-footer {
     border: none;
     padding-top: 0;
+}
+
+/* Toast */
+.toast-container {
+    bottom: 0;
+    right: 0;
 }
 
 .block {

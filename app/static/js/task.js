@@ -59,7 +59,7 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     hideSeparators([currentTab, nextTab])
 })
 
-// Get submissions tabe
+// Get submissions tab
 $('#submissions-tab').on('shown.bs.tab', function (e) {
     let submissions = $('#submissions__body')
     let submissionsLoader = $('#submissions__loader')
@@ -107,6 +107,30 @@ $('#report_form').submit(function (event) {
     $.ajax({
         type: 'POST',
         url: '/api/send_report',
+        contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify(data),
+        success: function (response) {
+            console.log(response);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+})
+
+// Deleting task
+$('#deleteTaskButton').on('click', function () {
+    //Forming dict with data
+    let data = {
+        task: getCurrentTask()
+    }
+
+    $('#deleteModal').modal('hide') // Hiding modal
+
+    // Sending AJAX
+    $.ajax({
+        type: 'POST',
+        url: '/api/delete_task',
         contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify(data),
         success: function (response) {

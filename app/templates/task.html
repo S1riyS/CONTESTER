@@ -141,7 +141,8 @@
                                         <i class="default_button__icon fas fa-pen"></i>
                                     </button>
 
-                                    <button data-tooltip="tooltip" data-placement="top" title="Удалить задачу"
+                                    <button data-toggle="modal" data-target="#deleteModal"
+                                            data-tooltip="tooltip" data-placement="top" title="Удалить задачу"
                                             class="report_button__btn" id="report_task__btn">
                                         <i class="default_button__icon far fa-trash-alt"></i>
                                     </button>
@@ -269,11 +270,11 @@
             <div class="modal_windows">
                 {# Report task Modal #}
                 <div class="modal fade" id="reportModal" tabindex="-1" role="dialog"
-                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                     aria-labelledby="reportModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Пожаловаться</h5>
+                                <h5 class="modal-title" id="reportModalLabel">Пожаловаться</h5>
                                 <button type="button" class="close" data-dismiss="modal"
                                         aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -298,6 +299,36 @@
                         </div>
                     </div>
                 </div>
+
+                {# Admin Modals #}
+                {% if is_admin %}
+                    {# Delete task Modal #}
+                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                         aria-labelledby="deleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel">Подтверждение действия</h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="form__title">Вы уверены, что хотите удалить задание?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Закрыть
+                                    </button>
+                                    <button type="button" id="deleteTaskButton" class="btn btn-danger">
+                                        Удалить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

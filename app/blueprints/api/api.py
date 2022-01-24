@@ -25,11 +25,13 @@ def send_code():
 def get_submissions():
     return jsonify(render_template('response_models/submissions.html'))
 
+
 @api.route('/send_report', methods=['POST'])
 def send_report():
     data = request.json
     print(data)
     return jsonify({'status': 'OK'})
+
 
 # Admin API
 @api.route('/create_task', methods=['POST'])
@@ -42,6 +44,13 @@ def create_task():
         ...
 
     return jsonify('OK')
+
+
+@api.route('/delete_task', methods=['POST'])
+def delete_task():
+    data = request.json
+    print(data)
+    return jsonify({'status': 'OK'})
 
 
 @api.route('/get_task_input_block', methods=['POST'])
