@@ -40,7 +40,7 @@
 
     <div class="tests-list">
         <div class="row tests-list_row">
-            <div class="col-md-4 col-5 nav_col">
+            <div class="col-xl-3 col-md-4 col-5 nav_col">
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     {% for key, value in response['tests'].items() %}
                         {% if value['status'] == 'OK' %}
@@ -75,7 +75,7 @@
                 </div>
             </div>
 
-            <div class="col-md-8 col-7 tab-content_col">
+            <div class="col-xl-9 col-md-8 col-7 tab-content_col">
                 <div class="tab-content" id="v-pills-tabContent">
                     {% for key, value in response['tests'].items() %}
                         {% if key == 1 %}
