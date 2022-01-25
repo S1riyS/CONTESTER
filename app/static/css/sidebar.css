@@ -11,6 +11,19 @@
     border-radius: 0 5px 5px 0;
 }
 
+.sidebar.fixed_position {
+    position: fixed;
+    top: 20px;
+    height: auto;
+    max-width: calc(16.6667% + 2.5px)
+}
+
+.sidebar.default_position {
+    position: relative;
+    top: 0;
+    height: 100%
+}
+
 .sidebar .sidebar__title {
     position: relative;
     padding: 10px 10px 15px 20px;

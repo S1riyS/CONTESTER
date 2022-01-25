@@ -183,7 +183,7 @@ pre {
 }
 
 .box-shadow {
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12), 0 10px 10px rgba(0, 0, 0, 0.09) !important;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.13), 0 10px 10px rgba(0, 0, 0, 0.13) !important;
 }
 
 .container-fluid {
@@ -198,7 +198,7 @@ pre {
     background: var(--defaul-button-color);
     border: 1px solid var(--defaul-button-color);
     border-radius: 5px;
-    transition: all .1s ease;
+    transition: all .15s ease;
 
 }
 

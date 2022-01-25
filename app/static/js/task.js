@@ -9,18 +9,12 @@ function setScrollBarAttributes() {
     if (currentSidebarY <= 0) currentSidebarY = findPosY(sidebar);
 
     if (pageYOffset > 70) {
-        sidebar.css({
-            position: 'fixed',
-            top: 20,
-            height: 'auto',
-        })
+        sidebar.addClass('fixed_position')
+        sidebar.removeClass('default_position')
         taskMain.addClass("offset-xl-2");
     } else {
-        sidebar.css({
-            position: 'relative',
-            top: 0,
-            height: '100%',
-        })
+        sidebar.addClass('default_position')
+        sidebar.removeClass('fixed_position')
         taskMain.removeClass("offset-xl-2");
     }
 }
