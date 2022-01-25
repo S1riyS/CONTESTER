@@ -19,10 +19,22 @@
     ╚█████╔╝╚█████╔╝██║ ╚███║   ██║   ███████╗██████╔╝   ██║   ███████╗██║  ██║
      ╚════╝  ╚════╝ ╚═╝  ╚══╝   ╚═╝   ╚══════╝╚═════╝    ╚═╝   ╚══════╝╚═╝  ╚═╝
 ## 📝 About project
-**[CONTESTER](https://github.com/S1riyS/CONTESTER)** - is a system for testing  students' code
+**[CONTESTER](https://github.com/S1riyS/CONTESTER)** - is a system for testing  students' code. 
+
+4 programming languages are supported, which include:
+* **[Python](https://www.python.org/?hl=ru)** (Python 3.8.9)
+* **[C++](https://isocpp.org/)** (GNU C++ 11.1)
+* **[C#](https://dotnet.microsoft.com/en-us/languages/csharp)** (C# Mono 6.12)
+* **[PascalABC](http://pascalabc.net/)** (Free Pascal 3.2.0)
+
+Also supported **[Pypy 3.7](https://www.pypy.org/)** (7.3.4)
+
+## 🖥️ Editor
+![Editor](https://i.postimg.cc/HWtxnQ2b/CONTESTER-editor.png)
+
+
 
 ## 🎞 Preview
-![Image 1](https://i.postimg.cc/G3k7RV15/image.png)
-![Image 2](https://i.postimg.cc/mZPWRvf9/19-01-2022-224700.png)
-![Image 3](https://i.postimg.cc/Y9JntyYN/19-01-2022-225030.png)
+![Image 1](https://i.postimg.cc/6p5djWHG/CONTESTER-screenshot.png)
+
 *Remaining description will be added later...*
