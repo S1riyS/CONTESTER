@@ -21,7 +21,7 @@
 ## 📝 About project
 **[CONTESTER](https://github.com/S1riyS/CONTESTER)** - is a system for testing  students' code. 
 
-4 programming languages are supported, which include:
+4 programming languages are supported:
 * **[Python](https://www.python.org/?hl=ru)** (Python 3.8.9)
 * **[C++](https://isocpp.org/)** (GNU C++ 11.1)
 * **[C#](https://dotnet.microsoft.com/en-us/languages/csharp)** (C# Mono 6.12)
