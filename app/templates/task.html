@@ -137,20 +137,20 @@
                             <div class="task__header__buttons">
                                 {% if is_admin %}
                                     <button data-tooltip="tooltip" data-placement="top" title="Изменить задачу"
-                                            class="default_button__btn" id="report_task__btn">
+                                            class="default_button" id="report_task__btn">
                                         <i class="default_button__icon fas fa-pen"></i>
                                     </button>
 
                                     <button data-toggle="modal" data-target="#deleteModal"
                                             data-tooltip="tooltip" data-placement="top" title="Удалить задачу"
-                                            class="report_button__btn" id="report_task__btn">
+                                            class="alert_button" id="report_task__btn">
                                         <i class="default_button__icon far fa-trash-alt"></i>
                                     </button>
 
                                 {% endif %}
                                 <button data-toggle="modal" data-target="#reportModal"
                                         data-tooltip="tooltip" data-placement="top" title="Пожаловаться на задачу"
-                                        class="report_button__btn" id="report_task__btn">
+                                        class="alert_button" id="report_task__btn">
                                     <i class="default_button__icon fas fa-exclamation-triangle"></i>
                                 </button>
                             </div>
@@ -211,11 +211,11 @@
                                     </div>
                                     <div class="header__right_side">
                                         <button data-tooltip="tooltip" data-placement="top" title="Удалить код"
-                                                class="header__button report_button__btn" id="reset-code__btn">
+                                                class="header__button alert_button" id="reset-code__btn">
                                             <i class="default_button__icon far fa-trash-alt"></i>
                                         </button>
                                         <button data-tooltip="tooltip" data-placement="top" title="Скопировать код"
-                                                class="header__button default_button__btn" id="copy-code__btn">
+                                                class="header__button default_button" id="copy-code__btn">
                                             <i class="default_button__icon far fa-copy"></i>
                                         </button>
                                     </div>

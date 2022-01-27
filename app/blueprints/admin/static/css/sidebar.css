@@ -4,7 +4,7 @@
     --sidebar-item-hover: #4c78f2;
 }
 
-.header .default_button__btn {
+.header .default_button {
     background-color: var(--background-color);
 }
 
