@@ -14,32 +14,32 @@ languages = {
         'fullname': 'GNU C++ 11.1',
         'compiler': 'gcc-11.1.0',
         'mode': 'text/x-c++src',
-        'icon': '/static/svg/cpp.svg'},
+        'icon': 'cpp.svg'},
     'csharp': {
         'name': 'C#',
         'fullname': 'C# Mono 6.12',
         'compiler': 'mono-6.12.0.122',
         'mode': 'text/x-csharp',
-        'icon': '/static/svg/csharp.svg'},
+        'icon': 'csharp.svg'},
     'python': {
         'name': 'Python 3',
         'fullname': 'Python 3.8.9',
         'compiler': 'cpython-3.8.9',
         'mode': 'text/x-python',
-        'icon': '/static/svg/python.svg',
+        'icon': 'python.svg',
         'is_default': True},
     'pypy': {
         'name': 'Pypy 3',
         'fullname': 'Pypy 3.7 (7.3.4)',
         'compiler': 'pypy-3.7-v7.3.4',
         'mode': 'text/x-python',
-        'icon': '/static/svg/python.svg'},
+        'icon': 'python.svg'},
     'pascal': {
         'name': 'Pascal',
         'fullname': 'Free Pascal 3.2.0',
         'compiler': 'fpc-3.2.0',
         'mode': 'text/x-pascal',
-        'icon': '/static/svg/default.svg'},
+        'icon': 'default.svg'},
 }
 
 
