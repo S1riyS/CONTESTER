@@ -77,7 +77,7 @@ executed there and then CONTESTER's server process results of execution and retu
   "icon": "python.svg",
   "language": "Python 3.8.9",
   "time": "1.335 sec",
-  "passed_tests": 11,
+  "passed_tests": 4,
   "tests": {
     "1": {
       "info": {
