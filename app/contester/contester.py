@@ -6,6 +6,7 @@ import asyncio
 import aiohttp
 
 from .errors import TestingSystemError, ServerResponseError, ExecutionError, WrongAnswerError, ExecutionTimeoutError
+from .fix_asyncio import silence_event_loop_closed
 
 # Dictionary with programming languages (name, compiler, CodeMirror mode)
 languages = {
@@ -97,12 +98,10 @@ class Contester:
         # Handling errors
         except (ServerResponseError, ExecutionError, WrongAnswerError, ExecutionTimeoutError) as error:
             result = {'status': 'ERROR', 'message': error.message}
-            print(f'Failed test number {test_number}, {error.message}')
 
         # If everything OK
         else:
             result = {'status': 'OK', 'message': 'Success'}
-            print(f'Passed test number {test_number}')
 
         finally:
             # Checking if test can be shown
@@ -163,6 +162,7 @@ class Contester:
 
         return None
 
+    @silence_event_loop_closed
     def run_tests(self, code, language, tests) -> dict:
         """
         :param code: User's code
