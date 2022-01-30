@@ -55,7 +55,7 @@ Response can contain next messages: `Success`, `WrongAnswerError`,
 
 The editor was created using **[CodeMirror](https://codemirror.net/)**.
 
-When user is pressing `Send Code` button, an *AJAX* request is sent to the server with **JSON** like this:
+When user is pressing `Send Code` button, an **AJAX** request is sent to the server with **JSON** like this:
 
 ```json
 {
@@ -70,41 +70,36 @@ When user is pressing `Send Code` button, an *AJAX* request is sent to the serve
 ```
 
 Then CONTESTER's server sends async requests to **[WandboxAPI](https://github.com/melpon/wandbox)**. The code is
-executed there and then CONTESTER's server process results of execution and returns **JSON** like this:
+executed there and then CONTESTER's server process results of execution and returns **JSON**, which is rendered into
+**HTML** code
 
-```json
-{
-  "icon": "python.svg",
-  "language": "Python 3.8.9",
-  "time": "1.335 sec",
-  "passed_tests": 4,
-  "tests": {
-    "1": {
-      "info": {
-        "expected-output": "3",
-        "stdin": "1 2"
-      },
-      "message": "Success",
-      "status": "OK"
-    },
-    "2": {
-      "info": {
-        "expected-output": "6",
-        "stdin": "1 5"
-      },
-      "message": "Success",
-      "status": "OK"
-    },
-   "3": {
-      "info": null,
-      "message": "Success",
-      "status": "OK"
-    },
-    "4": {
-      "info": null,
-      "message": "Success",
-      "status": "OK"
-    },
+## ⬇ Installation
+
+* Install **[Python 3.x](https://www.python.org/)**.
+
+* Clone repository to your local machine:
+
+  `git clone https://github.com/S1riyS/CONTESTER.git`
+
+* Move to the root folder of the project
+
+* Create virtual environment: `python -m venv venv`
+
+* Activate venv:
+    * Linux: `source venv/bin/activate`
+    * Windows: `venv\Scripts\activate`
+
+* Install all the necessary modules:
+
+  `pip install -r requirements.txt`
+
+Now you can start `run.py` file :
+
+```python
+from app import app
+
+if __name__ == "__main__":
+    app.run(port=5000, host='127.0.0.1', debug=True)
 ```
 
 ## 🎞 Preview
