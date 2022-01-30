@@ -26,7 +26,7 @@ class WrongAnswerError(TestingSystemError):
 
 
 # Wrong answer exception
-class ExecutionTimeoutError(TestingSystemError):
+class TimeLimitError(TestingSystemError):
     def __init__(self):
         super().__init__()
-        self.message = 'Timeout Error'
+        self.message = 'Time Limit Error'

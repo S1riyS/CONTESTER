@@ -49,7 +49,7 @@ this:
 ![Response](https://i.postimg.cc/qqqRXyHJ/image.png)
 
 Response can contain next messages: `Success`, `WrongAnswerError`,
-`ExecutionTimeoutError` (sometimes works incorrect), `ExecutionError`, `ServerResponseError`
+`TimeLimitError` (sometimes works incorrect), `ExecutionError`, `ServerResponseError`
 
 ### How it works:
 

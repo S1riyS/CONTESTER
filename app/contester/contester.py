@@ -5,7 +5,7 @@ from typing import Optional
 import asyncio
 import aiohttp
 
-from .errors import TestingSystemError, ServerResponseError, ExecutionError, WrongAnswerError, ExecutionTimeoutError
+from .errors import TestingSystemError, ServerResponseError, ExecutionError, WrongAnswerError, TimeLimitError
 from .fix_asyncio import silence_event_loop_closed
 
 # Dictionary with programming languages (name, compiler, CodeMirror mode)
@@ -93,10 +93,10 @@ class Contester:
                         raise ServerResponseError  # Raising 'ServerResponseError'
 
             except asyncio.TimeoutError:
-                raise ExecutionTimeoutError
+                raise TimeLimitError
 
         # Handling errors
-        except (ServerResponseError, ExecutionError, WrongAnswerError, ExecutionTimeoutError) as error:
+        except (ServerResponseError, ExecutionError, WrongAnswerError, TimeLimitError) as error:
             result = {'status': 'ERROR', 'message': error.message}
 
         # If everything OK
