@@ -46,15 +46,8 @@ languages = {
 
 class Contester:
     def __init__(self):
-        self.API_URL = 'https://wandbox.org/api/compile.json'  # API URL
+        self.API = 'https://wandbox.org/api/compile.json'  # API URL
         self.HEADERS = {'Content-Type': "application/json;charset=UTF-8"}  # Request headers
-
-    @staticmethod
-    def _get_compiler(language) -> str:
-        if language in languages:
-            return languages[language]['compiler']
-        else:
-            return None
 
     @staticmethod
     def _compare_answers(program_output, expected_output) -> Optional[WrongAnswerError]:
@@ -77,8 +70,7 @@ class Contester:
 
         try:
             try:
-                async with session.post(url=self.API_URL, headers=self.HEADERS, json=data,
-                                        timeout=10) as wandbox_response:
+                async with session.post(url=self.API, headers=self.HEADERS, json=data, timeout=10) as wandbox_response:
                     # Checking status code
                     if wandbox_response.status == 200:
                         result_json = await wandbox_response.json()  # Getting JSON
@@ -93,7 +85,7 @@ class Contester:
                         raise ServerResponseError  # Raising 'ServerResponseError'
 
             except asyncio.TimeoutError:
-                raise TimeLimitError
+                raise TimeLimitError  # Raising 'TimeLimitError'
 
         # Handling errors
         except (ServerResponseError, ExecutionError, WrongAnswerError, TimeLimitError) as error:
@@ -120,11 +112,14 @@ class Contester:
         :param code: User's code
         :param language: Programming language
         :param tests: Dictionary with tests
-        :return: None
+        :return: Dictionary with results of testing
         """
-        compiler = self._get_compiler(language)  # Getting compiler
 
-        if compiler is not None:
+        current_language = languages.get(language, None)
+
+        if current_language is not None:
+            compiler = current_language['compiler']  # Getting compiler
+
             response = {'tests': {}}  # Base of response
 
             start_time = time.time()  # Getting time when tests were started
@@ -153,10 +148,14 @@ class Contester:
 
                 end_time = time.time()  # Getting time when tests were finished
 
-                response['time'] = "{0:.3f} sec".format(end_time - start_time) # Total time of testing
-                response['language'] = languages[language]['fullname'] # Language
-                response['icon'] = languages[language]['icon'] # Icon
-                response['passed_tests'] = self._get_number_of_passed_tests(response['tests']) # Number of passed tests
+                # Language
+                response['language'] = {'fullname': current_language['fullname'], 'icon': current_language['icon']}
+
+                # Total time of testing
+                response['time'] = "{0:.3f} sec".format(end_time - start_time)
+
+                # Number of passed tests
+                response['passed_tests'] = self._get_number_of_passed_tests(response['tests'])
 
                 return response
 
