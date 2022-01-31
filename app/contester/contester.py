@@ -48,6 +48,7 @@ class Contester:
     def __init__(self):
         self.API = 'https://wandbox.org/api/compile.json'  # API URL
         self.HEADERS = {'Content-Type': "application/json;charset=UTF-8"}  # Request headers
+        self.DEBUG_RESPONSE = False
 
     @staticmethod
     def _compare_answers(program_output, expected_output) -> Optional[WrongAnswerError]:
@@ -114,14 +115,11 @@ class Contester:
         :param tests: Dictionary with tests
         :return: Dictionary with results of testing
         """
-
+        response = {'tests': {}}  # Base of response
         current_language = languages.get(language, None)
 
         if current_language is not None:
             compiler = current_language['compiler']  # Getting compiler
-
-            response = {'tests': {}}  # Base of response
-
             start_time = time.time()  # Getting time when tests were started
 
             async with aiohttp.ClientSession() as session:
@@ -173,7 +171,9 @@ class Contester:
         loop = asyncio.new_event_loop()  # Creating async loop
         response = loop.run_until_complete(self._get_testing_results(code, language, tests))
 
-        pprint.pprint(response, indent=4)
+        if self.DEBUG_RESPONSE:
+            pprint.pprint(response, indent=4)
+
         return response
 
     @staticmethod
