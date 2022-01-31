@@ -75,8 +75,6 @@ executed there and then CONTESTER's server process results of execution and retu
 
 ## ⬇ Installation
 
-* Install **[Python 3.x](https://www.python.org/)**.
-
 * Clone repository to your local machine:
 
   `git clone https://github.com/S1riyS/CONTESTER.git`
@@ -85,7 +83,7 @@ executed there and then CONTESTER's server process results of execution and retu
 
 * Create virtual environment: `python -m venv venv`
 
-* Activate venv:
+* Activate *venv*:
     * Linux: `source venv/bin/activate`
     * Windows: `venv\Scripts\activate`
 
