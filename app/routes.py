@@ -35,11 +35,9 @@ def topic_page(grade, topic):
 
 @app.route('/<int:grade>/<string:topic>/<int:task_number>', methods=['GET'])
 def task_page(grade, topic, task_number):
-    breadcrumbs_args = ({'text': f'{grade} класс', 'link': url_for('grade_page', grade=grade)},
-                        {'text': topic, 'link': url_for('topic_page', grade=grade, topic=topic)},
-                        {'text': f'Task №{task_number}', 'link': None})
-
-    breadcrumbs_html = render_template('breadcrumbs.html', breadcrumbs=breadcrumbs_args)
+    breadcrumbs = ({'text': f'{grade} класс', 'link': url_for('grade_page', grade=grade)},
+                   {'text': topic, 'link': url_for('topic_page', grade=grade, topic=topic)},
+                   {'text': f'Task №{task_number}', 'link': None})
 
     return render_template('task.html', grade=grade, topic=topic, task_number=task_number,
-                           languages=languages, breadcrumbs=breadcrumbs_html, is_admin=True)
+                           languages=languages, breadcrumbs=breadcrumbs, is_admin=True)
