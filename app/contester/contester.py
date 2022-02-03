@@ -1,6 +1,6 @@
 import time
 import pprint
-from typing import Optional
+from typing import Optional, List
 
 import asyncio
 import aiohttp
@@ -44,22 +44,31 @@ languages = {
 }
 
 
+class Status:
+    OK = 'OK'
+    ERROR = 'ERROR'
+
+
 class Contester:
     def __init__(self):
         self.API = 'https://wandbox.org/api/compile.json'  # API URL
         self.HEADERS = {'Content-Type': "application/json;charset=UTF-8"}  # Request headers
-        self.DEBUG_RESPONSE = False
+        self.DEBUG_RESPONSE = True  # Hide/show output testing result in console
 
     @staticmethod
-    def _compare_answers(program_output, expected_output) -> Optional[WrongAnswerError]:
+    def _compare_answers(program_output: str, expected_output: str) -> Optional[WrongAnswerError]:
         if not program_output.strip() == expected_output.strip():
             raise WrongAnswerError
 
     @staticmethod
-    def _get_number_of_passed_tests(tests) -> int:
-        return len([result for result in tests.values() if result['status'] == 'OK'])
+    def _get_number_of_passed_tests(tests: List[dict]) -> int:
+        return len([result for result in tests.values() if result['status'] == Status.OK])
 
-    async def _run_single_test(self, session, data, current_test, test_number) -> dict:
+    async def _run_single_test(self,
+                               session: aiohttp.ClientSession,
+                               data: dict,
+                               current_test: dict,
+                               test_number: int) -> dict:
         """
         :param session: aiohttp.ClientSession() object
         :param data: params which will be passed in the request
@@ -90,11 +99,11 @@ class Contester:
 
         # Handling errors
         except (ServerResponseError, ExecutionError, WrongAnswerError, TimeLimitError) as error:
-            result = {'status': 'ERROR', 'message': error.message}
+            result = {'status': Status.ERROR, 'message': error.message}
 
         # If everything OK
         else:
-            result = {'status': 'OK', 'message': 'Success'}
+            result = {'status': Status.OK, 'message': 'Success'}
 
         finally:
             # Checking if test can be shown
@@ -108,7 +117,7 @@ class Contester:
 
         return response
 
-    async def _get_testing_results(self, code, language, tests) -> dict:
+    async def _get_testing_results(self, code: str, language: str, tests: List[dict]) -> dict:
         """
         :param code: User's code
         :param language: Programming language
@@ -148,10 +157,8 @@ class Contester:
 
                 # Language
                 response['language'] = {'fullname': current_language['fullname'], 'icon': current_language['icon']}
-
                 # Total time of testing
                 response['time'] = "{0:.3f} sec".format(end_time - start_time)
-
                 # Number of passed tests
                 response['passed_tests'] = self._get_number_of_passed_tests(response['tests'])
 
@@ -160,7 +167,7 @@ class Contester:
         return None
 
     @silence_event_loop_closed
-    def run_tests(self, code, language, tests) -> dict:
+    def run_tests(self, code: str, language: str, tests: List[dict]) -> dict:
         """
         :param code: User's code
         :param language: Programming language
