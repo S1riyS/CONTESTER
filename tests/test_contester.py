@@ -3,7 +3,7 @@ This is file with tests for Contester class (core of testing system)
 """
 import unittest
 
-from app.contester.contester import Contester
+from app.contester.contester import Contester, Status
 
 
 class ContesterTests(unittest.TestCase):
@@ -19,6 +19,7 @@ class ContesterTests(unittest.TestCase):
                  2: {'status': 'ERROR', 'message': 'Wrong Answer', 'info': {'stdin': '1 5', 'expected-output': '6'}},
                  3: {'status': 'OK', 'message': 'Success', 'info': None},
                  4: {'status': 'ERROR', 'message': 'Time Limit Error', 'info': None}}
+
         result = self.contester._get_number_of_passed_tests(tests)
         self.assertEqual(result, 2)
 
@@ -36,8 +37,8 @@ class ContesterTests(unittest.TestCase):
 
         result = self.contester.run_tests(code, language, tests)
         self.assertIsNotNone(result)
-        message = result['tests'][1]['message']
-        self.assertEqual(message, 'Success')
+        status = result['tests'][1]['status']
+        self.assertEqual(status, Status.OK)
 
     def test_pypy_success(self):
         # Problem: sum two numbers (a + b)
@@ -53,8 +54,8 @@ class ContesterTests(unittest.TestCase):
 
         result = self.contester.run_tests(code, language, tests)
         self.assertIsNotNone(result)
-        message = result['tests'][1]['message']
-        self.assertEqual(message, 'Success')
+        status = result['tests'][1]['status']
+        self.assertEqual(status, Status.OK)
 
     def test_pascal_success(self):
         # Problem: subtract b from a (a - b)
@@ -70,8 +71,8 @@ class ContesterTests(unittest.TestCase):
 
         result = self.contester.run_tests(code, language, tests)
         self.assertIsNotNone(result)
-        message = result['tests'][1]['message']
-        self.assertEqual(message, 'Success')
+        status = result['tests'][1]['status']
+        self.assertEqual(status, Status.OK)
 
     def test_cpp_success(self):
         # Problem: multiply two numbers (a * b)
@@ -87,8 +88,8 @@ class ContesterTests(unittest.TestCase):
 
         result = self.contester.run_tests(code, language, tests)
         self.assertIsNotNone(result)
-        message = result['tests'][1]['message']
-        self.assertEqual(message, 'Success')
+        status = result['tests'][1]['status']
+        self.assertEqual(status, Status.OK)
 
     def test_csharp_success(self):
         # Problem: sum two numbers (a + b)
@@ -119,8 +120,8 @@ class ContesterTests(unittest.TestCase):
 
         result = self.contester.run_tests(code, language, tests)
         self.assertIsNotNone(result)
-        message = result['tests'][1]['message']
-        self.assertEqual(message, 'Success')
+        status = result['tests'][1]['status']
+        self.assertEqual(status, Status.OK)
 
 
 if __name__ == "__main__":
