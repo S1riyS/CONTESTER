@@ -24,6 +24,17 @@ function findPosY(obj) {
     return offset.top - $(window).scrollTop()
 }
 
+function setActiveTab() {
+    let activeTabs = window.localStorage.getItem('activeTab');
+
+    if (activeTabs) {
+        let activeTabs = (window.localStorage.getItem('activeTab') ? window.localStorage.getItem('activeTab').split(',') : []);
+        $.each(activeTabs, function (index, element) {
+            $('[data-toggle="tab"][href="' + element + '"]').tab('show');
+        });
+    }
+}
+
 function hideSeparators(tabs) {
     $('#task_tabs .nav-link').removeClass('hide_after')
 
@@ -34,10 +45,11 @@ function hideSeparators(tabs) {
 
 // Hiding tabs separators, setting attributes to scrollbar (on load)
 window.onload = function () {
-    let activeTab = $('#task_tabs .nav-link.active').first()
-    let nextAfterActiveTab = activeTab.parent().next('.nav-item').children('.nav-link')
-    hideSeparators([activeTab, nextAfterActiveTab])
-    setScrollBarAttributes()
+    setActiveTab();
+    let activeTab = $('#task_tabs .nav-link.active').first();
+    let nextAfterActiveTab = activeTab.parent().next('.nav-item').children('.nav-link');
+    hideSeparators([activeTab, nextAfterActiveTab]);
+    setScrollBarAttributes();
     $(".loader_wrapper").fadeOut("slow");
 }
 
@@ -46,12 +58,35 @@ $(window).scroll(function () {
     setScrollBarAttributes()
 });
 
-// Hiding tabs separators
-$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-    let currentTab = $(this)
-    let nextTab = $(this).parent().next('.nav-item').children('.nav-link')
-    hideSeparators([currentTab, nextTab])
-})
+// Tabs events
+$('a[data-toggle="tab"]')
+    .on('shown.bs.tab', function (e) {
+        let currentTab = $(this)
+        let nextTab = $(this).parent().next('.nav-item').children('.nav-link')
+        hideSeparators([currentTab, nextTab])
+    })
+    .on('click', function (e) {
+
+        let theTabId = $(this).attr('href');
+        let activeTabs = (window.localStorage.getItem('activeTab') ? window.localStorage.getItem('activeTab').split(',') : []);
+
+        let $sameLevelTabs = $(e.target).parents('.nav-tabs').find('[data-toggle="tab"]');
+
+        $.each($sameLevelTabs, function (index, element) {
+            let tabId = $(element).attr('href');
+            if (theTabId !== tabId && activeTabs.indexOf(tabId) !== -1) {
+                activeTabs.splice(activeTabs.indexOf(tabId), 1);
+            }
+        });
+
+        //unique tabs
+        if (activeTabs.indexOf($(e.target).attr('href')) === -1) {
+            activeTabs.push($(e.target).attr('href'));
+        }
+
+        window.localStorage.setItem('activeTab', activeTabs.join(','));
+
+    });
 
 // Get submissions tab
 $('#submissions-tab').on('shown.bs.tab', function (e) {
