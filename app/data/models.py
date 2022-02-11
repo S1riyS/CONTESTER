@@ -17,10 +17,11 @@ class User(db.Model, UserMixin):
     surname = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     role_id = sqlalchemy.Column(sqlalchemy.Integer,
                                  sqlalchemy.ForeignKey("roles.id"))
+    role = orm.relation('Role')
     grade_id = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey("grades.id"))
+    grade = orm.relation('Grade')
     grade_letter = sqlalchemy.Column(sqlalchemy.String)
-
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     registration_date = sqlalchemy.Column(sqlalchemy.DateTime,
                                           default=datetime.datetime.utcnow)
@@ -54,6 +55,7 @@ class Topic(db.Model):
                            primary_key=True, autoincrement=True)
     grade_id = sqlalchemy.Column(sqlalchemy.Integer,
                                  sqlalchemy.ForeignKey("grades.id"))
+    grade = orm.relation('Grade')
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
 
 
@@ -62,7 +64,8 @@ class Task(db.Model):
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
     topic_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                sqlalchemy.ForeignKey("topics.id"))
+                                 sqlalchemy.ForeignKey("topics.id"))
+    topic = orm.relation('Topic')
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     text = sqlalchemy.Column(sqlalchemy.Text)
 
@@ -73,6 +76,7 @@ class Example(db.Model):
                            primary_key=True, autoincrement=True)
     task_id = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey("tasks.id"))
+    task = orm.relation('Task')
     example_input = sqlalchemy.Column(sqlalchemy.Text)
     example_output = sqlalchemy.Column(sqlalchemy.Text)
 
@@ -83,6 +87,7 @@ class Test(db.Model):
                            primary_key=True, autoincrement=True)
     task_id = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey("tasks.id"))
+    task = orm.relation('Task')
     test_input = sqlalchemy.Column(sqlalchemy.Text)
     test_output = sqlalchemy.Column(sqlalchemy.Text)
     is_hidden = sqlalchemy.Column(sqlalchemy.Boolean, default=True)
@@ -94,8 +99,10 @@ class Report(db.Model):
                            primary_key=True, autoincrement=True)
     user_id = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey("users.id"))
+    user = orm.relation('User')
     task_id = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey("tasks.id"))
+    task = orm.relation('Task')
     text = sqlalchemy.Column(sqlalchemy.Text)
 
 
@@ -105,8 +112,10 @@ class Submission(db.Model):
                            primary_key=True, autoincrement=True)
     user_id = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey("users.id"))
+    user = orm.relation('User')
     task_id = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey("tasks.id"))
+    task = orm.relation('Task')
     language = sqlalchemy.Column(sqlalchemy.String)
     passed_tests = sqlalchemy.Column(sqlalchemy.Integer)
     source_code = sqlalchemy.Column(sqlalchemy.Text)
