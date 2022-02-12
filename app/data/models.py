@@ -16,10 +16,10 @@ class User(db.Model, UserMixin):
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     surname = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     role_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                 sqlalchemy.ForeignKey("roles.id"))
+                                sqlalchemy.ForeignKey("roles.id"))
     role = orm.relation('Role')
     grade_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                sqlalchemy.ForeignKey("grades.id"))
+                                 sqlalchemy.ForeignKey("grades.id"))
     grade = orm.relation('Grade')
     grade_letter = sqlalchemy.Column(sqlalchemy.String)
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
@@ -120,4 +120,4 @@ class Submission(db.Model):
     passed_tests = sqlalchemy.Column(sqlalchemy.Integer)
     source_code = sqlalchemy.Column(sqlalchemy.Text)
     submission_date = sqlalchemy.Column(sqlalchemy.DateTime,
-                                          default=datetime.datetime.utcnow)
+                                        default=datetime.datetime.utcnow)
