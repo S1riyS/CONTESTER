@@ -10,7 +10,7 @@ from config import DevConfig
 app = Flask(__name__)
 app.config.from_object(DevConfig)
 
-# db = SQLAlchemy(app)
+db = SQLAlchemy(app)
 # migrate = Migrate(app, db)
 # login_manager = LoginManager(app)
 # moment = Moment(app)
@@ -25,6 +25,10 @@ variables = {
 for key, value in variables.items():
     app.jinja_env.globals[key] = value
 
+db.init_app(app)
+
 # Import routes
 with app.app_context():
     from . import routes
+
+    db.create_all()
