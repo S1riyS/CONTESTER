@@ -32,3 +32,7 @@ with app.app_context():
     from . import routes
 
     db.create_all()
+
+    from .data.models import init_db_data
+
+    init_db_data()
