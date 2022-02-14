@@ -117,3 +117,44 @@ class Submission(db.Model):
     passed_tests = sqlalchemy.Column(sqlalchemy.Integer)
     source_code = sqlalchemy.Column(sqlalchemy.Text)
     submission_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.utcnow)
+
+
+def init_db_data():
+    db_session = db.session  # DB session
+
+    # Creating grades
+    if db_session.query(User).count() == 0:
+        for grade in range(5, 12):
+            db_session.add(Grade(number=grade))
+
+        print(db_session.query(Grade).filter(Grade.number == 10).first().id)
+
+        # Creating roles
+        user_role = Role(name='user')
+        db_session.add(user_role)
+        admin_role = Role(name='admin')
+        db_session.add(admin_role)
+
+        # Creating admin
+        admin = User(
+            name='Админ',
+            surname='Админович',
+            role_id=db_session.query(Role).filter(Role.name == 'admin').first().id,
+            grade_id=None,
+            grade_letter=None
+        )
+        admin.set_password('secret_admin_password')
+        db_session.add(admin)
+
+        # Creating user
+        user = User(
+            name='Обычный',
+            surname='Пользователь',
+            role_id=db_session.query(Role).filter(Role.name == 'user').first().id,
+            grade_id=db_session.query(Grade).filter(Grade.number == 10).first().id,
+            grade_letter='А'
+        )
+        user.set_password('secret_user_password')
+        db_session.add(user)
+
+        db_session.commit()
