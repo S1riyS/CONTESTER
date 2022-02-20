@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify
 
+from app import db
 from app.contester.contester import Contester
 
 api = Blueprint('api', __name__)
@@ -49,11 +50,10 @@ def create_task():
 @api.route('/delete_task', methods=['POST'])
 def delete_task():
     data = request.json
-    print(data)
     return jsonify({'status': 'OK'})
 
 
 @api.route('/get_task_input_block', methods=['POST'])
 def get_task_input_block():
     data = request.json
-    return jsonify(render_template('admin/test_block_model.html', test_number=data['test_number']))
+    return jsonify(render_template('response_models/single_test_block.html', test_number=data['test_number']))
