@@ -36,9 +36,15 @@
                                 <div class="dropdown-menu" id="dropdownMenuGrade"
                                      aria-labelledby="dropdownMenuButton">
                                     {% for grade in grades %}
-                                        <a class="dropdown-item" href="#" data-value={{ grade.id }}>
-                                            {{ grade.number }}
-                                        </a>
+                                        {% if loop.first %}
+                                            <a class="dropdown-item active" href="#" data-value={{ grade.id }}>
+                                                {{ grade.number }}
+                                            </a>
+                                        {% else %}
+                                            <a class="dropdown-item" href="#" data-value={{ grade.id }}>
+                                                {{ grade.number }}
+                                            </a>
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                             </div>

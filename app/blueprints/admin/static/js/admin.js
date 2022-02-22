@@ -1,3 +1,9 @@
+function setDropdownItem(item) {
+    let dropdownMenuButton = item.closest('.dropdown-menu').siblings('.dropdown-btn')
+    let dropdownMenuText = dropdownMenuButton.find('.dropdownBtn__text')
+    dropdownMenuText.html(item.text())
+}
+
 $(document).ready(function () {
     //jquery for toggle sub menus
     $('.sub-btn').click(function () {
@@ -17,6 +23,10 @@ $(".textarea_auto_expand").keyup(function (e) {
     }
 });
 
+$('.dropdown-item.active').each(function () {
+    setDropdownItem($(this))
+})
+
 $(".dropdown-menu a").click(function () {
     // Remove any existing 'active' classes...
     $(this).closest('.dropdown-menu').find('a').removeClass('active');
@@ -24,7 +34,5 @@ $(".dropdown-menu a").click(function () {
     // Add 'active' class to clicked element...
     $(this).addClass('active');
 
-    let dropdownMenuButton = $(this).closest('.dropdown-menu').siblings('.dropdown-btn')
-    let dropdownMenuText =  dropdownMenuButton.find('.dropdownBtn__text')
-    dropdownMenuText.html($(this).text())
+    setDropdownItem($(this))
 });
