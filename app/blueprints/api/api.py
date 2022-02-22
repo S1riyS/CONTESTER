@@ -3,6 +3,8 @@ from flask import Blueprint, render_template, request, jsonify
 from app import db
 from app.contester.contester import Contester
 
+from app.data.models import Topic
+
 api = Blueprint('api', __name__)
 contester = Contester()
 
@@ -38,7 +40,13 @@ def send_report():
 @api.route('/create_topic', methods=['POST'])
 def create_topic():
     data = request.json
-    print(data)
+
+    topic = Topic(
+        grade_id=data['grade_id'],
+        name=data['name']
+    )
+    db.session.add(topic)
+    db.session.commit()
 
     return jsonify('OK')
 

@@ -23,7 +23,7 @@
                 <div class="input_block">
                     <p class="input_block__title">Класс:</p>
                     <div class="admin_dropdown">
-                        <div class="dropdown__grade admin_dropdown__item">
+                        <div id="dropdown__grade" class="admin_dropdown__item">
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-btn" type="button"
                                         id="dropdownMenuButton"
@@ -35,12 +35,11 @@
                                 </button>
                                 <div class="dropdown-menu" id="dropdownMenuGrade"
                                      aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">6</a>
-                                    <a class="dropdown-item" href="#">7</a>
-                                    <a class="dropdown-item" href="#">8</a>
-                                    <a class="dropdown-item" href="#">9</a>
-                                    <a class="dropdown-item" href="#">10</a>
-                                    <a class="dropdown-item" href="#">11</a>
+                                    {% for grade in grades %}
+                                        <a class="dropdown-item" href="#" data-value={{ grade.id }}>
+                                            {{ grade.number }}
+                                        </a>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>

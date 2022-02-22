@@ -2,8 +2,8 @@ $("#create_topic_from").submit(function (event) {
     event.preventDefault();
 
     let data = {
-        grade: 10,
-        name: 'Рекурсия'
+        grade_id: $('#dropdown__grade').find('.dropdown-item.active').data('value'),
+        name: $('#topic__name').val()
     }
 
     $.ajax({

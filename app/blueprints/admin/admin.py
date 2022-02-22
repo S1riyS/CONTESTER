@@ -1,5 +1,8 @@
 from flask import Blueprint, render_template
 
+from app import db
+from app.data.models import Grade
+
 admin = Blueprint('admin', __name__, template_folder='templates', static_folder='static')
 
 # Admin
@@ -13,4 +16,5 @@ def create_task_page():
 
 @admin.route('/create_topic', methods=['GET', 'POST'])
 def create_topic_page():
-    return render_template('admin/create_topic.html')
+    grades = db.session.query(Grade).all()
+    return render_template('admin/create_topic.html', grades=grades)
