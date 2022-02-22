@@ -35,6 +35,14 @@ def send_report():
 
 
 # Admin API
+@api.route('/create_topic', methods=['POST'])
+def create_topic():
+    data = request.json
+    print(data)
+
+    return jsonify('OK')
+
+
 @api.route('/create_task', methods=['POST'])
 def create_task():
     data = request.json

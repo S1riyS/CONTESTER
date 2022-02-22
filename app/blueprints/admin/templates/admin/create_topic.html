@@ -1,0 +1,61 @@
+<head>
+    <title>Админ панель</title>
+</head>
+
+{% extends "admin/admin.html" %}
+
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/create_topic.css') }}">
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+    <script src="{{ url_for('admin.static', filename='js/create_topic.js') }}"></script>
+{% endblock %}
+
+{% block admin_content %}
+    <div class="create_topic__main">
+        <h2 class="admin__title">Создать тему</h2>
+        <form id="create_topic_from" method="post" role="form">
+            <div class="grade admin__block">
+                <p class="admin__subtitle">Путь до темы:</p>
+                <div class="input_block">
+                    <p class="input_block__title">Класс:</p>
+                    <div class="admin_dropdown">
+                        <div class="dropdown__grade admin_dropdown__item">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-btn" type="button"
+                                        id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="dropdownBtn__text" id="dropdown_grade__text">10</span>
+                                    <span class="arrow">
+                                <span></span><span></span>
+                            </span>
+                                </button>
+                                <div class="dropdown-menu" id="dropdownMenuGrade"
+                                     aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">6</a>
+                                    <a class="dropdown-item" href="#">7</a>
+                                    <a class="dropdown-item" href="#">8</a>
+                                    <a class="dropdown-item" href="#">9</a>
+                                    <a class="dropdown-item" href="#">10</a>
+                                    <a class="dropdown-item" href="#">11</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="input_block">
+                    <p class="input_block__title">Название: </p>
+                    <textarea class="input_block__textarea" id="topic__name"
+                              name="topic__name" placeholder="Название темы" required="" spellcheck="false"
+                              type="text"></textarea>
+                </div>
+            </div>
+            <input class="submit_button" id="submit" name="submit" type="submit" value="Создать тему">
+        </form>
+    </div>
+{% endblock %}
+

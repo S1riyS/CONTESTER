@@ -18,11 +18,11 @@
 {% block admin_content %}
     <div class="task">
         <form id="task_from" method="post" role="form">
-            <h2 class="task__title">Создание задачи</h2>
-            <div class="path_to_task task__block">
-                <p class="task__subtitle">Путь до задачи:</p>
-                <div class="path_dropdown">
-                    <div class="path_dropdown__grade path_dropdown__item">
+            <h2 class="admin__title">Создать задачу</h2>
+            <div class="path_to_task admin__block">
+                <p class="admin__subtitle">Путь до задачи:</p>
+                <div class="admin_dropdown">
+                    <div class="dropdown__grade admin_dropdown__item">
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-btn" type="button"
                                     id="dropdownMenuButton"
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="path_dropdown__topic path_dropdown__item">
+                    <div class="dropdown__topic admin_dropdown__item">
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-btn" type="button"
                                     id="dropdownMenuButton"
@@ -63,8 +63,8 @@
                     </div>
                 </div>
             </div>
-            <div class="basic_information task__block">
-                <p class="task__subtitle">Основная информация:</p>
+            <div class="basic_information admin__block">
+                <p class="admin__subtitle">Основная информация:</p>
                 <div class="basic_information__main">
                     <div class="input_block">
                         <p class="input_block__title">Название:</p>
@@ -81,8 +81,8 @@
                     </div>
                 </div>
             </div>
-            <div class="example task__block">
-                <p class="task__subtitle">Пример:</p>
+            <div class="example admin__block">
+                <p class="admin__subtitle">Пример:</p>
                 <div class="example__main">
                     <div class="input_block">
                         <p class="input_block__title">Ввод:</p>
@@ -100,8 +100,8 @@
                     </div>
                 </div>
             </div>
-            <div class="tests task__block">
-                <p class="task__subtitle">Тесты:</p>
+            <div class="tests admin__block">
+                <p class="admin__subtitle">Тесты:</p>
                 <div class="tests__main" id="tests__main">
                     <div id="all_tests">
                         {# Tests' inputs will be here #}

@@ -10,3 +10,7 @@ def home_page():
 @admin.route('/create_task', methods=['GET', 'POST'])
 def create_task_page():
     return render_template('admin/create_task.html')
+
+@admin.route('/create_topic', methods=['GET', 'POST'])
+def create_topic_page():
+    return render_template('admin/create_topic.html')

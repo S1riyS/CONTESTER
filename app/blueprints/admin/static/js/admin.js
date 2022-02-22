@@ -16,3 +16,15 @@ $(".textarea_auto_expand").keyup(function (e) {
         $(this).height($(this).height() + 1);
     }
 });
+
+$(".dropdown-menu a").click(function () {
+    // Remove any existing 'active' classes...
+    $(this).closest('.dropdown-menu').find('a').removeClass('active');
+
+    // Add 'active' class to clicked element...
+    $(this).addClass('active');
+
+    let dropdownMenuButton = $(this).closest('.dropdown-menu').siblings('.dropdown-btn')
+    let dropdownMenuText =  dropdownMenuButton.find('.dropdownBtn__text')
+    dropdownMenuText.html($(this).text())
+});
