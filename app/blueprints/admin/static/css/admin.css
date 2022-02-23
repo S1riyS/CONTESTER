@@ -41,9 +41,17 @@
 
 .admin_dropdown .admin_dropdown__item:not(:last-of-type)::after {
     content: '/';
-    margin: 0 5px;
+    margin: 0 10px 0 35px;
     font-size: 22px;
     color: var(--darker-text-color);
+}
+
+.dropdown-menu {
+    padding: 5px;
+}
+
+.dropdown-menu .dropdown-item {
+    border-radius: 3px;
 }
 
 .dropdown-menu .dropdown-item:hover,
@@ -52,14 +60,26 @@
     background-color: var(--blue-color);
 }
 
+.dropdown-divider {
+    margin: 0.25rem 0;
+}
+
 .dropdown-btn {
+    width: calc(100% + 25px);
+    position: relative;
     display: flex;
-    min-width: 120px;
-    text-align: left;
     border: none !important;
     outline: none !important;
     box-shadow: none !important;
     background: linear-gradient(135deg, var(--darker-purple-color), var(--purple-color)) !important;
+}
+
+.dropdown-btn.empty-dropdown {
+    background: var(--error-color) !important
+}
+
+#dropdown__grade .dropdown-btn {
+    min-width: 80px;
 }
 
 .arrow {

@@ -1,3 +1,5 @@
+{% import 'admin/dropdown/dropdown.html' as dropdown %}
+
 <head>
     <title>Админ панель</title>
 </head>
@@ -22,45 +24,8 @@
             <div class="path_to_task admin__block">
                 <p class="admin__subtitle">Путь до задачи:</p>
                 <div class="admin_dropdown">
-                    <div class="dropdown__grade admin_dropdown__item">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-btn" type="button"
-                                    id="dropdownMenuButton"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="dropdownBtn__text" id="dropdown_grade__text">10</span>
-                                <span class="arrow">
-                                <span></span><span></span>
-                            </span>
-                            </button>
-                            <div class="dropdown-menu" id="dropdownMenuGrade"
-                                 aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">6</a>
-                                <a class="dropdown-item" href="#">7</a>
-                                <a class="dropdown-item" href="#">8</a>
-                                <a class="dropdown-item" href="#">9</a>
-                                <a class="dropdown-item" href="#">10</a>
-                                <a class="dropdown-item" href="#">11</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dropdown__topic admin_dropdown__item">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-btn" type="button"
-                                    id="dropdownMenuButton"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="dropdownBtn__text" id="dropdown_topic__text">Арифметика</span>
-                                <span class="arrow">
-                                <span></span><span></span>
-                            </span>
-                            </button>
-                            <div class="dropdown-menu" id="dropdownMenuTopic"
-                                 aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Арифметика</a>
-                                <a class="dropdown-item" href="#">Циклы</a>
-                                <a class="dropdown-item" href="#">Функции</a>
-                            </div>
-                        </div>
-                    </div>
+                    {{ dropdown.render_grades(rendered_grade_list) }}
+                    {{ dropdown.render_topics(rendered_topic_list) }}
                 </div>
             </div>
             <div class="basic_information admin__block">

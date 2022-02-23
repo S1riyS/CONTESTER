@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, jsonify
 from app import db
 from app.contester.contester import Contester
 
-from app.data.models import Topic
+from app.data.models import Grade, Topic
 
 api = Blueprint('api', __name__)
 contester = Contester()
@@ -19,14 +19,14 @@ def send_code():
     response = contester.run_tests(code=data['code'], language=data['lang'], tests=tests)
 
     if response is not None:
-        return jsonify(render_template('response_models/code_success.html', response=response))
+        return jsonify(render_template('responses/code_success.html', response=response))
     else:
-        return jsonify(render_template('response_models/code_error.html'), count=5)
+        return jsonify(render_template('responses/code_error.html'), count=5)
 
 
 @api.route('/get_submissions', methods=['POST'])
 def get_submissions():
-    return jsonify(render_template('response_models/submissions.html'))
+    return jsonify(render_template('responses/submissions.html'))
 
 
 @api.route('/send_report', methods=['POST'])
@@ -34,6 +34,14 @@ def send_report():
     data = request.json
     print(data)
     return jsonify({'status': 'OK'})
+
+@api.route('/get_topics', methods=['POST'])
+def get_topics():
+    data = request.json
+    grade = db.session.query(Grade).filter(Grade.id == data['grade_id']).first()
+    topics = grade.get_topics()
+
+    return jsonify(render_template('admin/dropdown/topic_list.html', topics=topics))
 
 
 # Admin API
@@ -72,4 +80,4 @@ def delete_task():
 @api.route('/get_task_input_block', methods=['POST'])
 def get_task_input_block():
     data = request.json
-    return jsonify(render_template('response_models/single_test_block.html', test_number=data['test_number']))
+    return jsonify(render_template('responses/single_test_block.html', test_number=data['test_number']))

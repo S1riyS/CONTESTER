@@ -35,8 +35,10 @@ class User(db.Model, UserMixin):
 class Grade(db.Model):
     __tablename__ = "grades"
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
-
     number = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
+
+    def get_topics(self):
+        return db.session.query(Topic).filter(Topic.grade_id == self.id).all()
 
 
 class Role(db.Model):

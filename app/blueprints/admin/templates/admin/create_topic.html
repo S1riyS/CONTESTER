@@ -1,3 +1,5 @@
+{% import 'admin/dropdown/dropdown.html' as dropdown %}
+
 <head>
     <title>Админ панель</title>
 </head>
@@ -23,32 +25,7 @@
                 <div class="input_block">
                     <p class="input_block__title">Класс:</p>
                     <div class="admin_dropdown">
-                        <div id="dropdown__grade" class="admin_dropdown__item">
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-btn" type="button"
-                                        id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="dropdownBtn__text" id="dropdown_grade__text">10</span>
-                                    <span class="arrow">
-                                <span></span><span></span>
-                            </span>
-                                </button>
-                                <div class="dropdown-menu" id="dropdownMenuGrade"
-                                     aria-labelledby="dropdownMenuButton">
-                                    {% for grade in grades %}
-                                        {% if loop.first %}
-                                            <a class="dropdown-item active" href="#" data-value={{ grade.id }}>
-                                                {{ grade.number }}
-                                            </a>
-                                        {% else %}
-                                            <a class="dropdown-item" href="#" data-value={{ grade.id }}>
-                                                {{ grade.number }}
-                                            </a>
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
+                        {{ dropdown.render_grades(rendered_grade_list) }}
                     </div>
 
                 </div>

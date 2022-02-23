@@ -27,7 +27,7 @@ $('.dropdown-item.active').each(function () {
     setDropdownItem($(this))
 })
 
-$(".dropdown-menu a").click(function () {
+$(".dropdown-menu a").not('.dropdown-link-item').click(function () {
     // Remove any existing 'active' classes...
     $(this).closest('.dropdown-menu').find('a').removeClass('active');
 
@@ -36,3 +36,34 @@ $(".dropdown-menu a").click(function () {
 
     setDropdownItem($(this))
 });
+
+$('#dropdown__grade .dropdown-item').click(function () {
+    let topicDropdownList = $('#dropdownMenuTopic')
+
+    let data = {
+        grade_id: $('#dropdown__grade').find('.dropdown-item.active').data('value')
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/get_topics',
+        contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify(data),
+        success: function (response) {
+            topicDropdownList.html(response);
+            let activeTopic = topicDropdownList.find('.dropdown-item.active')
+            let dropdownButton = topicDropdownList.siblings('.dropdown-btn')
+
+            if (activeTopic.length) {
+                setDropdownItem(activeTopic)
+                dropdownButton.removeClass('empty-dropdown')
+            } else {
+                $('#dropdown_topic__text').html('Темы не найдены')
+                dropdownButton.addClass('empty-dropdown')
+            }
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    })
+})
