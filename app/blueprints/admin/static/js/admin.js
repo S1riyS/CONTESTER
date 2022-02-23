@@ -27,7 +27,7 @@ $('.dropdown-item.active').each(function () {
     setDropdownItem($(this))
 })
 
-$(".dropdown-menu a").not('.dropdown-link-item').click(function () {
+$(".dropdown-menu").on('click', '.dropdown-item:not(.dropdown-link-item)', function () {
     // Remove any existing 'active' classes...
     $(this).closest('.dropdown-menu').find('a').removeClass('active');
 
