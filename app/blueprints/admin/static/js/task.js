@@ -47,14 +47,16 @@ function getTests() {
 
 $("#task_from").submit(function (event) {
     event.preventDefault();
+    let grade_id = $('#dropdownMenuGrade .dropdown-item.active').data('value');
+    let topic_id = $('#dropdownMenuTopic .dropdown-item.active').data('value')
+
 
     let request = {
         path: {
-            grade: $('#dropdown_grade__text').val(),
-            topic: $('#dropdown_topic__text').val(),
-
+            grade_id: grade_id,
+            topic_id: topic_id,
         },
-        basic_information: {
+        information: {
             name: $('#task__name').val(),
             condition: $('#task__condition').val()
         },
@@ -65,18 +67,21 @@ $("#task_from").submit(function (event) {
         tests: getTests()
     }
 
-    $.ajax({
-        type: 'POST',
-        url: '/api/create_task',
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(request),
-        success: function (response) {
-            console.log(response);
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
+    if (topic_id && topic_id) {
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/create_task',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(request),
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
 });
 
 $('#create_test_button').click(function () {
