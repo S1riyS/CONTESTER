@@ -6,6 +6,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import db
+from app.utils import ru2en_transliteration
 
 
 class User(db.Model, UserMixin):
@@ -55,7 +56,12 @@ class Topic(db.Model):
     grade_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("grades.id"))
     grade = orm.relation('Grade')
 
-    name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    name = sqlalchemy.Column(sqlalchemy.String)
+    translit_name = sqlalchemy.Column(sqlalchemy.String)
+
+    def __init__(self, name):
+        self.name = name
+        self.translit_name = ru2en_transliteration(name)
 
 
 class Task(db.Model):
@@ -65,8 +71,13 @@ class Task(db.Model):
     topic_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("topics.id"))
     topic = orm.relation('Topic')
 
-    name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    name = sqlalchemy.Column(sqlalchemy.String)
+    translit_name = sqlalchemy.Column(sqlalchemy.String)
     text = sqlalchemy.Column(sqlalchemy.Text)
+
+    def __init__(self, name):
+        self.name = name
+        self.translit_name = ru2en_transliteration(name)
 
 
 class Example(db.Model):
