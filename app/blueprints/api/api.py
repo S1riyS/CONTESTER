@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, jsonify
 from app import db
 from app.contester.contester import Contester
 
-from app.data.models import Grade, Topic
+from app.data.models import Grade, Topic, Task, Example, Test
 
 api = Blueprint('api', __name__)
 contester = Contester()
@@ -35,6 +35,7 @@ def send_report():
     print(data)
     return jsonify({'status': 'OK'})
 
+
 @api.route('/get_topics', methods=['POST'])
 def get_topics():
     data = request.json
@@ -62,20 +63,43 @@ def create_topic():
 @api.route('/create_task', methods=['POST'])
 def create_task():
     data = request.json
-    print(data)
 
-    for program_input, program_output in zip(data['tests']['inputsArray'], data['tests']['outputsArray']):
-        # Do something with input and output
-        ...
+    # Task
+    task = Task(
+        topic_id=data['path']['topic_id'],
+        name=data['information']['name'],
+        text=data['information']['condition']
+    )
+    db.session.add(task)
+    db.session.commit()
+
+    # Example
+    example = Example(
+        task_id=task.id,
+        example_input=data['example']['input'],
+        example_output=data['example']['output']
+    )
+    db.session.add(example)
+
+    # Tests
+    tests = zip(data['tests']['inputs'], data['tests']['outputs'], data['tests']['is_hidden'])
+    for test_input, test_output, is_hidden in tests:
+        test = Test(
+            task_id=task.id,
+            test_input=test_input,
+            test_output=test_output,
+            is_hidden=is_hidden
+        )
+        db.session.add(test)
+
+    db.session.commit()
 
     return jsonify('OK')
-
 
 @api.route('/delete_task', methods=['POST'])
 def delete_task():
     data = request.json
     return jsonify({'status': 'OK'})
-
 
 @api.route('/get_task_input_block', methods=['POST'])
 def get_task_input_block():

@@ -39,9 +39,9 @@ function getTests() {
     })
 
     return {
-        inputsArray: inputsArray,
-        outputsArray: outputsArray,
-        checkboxesArray: checkboxesArray
+        inputs: inputsArray,
+        outputs: outputsArray,
+        is_hidden: checkboxesArray
     }
 }
 
