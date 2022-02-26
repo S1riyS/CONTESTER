@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.config.from_object(DevConfig)
 
 db = SQLAlchemy(app)
-# migrate = Migrate(app, db)
+migrate = Migrate(app, db)
 # login_manager = LoginManager(app)
 # moment = Moment(app)
 

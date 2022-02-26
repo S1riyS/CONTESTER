@@ -10,7 +10,6 @@ class Config(object):
 
     STATIC_FOLDER = 'static'
     TEMPLATES_FOLDER = 'templates'
-
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + path.join(basedir, 'app', 'db', 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
