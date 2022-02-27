@@ -6,6 +6,7 @@ load_dotenv(path.join(basedir, '.env')) # Loading env
 
 # Base Config
 class Config(object):
+    FLASK_APP = 'app:app'
     SECRET_KEY = environ.get('SECRET_KEY')
 
     STATIC_FOLDER = 'static'

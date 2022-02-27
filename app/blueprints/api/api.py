@@ -1,13 +1,14 @@
 from flask import Blueprint, render_template, request, jsonify
 
 from app import db
-from app.contester.contester import Contester
+from contester.contester import Contester
 
-from app.models import Grade, Topic, Task, Example, Test
+from models import Grade, Topic, Task, Example, Test
 
 api = Blueprint('api', __name__)
 contester = Contester()
 
+# TODO: Переименоаить API (api/create/task и т.д.)
 
 # API
 @api.route('/send_code', methods=['POST'])
@@ -49,11 +50,14 @@ def get_topics():
 @api.route('/create_topic', methods=['POST'])
 def create_topic():
     data = request.json
+    print(data)
 
     topic = Topic(
         grade_id=data['grade_id'],
         name=data['name']
     )
+    topic.set_translit_name()
+
     db.session.add(topic)
     db.session.commit()
 
@@ -70,6 +74,8 @@ def create_task():
         name=data['information']['name'],
         text=data['information']['condition']
     )
+    task.set_translit_name()
+
     db.session.add(task)
     db.session.commit()
 

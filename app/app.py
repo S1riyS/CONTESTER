@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.config.from_object(DevConfig)
 
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+migrate = Migrate(app, db) # TODO: Пофиксить Flask-Migrate
 # login_manager = LoginManager(app)
 # moment = Moment(app)
 
@@ -29,10 +29,10 @@ db.init_app(app)
 
 # Import routes
 with app.app_context():
-    from . import routes
+    import routes
 
     db.create_all()
 
-    from .data.models import init_db_data
+    from models import init_db_data
 
     init_db_data()
