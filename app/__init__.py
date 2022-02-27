@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from flask_login import LoginManager
 from flask_moment import Moment
 from flask_migrate import Migrate
 
@@ -29,10 +29,10 @@ db.init_app(app)
 
 # Import routes
 with app.app_context():
-    import routes
+    from . import routes
 
     db.create_all()
 
-    from models import init_db_data
+    from app.models import init_db_data
 
     init_db_data()

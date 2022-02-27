@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, request, jsonify
 
 from app import db
-from contester.contester import Contester
+from app.contester.contester import Contester
 
-from models import Grade, Topic, Task, Example, Test
+from app.models import Grade, Topic, Task, Example, Test
 
 api = Blueprint('api', __name__)
 contester = Contester()
