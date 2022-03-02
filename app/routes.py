@@ -1,11 +1,13 @@
 from flask import render_template, url_for
 
-from app import app
+from app import app, db
 from app.blueprints.admin.admin import admin
 from app.blueprints.api.api import api
 from app.blueprints.errors.handler import errors
 
-from contester.contester import languages
+from app.models import Grade, Topic, Task, Example, Test
+
+from app.contester.contester import languages
 
 app.register_blueprint(admin, url_prefix='/admin')
 app.register_blueprint(api, url_prefix='/api')
@@ -23,9 +25,12 @@ def lessons_page():
     return render_template('lessons.html')
 
 
-@app.route('/<int:grade>', methods=['GET'])
-def grade_page(grade):
-    return render_template('grade.html', grade=grade)
+@app.route('/<int:grade_number>', methods=['GET'])
+def grade_page(grade_number):
+    grade = db.session.query(Grade).filter(Grade.number == grade_number).first_or_404()
+    topics = grade.get_topics()
+
+    return render_template('grade.html', grade=grade, topics=topics)
 
 
 @app.route('/<int:grade>/<string:topic>', methods=['GET'])
