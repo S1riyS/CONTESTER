@@ -30,12 +30,36 @@ def grade_page(grade_number):
     grade = db.session.query(Grade).filter(Grade.number == grade_number).first_or_404()
     topics = grade.get_topics()
 
-    return render_template('grade.html', grade=grade, topics=topics)
+    breadcrumbs = (
+        {
+            'text': f'{grade.number} класс',
+            'link': None
+        }
+    )
+
+    return render_template('grade.html', grade=grade, topics=topics,
+                           breadcrumbs=breadcrumbs)
 
 
-@app.route('/<int:grade>/<string:topic>', methods=['GET'])
-def topic_page(grade, topic):
-    return render_template('topic.html', grade=grade, topic=topic)
+@app.route('/<int:grade_number>/<string:topic_translit_name>', methods=['GET'])
+def topic_page(grade_number, topic_translit_name):
+    grade = db.session.query(Grade).filter(Grade.number == grade_number).first_or_404()
+    topic = db.session.query(Topic).filter(Topic.translit_name == topic_translit_name).first_or_404()
+    tasks = topic.get_tasks()
+
+    breadcrumbs = (
+        {
+            'text': f'{grade.number} класс',
+            'link': url_for('grade_page', grade_number=grade.number)
+        },
+        {
+            'text': topic.name,
+            'link': None
+        },
+    )
+
+    return render_template('topic.html', grade=grade, topic=topic, tasks=tasks,
+                           breadcrumbs=breadcrumbs)
 
 
 @app.route('/<int:grade>/<string:topic>/<int:task_number>', methods=['GET'])

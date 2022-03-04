@@ -1,21 +1,31 @@
 <head>
-    <title>{{ grade }} класс</title>
+    <title>{{ topic.name }} класс</title>
 </head>
 
 {% extends "base.html" %}
 
 {% block css %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/topic.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/route.css') }}">
 {% endblock %}
 
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div class="info">
-                <p>Класс: {{ grade }}</p>
-                <p>Тема урока: {{ topic }}</p>
+            <div class="route__body">
+                <h3 class="route__body_title">Задачи:</h3>
+                <div class="route__body_list">
+                    {% for topic in topics %}
+                        <div class="list_item">
+                            <a href="{{ url_for('topic_page', grade=grade.number, topic=topic.translit_name) }}"
+                               class="list_item__link"></a>
+                            <div class="list_item_content">
+                                <p class="item_title">{{ topic.name }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
-            <h3>Список задач:</h3>
         </div>
     </div>
 {% endblock %}

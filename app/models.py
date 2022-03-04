@@ -68,6 +68,8 @@ class Topic(db.Model):
     def set_translit_name(self):
         self.translit_name = ru2en_transliteration(self.name)
 
+    def get_tasks(self):
+        return db.session.query(Task).filter(Task.topic_id == self.id).all()
 
 class Task(db.Model):
     # TODO: Пофиксить __init__
@@ -150,7 +152,6 @@ def init_db_data():
     if db.session.query(User).count() == 0:
         for grade in range(5, 12):
             db.session.add(Grade(number=grade))
-
 
         # Creating roles
         user_role = Role(name='user')
