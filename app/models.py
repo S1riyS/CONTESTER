@@ -53,8 +53,6 @@ class Role(db.Model):
 
 
 class Topic(db.Model):
-    # TODO: Пофиксить __init__
-
     __tablename__ = "topics"
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
@@ -72,8 +70,6 @@ class Topic(db.Model):
         return db.session.query(Task).filter(Task.topic_id == self.id).all()
 
 class Task(db.Model):
-    # TODO: Пофиксить __init__
-
     __tablename__ = "tasks"
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)

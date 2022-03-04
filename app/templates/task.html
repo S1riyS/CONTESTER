@@ -93,20 +93,28 @@
                 <h3 class="sidebar__title"><i class="sidebar__title__icon fas fa-tasks"></i> Задачи:</h3>
                 <ul class="nav sidebar_nav">
                     <li class="sidebar__item">
-                        <a href="{{ url_for('task_page', grade=grade, topic=topic, task_number=1) }}"
+                        <a href="{{ url_for(
+                        'task_page',
+                        grade_number=grade.number,
+                        topic_translit_name=topic.translit_name,
+                        task_translit_name=task.translit_name) }}"
                            class="item__link">Сложение</a>
                     </li>
                     <li class="sidebar__item">
-                        <a href="{{ url_for('task_page', grade=grade, topic=topic, task_number=2) }}"
-                           class="item__link">Вычитание</a>
+                        <a href="{{ url_for(
+                        'task_page',
+                        grade_number=grade.number,
+                        topic_translit_name=topic.translit_name,
+                        task_translit_name=task.translit_name) }}"
+                           class="item__link">Сложение</a>
                     </li>
                     <li class="sidebar__item">
-                        <a href="{{ url_for('task_page', grade=grade, topic=topic, task_number=3) }}"
-                           class="item__link">Умножение</a>
-                    </li>
-                    <li class="sidebar__item">
-                        <a href="{{ url_for('task_page', grade=grade, topic=topic, task_number=4) }}"
-                           class="item__link">Деление</a>
+                        <a href="{{ url_for(
+                        'task_page',
+                        grade_number=grade.number,
+                        topic_translit_name=topic.translit_name,
+                        task_translit_name=task.translit_name) }}"
+                           class="item__link">Сложение</a>
                     </li>
                 </ul>
             </div>
@@ -154,11 +162,10 @@
                                     <i class="default_button__icon fas fa-exclamation-triangle"></i>
                                 </button>
                             </div>
-                            <p class="task__title">Задание №{{ task_number }}</p>
+                            <p class="task__title">{{ task.name }}</p>
                             <div class="task__condition task__header__block">
                                 <h4 class="condition__title task__sub_title">Условие</h4>
-                                <p class="condition__text">С клавиатуры вводятся 2 числа: a и b.
-                                    Вывести в консоль сумму этих чисел.</p>
+                                <p class="condition__text">{{ task.text }}</p>
                                 {# Сюда вставить картинку #}
                             </div>
                             <div class="task__example task__header__block">

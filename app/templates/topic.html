@@ -1,5 +1,5 @@
 <head>
-    <title>{{ topic.name }} класс</title>
+    <title>{{ topic.name }}</title>
 </head>
 
 {% extends "base.html" %}
@@ -15,12 +15,15 @@
             <div class="route__body">
                 <h3 class="route__body_title">Задачи:</h3>
                 <div class="route__body_list">
-                    {% for topic in topics %}
+                    {% for task in tasks %}
                         <div class="list_item">
-                            <a href="{{ url_for('topic_page', grade=grade.number, topic=topic.translit_name) }}"
+                            <a href="{{ url_for('task_page',
+                            grade_number=grade.number,
+                            topic_translit_name=topic.translit_name,
+                            task_translit_name=task.translit_name) }}"
                                class="list_item__link"></a>
                             <div class="list_item_content">
-                                <p class="item_title">{{ topic.name }}</p>
+                                <p class="item_title">{{ task.name }}</p>
                             </div>
                         </div>
                     {% endfor %}

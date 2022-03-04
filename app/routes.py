@@ -30,12 +30,12 @@ def grade_page(grade_number):
     grade = db.session.query(Grade).filter(Grade.number == grade_number).first_or_404()
     topics = grade.get_topics()
 
-    breadcrumbs = (
+    breadcrumbs = [
         {
             'text': f'{grade.number} класс',
             'link': None
         }
-    )
+    ]
 
     return render_template('grade.html', grade=grade, topics=topics,
                            breadcrumbs=breadcrumbs)
@@ -47,7 +47,7 @@ def topic_page(grade_number, topic_translit_name):
     topic = db.session.query(Topic).filter(Topic.translit_name == topic_translit_name).first_or_404()
     tasks = topic.get_tasks()
 
-    breadcrumbs = (
+    breadcrumbs = [
         {
             'text': f'{grade.number} класс',
             'link': url_for('grade_page', grade_number=grade.number)
@@ -56,17 +56,33 @@ def topic_page(grade_number, topic_translit_name):
             'text': topic.name,
             'link': None
         },
-    )
+    ]
 
     return render_template('topic.html', grade=grade, topic=topic, tasks=tasks,
                            breadcrumbs=breadcrumbs)
 
 
-@app.route('/<int:grade>/<string:topic>/<int:task_number>', methods=['GET'])
-def task_page(grade, topic, task_number):
-    breadcrumbs = ({'text': f'{grade} класс', 'link': url_for('grade_page', grade=grade)},
-                   {'text': topic, 'link': url_for('topic_page', grade=grade, topic=topic)},
-                   {'text': f'Task №{task_number}', 'link': None})
+@app.route('/<int:grade_number>/<string:topic_translit_name>/<string:task_translit_name>', methods=['GET'])
+def task_page(grade_number, topic_translit_name, task_translit_name):
+    grade = db.session.query(Grade).filter(Grade.number == grade_number).first_or_404()
+    topic = db.session.query(Topic).filter(Topic.translit_name == topic_translit_name).first_or_404()
+    task = db.session.query(Task).filter(Task.translit_name == task_translit_name).first_or_404()
 
-    return render_template('task.html', grade=grade, topic=topic, task_number=task_number,
+    breadcrumbs = [
+        {
+            'text': f'{grade.number} класс',
+            'link': url_for('grade_page', grade_number=grade.number)
+        },
+        {
+            'text': topic.name,
+            'link': url_for('topic_page', grade_number=grade_number, topic_translit_name=topic_translit_name)
+        },
+        {
+            'text': task.name,
+            'link': None
+        }
+    ]
+
+
+    return render_template('task.html', grade=grade, topic=topic, task=task,
                            languages=languages, breadcrumbs=breadcrumbs, is_admin=True)
