@@ -112,6 +112,7 @@
 
 pre {
     display: flex;
+    flex-direction: column;
     padding: 15px;
     background: var(--code-preview-background);
     white-space: pre-line;
@@ -119,7 +120,7 @@ pre {
     border-radius: 3px;
     color: var(--text-color);
     font-size: 14px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Source Code Pro', monospace;
 }
 
 /* Code response loader */
