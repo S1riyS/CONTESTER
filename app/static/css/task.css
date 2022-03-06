@@ -111,6 +111,7 @@
 }
 
 pre {
+    display: flex;
     padding: 15px;
     background: var(--code-preview-background);
     white-space: pre-line;

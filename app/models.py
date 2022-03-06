@@ -84,6 +84,9 @@ class Task(db.Model):
     def set_translit_name(self):
         self.translit_name = ru2en_transliteration(self.name)
 
+    def get_example(self):
+        return db.session.query(Example).filter(Example.task_id == self.id).first()
+
 
 class Example(db.Model):
     __tablename__ = "examples"

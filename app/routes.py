@@ -84,5 +84,6 @@ def task_page(grade_number, topic_translit_name, task_translit_name):
     ]
 
 
-    return render_template('task.html', grade=grade, topic=topic, task=task,
-                           languages=languages, breadcrumbs=breadcrumbs, is_admin=True)
+    return render_template('task.html', grade=grade, topic=topic, task=task, example=task.get_example(),
+                           languages=languages,
+                           breadcrumbs=breadcrumbs, is_admin=True)

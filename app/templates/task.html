@@ -168,22 +168,31 @@
                                 <p class="condition__text">{{ task.text }}</p>
                                 {# Сюда вставить картинку #}
                             </div>
-                            <div class="task__example task__header__block">
-                                <h4 class="example__title task__sub_title">Пример</h4>
-                                <div class="input">
-                                    <p class="example__subtitle">Ввод:</p>
-                                    <pre>
-                                <span>1 2</span>
-                            </pre>
+
+                            {% if example %}
+                                <div class="task__example task__header__block">
+                                    <h4 class="example__title task__sub_title">Пример</h4>
+                                    <div class="input">
+                                        <p class="example__subtitle">Ввод:</p>
+                                        <pre>
+                                            {% for input_line in example.example_input.split('\n') %}
+                                                <span>{{ input_line }}</span>
+                                            {% endfor %}
+                                        </pre>
+                                    </div>
+                                    <div class="output">
+                                        <p class="example__subtitle">Вывод:</p>
+                                        <pre>
+                                            {% for output_line in example.example_output.split('\n') %}
+                                                <span>{{ output_line }}</span>
+                                            {% endfor %}
+                                        </pre>
+                                    </div>
                                 </div>
-                                <div class="output">
-                                    <p class="example__subtitle">Вывод:</p>
-                                    <pre>
-                                <span>3</span>
-                            </pre>
-                                </div>
-                            </div>
+                            {% endif %}
                         </div>
+
+
                         <div class="task__body box-shadow">
                             {# Editor #}
                             <div class="editor">
