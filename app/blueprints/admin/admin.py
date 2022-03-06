@@ -8,7 +8,7 @@ admin = Blueprint('admin', __name__, template_folder='templates', static_folder=
 # Admin
 @admin.route('/')
 def home_page():
-    return render_template('admin/admin.html')
+    return render_template('admin/admin.html', title='Админ панель')
 
 @admin.route('/create_task', methods=['GET', 'POST'])
 def create_task_page():
@@ -18,7 +18,7 @@ def create_task_page():
     rendered_topic_list = render_template('admin/dropdown/topic_list.html', topics=topics)
     rendered_grade_list = render_template('admin/dropdown/grade_list.html', grades=grades)
 
-    return render_template('admin/create_task.html',
+    return render_template('admin/create_task.html', title='Создать задачу',
                            rendered_grade_list=rendered_grade_list,
                            rendered_topic_list=rendered_topic_list)
 
@@ -27,5 +27,5 @@ def create_topic_page():
     grades = db.session.query(Grade).all()
     rendered_grade_list = render_template('admin/dropdown/grade_list.html', grades=grades)
 
-    return render_template('admin/create_topic.html',
+    return render_template('admin/create_topic.html', title='Создать тему',
                            rendered_grade_list=rendered_grade_list)

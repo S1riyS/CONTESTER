@@ -17,12 +17,12 @@ app.register_blueprint(errors, url_prefix='/error')
 @app.route('/')
 @app.route('/home')
 def home_page():
-    return render_template('home.html')
+    return render_template('home.html', title='Главная')
 
 
 @app.route('/all-tasks', methods=['GET'])
 def lessons_page():
-    return render_template('lessons.html')
+    return render_template('lessons.html', title='Все задания')
 
 
 @app.route('/<int:grade_number>', methods=['GET'])
@@ -37,7 +37,8 @@ def grade_page(grade_number):
         }
     ]
 
-    return render_template('grade.html', grade=grade, topics=topics,
+    return render_template('grade.html', title=f'{grade.number} класс',
+                           grade=grade, topics=topics,
                            breadcrumbs=breadcrumbs)
 
 
@@ -58,7 +59,8 @@ def topic_page(grade_number, topic_translit_name):
         },
     ]
 
-    return render_template('topic.html', grade=grade, topic=topic, tasks=tasks,
+    return render_template('topic.html', title=topic.name,
+                           grade=grade, topic=topic, tasks=tasks,
                            breadcrumbs=breadcrumbs)
 
 
@@ -84,6 +86,7 @@ def task_page(grade_number, topic_translit_name, task_translit_name):
     ]
 
 
-    return render_template('task.html', grade=grade, topic=topic, task=task, example=task.get_example(),
-                           languages=languages,
-                           breadcrumbs=breadcrumbs, is_admin=True)
+    return render_template('task.html', title=task.name,
+                           grade=grade, topic=topic, task=task, example=task.get_example(),
+                           languages=languages, breadcrumbs=breadcrumbs,
+                           is_admin=True)
