@@ -245,22 +245,10 @@ pre {
 }
 
 /* Breadcrumbs */
-.breadcrumbs__body {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    font-size: 16px;
-}
-
-.breadcrumbs__body .breadcrumbs__item:not(:last-child):after {
-    content: '/';
-    margin: 0 10px;
-    color: var(--gray-color);
-    font-size: 18px;
-}
-
-.breadcrumbs__body .breadcrumbs__item .breadcrumbs__item__endpoint {
-    color: var(--darker-text-color);
+ol.breadcrumb {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
 }
 
 /* Header */
