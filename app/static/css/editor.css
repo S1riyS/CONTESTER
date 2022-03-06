@@ -204,9 +204,6 @@
 
 
 .code-response__body .tests-list {
-    min-height: 430px;
-    max-height: 430px;
-    height: 100%;
     display: flex;
     flex-direction: column;
 }
@@ -229,7 +226,7 @@
 }
 
 .code-response__body .tests-list .tests-list_row {
-    height: 100%;
+    height: 430px;
 }
 
 .code-response__body .nav_col {
