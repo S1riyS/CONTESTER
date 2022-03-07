@@ -147,7 +147,14 @@
                             <p class="task__title">{{ task.name }}</p>
                             <div class="task__condition task__header__block">
                                 <h4 class="condition__title task__sub_title">Условие</h4>
-                                <p class="condition__text">{{ task.text }}</p>
+                                <p class="condition__text">
+                                    {% for line in task.text.split('\n') %}
+                                        {{ line }}
+                                        {% if not loop.last %}
+                                            <br>
+                                        {% endif %}
+                                    {% endfor %}
+                                </p>
                                 {# Сюда вставить картинку #}
                             </div>
 
