@@ -1,4 +1,5 @@
 import {getCurrentTask} from "../modules/current_task.js";
+import {showAlert} from "../modules/alert.js";
 
 $(document).ready(function () {
     let languages = $('.dropdown-menu').closest('.dropdown-menu').find('a');
@@ -95,6 +96,8 @@ $('#reset-code__btn').click(function () {
     myCodeMirror.setValue('');
     myCodeMirror.focus();
     myCodeMirror.setCursor({line: 1, ch: 1});
+
+    showAlert('Код удален', 'danger')
 })
 
 // ON click on "copy code" button
@@ -106,6 +109,8 @@ function copyToClipboard(str) {
     area.select();
     document.execCommand("copy");
     document.body.removeChild(area);
+
+    showAlert('Код скопирован', 'info')
 }
 
 $('#copy-code__btn').click(function () {
