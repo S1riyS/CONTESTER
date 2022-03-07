@@ -3,7 +3,7 @@ import {showAlert} from "../modules/alert.js";
 
 $(document).ready(function () {
     let languages = $('.dropdown-menu').closest('.dropdown-menu').find('a');
-    let currentLanguage = localStorage.getItem('currentLanguage');
+    let currentLanguage = localStorage.getItem(location.pathname + 'currentLanguage');
     languages.each(function () {
         // Remove any existing 'active' classes...
         if ($(this)[0].dataset.value === currentLanguage) {
@@ -47,7 +47,7 @@ function loadCodeMirror(config) {
 
     // Loading code from local storage
     let initEditorValue;
-    let codeMirrorText = localStorage.getItem('codeMirrorText');
+    let codeMirrorText = localStorage.getItem(location.pathname + 'codeMirrorText');
     if (codeMirrorText) {
         initEditorValue = codeMirrorText
     } else {
@@ -62,7 +62,7 @@ function loadCodeMirror(config) {
 
     // Saving code everytime it changes
     myCodeMirror.on('change', function () {
-        localStorage.setItem('codeMirrorText', myCodeMirror.getValue())
+        localStorage.setItem(location.pathname + 'codeMirrorText', myCodeMirror.getValue())
     })
 
     return myCodeMirror
@@ -85,7 +85,7 @@ function setLanguage(language) {
     dropdownMenuText.html(currentLanguage.text)
 
     // Saving current language to localStorage
-    localStorage.setItem('currentLanguage', currentLanguage.dataset.value)
+    localStorage.setItem(location.pathname + 'currentLanguage', currentLanguage.dataset.value)
 }
 
 
@@ -128,7 +128,7 @@ $('#submit-code__btn').click(function () {
         let request = {
             code: myCodeMirror.getValue(),
             lang: language.dataset.value,
-            task: getCurrentTask()
+            path: getCurrentTask()
         };
 
         let codeResponse = $('#code-response__body')

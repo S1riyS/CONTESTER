@@ -1,3 +1,5 @@
+import {showAlert} from "../../../../static/js/modules/alert.js";
+
 let current_test = 1
 
 function createTestBlock() {
@@ -75,10 +77,17 @@ $("#task_from").submit(function (event) {
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify(request),
             success: function (response) {
-                console.log(response);
+                let type;
+
+                if (response['success']) {
+                    type = 'success'
+                } else {
+                    type = 'danger'
+                }
+                showAlert(response['message'], type);
             },
             error: function (error) {
-                console.log(error);
+                showAlert('Что то пошло не так', 'danger');
             }
         });
     }

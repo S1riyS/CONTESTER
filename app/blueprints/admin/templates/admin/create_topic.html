@@ -9,7 +9,7 @@
 
 {% block js %}
     {{ super() }}
-    <script src="{{ url_for('admin.static', filename='js/create_topic.js') }}"></script>
+    <script type="module" src="{{ url_for('admin.static', filename='js/create_topic.js') }}"></script>
 {% endblock %}
 
 {% block admin_content %}

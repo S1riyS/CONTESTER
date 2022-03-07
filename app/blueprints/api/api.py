@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, make_response
+from sqlalchemy import and_
 
 from app import db
 from app.contester.contester import Contester
@@ -8,6 +9,7 @@ from app.models import Grade, Topic, Task, Example, Test
 api = Blueprint('api', __name__)
 contester = Contester()
 
+
 # TODO: Переименоаить API (api/create/task и т.д.)
 
 # API
@@ -16,7 +18,15 @@ def send_code():
     data = request.json
     print(data)
 
-    tests = contester.get_tests({})
+    task = db.session.query(Task).filter(
+        and_(
+            Grade.number == data['path']['grade'],
+            Topic.translit_name == data['path']['topic'],
+            Task.translit_name == data['path']['task']
+        )
+    ).first()
+
+    tests = task.get_tests()
     response = contester.run_tests(code=data['code'], language=data['lang'], tests=tests)
 
     if response is not None:
@@ -58,10 +68,24 @@ def create_topic():
     )
     topic.set_translit_name()
 
-    db.session.add(topic)
-    db.session.commit()
+    if not db.session.query(Topic).filter(Topic.translit_name == topic.translit_name).first():
+        db.session.add(topic)
+        db.session.commit()
 
-    return jsonify('OK')
+        return make_response(jsonify(
+            {
+                'success': True,
+                'message': 'Тема успешно создана!'
+            }
+        ), 200)
+
+    else:
+        return make_response(jsonify(
+            {
+                'success': False,
+                'message': 'Тема с таким именем уже существует'
+            }
+        ), 200)
 
 
 @api.route('/create_task', methods=['POST'])
@@ -76,36 +100,55 @@ def create_task():
     )
     task.set_translit_name()
 
-    db.session.add(task)
-    db.session.commit()
+    topic = db.session.query(Topic).filter(Topic.id == data['path']['topic_id']).first()
+    translit_names = [task_.translit_name for task_ in topic.get_tasks()]
 
-    # Example
-    example = Example(
-        task_id=task.id,
-        example_input=data['example']['input'],
-        example_output=data['example']['output']
-    )
-    db.session.add(example)
+    if task.translit_name in translit_names:
+        return make_response(jsonify(
+            {
+                'success': False,
+                'message': 'Задача с таким именем уже существует'
+            }
+        ), 200)
 
-    # Tests
-    tests = zip(data['tests']['inputs'], data['tests']['outputs'], data['tests']['is_hidden'])
-    for test_input, test_output, is_hidden in tests:
-        test = Test(
+    else:
+        db.session.add(task)
+        db.session.commit()
+
+        # Example
+        example = Example(
             task_id=task.id,
-            test_input=test_input,
-            test_output=test_output,
-            is_hidden=is_hidden
+            example_input=data['example']['input'],
+            example_output=data['example']['output']
         )
-        db.session.add(test)
+        db.session.add(example)
 
-    db.session.commit()
+        # Tests
+        tests = zip(data['tests']['inputs'], data['tests']['outputs'], data['tests']['is_hidden'])
+        for test_input, test_output, is_hidden in tests:
+            test = Test(
+                task_id=task.id,
+                test_input=test_input,
+                test_output=test_output,
+                is_hidden=is_hidden
+            )
+            db.session.add(test)
 
-    return jsonify('OK')
+        db.session.commit()
+
+    return make_response(jsonify(
+        {
+            'success': True,
+            'message': 'Задача успешно создана'
+        }
+    ), 200)
+
 
 @api.route('/delete_task', methods=['POST'])
 def delete_task():
     data = request.json
     return jsonify({'status': 'OK'})
+
 
 @api.route('/get_task_input_block', methods=['POST'])
 def get_task_input_block():

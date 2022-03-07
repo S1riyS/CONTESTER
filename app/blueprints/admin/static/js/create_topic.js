@@ -1,3 +1,5 @@
+import {showAlert} from "../../../../static/js/modules/alert.js";
+
 $("#create_topic_from").submit(function (event) {
     event.preventDefault();
 
@@ -12,10 +14,17 @@ $("#create_topic_from").submit(function (event) {
         contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify(data),
         success: function (response) {
-            console.log(response);
+            let type;
+
+            if (response['success']) {
+                type = 'success'
+            } else {
+                type = 'danger'
+            }
+            showAlert(response['message'], type);
         },
-        error: function (error) {
-            console.log(error);
+        error: function(xhr, textStatus, error) {
+            showAlert('Что то пошло не так', 'danger');
         }
     });
 });

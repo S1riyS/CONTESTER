@@ -3,6 +3,6 @@ export function getCurrentTask() {
     return {
         grade: Number(path[1]),
         topic: path[2],
-        task_number: Number(path[3])
+        task: path[3]
     }
 }
