@@ -120,6 +120,8 @@ $('#copy-code__btn').click(function () {
 let isRequestInProgress = false;
 // On click on "submit" button
 $('#submit-code__btn').click(function () {
+    showAlert('Решение отправлено на проверку', 'success');
+
     if (!isRequestInProgress) {
         let submitCodeButton = $('#submit-code__btn')
 
