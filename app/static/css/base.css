@@ -161,9 +161,9 @@ pre {
 }
 
 /* Toast */
-.toast-container {
-    bottom: 0;
-    right: 0;
+.alert {
+    position: fixed !important;
+    right: 5px !important;
 }
 
 .block {
@@ -193,6 +193,7 @@ pre {
 
 /* Buttons */
 .default_button {
+    display: flex;
     min-width: 38px;
     height: auto;
     padding: 10px;
@@ -223,6 +224,7 @@ pre {
 }
 
 .alert_button {
+    display: flex;
     min-width: 38px;
     height: auto;
     padding: 10px;

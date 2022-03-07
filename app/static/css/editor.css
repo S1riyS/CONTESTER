@@ -17,6 +17,11 @@
     align-items: center;
 }
 
+.editor__header .header__right_side {
+    display: flex;
+    flex-direction: row;
+}
+
 .editor__header .select-language {
     font-size: 16px;
     margin-right: 10px;
