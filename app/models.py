@@ -87,6 +87,19 @@ class Task(db.Model):
     def get_example(self):
         return db.session.query(Example).filter(Example.task_id == self.id).first()
 
+    def get_tests(self):
+        tests = db.session.query(Test).filter(Test.task_id == self.id).all()
+        tests_array = []
+
+        for test in tests:
+            test_dict = {
+                'stdin': test.test_input,
+                'output': test.test_output,
+                'hidden': test.is_hidden
+            }
+            tests_array.append(test_dict)
+
+        return tests_array
 
 class Example(db.Model):
     __tablename__ = "examples"
