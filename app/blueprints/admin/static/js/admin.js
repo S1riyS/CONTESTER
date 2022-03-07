@@ -41,7 +41,7 @@ $('#dropdown__grade .dropdown-item').click(function () {
     let topicDropdownList = $('#dropdownMenuTopic')
 
     let data = {
-        grade_id: $('#dropdown__grade').find('.dropdown-item.active').data('value')
+        grade_id: $(this).data('value')
     }
 
     $.ajax({
