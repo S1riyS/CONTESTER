@@ -1,9 +1,28 @@
 import {getCurrentTask} from "../modules/current_task.js";
 import {showAlert} from "../modules/alert.js";
 
+function loadTaskToLocalStorage() {
+    let taskStorage = JSON.parse(localStorage.getItem('taskStorage'));
+
+    if (!taskStorage) {
+        localStorage.setItem('taskStorage', JSON.stringify({}));
+    }
+
+    taskStorage = JSON.parse(localStorage.getItem('taskStorage'));
+
+    if (!taskStorage[location.pathname]) {
+        taskStorage[location.pathname] = {'language': null, 'source_code': null}
+        localStorage.setItem('taskStorage', JSON.stringify(taskStorage));
+    }
+}
+
 $(document).ready(function () {
     let languages = $('.dropdown-menu').closest('.dropdown-menu').find('a');
-    let currentLanguage = localStorage.getItem(location.pathname + 'currentLanguage');
+
+    loadTaskToLocalStorage()
+    let taskStorage = JSON.parse(localStorage.getItem('taskStorage'));
+    let currentLanguage = taskStorage[location.pathname]['language'];
+
     languages.each(function () {
         // Remove any existing 'active' classes...
         if ($(this)[0].dataset.value === currentLanguage) {
@@ -47,7 +66,11 @@ function loadCodeMirror(config) {
 
     // Loading code from local storage
     let initEditorValue;
-    let codeMirrorText = localStorage.getItem(location.pathname + 'codeMirrorText');
+
+    loadTaskToLocalStorage();
+    let taskStorage = JSON.parse(localStorage.getItem('taskStorage'));
+    let codeMirrorText = taskStorage[location.pathname]['source_code'];
+
     if (codeMirrorText) {
         initEditorValue = codeMirrorText
     } else {
@@ -62,7 +85,9 @@ function loadCodeMirror(config) {
 
     // Saving code everytime it changes
     myCodeMirror.on('change', function () {
-        localStorage.setItem(location.pathname + 'codeMirrorText', myCodeMirror.getValue())
+        let taskStorage = JSON.parse(localStorage.getItem('taskStorage'));
+        taskStorage[location.pathname]['source_code'] = myCodeMirror.getValue();
+        localStorage.setItem('taskStorage', JSON.stringify(taskStorage));
     })
 
     return myCodeMirror
@@ -85,7 +110,9 @@ function setLanguage(language) {
     dropdownMenuText.html(currentLanguage.text)
 
     // Saving current language to localStorage
-    localStorage.setItem(location.pathname + 'currentLanguage', currentLanguage.dataset.value)
+    let taskStorage = JSON.parse(localStorage.getItem('taskStorage'));
+    taskStorage[location.pathname]['language'] = currentLanguage.dataset.value;
+    localStorage.setItem('taskStorage', JSON.stringify(taskStorage));
 }
 
 
