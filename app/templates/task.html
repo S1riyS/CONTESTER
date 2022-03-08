@@ -89,14 +89,18 @@
                 <h3 class="sidebar__title"><i class="sidebar__title__icon fas fa-tasks"></i> Задачи:</h3>
                 <ul class="nav sidebar_nav">
                     {% for sidebar_task in topic.get_tasks() %}
-                        <li class="sidebar__item">
-                        <a href="{{ url_for(
-                        'task_page',
-                        grade_number=grade.number,
-                        topic_translit_name=topic.translit_name,
-                        task_translit_name=sidebar_task.translit_name) }}"
-                           class="item__link">{{ sidebar_task.name }}</a>
-                    </li>
+                        {% if sidebar_task.id == task.id %}
+                            {% set is_active = 'active_task' %}
+                        {% endif %}
+
+                        <li class="sidebar__item {{ is_active }}">
+                            <a href="{{ url_for(
+                            'task_page',
+                            grade_number=grade.number,
+                            topic_translit_name=topic.translit_name,
+                            task_translit_name=sidebar_task.translit_name) }}"
+                               class="item__link">{{ sidebar_task.name }}</a>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>
