@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('auth.static', filename='css/auth.css') }}">
+{% endblock %}
+
+{% block js %}
+    <script src="{{ url_for('auth.static', filename='js/sign_up.js') }}"></script>
+    <script src="{{ url_for('auth.static', filename='js/auth.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="form-wrapper box-shadow col-xl-4 offset-xl-4 offset-lg-1 col-lg-10 col-12">
+            <form action="" method="post" class="form" autocomplete="off">
+                {{ form.hidden_tag() }}
+                <h1 class="form__title">Регистрация</h1>
+
+                <div class="form__group">
+                    {{ form.first_name(type="text", id="first_name", class="form__input", placeholder=" ") }}
+                    <label for="first_name" class="form__label">
+                        <i class="form__icon fa fa-user" aria-hidden="true"></i>Имя
+                    </label>
+                </div>
+
+                <div class="form__group">
+                    {{ form.last_name(type="text", id="last_name", class="form__input", placeholder=" ") }}
+                    <label for="last_name" class="form__label">
+                        <i class="form__icon fa fa-user" aria-hidden="true"></i>Фамилия
+                    </label>
+                </div>
+
+                <div class="form__group">
+                    {{ form.email(type="text", id="email", class="form__input", placeholder=" ") }}
+                    <label for="email" class="form__label">
+                        <i class="form__icon fa fa-envelope-o" aria-hidden="true"></i>Почта
+                    </label>
+                </div>
+
+                <div class="form__group">
+                    {{ form.password(type="password", id="password", class="form__input", placeholder=" ") }}
+                    <label for="password" class="form__label">
+                        <i class="form__icon fa fa-key" aria-hidden="true"></i>Пароль
+                    </label>
+                    <a class="password-control"></a>
+                </div>
+
+                <div class="form__group">
+                    {{ form.password_again(type="password", id="password_again", class="form__input", placeholder=" ") }}
+                    <label for="password_again" class="form__label">
+                        <i class="form__icon fa fa-key" aria-hidden="true"> </i>Повторите пароль
+                    </label>
+                    <a class="password-control"></a>
+                </div>
+
+                {{ form.submit(type="submit", class="gradient-btn submit-btn") }}
+
+                <p class="form-text">Уже есть аккаунт?
+                    <a class="form-text-link" href="{{ url_for('auth.login_page') }}">
+                        Войти
+                    </a>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

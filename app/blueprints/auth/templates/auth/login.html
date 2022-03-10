@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('auth.static', filename='css/auth.css') }}">
+{% endblock %}
+
+{% block js %}
+    <script src="{{ url_for('auth.static', filename='js/login.js') }}"></script>
+    <script src="{{ url_for('auth.static', filename='js/auth.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="form-wrapper box-shadow col-xl-4 offset-xl-4 offset-lg-1 col-lg-10 col-12">
+                <form action="" method="post" class="form" id=form>
+                    {{ form.csrf_token }}
+                    <h1 class="form__title">Вход</h1>
+
+                    <div class="form__group">
+                        {{ form.email(type="email", id="email", class_="form__input", placeholder=" ") }}
+                        <label for="email" class="form__label">
+                            <i class="form__icon fa fa-envelope-o" aria-hidden="true"></i>Почта
+                        </label>
+                    </div>
+
+                    <div class="form__group">
+                        {{ form.password(type="password", id="password", class_="form__input", placeholder=" ") }}
+                        <label for="password" class="form__label">
+                            <i class="form__icon fa fa-key" aria-hidden="true"></i>Пароль
+                        </label>
+                        <a class="password-control"></a>
+                    </div>
+
+                    {{ form.submit(type="submit", class_="submit-btn") }}
+
+                    <p class="form-text">У вас нет учетной записи?
+                        <a class="form-text-link" href="{{ url_for('auth.signup_page') }}">
+                            Зарегестрироваться
+                        </a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,147 @@
+:root {
+    --form-background-color: #1a1d28
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 150px #1F2233 inset;
+    /* можно изменить на любой вариант цвета */
+    -webkit-text-fill-color: #fff;
+    font-family: inherit !important;
+}
+
+.main {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    align-items: center;
+}
+
+.form-wrapper {
+    padding: 0 !important;
+    background-color: #181A1F;
+    border-radius: 0.5rem;
+}
+
+.form {
+    padding: 40px;
+    border-radius: 10px;
+    background-color: var(--form-background-color);
+    text-align: center;
+    margin: 0;
+}
+
+.form__title {
+    margin-bottom: 2rem;
+}
+
+.form__group {
+    position: relative;
+    height: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.form__input {
+    width: 100%;
+    height: 100%;
+    border: 2px solid #89ddff;
+    border-radius: 0.5rem;
+    color: inherit;
+    outline: none;
+    padding: 1.4rem;
+    background: none;
+    transition: all 150ms ease-in
+}
+
+.form__input:hover {
+    border-color: #ffcb6b !important;
+}
+
+.form__input:focus {
+    border-color: #ffcb6b !important;
+}
+
+.form__label {
+    position: absolute;
+    left: 0.8rem;
+    top: 0.8rem;
+    padding: 0 0.5rem;
+    background-color: var(--form-background-color);
+    color: #cfd8dcbf;
+    transition: all 150ms ease-in
+}
+
+.form__input[type="password"] {
+    position: relative;
+}
+
+.form__icon {
+    margin-right: 4px;
+}
+
+.password-control {
+    border-radius: 3px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0.8rem;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url(/static/svg/auth/view.svg) 0 0 no-repeat;
+    color: #fff
+}
+
+.password-control:hover,
+.password-control.view:hover {
+    background-color: #eeffff33
+}
+
+.password-control.view {
+    background: url(/static/svg/auth/no-view.svg) 0 0 no-repeat;
+}
+
+.submit-btn {
+    margin-bottom: 15px;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 5px;
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 600;
+    background-color: var(--green-color);
+    box-shadow: 0 0 10px 1px var(--green-color);
+    transition: all .2s ease
+}
+
+.submit-btn:hover {
+    box-shadow: none;
+}
+
+.form-text {
+    color: #eeffff;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.form-text-link {
+    color: #c3e88d;
+    transition: 0.2s;
+}
+
+.form-text-link:hover {
+    color: #a9dc76;
+}
+
+.form-error {
+    color: #ff5370;
+}
+
+.form__input:not(:placeholder-shown).form__input:not(:focus) ~ .form__label,
+.form__input:focus ~ .form__label {
+    top: -0.5rem;
+    left: 0.8rem;
+    font-size: 0.8rem;
+}
