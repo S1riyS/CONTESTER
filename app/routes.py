@@ -2,6 +2,7 @@ from flask import render_template, url_for
 
 from app import app, db
 from app.blueprints.admin.admin import admin
+from app.blueprints.auth.auth import auth
 from app.blueprints.api.api import api
 from app.blueprints.errors.handler import errors
 
@@ -10,6 +11,7 @@ from app.models import Grade, Topic, Task, Example, Test
 from app.contester.contester import languages
 
 app.register_blueprint(admin, url_prefix='/admin')
+app.register_blueprint(auth, url_prefix='/auth')
 app.register_blueprint(api, url_prefix='/api')
 app.register_blueprint(errors, url_prefix='/error')
 
