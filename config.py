@@ -1,8 +1,8 @@
 from os import environ, path
 from dotenv import load_dotenv
 
-basedir = path.abspath(path.dirname(__file__)) # Getting base directory
-load_dotenv(path.join(basedir, '.env')) # Loading env
+basedir = path.abspath(path.dirname(__file__))  # Getting base directory
+load_dotenv(path.join(basedir, '.env'))  # Loading env
 
 # Base Config
 class Config(object):
@@ -13,8 +13,22 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + path.join(basedir, 'app', 'db', 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+
+class ProdConfig(Config):
+    FLASK_ENV = 'production'
+    DEBUG = False
+    TESTING = False
+
+
 # Developing Config
 class DevConfig(Config):
     FLASK_ENV = 'development'
     DEBUG = True
     TESTING = True
+
+
+config = {
+    'dev': DevConfig,
+    'prod': ProdConfig,
+    'default': DevConfig,
+}
