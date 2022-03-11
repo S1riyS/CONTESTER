@@ -4,7 +4,7 @@
 
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 150px #1F2233 inset;
+    -webkit-box-shadow: 0 0 0 150px var(--form-background-color) inset;
     /* можно изменить на любой вариант цвета */
     -webkit-text-fill-color: #fff;
     font-family: inherit !important;
@@ -50,9 +50,9 @@ input:-webkit-autofill:focus {
     border-radius: 0.5rem;
     color: inherit;
     outline: none;
-    padding: 1.4rem;
     background: none;
-    transition: all 150ms ease-in
+    transition: all 150ms ease-in;
+    padding: 20px 35px 20px 20px;
 }
 
 .form__input:hover {
