@@ -14,8 +14,10 @@ class User(db.Model, UserMixin):
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
 
-    name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    surname = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    name = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+    surname = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+    email = sqlalchemy.Column(sqlalchemy.String, index=True, unique=True)
+    verified = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
 
     role_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("roles.id"))
     role = orm.relation('Role')
@@ -175,6 +177,8 @@ def init_db_data():
         admin = User(
             name='Админ',
             surname='Админович',
+            email='contester@mail.ru',
+            verified=True,
             role_id=db.session.query(Role).filter(Role.name == 'admin').first().id,
             grade_id=None,
             grade_letter=None
@@ -186,6 +190,8 @@ def init_db_data():
         user = User(
             name='Обычный',
             surname='Пользователь',
+            email='kirill.ankudinov.94@mail.ru',
+            verified=False,
             role_id=db.session.query(Role).filter(Role.name == 'user').first().id,
             grade_id=db.session.query(Grade).filter(Grade.number == 10).first().id,
             grade_letter='А'
