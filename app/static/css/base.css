@@ -309,38 +309,30 @@ ol.breadcrumb {
     flex-wrap: wrap;
 }
 
-.header .header__nav .navigation .item {
-    font-size: 20px;
-    display: inline-block;
-    margin: 0 15px;
-    color: var(--gray-color);
-    position: relative;
+.header .header__nav .navigation .header__nav_item:not(:last-of-type) {
+    margin-right: 10px;
 }
 
-.header .header__nav .navigation .item,
-.header .header__nav .navigation .item:after {
-    transition: all .2s ease;
+.header .header__nav .navigation .header__nav_button {
+    padding: 6px 24px;
+    border: none;
+    border-radius: 5px;
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 600;
+    transition: all .2s ease
 }
 
-.header .header__nav .navigation .item:hover {
-    color: var(--blue-color);
+.header .header__nav .navigation .header__nav_button:hover {
+    box-shadow: none !important;
 }
 
-.header .header__nav .navigation .item:after {
-    position: absolute;
-    bottom: -20px;
-    left: 0;
-    right: 0;
-    margin: auto;
-    width: 0;
-    content: '.';
-    color: transparent;
-    background: var(--blue-color);
-    height: 2px;
+.header .header__nav .navigation #login {
+    background-color: var(--green-color);
 }
 
-.header .header__nav .navigation .item:hover:after {
-    width: 80%;
+.header .header__nav .navigation #signup {
+    background-color: var(--darker-purple-color)
 }
 
 /* Page content */
