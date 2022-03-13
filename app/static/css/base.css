@@ -332,7 +332,7 @@ ol.breadcrumb {
 }
 
 .header .header__nav .navigation #signup {
-    background-color: var(--darker-purple-color)
+    background: linear-gradient(135deg, var(--darker-purple-color), var(--purple-color))
 }
 
 /* Page content */
