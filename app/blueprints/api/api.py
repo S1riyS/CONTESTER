@@ -1,10 +1,11 @@
 from flask import Blueprint, render_template, session, request, jsonify, make_response, url_for
+from flask_login import login_user
 from sqlalchemy import and_
 
 from app import db
 from app.contester.contester import Contester
 
-from app.models import User, Role, Grade, Topic, Task, Example, Test, load_user
+from app.models import User, Role, Grade, Topic, Task, Example, Test
 
 api = Blueprint('api', __name__)
 contester = Contester()
@@ -104,7 +105,7 @@ def login():
         return send_alert(False, 'Неверная почта или пароль')
     # Success
     elif user.check_password(data['password']):
-        load_user(user)
+        login_user(user)
         next_url = session['next_url'] or url_for('home_page')
         return make_response(jsonify({'success': True, 'redirect_url': next_url}), 200)
     # Error
