@@ -10,19 +10,3 @@ $(document).on('click', '.password-control', function () {
         inputField.attr('type', 'password');
     }
 });
-
-$(document).ready(function () {
-    $('.form__input').each(function () {
-        $(this).attr({
-            'readonly': ""
-        });
-    });
-
-    $('.form__input').on({
-        focus: function () {
-            $('.form__input').each(function () {
-                $(this).removeAttr('readonly')
-            });
-        }
-    })
-});
