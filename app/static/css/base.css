@@ -316,23 +316,19 @@ ol.breadcrumb {
 .header .header__nav .navigation .header__nav_button {
     padding: 6px 24px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     color: var(--text-color);
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 400;
     transition: all .2s ease
 }
 
-.header .header__nav .navigation .header__nav_button:hover {
-    box-shadow: none !important;
-}
-
-.header .header__nav .navigation #login {
-    background-color: var(--green-color);
+.header .header__nav .navigation #signup:hover {
+    border-color: var(--purple-color);
 }
 
 .header .header__nav .navigation #signup {
-    background: linear-gradient(135deg, var(--darker-purple-color), var(--purple-color))
+    border: 2px var(--darker-purple-color) solid;
 }
 
 /* Page content */
