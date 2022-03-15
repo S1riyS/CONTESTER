@@ -31,5 +31,3 @@ $(document).on('click', '.password-control', function () {
         inputField.attr('type', 'password');
     }
 });
-
-$('form .form__input').first().focus()
