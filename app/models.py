@@ -202,5 +202,5 @@ def init_db_data():
         db.session.commit()
 
 @login_manager.user_loader
-def load_user(user: User):
-    return db.session.query(User).get(user.id)
+def load_user(user_id):
+    return db.session.query(User).get(user_id)
