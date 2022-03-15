@@ -1,4 +1,4 @@
-import {showAlert} from "../../../../static/js/modules/alert.js";
+import {sendAuthAjax} from "./auth.js";
 
 $('#signup_form').submit(function (event) {
     event.preventDefault()
@@ -12,24 +12,6 @@ $('#signup_form').submit(function (event) {
         password: $('#password').val(),
         password_again: $('#password_again').val()
     }
-    console.log(data)
 
-    $.ajax({
-        type: 'POST',
-        url: '/api/auth/sign-up',
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(data),
-        success: function (response) {
-            let type;
-
-            if (response['success']) {
-                window.location = response['redirect_url']
-            } else {
-                showAlert(response['message'], 'danger');
-            }
-        },
-        error: function (xhr, textStatus, error) {
-            showAlert('Что-то пошло не так', 'danger');
-        }
-    });
+    sendAuthAjax('/api/auth/sign-up', data)
 })
