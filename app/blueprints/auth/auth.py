@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, make_response, jsonify
 
 from app import db
-from app.models import Grade, Topic
+from app.models import User, Role
 from app.forms.auth import LoginForm, SignUpForm
 
 

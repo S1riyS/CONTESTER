@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block js %}
-    <script src="{{ url_for('auth.static', filename='js/login.js') }}"></script>
+    <script type='module' src="{{ url_for('auth.static', filename='js/login.js') }}"></script>
     <script src="{{ url_for('auth.static', filename='js/auth.js') }}"></script>
 {% endblock %}
 
@@ -13,7 +13,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="form-wrapper box-shadow col-xl-4 offset-xl-4 offset-lg-1 col-lg-10 col-12">
-                <form action="" method="post" class="form" id=form>
+                <form action="" method="post" class="form" id=login_form>
                     {{ form.csrf_token }}
                     <h1 class="form__title">Вход</h1>
 

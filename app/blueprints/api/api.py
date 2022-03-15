@@ -4,7 +4,7 @@ from sqlalchemy import and_
 from app import db
 from app.contester.contester import Contester
 
-from app.models import User, Role, Grade, Topic, Task, Example, Test
+from app.models import User, Role, Grade, Topic, Task, Example, Test, load_user
 
 api = Blueprint('api', __name__)
 contester = Contester()
@@ -91,6 +91,25 @@ def signup():
 
     next_url = session['next_url'] or url_for('home_page')
     return make_response(jsonify({'success': True, 'redirect_url': next_url}), 200)
+
+
+@api.route('/auth/login', methods=['POST'])
+def login():
+    data = request.json
+    print(data)
+
+    user = db.session.query(User).filter(User.email == data['email']).first()
+    # Error
+    if not user:
+        return send_alert(False, 'Неверная почта или пароль')
+    # Success
+    elif user.check_password(data['password']):
+        load_user(user)
+        next_url = session['next_url'] or url_for('home_page')
+        return make_response(jsonify({'success': True, 'redirect_url': next_url}), 200)
+    # Error
+    else:
+        return send_alert(False, 'Неверная почта или пароль')
 
 
 # Admin API
