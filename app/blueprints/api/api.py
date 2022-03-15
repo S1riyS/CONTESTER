@@ -1,16 +1,24 @@
-from flask import Blueprint, render_template, request, jsonify, make_response
+from flask import Blueprint, render_template, session, request, jsonify, make_response, url_for
 from sqlalchemy import and_
 
 from app import db
 from app.contester.contester import Contester
 
-from app.models import Grade, Topic, Task, Example, Test
+from app.models import User, Role, Grade, Topic, Task, Example, Test
 
 api = Blueprint('api', __name__)
 contester = Contester()
 
 
 # TODO: Переименоаить API (api/create/task и т.д.)
+def send_alert(success: bool, message: str):
+    return make_response(jsonify(
+        {
+            'success': success,
+            'message': message
+        }
+    ), 200)
+
 
 # API
 @api.route('/send_code', methods=['POST'])
@@ -56,6 +64,35 @@ def get_topics():
     return jsonify(render_template('admin/dropdown/topic_list.html', topics=topics))
 
 
+# Auth api
+@api.route('/auth/sign-up', methods=['POST'])
+def signup():
+    data = request.json
+    print(data)
+
+    if db.session.query(User).filter(User.email == data['email']).first():
+        return send_alert(False, 'Пользователь с этой почтой уже зарегестрирован!')
+
+    if data['password'] != data['password_again']:
+        return send_alert(False, 'Пароли не совпадают')
+
+    user = User(
+        name=data['firstname'],
+        surname=data['lastname'],
+        email=data['email'],
+        role_id=db.session.query(Role).filter(Role.name == 'user').first().id,
+        grade_id=data['grade'],
+        grade_letter=data['letter'],
+    )
+    user.set_password(data['password'])
+
+    db.session.add(user)
+    db.session.commit()
+
+    next_url = session['next_url'] or url_for('home_page')
+    return make_response(jsonify({'success': True, 'redirect_url': next_url}), 200)
+
+
 # Admin API
 @api.route('/create_topic', methods=['POST'])
 def create_topic():
@@ -72,20 +109,9 @@ def create_topic():
         db.session.add(topic)
         db.session.commit()
 
-        return make_response(jsonify(
-            {
-                'success': True,
-                'message': 'Тема успешно создана!'
-            }
-        ), 200)
-
+        return send_alert(True, 'Тема успешно создана!')
     else:
-        return make_response(jsonify(
-            {
-                'success': False,
-                'message': 'Тема с таким именем уже существует'
-            }
-        ), 200)
+        return send_alert(False, 'Тема с таким именем уже существует')
 
 
 @api.route('/create_task', methods=['POST'])
@@ -104,12 +130,7 @@ def create_task():
     translit_names = [task_.translit_name for task_ in topic.get_tasks()]
 
     if task.translit_name in translit_names:
-        return make_response(jsonify(
-            {
-                'success': False,
-                'message': 'Задача с таким именем уже существует'
-            }
-        ), 200)
+        return send_alert(False, 'Задача с таким именем уже существует')
 
     else:
         db.session.add(task)
@@ -136,12 +157,7 @@ def create_task():
 
         db.session.commit()
 
-    return make_response(jsonify(
-        {
-            'success': True,
-            'message': 'Задача успешно создана'
-        }
-    ), 200)
+    return send_alert(True, 'Задача успешно создана')
 
 
 @api.route('/delete_task', methods=['POST'])
