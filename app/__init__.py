@@ -14,7 +14,7 @@ app.config.from_object(config.get(environ.get('FLASK_CONFIG') or 'default'))
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db, render_as_batch=True)
-# login_manager = LoginManager(app)
+login_manager = LoginManager(app)
 # moment = Moment(app)
 
 
