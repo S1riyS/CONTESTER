@@ -92,8 +92,14 @@
                 {# Navigation #}
                 <div id="header__nav" class="header__nav">
                     <nav class="navigation">
-                        <a href="{{ url_for('auth.login_page') }}"  id="login" class="header__nav_item header__nav_button">Войти</a>
-                        <a href="{{ url_for('auth.signup_page') }}" id="signup" class="header__nav_item header__nav_button">Регистрация</a>
+                        {% if current_user.is_authenticated %}
+                            <a href="">{{ current_user.name }} {{ current_user.surname }}</a>
+                        {% else %}
+                            <a href="{{ url_for('auth.login_page') }}" id="login"
+                               class="header__nav_item header__nav_button">Войти</a>
+                            <a href="{{ url_for('auth.signup_page') }}" id="signup"
+                               class="header__nav_item header__nav_button">Регистрация</a>
+                        {% endif %}
                     </nav>
                 </div>
             </div>

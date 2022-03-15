@@ -1,6 +1,7 @@
 from functools import wraps
 
 from flask import render_template, url_for, request, session
+from flask_login import current_user
 
 from app import app, db
 from app.blueprints.admin.admin import admin
