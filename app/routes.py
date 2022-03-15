@@ -1,4 +1,6 @@
-from flask import render_template, url_for
+from functools import wraps
+
+from flask import render_template, url_for, request, session
 
 from app import app, db
 from app.blueprints.admin.admin import admin
@@ -16,18 +18,31 @@ app.register_blueprint(api, url_prefix='/api')
 app.register_blueprint(errors, url_prefix='/error')
 
 
+# Decoration function which adds current url to session variable
+def next_url(func):
+    @wraps(func)
+    def wrapper_function(*args, **kwargs):
+        session['next_url'] = request.url
+        return func(*args, **kwargs)
+
+    return wrapper_function
+
+
 @app.route('/')
 @app.route('/home')
+@next_url
 def home_page():
     return render_template('home.html', title='Главная')
 
 
 @app.route('/all-tasks', methods=['GET'])
+@next_url
 def lessons_page():
     return render_template('lessons.html', title='Все задания')
 
 
 @app.route('/<int:grade_number>', methods=['GET'])
+@next_url
 def grade_page(grade_number):
     grade = db.session.query(Grade).filter(Grade.number == grade_number).first_or_404()
     topics = grade.get_topics()
@@ -45,6 +60,7 @@ def grade_page(grade_number):
 
 
 @app.route('/<int:grade_number>/<string:topic_translit_name>', methods=['GET'])
+@next_url
 def topic_page(grade_number, topic_translit_name):
     grade = db.session.query(Grade).filter(Grade.number == grade_number).first_or_404()
     topic = db.session.query(Topic).filter(Topic.translit_name == topic_translit_name).first_or_404()
@@ -67,6 +83,7 @@ def topic_page(grade_number, topic_translit_name):
 
 
 @app.route('/<int:grade_number>/<string:topic_translit_name>/<string:task_translit_name>', methods=['GET'])
+@next_url
 def task_page(grade_number, topic_translit_name, task_translit_name):
     grade = db.session.query(Grade).filter(Grade.number == grade_number).first_or_404()
     topic = db.session.query(Topic).filter(Topic.translit_name == topic_translit_name).first_or_404()
@@ -86,7 +103,6 @@ def task_page(grade_number, topic_translit_name, task_translit_name):
             'link': None
         }
     ]
-
 
     return render_template('task.html', title=task.name,
                            grade=grade, topic=topic, task=task, example=task.get_example(),
