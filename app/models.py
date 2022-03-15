@@ -5,7 +5,7 @@ from sqlalchemy import orm
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from app import db
+from app import db, login_manager
 from app.utils import ru2en_transliteration
 
 
@@ -200,3 +200,7 @@ def init_db_data():
         db.session.add(user)
 
         db.session.commit()
+
+@login_manager.user_loader
+def load_user(user: User):
+    return db.session.query(User).get(user.id)
