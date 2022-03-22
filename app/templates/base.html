@@ -93,7 +93,12 @@
                 <div id="header__nav" class="header__nav">
                     <nav class="navigation">
                         {% if current_user.is_authenticated %}
-                            <a href="">{{ current_user.name }} {{ current_user.surname }}</a>
+                            <a id="profile" class="header__nav_item" type="button">
+                                <i class="fa fa-user-o" aria-hidden="true"></i>
+                                {{ current_user.name }} {{ current_user.surname }}
+                            </a>
+                            <a href="{{ url_for('auth.signup_page') }}" id="logout"
+                               class="header__nav_item header__nav_button">Выйти</a>
                         {% else %}
                             <a href="{{ url_for('auth.login_page') }}" id="login"
                                class="header__nav_item header__nav_button">Войти</a>

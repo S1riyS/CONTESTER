@@ -309,6 +309,10 @@ ol.breadcrumb {
     flex-wrap: wrap;
 }
 
+.header .header__nav .navigation .header__nav_item {
+    transition: all .2s ease
+}
+
 .header .header__nav .navigation .header__nav_item:not(:last-of-type) {
     margin-right: 10px;
 }
@@ -320,7 +324,6 @@ ol.breadcrumb {
     color: var(--text-color);
     font-size: 16px;
     font-weight: 400;
-    transition: all .2s ease
 }
 
 .header .header__nav .navigation #signup:hover {
@@ -329,6 +332,33 @@ ol.breadcrumb {
 
 .header .header__nav .navigation #signup {
     border: 2px var(--darker-purple-color) solid;
+}
+
+.header .header__nav .navigation #profile {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    color: var(--darker-text-color);
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.header .header__nav .navigation #profile:hover {
+    color: var(--text-color);
+}
+
+.header .header__nav .navigation #profile .fa {
+    margin-right: 5px;
+    font-size: 18px;
+}
+
+.header .header__nav .navigation #logout {
+    border: 2px var(--error-color) solid;
+    margin-left: 5px;
+}
+
+.header .header__nav .navigation #logout:hover {
+    border-color: var(--red-color);
 }
 
 /* Page content */
