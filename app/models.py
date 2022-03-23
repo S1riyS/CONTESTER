@@ -187,19 +187,6 @@ def init_db_data():
         admin.set_password(environ.get('ADMIN_PASSWORD'))
         db.session.add(admin)
 
-        # Creating user
-        user = User(
-            name='Обычный',
-            surname='Пользователь',
-            email='kirill.ankudinov.94@mail.ru',
-            verified=False,
-            role_id=db.session.query(Role).filter(Role.name == 'user').first().id,
-            grade_id=db.session.query(Grade).filter(Grade.number == 10).first().id,
-            grade_letter='А'
-        )
-        user.set_password('secret_user_password')
-        db.session.add(user)
-
         db.session.commit()
 
 @login_manager.user_loader
