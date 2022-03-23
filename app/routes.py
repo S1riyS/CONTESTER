@@ -1,9 +1,9 @@
 from functools import wraps
 
-from flask import render_template, url_for, request, session
-from flask_login import current_user
+from flask import render_template, redirect, url_for, request, session
+from flask_login import current_user, login_required
 
-from app import app, db
+from app import app, db, login_manager
 from app.blueprints.admin.admin import admin
 from app.blueprints.auth.auth import auth
 from app.blueprints.api.api import api
@@ -27,6 +27,13 @@ def next_url(func):
         return func(*args, **kwargs)
 
     return wrapper_function
+
+
+# Unauthorized handler
+@login_manager.unauthorized_handler
+def unauthorized_callback():
+    session['next_url'] = request.path
+    return redirect(url_for('auth.login_page'))
 
 
 @app.route('/')
@@ -109,3 +116,9 @@ def task_page(grade_number, topic_translit_name, task_translit_name):
                            grade=grade, topic=topic, task=task, example=task.get_example(),
                            languages=languages, breadcrumbs=breadcrumbs,
                            is_admin=True)
+
+
+@app.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile_page():
+    return render_template('profile.html', title='Профиль')

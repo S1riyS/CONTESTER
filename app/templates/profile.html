@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 col-md-5 col-12">
+                <div class="user__info">
+                    <div class="avatar__block">
+                        <img src="{{ url_for('static', filename='images/default_avatar.jpg') }}" alt="avatar"
+                             class="avatar__image">
+                        <p class="avatar__text">{{ current_user.name[0] }}{{ current_user.surname[0] }}</p>
+                    </div>
+                    <div class="name__block user__info__block">
+                        <i class="fa fa-2x fa-user-o" aria-hidden="true"></i>
+                        <h1 class="name__text">{{ current_user.name }} {{ current_user.surname }},
+                            {{ current_user.grade.number }}{{ current_user.grade_letter }}</h1>
+                    </div>
+                    <div class="email__block user__info__block">
+                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                        <p class="email__text">{{ current_user.email }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 offset-lg-4 offset-md-5 col-md-7 col-12"></div>
+        </div>
+    </div>
+{% endblock %}
