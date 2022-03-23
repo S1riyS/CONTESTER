@@ -322,6 +322,7 @@ ol.breadcrumb {
     border: none;
     border-radius: 8px;
     color: var(--text-color);
+    background: transparent;
     font-size: 16px;
     font-weight: 400;
 }
@@ -337,7 +338,6 @@ ol.breadcrumb {
 .header .header__nav .navigation #profile {
     display: flex;
     align-items: center;
-    background: transparent;
     color: var(--darker-text-color);
     font-weight: 600;
     font-size: 16px;
@@ -354,7 +354,6 @@ ol.breadcrumb {
 
 .header .header__nav .navigation #logout {
     border: 2px var(--error-color) solid;
-    margin-left: 5px;
 }
 
 .header .header__nav .navigation #logout:hover {
