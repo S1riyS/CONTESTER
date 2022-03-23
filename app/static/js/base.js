@@ -33,17 +33,10 @@ $('#logout').click(function () {
         url: '/api/auth/logout',
         contentType: 'application/json;charset=UTF-8',
         success: function (response) {
-                let type;
-
-                if (response['success']) {
-                    type = 'success'
-                } else {
-                    type = 'danger'
-                }
-                showAlert(response['message'], type);
-            },
-            error: function (error) {
-                showAlert('Что то пошло не так', 'danger');
-            }
+            window.location = response['redirect_url']
+        },
+        error: function (error) {
+            showAlert('Что-то пошло не так', 'danger');
+        }
     });
 })

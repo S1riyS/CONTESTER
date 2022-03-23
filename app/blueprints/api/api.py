@@ -46,7 +46,6 @@ def send_solution():
 
 @api.route('/task/submissions', methods=['POST'])
 def get_submissions():
-    print(request.json)
     return jsonify(render_template('responses/submissions.html'))
 
 
@@ -117,7 +116,7 @@ def login():
 @api.route('/auth/logout', methods=['POST'])
 def logout():
     logout_user()
-    return send_alert(True, 'Выполнен выход из аккаунта')
+    return make_response(jsonify({'redirect_url': url_for('home_page')}), 200)
 
 
 # Admin API
