@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, session, request, jsonify, make_response, url_for
-from flask_login import login_user
+from flask_login import login_user, logout_user
 from sqlalchemy import and_
 
 from app import db
@@ -22,8 +22,8 @@ def send_alert(success: bool, message: str):
 
 
 # API
-@api.route('/send_code', methods=['POST'])
-def send_code():
+@api.route('/task/solution', methods=['POST'])
+def send_solution():
     data = request.json
     print(data)
 
@@ -44,19 +44,20 @@ def send_code():
         return jsonify(render_template('responses/code_error.html'), count=5)
 
 
-@api.route('/get_submissions', methods=['POST'])
+@api.route('/task/submissions', methods=['POST'])
 def get_submissions():
+    print(request.json)
     return jsonify(render_template('responses/submissions.html'))
 
 
-@api.route('/send_report', methods=['POST'])
+@api.route('/task/report', methods=['POST'])
 def send_report():
     data = request.json
     print(data)
     return jsonify({'status': 'OK'})
 
 
-@api.route('/get_topics', methods=['POST'])
+@api.route('/topics', methods=['POST'])
 def get_topics():
     data = request.json
     grade = db.session.query(Grade).filter(Grade.id == data['grade_id']).first()
@@ -113,8 +114,14 @@ def login():
         return send_alert(False, 'Неверная почта или пароль')
 
 
+@api.route('/auth/logout', methods=['POST'])
+def logout():
+    logout_user()
+    return send_alert(True, 'Выполнен выход из аккаунта')
+
+
 # Admin API
-@api.route('/create_topic', methods=['POST'])
+@api.route('/admin/topic', methods=['POST'])
 def create_topic():
     data = request.json
     print(data)
@@ -134,7 +141,7 @@ def create_topic():
         return send_alert(False, 'Тема с таким именем уже существует')
 
 
-@api.route('/create_task', methods=['POST'])
+@api.route('/admin/task', methods=['POST'])
 def create_task():
     data = request.json
 
@@ -180,13 +187,14 @@ def create_task():
     return send_alert(True, 'Задача успешно создана')
 
 
-@api.route('/delete_task', methods=['POST'])
+@api.route('/admin/task', methods=['DELETE'])
 def delete_task():
     data = request.json
     return jsonify({'status': 'OK'})
 
 
-@api.route('/get_task_input_block', methods=['POST'])
+@api.route('/admin/test_block', methods=['POST'])
 def get_task_input_block():
     data = request.json
+    print(data)
     return jsonify(render_template('responses/single_test_block.html', test_number=data['test_number']))

@@ -165,7 +165,7 @@ $('#submit-code__btn').click(function () {
 
         // Sending AJAX request to server
         $.ajax({
-            url: '/api/send_code',
+            url: '/api/task/solution',
             type: 'POST',
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify(request),

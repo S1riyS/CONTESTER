@@ -46,7 +46,7 @@ $('#dropdown__grade .dropdown-item').click(function () {
 
     $.ajax({
         type: 'POST',
-        url: '/api/get_topics',
+        url: '/api/topics',
         contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify(data),
         success: function (response) {

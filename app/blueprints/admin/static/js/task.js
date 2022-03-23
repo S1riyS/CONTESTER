@@ -6,10 +6,11 @@ function createTestBlock() {
     let request = {
         test_number: current_test
     }
+    console.log(JSON.stringify(request))
 
     $.ajax({
         type: 'POST',
-        url: '/api/get_task_input_block',
+        url: '/api/admin/test_block',
         contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify(request),
         success: function (response) {
@@ -73,7 +74,7 @@ $("#task_from").submit(function (event) {
 
         $.ajax({
             type: 'POST',
-            url: '/api/create_task',
+            url: '/api/admin/task',
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify(request),
             success: function (response) {
@@ -87,7 +88,7 @@ $("#task_from").submit(function (event) {
                 showAlert(response['message'], type);
             },
             error: function (error) {
-                showAlert('Что то пошло не так', 'danger');
+                showAlert('Что-то пошло не так', 'danger');
             }
         });
     }

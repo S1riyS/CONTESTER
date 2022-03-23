@@ -1,3 +1,5 @@
+import {showAlert} from "./modules/alert.js";
+
 let cords = ['scrollX', 'scrollY'];
 // сохраняем позицию скролла в localStorage
 window.addEventListener('beforeunload', e => cords.forEach(cord => localStorage[cord] = window[cord]));
@@ -24,3 +26,24 @@ $(function () {
         $(this).addClass('active').siblings().removeClass('active').closest('div.tabs').children('div.tabs_content').removeClass('active').eq($(this).index()).addClass('active');
     });
 });
+
+$('#logout').click(function () {
+    $.ajax({
+        type: 'POST',
+        url: '/api/auth/logout',
+        contentType: 'application/json;charset=UTF-8',
+        success: function (response) {
+                let type;
+
+                if (response['success']) {
+                    type = 'success'
+                } else {
+                    type = 'danger'
+                }
+                showAlert(response['message'], type);
+            },
+            error: function (error) {
+                showAlert('Что то пошло не так', 'danger');
+            }
+    });
+})

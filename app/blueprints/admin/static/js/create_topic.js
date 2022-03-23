@@ -10,7 +10,7 @@ $("#create_topic_from").submit(function (event) {
 
     $.ajax({
         type: 'POST',
-        url: '/api/create_topic',
+        url: '/api/admin/topic',
         contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify(data),
         success: function (response) {

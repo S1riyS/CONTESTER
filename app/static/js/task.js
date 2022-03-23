@@ -94,7 +94,7 @@ $('#submissions-tab').on('shown.bs.tab', function (e) {
     let submissionsLoader = $('#submissions__loader')
 
     $.ajax({
-        url: '/api/get_submissions',
+        url: '/api/task/submissions',
         type: 'POST',
         contentType: 'application/json;charset=UTF-8',
         // Before send
@@ -135,7 +135,7 @@ $('#report_form').submit(function (event) {
     // Sending AJAX
     $.ajax({
         type: 'POST',
-        url: '/api/send_report',
+        url: '/api/task/report',
         contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify(data),
         success: function (response) {
