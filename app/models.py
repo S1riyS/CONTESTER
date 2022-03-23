@@ -1,3 +1,4 @@
+from os import environ
 import datetime
 
 import sqlalchemy
@@ -183,7 +184,7 @@ def init_db_data():
             grade_id=None,
             grade_letter=None
         )
-        admin.set_password('secret_admin_password')
+        admin.set_password(environ.get('ADMIN_PASSWORD'))
         db.session.add(admin)
 
         # Creating user
