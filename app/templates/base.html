@@ -114,6 +114,23 @@
     </div>
 </header>
 
+{% if current_user.is_authenticated and not current_user.verified %}
+    <div id="confirmation" class="confirmation box-shadow">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="confirmation__body">
+                    <i class="confirmation__icon fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    <p class="confirmation__text">
+                        Для работы с системой необходимо подтвердить свою почту:
+                    </p>
+                    <a href="#" class="confirmation__button">Подтвердить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+
 {# Page content #}
 <main role="main" class="main">
     {% block content %}

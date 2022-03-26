@@ -6,9 +6,19 @@ function setScrollBarAttributes() {
     let sidebar = $('#sidebar');
     let taskMain = $('#task__main');
 
+    let headerHeight = $('#header').outerHeight();
+    let confirmationHeight
+    if ($('#confirmation').css('display') === 'none') {
+        confirmationHeight = 0
+    } else {
+        confirmationHeight = $('#confirmation').outerHeight()
+    }
+    let offsetValue = headerHeight + confirmationHeight;
+
+
     if (currentSidebarY <= 0) currentSidebarY = findPosY(sidebar);
 
-    if (pageYOffset > 70) {
+    if (pageYOffset > offsetValue) {
         sidebar.addClass('fixed_position')
         sidebar.removeClass('default_position')
         taskMain.addClass("offset-xl-2");

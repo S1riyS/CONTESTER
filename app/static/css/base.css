@@ -5,6 +5,7 @@
     --footer-color: #0e1012;
     --text-color: #e7eaef;
     --darker-text-color: #8e9fbf;
+    --dark-text-color: #343a40;
     --defaul-button-color: #292d3e;
     --defaul-icon-color: #1a1d28;
     --tooltip-backgroung: #ffffff;
@@ -15,6 +16,7 @@
     --green-color: #1ba94c;
     --darker-green-color: #10652e;
     --yellow-color: #ffcb6b;
+    --darker-yellow-color: #dbae52;
     --blue-color: #72a0fd;
     --red-color: #f07178;
     --purple-color: #727dfd;
@@ -259,7 +261,6 @@ ol.breadcrumb {
 /* Header */
 .header {
     padding: 15px 0;
-    margin-bottom: 20px;
     background: var(--header-color);
     z-index: 100;
 }
@@ -360,8 +361,48 @@ ol.breadcrumb {
     border-color: var(--red-color);
 }
 
+.confirmation {
+    padding: 10px;
+    background: linear-gradient(135deg, var(--darker-purple-color), var(--purple-color));
+}
+
+.confirmation .container-fluid {
+    width: 90%;
+}
+
+.confirmation .confirmation__body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.confirmation .confirmation__body .confirmation__icon {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.confirmation .confirmation__body .confirmation__text {
+    margin-right: 10px;
+}
+
+.confirmation .confirmation__body .confirmation__button {
+    color: var(--dark-text-color);
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 5px;
+    background: linear-gradient(135deg, var(--darker-yellow-color), var(--yellow-color));
+    background-size: 200% 100%;
+    transition: all .3s ease-in-out;
+}
+
+.confirmation .confirmation__body .confirmation__button:hover {
+    background-position: 100% 0;
+}
+
 /* Page content */
 .main {
+    margin-top: 20px;
     flex-grow: 1;
 }
 
