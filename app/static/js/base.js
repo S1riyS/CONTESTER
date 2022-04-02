@@ -40,3 +40,8 @@ $('#logout').click(function () {
         }
     });
 })
+
+$('#confirmEmailButton').on('click', function () {
+    $('#confirmEmailModal').modal('hide');
+    console.log(1)
+})

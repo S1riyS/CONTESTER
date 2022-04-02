@@ -132,6 +132,11 @@ pre {
     padding-bottom: 0;
 }
 
+.modal .modal-header .modal-title {
+    font-size: 24px;
+    font-weight: 600;
+}
+
 .modal .modal-body .form__title {
     font-size: 16px;
 }
@@ -157,9 +162,35 @@ pre {
     border: 2px solid var(--blue-color);
 }
 
+.modal .modal-body .modal__text {
+    font-size: 16px;
+}
+
+.modal .modal-body .modal__text .paragraph:not(:last-of-type) {
+    margin-bottom: 10px;
+}
+
 .modal-footer {
     border: none;
     padding-top: 0;
+}
+
+.modal .btn {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.13), 0 10px 10px rgba(0, 0, 0, 0.13) !important;
+}
+
+.modal-alert {
+    margin-top: 1rem;
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    font-size: 16px;
+}
+
+.modal span.email {
+    font-weight: 700;
+    color: var(--yellow-color);
 }
 
 /* Toast */
@@ -354,6 +385,7 @@ ol.breadcrumb {
 }
 
 .header .header__nav .navigation #logout {
+    padding: 4px 20px;
     border: 2px var(--error-color) solid;
 }
 
