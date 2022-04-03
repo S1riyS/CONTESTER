@@ -1,11 +1,13 @@
 from flask import Blueprint, render_template, session, request, jsonify, make_response, url_for
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
+from flask_mail import Message
 from sqlalchemy import and_
 
-from app import db
+from app import db, serializer
 from app.contester.contester import Contester
 
 from app.models import User, Role, Grade, Topic, Task, Example, Test
+from app.utils.email import send_email
 
 api = Blueprint('api', __name__)
 contester = Contester()
@@ -117,6 +119,25 @@ def login():
 def logout():
     logout_user()
     return make_response(jsonify({'redirect_url': url_for('home_page')}), 200)
+
+
+@api.route('/auth/confirm-email', methods=['PUT'])
+def confirm_email():
+    try:
+        email = current_user.email
+        token = serializer.dumps(email, salt='confirm-email')
+        link = url_for('auth.confirm_email', token=token, _external=True)
+        print(email, token, link)
+
+        send_email(subject='Подтвердите адрес электронной почты',
+                   recipients=[email],
+                   text_body=f'Ваша ссылка для подтверждения: {link}',
+                   html_body=render_template('auth/confirm_email.html', link=link))
+
+    except Exception:
+        return send_alert(False, 'При отправке письма произошла ошибка')
+
+    return send_alert(True, 'Письмо с подтверждением отправлено')
 
 
 # Admin API

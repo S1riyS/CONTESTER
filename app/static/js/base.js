@@ -43,5 +43,24 @@ $('#logout').click(function () {
 
 $('#confirmEmailButton').on('click', function () {
     $('#confirmEmailModal').modal('hide');
-    console.log(1)
+
+    $.ajax({
+        type: 'PUT',
+        url: '/api/auth/confirm-email',
+        contentType: 'application/json;charset=UTF-8',
+        success: function (response) {
+            let alertType;
+
+            if (response['success']) {
+                alertType = 'success'
+            } else {
+                alertType = 'danger'
+            }
+
+            showAlert(response['message'], alertType);
+        },
+        error: function(xhr, textStatus, error) {
+            showAlert('Что-то пошло не так', 'danger');
+        }
+    });
 })

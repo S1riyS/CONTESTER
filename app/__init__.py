@@ -5,6 +5,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_moment import Moment
 from flask_migrate import Migrate
+from flask_mail import Mail
+from itsdangerous import URLSafeTimedSerializer
 
 from config import config
 
@@ -16,6 +18,8 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db, render_as_batch=True)
 login_manager = LoginManager(app)
 # moment = Moment(app)
+mail = Mail(app)
+serializer = URLSafeTimedSerializer(environ.get('SECRET_KEY'))
 
 
 # Jinja2 global variables

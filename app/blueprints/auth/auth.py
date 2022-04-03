@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, make_response, jsonify
+from itsdangerous import SignatureExpired
 
-from app import db
+from app import db, serializer
 from app.models import User, Role
 from app.forms.auth import LoginForm, SignUpForm
 
@@ -16,3 +17,14 @@ def login_page():
 def signup_page():
     form = SignUpForm()
     return render_template('auth/sign_up.html', title='Регистрация', form=form)
+
+@auth.route('/confirm-email/<string:token>')
+def confirm_email(token):
+    try:
+        email = serializer.loads(token, salt='confirm-email', max_age=3600)
+
+
+    except SignatureExpired:
+        return '<h1>The token is expired</h1>'
+
+    return '<h1>The token works</h1>'
