@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('auth.static', filename='css/after_confirm.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="confirmation__result">
+                {% if success %}
+                    <p class="result__status success">{{ status }}</p>
+                {% else %}
+                    <p class="result__status">{{ status }}</p>
+                    <p class="result__text">Отправьте повторный запрос на подтверждение</p>
+                {% endif %}
+
+                <a href="{{ url_for('home_page') }}" class="go_home__button">
+                    Перейти на главную
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
