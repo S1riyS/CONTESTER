@@ -22,7 +22,7 @@
 }
 
 .result__status.success {
-    color: var(--green-color);
+    color: var(--success-color);
 }
 
 .result__text {
