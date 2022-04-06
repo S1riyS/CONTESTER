@@ -18,16 +18,19 @@
 .result__status {
     font-size: 45px;
     font-weight: 600;
-    color: var(--error-color);
+    background: linear-gradient(45deg, var(--error-color) 0%, var(--red-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .result__status.success {
-    color: var(--success-color);
+    background: linear-gradient(100deg, var(--green-color) 0%, var(--success-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .result__text {
     font-size: 20px;
-    margin-top: 5px;
 }
 
 .go_home__button {
@@ -35,7 +38,7 @@
     background: transparent;
     color: var(--text-color);
     font-size: 18px;
-    padding: 12px 14px;
+    padding: 9px 18px;
     border: 2px solid var(--purple-color);
     border-radius: 10px;
     transition: all .2s ease;
