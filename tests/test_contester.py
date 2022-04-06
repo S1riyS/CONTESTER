@@ -5,6 +5,23 @@ import unittest
 
 from app.contester.contester import Contester, Status
 
+test_code = {
+    'python': {
+        'success': """a, b = list(map(int, input().split()))\nprint(a + b)"""
+    },
+    'pascal': {
+        'success': """var\n\ta, b:integer;\nbegin\n\treadln(a, b);\n\twriteln(a - b)\nend.""",
+    },
+    'cpp': {
+        'success': """#include <iostream>\n\nusing namespace std;\n\nint main() {\n\tint a, b;\n\tcin >> a >> b;\n\tcout << a * b;\n}"""
+    },
+    'csharp': {
+        'success': """using System;\n\nnamespace HelloWorld\n{\n\tclass Program\n\t{\n\t\tstatic void Main(string[] args)
+        \n\t\t{\n\t\t\tstring[] num = Console.ReadLine().Split(' ');\n\t\t\tint a = int.Parse(num[0]);\n\t\t\tint b = int.Parse(num[1]);
+        \n\t\t\tConsole.WriteLine(a + b);\n\t\t}\n\t}\n}"""
+    }
+}
+
 
 class ContesterTests(unittest.TestCase):
     def setUp(self) -> None:
@@ -25,7 +42,7 @@ class ContesterTests(unittest.TestCase):
 
     def test_python_success(self):
         # Problem: sum two numbers (a + b)
-        code = """a, b = list(map(int, input().split()))\nprint(a + b)"""
+        code = test_code['python']['success']
         language = 'python'
         tests = [
             {
@@ -42,7 +59,7 @@ class ContesterTests(unittest.TestCase):
 
     def test_pypy_success(self):
         # Problem: sum two numbers (a + b)
-        code = """a, b = list(map(int, input().split()))\nprint(a + b)"""
+        code = test_code['python']['success']
         language = 'pypy'
         tests = [
             {
@@ -59,7 +76,7 @@ class ContesterTests(unittest.TestCase):
 
     def test_pascal_success(self):
         # Problem: subtract b from a (a - b)
-        code = """var\n\ta, b:integer;\nbegin\n\treadln(a, b);\n\twriteln(a - b)\nend."""
+        code = test_code['pascal']['success']
         language = 'pascal'
         tests = [
             {
@@ -76,7 +93,7 @@ class ContesterTests(unittest.TestCase):
 
     def test_cpp_success(self):
         # Problem: multiply two numbers (a * b)
-        code = """#include <iostream>\n\nusing namespace std;\n\nint main() {\n\tint a, b;\n\tcin >> a >> b;\n\tcout << a * b;\n}"""
+        code = test_code['cpp']['success']
         language = 'cpp'
         tests = [
             {
@@ -93,22 +110,7 @@ class ContesterTests(unittest.TestCase):
 
     def test_csharp_success(self):
         # Problem: sum two numbers (a + b)
-        code = """using System;
-
-        namespace HelloWorld
-        {
-            class Program
-            {
-                static void Main(string[] args)
-                {
-                    string[] num = Console.ReadLine().Split(' ');
-                    int a = int.Parse(num[0]);
-                    int b = int.Parse(num[1]);
-                    Console.WriteLine(a + b);
-                }
-            }
-        }"""
-
+        code = test_code['csharp']['success']
         language = 'csharp'
         tests = [
             {
