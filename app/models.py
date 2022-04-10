@@ -72,6 +72,7 @@ class Topic(db.Model):
     def get_tasks(self):
         return db.session.query(Task).filter(Task.topic_id == self.id).all()
 
+
 class Task(db.Model):
     __tablename__ = "tasks"
 
@@ -104,6 +105,7 @@ class Task(db.Model):
 
         return tests_array
 
+
 class Example(db.Model):
     __tablename__ = "examples"
 
@@ -129,20 +131,6 @@ class Test(db.Model):
     is_hidden = sqlalchemy.Column(sqlalchemy.Boolean, default=True)
 
 
-class Report(db.Model):
-    __tablename__ = "reports"
-
-    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
-
-    user_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("users.id"))
-    user = orm.relation('User')
-
-    task_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("tasks.id"))
-    task = orm.relation('Task')
-
-    text = sqlalchemy.Column(sqlalchemy.Text)
-
-
 class Submission(db.Model):
     __tablename__ = "submissions"
 
@@ -160,9 +148,36 @@ class Submission(db.Model):
     submission_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.utcnow)
 
 
-def init_db_data():
-    db.session = db.session  # DB session
+class TestResult(db.Model):
+    __tablename__ = "test_result"
 
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
+
+    test_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("tests.id"))
+    test = orm.relation('Test')
+
+    submission_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("submissions.id"))
+    submission = orm.relation('Submission')
+
+    result = sqlalchemy.Column(sqlalchemy.String)
+    user_output = sqlalchemy.Column(sqlalchemy.String)
+
+
+class Report(db.Model):
+    __tablename__ = "reports"
+
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
+
+    user_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("users.id"))
+    user = orm.relation('User')
+
+    task_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("tasks.id"))
+    task = orm.relation('Task')
+
+    text = sqlalchemy.Column(sqlalchemy.Text)
+
+
+def init_db_data():
     # Creating grades
     if db.session.query(User).count() == 0:
         for grade in range(5, 12):
@@ -188,6 +203,7 @@ def init_db_data():
         db.session.add(admin)
 
         db.session.commit()
+
 
 @login_manager.user_loader
 def load_user(user_id):
