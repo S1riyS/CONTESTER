@@ -65,8 +65,7 @@
                                 <p class="item__text"> Тест {{ key }}</p>
                                 {# Locked test icon #}
                                 {% if value['info'] is none %}
-                                    <i class="fas locked_test__tab_icon fa-lock" data-tooltip="tooltip"
-                                       data-placement="top" data-original-title="Скопировать код"></i>
+                                    <i class="fas locked_test__tab_icon fa-lock"></i>
                                 {% endif %}
                             </a>
                         {% else %}
@@ -83,8 +82,7 @@
                                 <p class="item__text"> Тест {{ key }}</p>
                                 {# Locked test icon #}
                                 {% if value['info'] is none %}
-                                    <i class="fas locked_test__tab_icon fa-lock" title="Скопировать код"
-                                       data-toggle="tooltip" data-placement="right"></i>
+                                    <i class="fas locked_test__tab_icon fa-lock"></i>
                                 {% endif %}
                             </a>
                         {% endif %}
