@@ -147,8 +147,6 @@ $('#copy-code__btn').click(function () {
 let isRequestInProgress = false;
 // On click on "submit" button
 $('#submit-code__btn').click(function () {
-    showAlert('Решение отправлено на проверку', 'success');
-
     if (!isRequestInProgress) {
         let submitCodeButton = $('#submit-code__btn')
 
@@ -185,12 +183,12 @@ $('#submit-code__btn').click(function () {
             },
             // Success
             success: function (response) {
-                codeResponse.replaceWith(response) // setting generated HTML
+                codeResponse.replaceWith(response['result']) // setting generated HTML
                 scrollTo($('#code-response__body')) // Scrolling to response
             },
             // Error
             error: function () {
-                console.log('Error')
+                showAlert('Что-то пошло не так', 'danger');
             }
         })
     }

@@ -26,8 +26,19 @@ def send_alert(success: bool, message: str):
 # API
 @api.route('/task/solution', methods=['POST'])
 def send_solution():
+    if not current_user.is_authenticated:
+        return jsonify({
+            'result': render_template('responses/code_error.html',
+                                      message='Для отправки решений вам нужно войти в систему')
+        })
+
+    elif not current_user.verified:
+        return jsonify({
+            'result': render_template('responses/code_error.html',
+                                      message='Для отправки решений вам нужно подтвердить свою почту')
+        })
+
     data = request.json
-    print(data)
 
     task = db.session.query(Task).filter(
         and_(
@@ -41,9 +52,13 @@ def send_solution():
     response = contester.run_tests(code=data['code'], language=data['lang'], tests=tests)
 
     if response is not None:
-        return jsonify(render_template('responses/code_success.html', response=response))
+        return jsonify({
+            'result': render_template('responses/code_success.html', response=response)
+        })
     else:
-        return jsonify(render_template('responses/code_error.html'), count=5)
+        return jsonify({
+            'result': render_template('responses/code_error.html', message='Что-то пошло не так!')
+        })
 
 
 @api.route('/task/submissions', methods=['POST'])
