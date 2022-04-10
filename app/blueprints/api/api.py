@@ -29,13 +29,13 @@ def send_solution():
     if not current_user.is_authenticated:
         return jsonify({
             'result': render_template('responses/code_error.html',
-                                      message='Для отправки решений вам нужно войти в систему')
+                                      message='Для отправки решений необходимо войти в систему')
         })
 
     elif not current_user.verified:
         return jsonify({
             'result': render_template('responses/code_error.html',
-                                      message='Для отправки решений вам нужно подтвердить свою почту')
+                                      message='Для отправки решений необходимо подтвердить свою почту')
         })
 
     data = request.json
