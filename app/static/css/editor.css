@@ -215,6 +215,7 @@
 
 .code-response__body .tests-list .tests-list__item {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     padding: 15px 30px;
     font-size: 16px;
@@ -223,15 +224,32 @@
 
 .code-response__body .tests-list .tests-list__item.active {
     background-color: var(--editor-footer-color);
-
 }
 
 .code-response__body .tests-list .tests-list__item:hover {
     background-color: var(--editor-footer-color);
 }
 
+.code-response__body .tests-list .tests-list__item.successful {
+    color: #1ba94c;
+}
+
+.code-response__body .tests-list .tests-list__item.failed {
+    color: #ff5370;
+}
+
 .code-response__body .tests-list .tests-list_row {
     height: 430px;
+}
+
+.code-response__body .tests-list .item__text {
+    flex-grow: 1;
+    margin-right: 10px;
+    margin-left: 15px;
+}
+
+.code-response__body .tests-list .tests-list__item .locked_test__tab_icon {
+    margin-left: 10px;
 }
 
 .code-response__body .nav_col {
