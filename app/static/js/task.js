@@ -7,14 +7,13 @@ function setScrollBarAttributes() {
     let taskMain = $('#task__main');
 
     let headerHeight = $('#header').outerHeight();
-    let confirmationHeight
-    if ($('#confirmation').css('display') === 'none') {
-        confirmationHeight = 0
-    } else {
-        confirmationHeight = $('#confirmation').outerHeight()
-    }
-    let offsetValue = headerHeight + confirmationHeight;
+    let confirmationHeight = $('#confirmation').outerHeight() ;
 
+    if (typeof confirmationHeight === 'undefined') {
+         confirmationHeight = 0
+    }
+
+    let offsetValue = headerHeight + confirmationHeight;
 
     if (currentSidebarY <= 0) currentSidebarY = findPosY(sidebar);
 
