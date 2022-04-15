@@ -102,28 +102,27 @@
                                  aria-labelledby="response_tab_{{ key }}">
                         {% endif %}
 
-                    <div class="compiler__message tab-content__block">
-                        <p class="tab-content__title">Сообщение</p>
-                        <p class="compiler__message__text">{{ value['message'] }}</p>
-                    </div>
-
-                    {% if value['info'] is not none %}
-                        <div class="stdin tab-content__block">
-                            <p class="tab-content__title">Ввод (stdin)</p>
-                            <pre>{{ value['info']['stdin'] }}</pre>
-                        </div>
-                        <div class="expected-output tab-content__block">
-                            <p class="tab-content__title">Ожидаемый вывод</p>
-                            <pre>{{ value['info']['expected-output'] }}</pre>
+                        <div class="compiler__message tab-content__block">
+                            <p class="tab-content__title">Сообщение</p>
+                            <p class="compiler__message__text">{{ value['message'] }}</p>
                         </div>
 
-                    {% else %}
-                        <div class="locked-test">
-                            <i class="locked-test__icon fas fa-lock"></i>
-                            <p class="locked-test__text">Это скрытый тест</p>
+                        {% if value['info'] %}
+                            <div class="stdin tab-content__block">
+                                <p class="tab-content__title">Ввод (stdin)</p>
+                                <pre>{{ value['info']['stdin'] }}</pre>
+                            </div>
+                            <div class="expected-output tab-content__block">
+                                <p class="tab-content__title">Ожидаемый вывод</p>
+                                <pre>{{ value['info']['expected-output'] }}</pre>
+                            </div>
+                        {% else %}
+                            <div class="locked-test">
+                                <i class="locked-test__icon fas fa-lock"></i>
+                                <p class="locked-test__text">Это скрытый тест</p>
+                            </div>
+                        {% endif %}
                         </div>
-                    {% endif %}
-                    </div>
                     {% endfor %}
                     </div>
                 </div>

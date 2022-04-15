@@ -106,8 +106,6 @@ class Contester:
             # Checking if test can be shown
             if not current_test['hidden']:
                 result['info'] = {'stdin': current_test['stdin'], 'expected-output': current_test['output']}
-            else:
-                result['info'] = None
 
             response['test_number'] = test_number  # Writing test number to response
             response['result'] = result  # Writing result to response
