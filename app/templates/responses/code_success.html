@@ -44,7 +44,7 @@
             <div class="col-xl-3 col-md-4 col-5 nav_col">
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     {% for key, value in response['tests'].items() %}
-                        {% if value['status'] == 'OK' %}
+                        {% if value['success'] %}
                             {% set test_result = 'successful' %}
                         {% else %}
                             {% set test_result = 'failed' %}
@@ -73,7 +73,7 @@
                                href="#response_tab_content_{{ key }}" role="tab"
                                aria-controls="response_tab_content_{{ key }}" aria-selected="false">
                                 {# Status icon #}
-                                {% if value['status'] == 'OK' %}
+                                {% if value['success'] %}
                                     <i class="far fa-check-circle"></i>
                                 {% else %}
                                     <i class="far fa-times-circle"></i>

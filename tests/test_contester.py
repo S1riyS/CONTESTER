@@ -3,7 +3,7 @@ This is file with tests for Contester class (core of testing system)
 """
 import unittest
 
-from app.contester.contester import Contester, Status
+from app.contester.contester import Contester
 
 test_code = {
     'python': {
@@ -32,10 +32,10 @@ class ContesterTests(unittest.TestCase):
         self.assertIsNone(result)
 
     def test_get_number_of_passed_tests(self):
-        tests = {1: {'status': 'OK', 'message': 'Success', 'info': {'stdin': '1 2', 'expected-output': '3'}},
-                 2: {'status': 'ERROR', 'message': 'Wrong Answer', 'info': {'stdin': '1 5', 'expected-output': '6'}},
-                 3: {'status': 'OK', 'message': 'Success', 'info': None},
-                 4: {'status': 'ERROR', 'message': 'Time Limit Error', 'info': None}}
+        tests = {1: {'success': True, 'message': 'Success', 'info': {'stdin': '1 2', 'expected-output': '3'}},
+                 2: {'success': False, 'message': 'Wrong Answer', 'info': {'stdin': '1 5', 'expected-output': '6'}},
+                 3: {'success': True, 'message': 'Success', 'info': None},
+                 4: {'success': False, 'message': 'Time Limit Error', 'info': None}}
 
         result = self.contester._get_number_of_passed_tests(tests)
         self.assertEqual(result, 2)

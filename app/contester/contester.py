@@ -4,7 +4,10 @@ from typing import Optional, List
 
 import asyncio
 import aiohttp
+from flask_login import current_user
 
+from app import app, db
+from app.models import Submission, TestResult
 from .errors import TestingSystemError, ServerResponseError, ExecutionError, WrongAnswerError, TimeLimitError
 from .fix_asyncio import silence_event_loop_closed
 
@@ -44,16 +47,10 @@ languages = {
 }
 
 
-class Status:
-    OK = 'OK'
-    ERROR = 'ERROR'
-
-
 class Contester:
     def __init__(self):
         self.API = 'https://wandbox.org/api/compile.json'  # API URL
         self.HEADERS = {'Content-Type': "application/json;charset=UTF-8"}  # Request headers
-        self.DEBUG_RESPONSE = True  # Hide/show output testing result in console
 
     @staticmethod
     def _compare_answers(program_output: str, expected_output: str) -> Optional[WrongAnswerError]:
@@ -62,7 +59,7 @@ class Contester:
 
     @staticmethod
     def _get_number_of_passed_tests(tests: List[dict]) -> int:
-        return len([result for result in tests.values() if result['status'] == Status.OK])
+        return len([result for result in tests.values() if result['success']])
 
     async def _run_single_test(self,
                                session: aiohttp.ClientSession,
@@ -99,11 +96,11 @@ class Contester:
 
         # Handling errors
         except (ServerResponseError, ExecutionError, WrongAnswerError, TimeLimitError) as error:
-            result = {'status': Status.ERROR, 'message': error.message}
+            result = {'success': False, 'message': error.message}
 
         # If everything OK
         else:
-            result = {'status': Status.OK, 'message': 'Success'}
+            result = {'success': True, 'message': 'Success'}
 
         finally:
             # Checking if test can be shown
@@ -162,6 +159,11 @@ class Contester:
                 # Number of passed tests
                 response['passed_tests'] = self._get_number_of_passed_tests(response['tests'])
 
+                # submission = Submission(
+                #     user_id=current_user.id,
+                #
+                # )
+
                 return response
 
         return None
@@ -178,7 +180,7 @@ class Contester:
         loop = asyncio.new_event_loop()  # Creating async loop
         response = loop.run_until_complete(self._get_testing_results(code, language, tests))
 
-        if self.DEBUG_RESPONSE:
+        if app.config.get('TESTING'):
             pprint.pprint(response, indent=4)
 
         return response
