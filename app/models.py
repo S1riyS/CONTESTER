@@ -2,7 +2,7 @@ from os import environ
 import datetime
 
 import sqlalchemy
-from sqlalchemy import orm
+from sqlalchemy.orm import relationship
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -21,10 +21,10 @@ class User(db.Model, UserMixin):
     verified = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
 
     role_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("roles.id"))
-    role = orm.relation('Role')
+    role = relationship('Role')
 
     grade_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("grades.id"))
-    grade = orm.relation('Grade')
+    grade = relationship('Grade')
     grade_letter = sqlalchemy.Column(sqlalchemy.String)
 
     hashed_password = sqlalchemy.Column(sqlalchemy.String)
@@ -61,7 +61,7 @@ class Topic(db.Model):
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
 
     grade_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("grades.id"))
-    grade = orm.relation('Grade')
+    grade = relationship('Grade')
 
     name = sqlalchemy.Column(sqlalchemy.String)
     translit_name = sqlalchemy.Column(sqlalchemy.String)
@@ -79,7 +79,7 @@ class Task(db.Model):
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
 
     topic_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("topics.id"))
-    topic = orm.relation('Topic')
+    topic = relationship('Topic')
 
     name = sqlalchemy.Column(sqlalchemy.String)
     translit_name = sqlalchemy.Column(sqlalchemy.String)
@@ -112,7 +112,7 @@ class Example(db.Model):
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
 
     task_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("tasks.id"))
-    task = orm.relation('Task')
+    task = relationship('Task')
 
     example_input = sqlalchemy.Column(sqlalchemy.Text)
     example_output = sqlalchemy.Column(sqlalchemy.Text)
@@ -124,7 +124,7 @@ class Test(db.Model):
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
 
     task_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("tasks.id"))
-    task = orm.relation('Task')
+    task = relationship('Task')
 
     test_input = sqlalchemy.Column(sqlalchemy.Text)
     test_output = sqlalchemy.Column(sqlalchemy.Text)
@@ -137,10 +137,10 @@ class Submission(db.Model):
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
 
     user_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("users.id"))
-    user = orm.relation('User')
+    user = relationship('User')
 
     task_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("tasks.id"))
-    task = orm.relation('Task')
+    task = relationship('Task')
 
     language = sqlalchemy.Column(sqlalchemy.String)
     passed_tests = sqlalchemy.Column(sqlalchemy.Integer)
@@ -154,10 +154,10 @@ class TestResult(db.Model):
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
 
     test_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("tests.id"))
-    test = orm.relation('Test')
+    test = relationship('Test')
 
     submission_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("submissions.id"))
-    submission = orm.relation('Submission')
+    submission = relationship('Submission')
 
     result = sqlalchemy.Column(sqlalchemy.String)
     user_output = sqlalchemy.Column(sqlalchemy.String)
@@ -169,10 +169,10 @@ class Report(db.Model):
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
 
     user_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("users.id"))
-    user = orm.relation('User')
+    user = relationship('User')
 
     task_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("tasks.id"))
-    task = orm.relation('Task')
+    task = relationship('Task')
 
     text = sqlalchemy.Column(sqlalchemy.Text)
 
