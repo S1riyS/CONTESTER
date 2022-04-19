@@ -1,7 +1,6 @@
 :root {
     --sidebar-background: #212432;
     --sidebar-active-task: #292d3e;
-    --sidebar-item-hover: linear-gradient(135deg, var(--darker-purple-color), var(--purple-color));
 }
 
 .sidebar {
@@ -65,12 +64,13 @@
     margin: 10px;
 }
 
-.sidebar .sidebar__item:hover {
-    background: var(--sidebar-item-hover);
-}
-
 .sidebar .sidebar__item.active_task {
     background: var(--sidebar-active-task);
+    pointer-events: none
+}
+
+.sidebar .sidebar__item:hover {
+    background: var(--purple-color);
 }
 
 .sidebar .sidebar__item .item__link {
