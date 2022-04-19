@@ -53,19 +53,7 @@ Response can contain next messages: `Success`, `WrongAnswerError`,
 
 The editor was created using **[CodeMirror](https://codemirror.net/)**.
 
-When user is pressing `Send Code` button, an **AJAX** request is sent to the server with **JSON** like this:
-
-```json
-{
-  "code": "a, b = list(map(int, input().split()))\nprint(a + b)\n",
-  "lang": "python",
-  "task": {
-    "grade": 10,
-    "topic": "arithmetic",
-    "task_number": 1
-  }
-}
-```
+When user is pressing `Send Code` button, an **AJAX** request is sent to the server.
 
 Then CONTESTER's server sends async requests to **[WandboxAPI](https://github.com/melpon/wandbox)**. The code is
 executed there and then CONTESTER's server process results of execution and returns **JSON**, which is rendered into
@@ -89,7 +77,7 @@ executed there and then CONTESTER's server process results of execution and retu
 
   `pip install -r requirements.txt`
 
-Now you can start `run.py` file :
+Now you can start `app.py` file :
 
 ```python
 from app import app
