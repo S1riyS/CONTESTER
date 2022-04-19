@@ -59,21 +59,15 @@ class Contester:
 
     @staticmethod
     def _get_number_of_passed_tests(tests: List[dict]) -> int:
-        return len([result for result in tests.values() if result['success']])
+        return len([result for result in tests if result['success']])
 
-    async def _run_single_test(self,
-                               session: aiohttp.ClientSession,
-                               data: dict,
-                               current_test: dict,
-                               test_number: int) -> dict:
+    async def _run_single_test(self, session: aiohttp.ClientSession, data: dict, current_test: dict) -> dict:
         """
         :param session: aiohttp.ClientSession() object
         :param data: params which will be passed in the request
-        :param test_number: Number of test
         :return: Dictionary with result of test
         """
-        response = {}
-        result = {'status': None, 'message': None}
+        response = {'status': None, 'message': None}
 
         try:
             try:
@@ -96,19 +90,16 @@ class Contester:
 
         # Handling errors
         except (ServerResponseError, ExecutionError, WrongAnswerError, TimeLimitError) as error:
-            result = {'success': False, 'message': error.message}
+            response = {'success': False, 'message': error.message}
 
         # If everything OK
         else:
-            result = {'success': True, 'message': 'Success'}
+            response = {'success': True, 'message': 'Success'}
 
         finally:
             # Checking if test can be shown
             if not current_test['hidden']:
-                result['info'] = {'stdin': current_test['stdin'], 'expected-output': current_test['output']}
-
-            response['test_number'] = test_number  # Writing test number to response
-            response['result'] = result  # Writing result to response
+                response['info'] = {'stdin': current_test['stdin'], 'expected-output': current_test['output']}
 
         return response
 
@@ -129,7 +120,7 @@ class Contester:
             async with aiohttp.ClientSession() as session:
                 tasks = []
 
-                for index, current_test in enumerate(tests):
+                for current_test in tests:
                     # Forming content of request
                     data = {
                         'code': code,
@@ -138,18 +129,16 @@ class Contester:
                     }
 
                     # Creating asyncio task
-                    task = asyncio.ensure_future(self._run_single_test(session, data, current_test, index))
+                    task = asyncio.ensure_future(self._run_single_test(session, data, current_test))
                     tasks.append(task)
 
                 test_results = await asyncio.gather(*tasks)  # Running tasks
 
-                # Writing sub-dictionary with results of testing to response
-                for test_result in test_results:
-                    test_number = test_result['test_number'] + 1
-                    response['tests'][test_number] = test_result['result']
-
                 end_time = time.time()  # Getting time when tests were finished
 
+                # Results of test
+                response['tests'] = sorted(test_results, key=lambda item: item['success'])
+                pprint.pprint(test_results, indent=4)
                 # Language
                 response['language'] = {'fullname': current_language['fullname'], 'icon': current_language['icon']}
                 # Total time of testing

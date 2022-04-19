@@ -2,16 +2,14 @@
 {% set number_of_tests = response['tests']|length %}
 
 {% if passed_tests == number_of_tests %}
-    {% set status_color = '#1ba94c' %}
-{% elif passed_tests == 0 %}
-    {% set status_color = '#ff5370' %}
+    {% set result_status = 'successful' %}
 {% else %}
-    {% set status_color = '#ffcb6b' %}
+    {% set result_status = 'failed' %}
 {% endif %}
 
 <div class="code-response__body" id="code-response__body">
     <div class="code-response__header">
-        <div class="status" style="color: {{ status_color }};">
+        <div class="status {{ result_status }}">
             <i class="status__icon fas fa-2x fa-poll"></i>
             <p class="status__text">Пройдено тестов {{ passed_tests }}/{{ number_of_tests }}</p>
         </div>
@@ -43,89 +41,82 @@
         <div class="row tests-list_row">
             <div class="col-xl-3 col-md-4 col-5 nav_col">
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    {% for key, value in response['tests'].items() %}
+                    {% for value in response['tests'] %}
+                        {% set key = loop.index %}
+
                         {% if value['success'] %}
                             {% set test_result = 'successful' %}
                         {% else %}
                             {% set test_result = 'failed' %}
                         {% endif %}
 
-                        {% if key == 1 %}
-                            <a class="tests-list__item active {{ test_result }}" id="response_tab_{{ key }}"
-                               data-toggle="pill"
-                               href="#response_tab_content_{{ key }}" role="tab"
-                               aria-controls="response_tab_content_{{ key }}" aria-selected="true">
-                                {# Status icon #}
-                                {% if value['success'] %}
-                                    <i class="far fa-check-circle"></i>
-                                {% else %}
-                                    <i class="far fa-times-circle"></i>
-                                {% endif %}
-                                {# Test #}
-                                <p class="item__text"> Тест {{ key }}</p>
-                                {# Locked test icon #}
-                                {% if not value['info'] %}
-                                    <i class="fas locked_test__tab_icon fa-lock"></i>
-                                {% endif %}
-                            </a>
+                        {% if loop.first %}
+                            {% set classes = 'active' %}
+                            {% set aria_selected = true %}
                         {% else %}
-                            <a class="tests-list__item {{ test_result }}" id="response_tab_{{ key }}" data-toggle="pill"
-                               href="#response_tab_content_{{ key }}" role="tab"
-                               aria-controls="response_tab_content_{{ key }}" aria-selected="false">
-                                {# Status icon #}
-                                {% if value['success'] %}
-                                    <i class="far fa-check-circle"></i>
-                                {% else %}
-                                    <i class="far fa-times-circle"></i>
-                                {% endif %}
-                                {# Test #}
-                                <p class="item__text"> Тест {{ key }}</p>
-                                {# Locked test icon #}
-                                {% if not value['info'] %}
-                                    <i class="fas locked_test__tab_icon fa-lock"></i>
-                                {% endif %}
-                            </a>
+                            {% set classes = '' %}
+                            {% set aria_selected = false %}
                         {% endif %}
+
+                        <a class="tests-list__item {{ classes }} {{ test_result }}" id="response_tab_{{ key }}"
+                           data-toggle="pill"
+                           href="#response_tab_content_{{ key }}" role="tab"
+                           aria-controls="response_tab_content_{{ key }}" aria-selected="{{ aria_selected }}">
+                            {# Status icon #}
+                            {% if value['success'] %}
+                                <i class="far fa-check-circle"></i>
+                            {% else %}
+                                <i class="far fa-times-circle"></i>
+                            {% endif %}
+                            {# Test #}
+                            <p class="item__text"> Тест {{ key }}</p>
+                            {# Locked test icon #}
+                            {% if not value['info'] %}
+                                <i class="fas locked_test__tab_icon fa-lock"></i>
+                            {% endif %}
+                        </a>
                     {% endfor %}
                 </div>
             </div>
 
             <div class="col-xl-9 col-md-8 col-7 tab-content_col">
                 <div class="tab-content" id="v-pills-tabContent">
-                    {% for key, value in response['tests'].items() %}
-                        {% if key == 1 %}
-                            <div class="tab-pane fade show active" id="response_tab_content_{{ key }}"
-                                 role="tabpanel"
-                                 aria-labelledby="response_tab_{{ key }}">
+                    {% for value in response['tests'] %}
+                        {% set key = loop.index %}
+
+                        {% if loop.first %}
+                            {% set classes = 'show active' %}
                         {% else %}
-                            <div class="tab-pane fade" id="response_tab_content_{{ key }}" role="tabpanel"
-                                 aria-labelledby="response_tab_{{ key }}">
+                            {% set classes = '' %}
                         {% endif %}
 
-                        <div class="compiler__message tab-content__block">
-                            <p class="tab-content__title">Сообщение</p>
-                            <p class="compiler__message__text">{{ value['message'] }}</p>
-                        </div>
+                        <div class="tab-pane fade {{ classes }}" id="response_tab_content_{{ key }}"
+                             role="tabpanel"
+                             aria-labelledby="response_tab_{{ key }}">
+                            <div class="compiler__message tab-content__block">
+                                <p class="tab-content__title">Сообщение</p>
+                                <p class="compiler__message__text">{{ value['message'] }}</p>
+                            </div>
 
-                        {% if value['info'] %}
-                            <div class="stdin tab-content__block">
-                                <p class="tab-content__title">Ввод (stdin)</p>
-                                <pre>{{ value['info']['stdin'] }}</pre>
-                            </div>
-                            <div class="expected-output tab-content__block">
-                                <p class="tab-content__title">Ожидаемый вывод</p>
-                                <pre>{{ value['info']['expected-output'] }}</pre>
-                            </div>
-                        {% else %}
-                        <div class="locked-test">
-                            <i class="locked-test__icon fas fa-lock"></i>
-                            <p class="locked-test__text">Это скрытый тест</p>
+                            {% if value['info'] %}
+                                <div class="stdin tab-content__block">
+                                    <p class="tab-content__title">Ввод (stdin)</p>
+                                    <pre>{{ value['info']['stdin'] }}</pre>
+                                </div>
+                                <div class="expected-output tab-content__block">
+                                    <p class="tab-content__title">Ожидаемый вывод</p>
+                                    <pre>{{ value['info']['expected-output'] }}</pre>
+                                </div>
+                            {% else %}
+                                <div class="locked-test">
+                                    <i class="locked-test__icon fas fa-lock"></i>
+                                    <p class="locked-test__text">Это скрытый тест</p>
+                                </div>
+                            {% endif %}
                         </div>
-                    {% endif %}
-                    </div>
                     {% endfor %}
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>

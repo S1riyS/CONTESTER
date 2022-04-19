@@ -129,6 +129,14 @@
     font-family: 'JetBrains Mono', monospace;
 }
 
+.code-response__body .successful {
+    color: #1ba94c;
+}
+
+.code-response__body .failed {
+    color: #f33151;
+}
+
 .code-response__body .code-response__header {
     display: flex;
     justify-content: space-between;
@@ -228,14 +236,6 @@
 
 .code-response__body .tests-list .tests-list__item:hover {
     background-color: var(--editor-footer-color);
-}
-
-.code-response__body .tests-list .tests-list__item.successful {
-    color: #1ba94c;
-}
-
-.code-response__body .tests-list .tests-list__item.failed {
-    color: #ff5370;
 }
 
 .code-response__body .tests-list .tests-list_row {
