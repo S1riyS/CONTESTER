@@ -28,13 +28,13 @@ def send_alert(success: bool, message: str):
 def send_solution():
     if not current_user.is_authenticated:
         return jsonify({
-            'result': render_template('responses/code_error.html',
+            'result': render_template('responses/solution_error.html',
                                       message='Для отправки решений необходимо войти в систему')
         })
 
     elif not current_user.verified:
         return jsonify({
-            'result': render_template('responses/code_error.html',
+            'result': render_template('responses/solution_error.html',
                                       message='Для отправки решений необходимо подтвердить свою почту')
         })
 
@@ -53,11 +53,11 @@ def send_solution():
 
     if response is not None:
         return jsonify({
-            'result': render_template('responses/code_success.html', response=response)
+            'result': render_template('responses/solution_success.html', response=response)
         })
     else:
         return jsonify({
-            'result': render_template('responses/code_error.html', message='Что-то пошло не так!')
+            'result': render_template('responses/solution_error.html', message='Что-то пошло не так!')
         })
 
 

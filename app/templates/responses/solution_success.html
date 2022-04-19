@@ -56,7 +56,7 @@
                                href="#response_tab_content_{{ key }}" role="tab"
                                aria-controls="response_tab_content_{{ key }}" aria-selected="true">
                                 {# Status icon #}
-                                {% if value['status'] == 'OK' %}
+                                {% if value['success'] %}
                                     <i class="far fa-check-circle"></i>
                                 {% else %}
                                     <i class="far fa-times-circle"></i>
@@ -64,7 +64,7 @@
                                 {# Test #}
                                 <p class="item__text"> Тест {{ key }}</p>
                                 {# Locked test icon #}
-                                {% if value['info'] is none %}
+                                {% if not value['info'] %}
                                     <i class="fas locked_test__tab_icon fa-lock"></i>
                                 {% endif %}
                             </a>
@@ -81,7 +81,7 @@
                                 {# Test #}
                                 <p class="item__text"> Тест {{ key }}</p>
                                 {# Locked test icon #}
-                                {% if value['info'] is none %}
+                                {% if not value['info'] %}
                                     <i class="fas locked_test__tab_icon fa-lock"></i>
                                 {% endif %}
                             </a>
@@ -117,12 +117,12 @@
                                 <pre>{{ value['info']['expected-output'] }}</pre>
                             </div>
                         {% else %}
-                            <div class="locked-test">
-                                <i class="locked-test__icon fas fa-lock"></i>
-                                <p class="locked-test__text">Это скрытый тест</p>
-                            </div>
-                        {% endif %}
+                        <div class="locked-test">
+                            <i class="locked-test__icon fas fa-lock"></i>
+                            <p class="locked-test__text">Это скрытый тест</p>
                         </div>
+                    {% endif %}
+                    </div>
                     {% endfor %}
                     </div>
                 </div>
