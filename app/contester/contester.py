@@ -138,7 +138,6 @@ class Contester:
 
                 # Results of test
                 response['tests'] = sorted(test_results, key=lambda item: item['success'])
-                pprint.pprint(test_results, indent=4)
                 # Language
                 response['language'] = {'fullname': current_language['fullname'], 'icon': current_language['icon']}
                 # Total time of testing
