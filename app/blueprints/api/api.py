@@ -95,9 +95,9 @@ def signup():
         return send_alert(False, 'Пароли не совпадают')
 
     user = User(
-        name=data['firstname'],
-        surname=data['lastname'],
-        email=data['email'],
+        name=data['firstname'].strip(),
+        surname=data['lastname'].strip(),
+        email=data['email'].strip(),
         role_id=db.session.query(Role).filter(Role.name == 'user').first().id,
         grade_id=data['grade'],
         grade_letter=data['letter'],
@@ -163,7 +163,7 @@ def create_topic():
 
     topic = Topic(
         grade_id=data['grade_id'],
-        name=data['name']
+        name=data['name'].strip()
     )
     topic.set_translit_name()
 
@@ -183,8 +183,8 @@ def create_task():
     # Task
     task = Task(
         topic_id=data['path']['topic_id'],
-        name=data['information']['name'],
-        text=data['information']['condition']
+        name=data['information']['name'].strip(),
+        text=data['information']['condition'].strip()
     )
     task.set_translit_name()
 
