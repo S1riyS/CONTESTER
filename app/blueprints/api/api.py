@@ -49,7 +49,7 @@ def send_solution():
     ).first()
 
     tests = task.get_tests()
-    response = contester.run_tests(code=data['code'], language=data['lang'], tests=tests)
+    response = contester.run_tests(code=data['code'], language=data['lang'], task=task)
 
     if response is not None:
         return jsonify({

@@ -71,7 +71,7 @@
                             {# Test #}
                             <p class="item__text"> Тест {{ key }}</p>
                             {# Locked test icon #}
-                            {% if not value['info'] %}
+                            {% if value['test'].is_hidden %}
                                 <i class="fas locked_test__tab_icon fa-lock"></i>
                             {% endif %}
                         </a>
@@ -98,14 +98,15 @@
                                 <p class="compiler__message__text">{{ value['message'] }}</p>
                             </div>
 
-                            {% if value['info'] %}
+                            {% set test = value['test'] %}
+                            {% if not test.is_hidden %}
                                 <div class="stdin tab-content__block">
                                     <p class="tab-content__title">Ввод (stdin)</p>
-                                    <pre>{{ value['info']['stdin'] }}</pre>
+                                    <pre>{{ test.test_input }}</pre>
                                 </div>
                                 <div class="expected-output tab-content__block">
                                     <p class="tab-content__title">Ожидаемый вывод</p>
-                                    <pre>{{ value['info']['expected-output'] }}</pre>
+                                    <pre>{{ test.test_output }}</pre>
                                 </div>
                             {% else %}
                                 <div class="locked-test">
