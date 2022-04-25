@@ -36,8 +36,7 @@ def unauthorized_callback():
     return redirect(url_for('auth.login_page'))
 
 
-@app.route('/')
-@app.route('/home')
+@app.route('/', methods=['GET'])
 @next_url
 def home_page():
     return render_template('home.html', title='Главная')
