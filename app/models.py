@@ -136,6 +136,15 @@ class Submission(db.Model):
     source_code = sqlalchemy.Column(sqlalchemy.Text)
     submission_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.utcnow)
 
+    test_results = relationship('TestResult', back_populates="submission")
+
+    def get_result(self) -> dict:
+        failed_tests = [result for result in self.test_results if not result.success]
+        if any(failed_tests):
+            failed_test = failed_tests[0]
+            return {'success': False, 'message': failed_test.message}
+
+        return {'success': True, 'message': 'Success'}
 
 class TestResult(db.Model):
     __tablename__ = "test_result"
@@ -146,7 +155,7 @@ class TestResult(db.Model):
     test = relationship('Test')
 
     submission_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("submissions.id"))
-    submission = relationship('Submission')
+    submission = relationship('Submission', back_populates="test_results")
 
     success = sqlalchemy.Column(sqlalchemy.Boolean)
     message = sqlalchemy.Column(sqlalchemy.String)
