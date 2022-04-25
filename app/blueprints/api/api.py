@@ -6,7 +6,7 @@ from sqlalchemy import and_
 from app import db, serializer
 from app.contester.contester import Contester
 
-from app.models import User, Role, Grade, Topic, Task, Example, Test
+from app.models import User, Role, Grade, Topic, Task, Example, Test, Submission
 from app.utils.email import send_email
 
 api = Blueprint('api', __name__)
@@ -63,7 +63,8 @@ def send_solution():
 
 @api.route('/task/submissions', methods=['POST'])
 def get_submissions():
-    return jsonify(render_template('responses/submissions.html'))
+    submissions = db.session.query(Submission).filter(Submission.user_id == current_user.id)
+    return jsonify(render_template('responses/submissions_list.html', submissions=submissions))
 
 
 @api.route('/task/report', methods=['POST'])
