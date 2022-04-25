@@ -62,17 +62,38 @@ class Contester:
     def _get_number_of_passed_tests(tests: List[dict]) -> int:
         return len([result for result in tests if result['success']])
 
-    @staticmethod
-    def _results_to_database(results: List[dict], submission: Submission):
-        for result in results:
-            test_result = TestResult(
-                test_id=result['test'].id,
-                submission_id=submission.id,
-                success=result['success'],
-                message=result['message'],
-                user_output=result['user_output']
+    def _save_to_database(self, task: Task, code: str, language: str, results: List[dict], passed_tests: int) -> None:
+        """
+        Method that saves all information about user's submission in database
+        :param task: Task object
+        :param results: Dictionary with results of testing
+        :param code: User's code
+        :param language: Programming language
+        :param passed_tests: Number of passed tests
+        :return: None
+        """
+        if not self.TESTING_MODE:
+            submission = Submission(
+                user_id=current_user.id,
+                task_id=task.id,
+                language=language,
+                passed_tests=passed_tests,
+                source_code=code
             )
-            db.session.add(test_result)
+            db.session.add(submission)
+            db.session.commit()
+
+            for result in results:
+                test_result = TestResult(
+                    test_id=result['test'].id,
+                    submission_id=submission.id,
+                    success=result['success'],
+                    message=result['message'],
+                    user_output=result['user_output']
+                )
+                db.session.add(test_result)
+
+            db.session.commit()
 
     async def _run_single_test(self, session: aiohttp.ClientSession, data: dict, current_test: dict) -> dict:
         """
@@ -160,19 +181,11 @@ class Contester:
                 passed_tests = self._get_number_of_passed_tests(response['tests'])
                 response['passed_tests'] = passed_tests
 
-                if not self.TESTING_MODE:
-                    submission = Submission(
-                        user_id=current_user.id,
-                        task_id=task.id,
-                        language=current_language['fullname'],
-                        passed_tests=passed_tests,
-                        source_code=code
-                    )
-                    db.session.add(submission)
-                    db.session.commit()
-
-                    self._results_to_database(response['tests'], submission)
-                    db.session.commit()
+                self._save_to_database(task=task,
+                                       code=code,
+                                       language=current_language['fullname'],
+                                       results=response['tests'],
+                                       passed_tests=passed_tests)
 
                 return response
 
