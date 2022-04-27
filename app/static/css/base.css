@@ -26,7 +26,9 @@
     --gray-color: #aebdcb;
     --white-color: #eeffff;
     --error-color: #ff5370;
-    --success-color: #86FF53
+    --success-color: #86FF53;
+
+    --purple-gradient: linear-gradient(145deg, var(--darker-purple-color), var(--purple-color));
 }
 
 * {
