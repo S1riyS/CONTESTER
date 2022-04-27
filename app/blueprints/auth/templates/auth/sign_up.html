@@ -12,24 +12,10 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div class="form-wrapper box-shadow col-xl-4 offset-xl-4 offset-lg-1 col-lg-10 col-12">
-                <form id="signup_form" action="" method="post" class="form" autocomplete="off">
+            <div class="form-wrapper col-xl-4 offset-xl-4 offset-lg-1 col-lg-10 col-12">
+                <form id="signup_form" action="" method="post" class="form box-shadow" autocomplete="off">
                     {{ form.hidden_tag() }}
                     <h1 class="form__title">Регистрация</h1>
-
-                    <div class="form__group">
-                        {{ form.first_name(type="text", id="first_name", class="form__input", placeholder=" ") }}
-                        <label for="first_name" class="form__label">
-                            <i class="form__icon fa fa-user" aria-hidden="true"></i>Имя
-                        </label>
-                    </div>
-
-                    <div class="form__group">
-                        {{ form.last_name(type="text", id="last_name", class="form__input", placeholder=" ") }}
-                        <label for="last_name" class="form__label">
-                            <i class="form__icon fa fa-user" aria-hidden="true"></i>Фамилия
-                        </label>
-                    </div>
 
                     <div class="form__group form__group_dropdowns">
                         <div class="dropdown__group">
@@ -44,7 +30,20 @@
                             </p>
                             {{ form.letter }}
                         </div>
+                    </div>
 
+                    <div class="form__group">
+                        {{ form.first_name(type="text", id="first_name", class="form__input", placeholder=" ") }}
+                        <label for="first_name" class="form__label">
+                            <i class="form__icon fa fa-user" aria-hidden="true"></i>Имя
+                        </label>
+                    </div>
+
+                    <div class="form__group">
+                        {{ form.last_name(type="text", id="last_name", class="form__input", placeholder=" ") }}
+                        <label for="last_name" class="form__label">
+                            <i class="form__icon fa fa-user" aria-hidden="true"></i>Фамилия
+                        </label>
                     </div>
 
                     <div class="form__group">
@@ -71,13 +70,12 @@
                     </div>
 
                     {{ form.submit(type="submit", class="gradient-btn submit-btn") }}
-
-                    <p class="form-text">Уже есть аккаунт?
-                        <a class="form-text-link" href="{{ url_for('auth.login_page') }}">
-                            Войти
-                        </a>
-                    </p>
                 </form>
+                <p class="form-text">Уже есть аккаунт?
+                    <a class="form-text-link" href="{{ url_for('auth.login_page') }}">
+                        Войти
+                    </a>
+                </p>
             </div>
         </div>
     </div>

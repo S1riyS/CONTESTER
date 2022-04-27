@@ -22,29 +22,33 @@ input:-webkit-autofill:focus {
 
 .form-wrapper {
     padding: 0 !important;
-    background-color: #181A1F;
-    border-radius: 0.5rem;
+    text-align: center;
 }
 
 .form {
     padding: 40px;
-    border-radius: 10px;
+    border-radius: 8px;
     background-color: var(--form-background-color);
     text-align: center;
     margin: 0;
 }
 
+.form__title {
+    margin-bottom: 30px;
+    font-size: 28px;
+    text-align: left;
+}
+
 .form__group {
     position: relative;
     height: 3rem;
-    margin-top: 20px;
+    margin-bottom: 25px;
 }
 
 .form__group_dropdowns {
     display: flex;
     justify-content: space-between;
     height: fit-content;
-    margin-top: 15px;
 }
 
 .form__group_dropdowns .dropdown__group {
@@ -57,7 +61,7 @@ input:-webkit-autofill:focus {
 
 .form__group_dropdowns .dropdown__group_title {
     color: #cfd8dcbf;
-    margin-bottom: 3px;
+    margin-bottom: 5px;
 }
 
 
@@ -78,8 +82,7 @@ input:-webkit-autofill:focus {
 }
 
 .form__group select:focus,
-.form__group select:hover
-{
+.form__group select:hover {
     border-color: #ffcb6b !important;
 }
 
@@ -89,6 +92,7 @@ input:-webkit-autofill:focus {
 }
 
 .form__input {
+    font-size: 15px;
     width: 100%;
     height: 100%;
     border: 2px solid var(--form-border-color);
@@ -115,7 +119,7 @@ input:-webkit-autofill:focus {
     padding: 0 0.5rem;
     background-color: var(--form-background-color);
     color: #cfd8dcbf;
-    transition: all 150ms ease-in
+    transition: all 150ms ease-in;
 }
 
 .form__input[type="password"] {
@@ -149,16 +153,20 @@ input:-webkit-autofill:focus {
 }
 
 .submit-btn {
-    margin: 25px 0 10px;
-    padding: 10px 24px;
+    width: 100%;
+    padding: 12px 24px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     color: var(--text-color);
     font-size: 16px;
-    font-weight: 600;
-    background-color: var(--green-color);
-    box-shadow: 0 0 10px 1px var(--green-color);
-    transition: all .2s ease
+    font-weight: 400;
+    background: var(--purple-gradient);
+    background-size: 200% 100%;
+    transition: all .2s ease;
+}
+
+.submit-btn:hover {
+    background-position: 100% 0;
 }
 
 .submit-btn:hover {
@@ -166,6 +174,7 @@ input:-webkit-autofill:focus {
 }
 
 .form-text {
+    margin-top: 25px;
     color: #eeffff;
     font-size: 16px;
     margin-bottom: 10px;

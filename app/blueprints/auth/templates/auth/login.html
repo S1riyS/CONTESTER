@@ -12,10 +12,10 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div class="form-wrapper box-shadow col-xl-4 offset-xl-4 offset-lg-1 col-lg-10 col-12">
-                <form action="" method="post" class="form" id=login_form>
+            <div class="form-wrapper col-xl-4 offset-xl-4 offset-lg-1 col-lg-10 col-12">
+                <form action="" method="post" class="form box-shadow" id=login_form>
                     {{ form.csrf_token }}
-                    <h1 class="form__title">Вход</h1>
+                    <h1 class="form__title">Вход по логину и паролю</h1>
 
                     <div class="form__group">
                         {{ form.email(type="email", id="email", class_="form__input", placeholder=" ") }}
@@ -33,13 +33,12 @@
                     </div>
 
                     {{ form.submit(type="submit", class_="submit-btn") }}
-
-                    <p class="form-text">У вас нет учетной записи?
-                        <a class="form-text-link" href="{{ url_for('auth.signup_page') }}">
-                            Зарегестрироваться
-                        </a>
-                    </p>
                 </form>
+                <p class="form-text">У вас нет учетной записи?
+                    <a class="form-text-link" href="{{ url_for('auth.signup_page') }}">
+                        Зарегестрироваться
+                    </a>
+                </p>
             </div>
         </div>
     </div>
