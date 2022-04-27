@@ -379,8 +379,22 @@ ol.breadcrumb {
     border-color: var(--purple-color);
 }
 
+.header .header__nav .navigation #login {
+    border: 1px var(--purple-color) solid;
+}
+
+.header .header__nav .navigation #login:hover {
+    border: 1px var(--darker-purple-color) solid;
+}
+
 .header .header__nav .navigation #signup {
-    border: 2px var(--darker-purple-color) solid;
+    background: var(--purple-color);
+    border: 1px var(--purple-color) solid;
+}
+
+.header .header__nav .navigation #signup:hover {
+    background: var(--darker-purple-color);
+    border: 1px var(--darker-purple-color) solid;
 }
 
 .header .header__nav .navigation #profile {
