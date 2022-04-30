@@ -161,7 +161,7 @@ input:-webkit-autofill:focus {
     font-size: 16px;
     font-weight: 400;
     background: var(--purple-gradient);
-    background-size: 200% 100%;
+    background-size: 300% 100%;
     transition: all .2s ease;
 }
 
