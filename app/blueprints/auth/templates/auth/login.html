@@ -18,7 +18,8 @@
                     <h1 class="form__title">Вход по логину и паролю</h1>
 
                     <div class="form__group">
-                        {{ form.email(type="email", id="email", class_="form__input", placeholder=" ") }}
+                        {{ form.email(type="email", id="email", class_="form__input", placeholder=" ",
+                                onfocus="this.removeAttribute('readonly')", readonly=True) }}
                         <label for="email" class="form__label">
                             <i class="form__icon fa fa-envelope-o" aria-hidden="true"></i>Почта
                         </label>

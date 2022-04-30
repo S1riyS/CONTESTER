@@ -6,7 +6,7 @@
 
 {% block js %}
     <script type="module" src="{{ url_for('auth.static', filename='js/sign_up.js') }}"></script>
-    <script src="{{ url_for('auth.static', filename='js/auth.js') }}"></script>
+    <script type="module" src="{{ url_for('auth.static', filename='js/auth.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -47,7 +47,8 @@
                     </div>
 
                     <div class="form__group">
-                        {{ form.email(type="text", id="email", class="form__input", placeholder=" ") }}
+                        {{ form.email(type="email", id="email", class="form__input", placeholder=" ",
+                                onfocus="this.removeAttribute('readonly')", readonly=True) }}
                         <label for="email" class="form__label">
                             <i class="form__icon fa fa-envelope-o" aria-hidden="true"></i>Почта
                         </label>
