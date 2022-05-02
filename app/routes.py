@@ -42,12 +42,6 @@ def home_page():
     return render_template('home.html', title='Главная')
 
 
-@app.route('/all-tasks', methods=['GET'])
-@next_url
-def lessons_page():
-    return render_template('lessons.html', title='Все задания')
-
-
 @app.route('/<int:grade_number>', methods=['GET'])
 @next_url
 def grade_page(grade_number):
