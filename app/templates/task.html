@@ -158,6 +158,7 @@
                                 {# Сюда вставить картинку #}
                             </div>
 
+                            {% set example = task.get_example() %}
                             {% if example %}
                                 <div class="task__example task__header__block">
                                     <h4 class="example__title task__sub_title">Пример</h4>
