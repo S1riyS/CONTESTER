@@ -494,3 +494,19 @@ ol.breadcrumb {
     color: var(--cyan-color);
     margin-left: 3px;
 }
+
+.empty_response__body {
+    padding: 25px 25px 35px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.empty_response__body .empty_response__image {
+    width: 200px;
+    height: auto;
+}
+
+.empty_response__body .empty_response__text {
+    margin-top: 10px;
+}

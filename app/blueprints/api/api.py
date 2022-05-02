@@ -39,16 +39,16 @@ def send_solution():
         })
 
     data = request.json
+    path = data['path']
 
     task = db.session.query(Task).filter(
         and_(
-            Grade.number == data['path']['grade'],
-            Topic.translit_name == data['path']['topic'],
-            Task.translit_name == data['path']['task']
+            Grade.number == path['grade'],
+            Topic.translit_name == path['topic'],
+            Task.translit_name == path['task']
         )
     ).first()
 
-    tests = task.get_tests()
     response = contester.run_tests(code=data['code'], language=data['lang'], task=task)
 
     if response is not None:
@@ -63,9 +63,13 @@ def send_solution():
 
 @api.route('/task/submissions', methods=['POST'])
 def get_submissions():
-    submissions = db.session.query(Submission).filter(Submission.user_id == current_user.id)
-    return jsonify(render_template('responses/submissions_list.html', submissions=submissions))
+    if current_user.is_authenticated:
+        submissions = db.session.query(Submission).filter(Submission.user_id == current_user.id)
 
+        if submissions:
+            return jsonify(render_template('responses/submissions_list.html', submissions=submissions))
+
+    return jsonify(render_template('responses/empty_response.html'))
 
 @api.route('/task/report', methods=['POST'])
 def send_report():
@@ -96,8 +100,8 @@ def signup():
         return send_alert(False, 'Пароли не совпадают')
 
     user = User(
-        name=data['firstname'].strip(),
-        surname=data['lastname'].strip(),
+        name=data['firstname'].strip().capitalize(),
+        surname=data['lastname'].strip().capitalize(),
         email=data['email'].strip(),
         role_id=db.session.query(Role).filter(Role.name == 'user').first().id,
         grade_id=data['grade'],
@@ -121,11 +125,15 @@ def login():
     # Error
     if not user:
         return send_alert(False, 'Неверная почта или пароль')
+
     # Success
     elif user.check_password(data['password']):
         login_user(user)
+
         next_url = session['next_url'] or url_for('home_page')
+
         return make_response(jsonify({'success': True, 'redirect_url': next_url}), 200)
+
     # Error
     else:
         return send_alert(False, 'Неверная почта или пароль')

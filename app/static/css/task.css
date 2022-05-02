@@ -135,7 +135,8 @@ pre {
 }
 
 /* Submissions */
-.submissions .submissions_table {
+.submissions .submissions__body {
+    width: 100%;
     background: #212432;
 }
 
