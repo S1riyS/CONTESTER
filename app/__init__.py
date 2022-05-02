@@ -6,6 +6,7 @@ from flask_login import LoginManager
 from flask_moment import Moment
 from flask_migrate import Migrate
 from flask_mail import Mail
+from flask_breadcrumbs import Breadcrumbs
 from itsdangerous import URLSafeTimedSerializer
 
 from config import config
@@ -17,7 +18,8 @@ app.config.from_object(config.get(environ.get('FLASK_CONFIG') or 'default'))
 db = SQLAlchemy(app)
 migrate = Migrate(app, db, render_as_batch=True)
 login_manager = LoginManager(app)
-# moment = Moment(app)
+moment = Moment(app)
+Breadcrumbs(app=app)
 mail = Mail(app)
 serializer = URLSafeTimedSerializer(environ.get('SECRET_KEY'))
 

@@ -69,17 +69,12 @@
                 {% if breadcrumbs %}
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item">
-                                <a href="{{ url_for('home_page') }}">Главная</a>
-                            </li>
-                            {% for item in breadcrumbs %}
+                            {% for breadcrumb in breadcrumbs %}
                                 {% if loop.last %}
-                                    <li class="breadcrumb-item active" aria-current="page">
-                                        {{ item['text'] }}
-                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">{{ breadcrumb.text }}</li>
                                 {% else %}
                                     <li class="breadcrumb-item">
-                                        <a href="{{ item['link'] }}">{{ item['text'] }}</a>
+                                        <a href="{{ breadcrumb.url }}">{{ breadcrumb.text }}</a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
