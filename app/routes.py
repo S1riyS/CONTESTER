@@ -1,5 +1,3 @@
-from functools import wraps
-
 from flask import render_template, redirect, url_for, request, session
 from flask_login import current_user, login_required
 from flask_breadcrumbs import register_breadcrumb
@@ -63,8 +61,7 @@ def topic_page(grade_number, topic_translit_name):
     topic = db.session.query(Topic).filter(Topic.translit_name == topic_translit_name).first_or_404()
     tasks = topic.get_tasks()
 
-    return render_template('topic.html', title=topic.name,
-                           grade=grade, topic=topic, tasks=tasks)
+    return render_template('topic.html', title=topic.name, grade=grade, topic=topic, tasks=tasks)
 
 
 @app.route('/<int:grade_number>/<string:topic_translit_name>/<string:task_translit_name>', methods=['GET'])
@@ -75,9 +72,7 @@ def task_page(grade_number, topic_translit_name, task_translit_name):
     topic = db.session.query(Topic).filter(Topic.translit_name == topic_translit_name).first_or_404()
     task = db.session.query(Task).filter(Task.translit_name == task_translit_name).first_or_404()
 
-    return render_template('task.html', title=task.name,
-                           grade=grade, topic=topic, task=task, example=task.get_example(),
-                           languages=languages)
+    return render_template('task.html', title=task.name, grade=grade, topic=topic, task=task, languages=languages)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
