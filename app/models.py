@@ -3,11 +3,11 @@ import datetime
 
 import sqlalchemy
 from sqlalchemy.orm import relationship
-from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
+from transliterate import slugify
 
 from app import db, login_manager
-from app.utils.db import ru2en_transliteration
 
 
 class User(db.Model, UserMixin):
@@ -67,7 +67,7 @@ class Topic(db.Model):
     translit_name = sqlalchemy.Column(sqlalchemy.String)
 
     def set_translit_name(self):
-        self.translit_name = ru2en_transliteration(self.name)
+        self.translit_name = slugify(self.name)
 
     def get_tasks(self):
         return db.session.query(Task).filter(Task.topic_id == self.id).all()
@@ -86,7 +86,7 @@ class Task(db.Model):
     text = sqlalchemy.Column(sqlalchemy.Text)
 
     def set_translit_name(self):
-        self.translit_name = ru2en_transliteration(self.name)
+        self.translit_name = slugify(self.name)
 
     def get_example(self):
         return db.session.query(Example).filter(Example.task_id == self.id).first()
@@ -145,6 +145,7 @@ class Submission(db.Model):
             return {'success': False, 'message': failed_test.message}
 
         return {'success': True, 'message': 'Success'}
+
 
 class TestResult(db.Model):
     __tablename__ = "test_result"
