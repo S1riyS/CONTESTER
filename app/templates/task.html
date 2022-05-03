@@ -125,24 +125,25 @@
                     <div class="task tab-pane fade show active" id="task" role="tabpanel" aria-labelledby="task-tab">
                         <div class="task__header box-shadow">
                             <div class="task__header__buttons">
-                                {% if is_admin %}
-                                    <button data-tooltip="tooltip" data-placement="top" title="Изменить задачу"
-                                            class="default_button" id="report_task__btn">
-                                        <i class="default_button__icon fas fa-pen"></i>
-                                    </button>
+                                {% if current_user.is_authenticated %}
+                                    {% if current_user.role.name == 'admin' %}
+                                        <button data-tooltip="tooltip" data-placement="top" title="Изменить задачу"
+                                                class="default_button" id="report_task__btn">
+                                            <i class="default_button__icon fas fa-pen"></i>
+                                        </button>
 
-                                    <button data-toggle="modal" data-target="#deleteModal"
-                                            data-tooltip="tooltip" data-placement="top" title="Удалить задачу"
+                                        <button data-toggle="modal" data-target="#deleteModal"
+                                                data-tooltip="tooltip" data-placement="top" title="Удалить задачу"
+                                                class="alert_button" id="report_task__btn">
+                                            <i class="default_button__icon far fa-trash-alt"></i>
+                                        </button>
+                                    {% endif %}
+                                    <button data-toggle="modal" data-target="#reportModal"
+                                            data-tooltip="tooltip" data-placement="top" title="Пожаловаться на задачу"
                                             class="alert_button" id="report_task__btn">
-                                        <i class="default_button__icon far fa-trash-alt"></i>
+                                        <i class="default_button__icon fas fa-exclamation-triangle"></i>
                                     </button>
-
                                 {% endif %}
-                                <button data-toggle="modal" data-target="#reportModal"
-                                        data-tooltip="tooltip" data-placement="top" title="Пожаловаться на задачу"
-                                        class="alert_button" id="report_task__btn">
-                                    <i class="default_button__icon fas fa-exclamation-triangle"></i>
-                                </button>
                             </div>
                             <p class="task__title">{{ task.name }}</p>
                             <div class="task__condition task__header__block">
