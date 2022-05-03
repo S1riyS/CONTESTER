@@ -8,6 +8,7 @@ from app.contester.contester import Contester
 
 from app.models import User, Role, Grade, Topic, Task, Example, Test, Submission
 from app.utils.email import send_email
+from app.utils.db import get_task
 
 api = Blueprint('api', __name__)
 contester = Contester()
@@ -41,13 +42,14 @@ def send_solution():
     data = request.json
     path = data['path']
 
-    task = db.session.query(Task).filter(
-        and_(
-            Grade.number == path['grade'],
-            Topic.translit_name == path['topic'],
-            Task.translit_name == path['task']
-        )
-    ).first()
+    task = get_task(path['grade'], path['topic'], path['task'])
+    # task = db.session.query(Task).filter(
+    #     and_(
+    #         Grade.number == path['grade'],
+    #         Topic.translit_name == path['topic'],
+    #         Task.translit_name == path['task']
+    #     )
+    # ).first()
 
     response = contester.run_tests(code=data['code'], language=data['lang'], task=task)
 
