@@ -66,7 +66,7 @@ def send_solution():
 @api.route('/task/submissions', methods=['POST'])
 def get_submissions():
     if current_user.is_authenticated:
-        submissions = db.session.query(Submission).filter(Submission.user_id == current_user.id)
+        submissions = db.session.query(Submission).filter(Submission.user_id == current_user.id).all()
 
         if submissions:
             return jsonify(render_template('responses/submissions_list.html', submissions=submissions))
