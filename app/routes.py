@@ -9,23 +9,14 @@ from app.blueprints.api.api import api
 from app.blueprints.errors.handler import errors
 
 from app.models import Grade, Topic, Task, Example, Test
-import app.breadcrumbs as bc
 from app.contester.contester import languages
+from app.utils.routes import next_url
+import app.breadcrumbs as bc
 
 app.register_blueprint(admin, url_prefix='/admin')
 app.register_blueprint(auth, url_prefix='/auth')
 app.register_blueprint(api, url_prefix='/api')
 app.register_blueprint(errors, url_prefix='/error')
-
-
-# Decoration function which adds current url to session variable
-def next_url(func):
-    @wraps(func)
-    def wrapper_function(*args, **kwargs):
-        session['next_url'] = request.url
-        return func(*args, **kwargs)
-
-    return wrapper_function
 
 
 # Unauthorized handler
