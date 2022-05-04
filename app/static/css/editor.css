@@ -87,7 +87,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px;
+    padding: 14px 12px;
     background: var(--editor-footer-color);
     box-shadow: 0 -10px 15px rgba(26, 29, 40, 0.3);
     position: relative;
@@ -96,12 +96,12 @@
 .editor__footer .submit-code__btn {
     padding: 8px 12px;
     border-radius: 5px;
-    color: var(--text-color);
+    color: var(--dark-text-color);
     font-size: 16px;
     font-weight: 600;
     background-color: var(--green-color);
-    box-shadow: 0 0 10px 1px var(--green-color);
-    transition: all .2s ease
+    box-shadow: 0 0 10px 0.5px var(--green-color);
+    transition: all .3s ease
 }
 
 .editor__footer .submit-code__btn:hover {
