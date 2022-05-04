@@ -29,13 +29,13 @@ def send_alert(success: bool, message: str):
 def send_solution():
     if not current_user.is_authenticated:
         return jsonify({
-            'result': render_template('responses/solution_error.html',
+            'result': render_template('responses/solution/failure.html',
                                       message='Для отправки решений необходимо войти в систему')
         })
 
     elif not current_user.verified:
         return jsonify({
-            'result': render_template('responses/solution_error.html',
+            'result': render_template('responses/solution/failure.html',
                                       message='Для отправки решений необходимо подтвердить свою почту')
         })
 
@@ -55,11 +55,11 @@ def send_solution():
 
     if response is not None:
         return jsonify({
-            'result': render_template('responses/solution_success.html', response=response)
+            'result': render_template('responses/solution/success.html', response=response)
         })
     else:
         return jsonify({
-            'result': render_template('responses/solution_error.html', message='Что-то пошло не так!')
+            'result': render_template('responses/solution/failure.html', message='Что-то пошло не так!')
         })
 
 
@@ -69,7 +69,7 @@ def get_submissions():
         submissions = db.session.query(Submission).filter(Submission.user_id == current_user.id).all()
 
         if submissions:
-            return jsonify(render_template('responses/submissions_list.html', submissions=submissions))
+            return jsonify(render_template('responses/submissions/list.html', submissions=submissions))
 
     return jsonify(render_template('responses/empty_response.html'))
 
@@ -243,4 +243,4 @@ def delete_task():
 def get_task_input_block():
     data = request.json
     print(data)
-    return jsonify(render_template('responses/single_test_block.html', test_number=data['test_number']))
+    return jsonify(render_template('responses/admin/single_test_block.html', test_number=data['test_number']))
