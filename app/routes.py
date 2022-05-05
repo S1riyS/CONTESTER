@@ -9,7 +9,7 @@ from app.blueprints.api.api import api
 from app.blueprints.errors.handler import errors
 
 from app.models import Grade, Topic, Task, Example, Test
-from app.contester.contester import languages
+from app.contester.languages import languages_dict
 from app.utils.routes import next_url
 import app.breadcrumbs as bc
 
@@ -63,7 +63,7 @@ def task_page(grade_number, topic_translit_name, task_translit_name):
     topic = db.session.query(Topic).filter(Topic.translit_name == topic_translit_name).first_or_404()
     task = db.session.query(Task).filter(Task.translit_name == task_translit_name).first_or_404()
 
-    return render_template('task.html', title=task.name, grade=grade, topic=topic, task=task, languages=languages)
+    return render_template('task.html', title=task.name, grade=grade, topic=topic, task=task, languages=languages_dict)
 
 
 @app.route('/profile', methods=['GET', 'POST'])

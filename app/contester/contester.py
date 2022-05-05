@@ -8,43 +8,9 @@ from flask_login import current_user
 
 from app import app, db
 from app.models import Submission, TestResult, Task
-from .errors import TestingSystemError, ServerResponseError, ExecutionError, WrongAnswerError, TimeLimitError
+from .languages import languages
 from .fix_asyncio import silence_event_loop_closed
-
-# Dictionary with programming languages (name, compiler, CodeMirror mode)
-languages = {
-    'cpp': {
-        'name': 'C++',
-        'fullname': 'GNU C++ 11.1',
-        'compiler': 'gcc-11.1.0',
-        'mode': 'text/x-c++src',
-        'icon': 'cpp.svg'},
-    'csharp': {
-        'name': 'C#',
-        'fullname': 'C# Mono 6.12',
-        'compiler': 'mono-6.12.0.122',
-        'mode': 'text/x-csharp',
-        'icon': 'csharp.svg'},
-    'python': {
-        'name': 'Python 3',
-        'fullname': 'Python 3.8.9',
-        'compiler': 'cpython-3.8.9',
-        'mode': 'text/x-python',
-        'icon': 'python.svg',
-        'is_default': True},
-    'pypy': {
-        'name': 'Pypy 3',
-        'fullname': 'Pypy 3.7 (7.3.4)',
-        'compiler': 'pypy-3.7-v7.3.4',
-        'mode': 'text/x-python',
-        'icon': 'python.svg'},
-    'pascal': {
-        'name': 'Pascal',
-        'fullname': 'Free Pascal 3.2.0',
-        'compiler': 'fpc-3.2.0',
-        'mode': 'text/x-pascal',
-        'icon': 'default.svg'},
-}
+from .errors import TestingSystemError, ServerResponseError, ExecutionError, WrongAnswerError, TimeLimitError
 
 
 class Contester:
@@ -145,7 +111,7 @@ class Contester:
         :return: Dictionary with results of testing
         """
         response = {}  # Base of response
-        current_language = languages.get(language, None)
+        current_language = languages.get_language(language)
 
         if current_language is not None:
             compiler = current_language['compiler']  # Getting compiler
@@ -174,7 +140,7 @@ class Contester:
                 # Results of test
                 response['tests'] = sorted(test_results, key=lambda item: item['success'])
                 # Language
-                response['language'] = {'fullname': current_language['fullname'], 'icon': current_language['icon']}
+                response['language'] = languages.get_info(language)
                 # Total time of testing
                 response['time'] = "{0:.3f} sec".format(end_time - start_time)
                 # Number of passed tests
