@@ -335,9 +335,9 @@ ol.breadcrumb {
 }
 
 .header .header__logo .img {
-    width: 40px;
+    width: 45px;
     height: auto;
-    margin-right: 10px;
+    margin-right: 8px;
     transition: all .2s ease;
 }
 
