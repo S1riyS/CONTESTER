@@ -139,7 +139,7 @@ input:-webkit-autofill:focus {
     display: inline-block;
     width: 20px;
     height: 20px;
-    background: url(/static/svg/auth/view.svg) 0 0 no-repeat;
+    background: url(/static/images/svg/auth/view.svg) 0 0 no-repeat;
     color: #fff
 }
 
@@ -149,7 +149,7 @@ input:-webkit-autofill:focus {
 }
 
 .password-control.view {
-    background: url(/static/svg/auth/no-view.svg) 0 0 no-repeat;
+    background: url(/static/images/svg/auth/no-view.svg) 0 0 no-repeat;
 }
 
 .submit-btn {

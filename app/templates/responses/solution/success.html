@@ -28,8 +28,7 @@
                 <div class="info__content__item">
                     <p class="item__title">Язык программирования: </p>
                     <div class="item__content">
-                        {% set icon_url = 'svg/' + response['language']['icon'] %}
-                        <img class="item__content__icon" src="{{ url_for('static', filename=icon_url) }}" alt="icon">
+                        <img class="item__content__icon" src="{{ response['language']['icon'] }}" alt="icon">
                         <span class="item__content__text">{{ response['language']['fullname'] }}</span>
                     </div>
                 </div>
