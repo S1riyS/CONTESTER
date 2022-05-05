@@ -8,9 +8,10 @@ from flask_login import current_user
 
 from app import app, db
 from app.models import Submission, TestResult, Task
+from app.utils.fix_asyncio import silence_event_loop_closed
+
 from .languages import languages
-from .fix_asyncio import silence_event_loop_closed
-from .errors import TestingSystemError, ServerResponseError, ExecutionError, WrongAnswerError, TimeLimitError
+from .errors import ServerResponseError, ExecutionError, WrongAnswerError, TimeLimitError
 
 
 class Contester:
