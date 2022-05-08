@@ -29,38 +29,41 @@ class Contester:
     def _get_number_of_passed_tests(tests: List[dict]) -> int:
         return len([result for result in tests if result['success']])
 
-    def _save_to_database(self, task: Task, code: str, language: str, results: List[dict], passed_tests: int) -> None:
+    @staticmethod
+    def _save_to_database(task: Task, code: str, response: dict, language: str) -> None:
         """
         Method that saves all information about user's submission in database
         :param task: Task object
-        :param results: Dictionary with results of testing
         :param code: User's code
+        :param response: Dictionary with final response
         :param language: Programming language
-        :param passed_tests: Number of passed tests
         :return: None
         """
-        if not self.TESTING_MODE:
-            submission = Submission(
-                user_id=current_user.id,
-                task_id=task.id,
-                language=language,
-                passed_tests=passed_tests,
-                source_code=code
+        passed_tests = response['passed_tests']
+
+        submission = Submission(
+            user_id=current_user.id,
+            task_id=task.id,
+            language=language,
+            passed_tests=passed_tests,
+            source_code=code
+        )
+        db.session.add(submission)
+        db.session.commit()
+
+        results = response['tests']
+
+        for result in results:
+            test_result = TestResult(
+                test_id=result['test'].id,
+                submission_id=submission.id,
+                success=result['success'],
+                message=result['message'],
+                user_output=result['user_output']
             )
-            db.session.add(submission)
-            db.session.commit()
+            db.session.add(test_result)
 
-            for result in results:
-                test_result = TestResult(
-                    test_id=result['test'].id,
-                    submission_id=submission.id,
-                    success=result['success'],
-                    message=result['message'],
-                    user_output=result['user_output']
-                )
-                db.session.add(test_result)
-
-            db.session.commit()
+        db.session.commit()
 
     async def _run_single_test(self, session: aiohttp.ClientSession, data: dict, current_test: dict) -> dict:
         """
@@ -145,14 +148,11 @@ class Contester:
                 # Total time of testing
                 response['time'] = "{0:.3f} sec".format(end_time - start_time)
                 # Number of passed tests
-                passed_tests = self._get_number_of_passed_tests(response['tests'])
-                response['passed_tests'] = passed_tests
+                response['passed_tests'] = self._get_number_of_passed_tests(response['tests'])
 
-                self._save_to_database(task=task,
-                                       code=code,
-                                       language=current_language['fullname'],
-                                       results=response['tests'],
-                                       passed_tests=passed_tests)
+                # Saving results to DB
+                if not self.TESTING_MODE:
+                    self._save_to_database(task=task, code=code, response=response, language=language)
 
                 return response
 
