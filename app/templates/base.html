@@ -54,6 +54,7 @@
 
     {# CSS #}
     {% block css %}{% endblock %}
+
 </head>
 <body>
 {# Header #}
@@ -214,6 +215,8 @@
 
 {# JS #}
 <script type="module" src="{{ url_for('static', filename='js/base.js') }}"></script>
+{{ moment.include_moment() }}
+{{ moment.locale(LANGUAGE) }}
 {% block js %}{% endblock %}
 </body>
 </html>

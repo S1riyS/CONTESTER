@@ -118,6 +118,7 @@ $('#submissions-tab').on('shown.bs.tab', function (e) {
         // Success
         success: function (response) {
             submissions.html(response) // Setting generated HTML
+            flask_moment_render_all();
         },
         // Error
         error: function () {

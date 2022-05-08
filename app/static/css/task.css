@@ -159,7 +159,7 @@ pre {
 
 .submissions_table .language {
     padding-right: 60px !important;
-    text-align: right;
+    text-align: left;
 }
 
 .submissions_table .table_row__wrapper {
@@ -184,6 +184,36 @@ pre {
     padding: 14px 0;
     float: left;
     min-width: 0;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 400;
+}
+
+.table_row_column.result.success {
+    color: var(--green-color)
+}
+
+.table_row_column.result.fail {
+    color: var(--fail-color);
+}
+
+.table_row_column.result {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.table_row_column.result .result__icon {
+    margin-right: 6px;
+}
+
+.submissions_table .table_row_column.language {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.submissions_table .table_row_column.language .language__icon {
+    width: 25px;
+    height: auto;
+    margin-right: 5px;
 }

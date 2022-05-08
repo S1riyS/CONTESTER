@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, request, session
 from flask_login import current_user, login_required
 from flask_breadcrumbs import register_breadcrumb
 
-from app import app, db, login_manager
+from app import app, db, moment, login_manager
 from app.blueprints.admin.admin import admin
 from app.blueprints.auth.auth import auth
 from app.blueprints.api.api import api

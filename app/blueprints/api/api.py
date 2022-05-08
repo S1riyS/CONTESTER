@@ -5,6 +5,7 @@ from sqlalchemy import and_
 
 from app import db, serializer
 from app.contester.contester import Contester
+from app.contester.languages import languages
 
 from app.models import User, Role, Grade, Topic, Task, Example, Test, Submission
 from app.utils.email import send_email
@@ -69,7 +70,7 @@ def get_submissions():
         submissions = db.session.query(Submission).filter(Submission.user_id == current_user.id).all()
 
         if submissions:
-            return jsonify(render_template('responses/submissions/list.html', submissions=submissions))
+            return jsonify(render_template('responses/submissions/list.html', submissions=submissions, languages=languages))
 
     return jsonify(render_template('responses/empty_response.html'))
 

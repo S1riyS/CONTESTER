@@ -27,17 +27,28 @@
                         {% set submission_result = submission.get_result() %}
 
                         {% if submission_result['success'] %}
-                            {% set result_status = 'successful' %}
+                            {% set result_status = 'success' %}
                         {% else %}
-                            {% set result_status = 'failed' %}
+                            {% set result_status = 'fail' %}
                         {% endif %}
+
                         <div class="table_row_column result {{ result_status }}">
+                            {# Status icon #}
+                            {% if submission_result['success'] %}
+                                <i class="result__icon far fa-check-circle"></i>
+                            {% else %}
+                                <i class="result__icon far fa-times-circle"></i>
+                            {% endif %}
                             <p>{{ submission_result['message'] }}</p>
                         </div>
                         {# Language #}
-                        <div class="table_row_column language">{{ submission.language }}</div>
+                        <div class="table_row_column language">
+                            {% set language_info = languages.get_info(submission.language) %}
+                            <img src="{{ language_info['icon'] }}" alt="" class="language__icon">
+                            <p class="language__name">{{ language_info['fullname'] }}</p>
+                        </div>
                         {# Time #}
-                        <div class="table_row_column time">{{ submission.submission_date }}</div>
+                        <div class="table_row_column time">{{ moment(submission.submission_date).fromNow(refresh=True) }}</div>
                         {# View result #}
                         <div class="table_row_column view_result">View Result</div>
                     </div>
