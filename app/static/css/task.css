@@ -140,6 +140,10 @@ pre {
     background: #212432;
 }
 
+.submissions_table {
+    font-size: 15px;
+}
+
 .submissions_table .table_header__wrapper {
     border-bottom: 1px solid var(--table-separator)
 }
@@ -147,6 +151,7 @@ pre {
 .submissions_table .table_header {
     padding: 0 30px;
     display: flex;
+    color: var(--darker-text-color);
 }
 
 .submissions_table .table_header .table_header_column {
