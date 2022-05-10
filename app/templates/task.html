@@ -1,79 +1,27 @@
 {% extends "base.html" %}
 
 {% block css %}
-    {#  CodeMirror  #}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/codemirror.min.css"
-          integrity="sha512-CCnciBUnVXwa6IQT9q8EmGcarNit9GdKI5nJnj56B1iu0LuD13Qn/GZ+IUkrZROZaBdutN718NK6mIXdUjZGqg=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/theme/material-palenight.min.css"
-          integrity="sha512-uIAyXysSwPKYTS4BrBQGkt7i9ozdNjNA4jXfjFDl6fWIc2zDllleoiY5EkH7Ib2j+Qb8YJx4a5qy192JZqxqVg=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/fold/foldgutter.min.css"
-          integrity="sha512-YwkMTlTHn8dBnwa47IF+cKsS00HPiiVhQ4DpwT1KF2gUftfFR7aefepabSPLAs6zrMyD89M3w0Ow6mQ5XJEUCw=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/scroll/simplescrollbars.min.css"
-          integrity="sha512-2y3NTsei81d5emn5nwrdflyI5EGULwKXRZ0BCbO55cjgQ8x62X4ydH/jbnzrKnxArstf79F9n6z1j2MtVmJ8YA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    {#  ===== CodeMirror =====  #}
+    {% include 'codemirror/css.html' %}
+
     {#  Local CSS  #}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/task.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/editor.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/loader.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/submissions_table.css') }}">
 {% endblock %}
 
 {% block js %}
     {#  ===== CodeMirror =====  #}
     {#  Codemirror.js  #}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/codemirror.min.js"
-            integrity="sha512-4DlmQ+aBOfYTZ3uzRKCDXdyL7y8IlopnVChhXG0pRFgyvhwONVQW3JX8e5DYoXUNr3evQpLZz7S3O1XxMH4WKA=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {% include 'codemirror/init.html' %}
     {# == Mods == #}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/mode/python/python.min.js"
-            integrity="sha512-/mavDpedrvPG/0Grj2Ughxte/fsm42ZmZWWpHz1jCbzd5ECv8CB7PomGtw0NAnhHmE/lkDFkRMupjoohbKNA1Q=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/mode/pascal/pascal.min.js"
-            integrity="sha512-FskTD6xtu02tgjmJwbLeNzLpNRChqnWgcB3/yALsIuPp3Y6dpCx6O8HPFiOMBdzq6Bc82cBKantPm/rVy2yukQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/mode/clike/clike.min.js"
-            integrity="sha512-GAled7oA9WlRkBaUQlUEgxm37hf43V2KEMaEiWlvBO/ueP2BLvBLKN5tIJu4VZOTwo6Z4XvrojYngoN9dJw2ug=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {% include 'codemirror/mods.html' %}
     {#  == Addons == #}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/comment/comment.min.js"
-            integrity="sha512-U0udq4Tvwzb+OiL6f7aak/n07mlIutTl+pEPtKoK0oOTF4Q9SkLOQYvKpIaCIM8CKTufd7szgeN9VDcgXDVvWg=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/selection/active-line.min.js"
-            integrity="sha512-UNVAZmixdjeBtJVQcH5eSKXuVdzbSV6rzfTfNVyYWUIIDCdI9/G8/Z/nWplnSHXXxz9U8TA1BiJ1trK7abL/dg=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/edit/closebrackets.min.js"
-            integrity="sha512-cCnOU69ESswPmMV3f9TR7WgctoJZliqGbJ8WeLn0VlUrngSsmtVopRf6OG/epbURGfNmY4RY6RzZ/mWkPQ/onw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/edit/matchbrackets.min.js"
-            integrity="sha512-03Ei8A+mDhwF6O/CmXM47U4A9L7TobAxMbPV2Wn5cEbY76lngHQRyvvmnqhJ8IthfoxrRqmtoBxQCxOC7AOeKw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/scroll/simplescrollbars.min.js"
-            integrity="sha512-HbaqNZHZLix+FaENPr62o07Q2G46VYUDCLZyxo5fPE0lN1EIpncArGlznYfLu+q0Vy7eTR+EBcW23FypU+Jqpw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {% include 'codemirror/addons.html' %}
     {#  Addons/fold  #}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/fold/foldcode.min.js"
-            integrity="sha512-zpi1i9GnOG8aQI/E3vqtH5+mZ/U6heNGndQ/xZO4QL1Utt4XYXQzM69EaeheYAO12i6mDxSZ2a6IMEOACvUydQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/fold/foldgutter.min.js"
-            integrity="sha512-Yhrn0zU9jQBETdu3RUw6Rl+pSPWNl8xDxjiJkds2xNQapiaCiBX0et1ecl8VqUM421uWRwoa0ynzZ5knY8zt9w=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/fold/brace-fold.min.js"
-            integrity="sha512-vVV3x/YFatpYt7XhLDJoOL40Z0s5g5q/VXLYDxEw8J5zSatMvfKndmqBSzn9CNe5esCDZSu6003G0DYkyS80ww=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/fold/indent-fold.min.js"
-            integrity="sha512-Q6g5qQfa6ko+Y+0BwAciUAq01qxgfScTPFP2Fsrr+zIrTe5Yq3tN5xaA919MmBs/1RMz/jyctknYavjc3k+/xg=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/comment/comment.min.js"
-            integrity="sha512-U0udq4Tvwzb+OiL6f7aak/n07mlIutTl+pEPtKoK0oOTF4Q9SkLOQYvKpIaCIM8CKTufd7szgeN9VDcgXDVvWg=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/fold/comment-fold.min.js"
-            integrity="sha512-UKU458xnHR+JuKmlgf/jsYBq4/JJVipuY9wJ0CzS4E2xe5lETTWothmsd9afiH2i114eEKupsFP7Zer+CqWEWg=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {% include 'codemirror/fold.html' %}
 
     {#  Local scripts #}
     <script type="module" src="{{ url_for('static', filename='js/task.js') }}"></script>
