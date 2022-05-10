@@ -11,18 +11,22 @@
             <div class="route__body">
                 <h3 class="route__body_title">Задачи:</h3>
                 <div class="route__body_list">
-                    {% for task in tasks %}
-                        <div class="list_item">
-                            <a href="{{ url_for('task_page',
+                    {% if tasks %}
+                        {% for task in tasks %}
+                            <div class="list_item">
+                                <a href="{{ url_for('task_page',
                             grade_number=grade.number,
                             topic_translit_name=topic.translit_name,
                             task_translit_name=task.translit_name) }}"
-                               class="list_item__link"></a>
-                            <div class="list_item_content">
-                                <p class="item_title">{{ task.name }}</p>
+                                   class="list_item__link"></a>
+                                <div class="list_item_content">
+                                    <p class="item_title">{{ task.name }}</p>
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    {% else %}
+                        {% include 'responses/empty_response.html' %}
+                    {% endif %}
                 </div>
             </div>
         </div>

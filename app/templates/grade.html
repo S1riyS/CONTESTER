@@ -11,19 +11,23 @@
             <div class="route__body">
                 <h3 class="route__body_title">Список тем:</h3>
                 <div class="route__body_list">
-                    {% for topic in topics %}
-                        <div class="list_item">
-                            <a href="{{ url_for(
+                    {% if topics %}
+                        {% for topic in topics %}
+                            <div class="list_item">
+                                <a href="{{ url_for(
                             'topic_page',
                             grade_number=grade.number,
                             topic_translit_name=topic.translit_name
                             ) }}"
-                               class="list_item__link"></a>
-                            <div class="list_item_content">
-                                <p class="item_title">{{ topic.name }}</p>
+                                   class="list_item__link"></a>
+                                <div class="list_item_content">
+                                    <p class="item_title">{{ topic.name }}</p>
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    {% else %}
+                        {% include 'responses/empty_response.html' %}
+                    {% endif %}
                 </div>
             </div>
         </div>
