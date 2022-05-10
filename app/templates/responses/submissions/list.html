@@ -43,14 +43,14 @@
                         </div>
                         {# Language #}
                         <div class="table_row_column language">
-                            {% set language_info = languages.get_info(submission.language) %}
-                            <img src="{{ language_info['icon'] }}" alt="" class="language__icon">
-                            <p class="language__name">{{ language_info['fullname'] }}</p>
+                            {% set language = languages.get_language(submission.language)['language'] %}
+                            <img src="{{ language.icon_url }}" alt="Language icon" class="language__icon">
+                            <p class="language__name">{{ language.fullname }}</p>
                         </div>
                         {# Time #}
                         <div class="table_row_column time">{{ moment(submission.submission_date).fromNow(refresh=True) }}</div>
                         {# View result #}
-                        <div class="table_row_column view_result">View Result</div>
+                        <div class="table_row_column view_result">Посмотреть результат</div>
                     </div>
                 </div>
             {% endfor %}

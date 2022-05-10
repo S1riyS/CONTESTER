@@ -115,10 +115,11 @@ class Contester:
         :return: Dictionary with results of testing
         """
         response = {}  # Base of response
-        current_language = languages.get_language(language)
+        current_language_dict = languages.get_language(language)
 
-        if current_language is not None:
-            compiler = current_language['compiler']  # Getting compiler
+        if current_language_dict['success']:
+            current_language = current_language_dict['language']
+            compiler = current_language.compiler  # Getting compiler
             tests = task.get_tests()
             start_time = time.time()  # Getting time when tests were started
 
@@ -144,7 +145,7 @@ class Contester:
                 # Results of test
                 response['tests'] = sorted(test_results, key=lambda item: item['success'])
                 # Language
-                response['language'] = languages.get_info(language)
+                response['language'] = current_language
                 # Total time of testing
                 response['time'] = "{0:.3f} sec".format(end_time - start_time)
                 # Number of passed tests

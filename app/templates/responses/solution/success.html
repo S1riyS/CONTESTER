@@ -28,8 +28,9 @@
                 <div class="info__content__item">
                     <p class="item__title">Язык программирования: </p>
                     <div class="item__content">
-                        <img class="item__content__icon" src="{{ response['language']['icon'] }}" alt="icon">
-                        <span class="item__content__text">{{ response['language']['fullname'] }}</span>
+                        {% set language = response['language'] %}
+                        <img class="item__content__icon" src="{{ language.icon_url }}" alt="icon">
+                        <span class="item__content__text">{{ language.fullname }}</span>
                     </div>
                 </div>
             </div>

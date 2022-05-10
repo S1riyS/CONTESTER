@@ -201,16 +201,16 @@
                                             </button>
                                             <div class="dropdown-menu" id="dropdownMenuLanguage"
                                                  aria-labelledby="dropdownMenuButton">
-                                                {% for key, value in languages.items() %}
-                                                    {% if value['is_default'] %}
+                                                {% for key, language in languages.dictionary.items() %}
+                                                    {% if language.is_default %}
                                                         {% set is_active = 'active' %}
                                                     {% else %}
                                                         {% set is_active = '' %}
                                                     {% endif %}
 
                                                     <a class="dropdown-item {{ is_active }}" data-value="{{ key }}"
-                                                       data-mode="{{ value['mode'] }}">
-                                                        {{ value['name'] }}
+                                                       data-mode="{{ language.mode }}">
+                                                        {{ language.name }}
                                                     </a>
                                                 {% endfor %}
                                             </div>
