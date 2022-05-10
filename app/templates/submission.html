@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block css %}
+    {#  ===== CodeMirror =====  #}
+    {% include 'codemirror/css.html' %}
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/submission.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/editor.css') }}">
+{% endblock %}
+
+{% block js %}
+    {#  ===== CodeMirror =====  #}
+    {#  == Init ==  #}
+    {% include 'codemirror/init.html' %}
+    {# == Mods == #}
+    {% include 'codemirror/mods.html' %}
+    {#  == Addons == #}
+    {% include 'codemirror/addons.html' %}
+    {#  Addons/fold  #}
+    {% include 'codemirror/fold.html' %}
+
+    <script>
+        let config = {
+            mode: "{{ language.mode }}", // Language mode
+            theme: "material-palenight", // theme
+            lineNumbers: true, // set number
+            smartIndent: true, // smart indent
+            indentUnit: 4, // Smart indent in 4 spaces
+            indentWithTabs: true, // Smart indent with tabs
+            lineWrapping: true, //
+            // Add line number display, folder and syntax detector to the slot
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter", "CodeMirror-lint-markers"],
+            foldGutter: true, // Enable code folding in slots
+            autofocus: true, // Autofocus
+            matchBrackets: true, // Match end symbols, such as "],}"
+            autoCloseBrackets: true, // Auto close symbol
+            styleActiveLine: true, // Display the style of the selected row
+            scrollbarStyle: 'simple', // Scrollbar style,
+            readOnly: true
+        }
+        let editor = document.getElementById("editor");
+        let myCodeMirror = CodeMirror(editor, config)
+        myCodeMirror.setValue(`{{ code }}`)
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="submission__body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="submitted_code box-shadow col-lg-8 offset-lg-2 col-12">
+                    <div class="submitted_code__header">
+                        <p class="submission__time">
+                            Решение было отправлено {{ moment(submission.submission_date).fromNow(refresh=True) }}
+                        </p>
+
+                        {# Result #}
+                        {% set submission_result = submission.get_result() %}
+
+                        {% if submission_result['success'] %}
+                            {% set result_status = 'success' %}
+                        {% else %}
+                            {% set result_status = 'fail' %}
+                        {% endif %}
+
+                        <div class="submission__result">
+                            <strong>Результат:</strong>
+                            <div class="submission__result__message {{ result_status }}">
+                                {# Status icon #}
+                                {% if submission_result['success'] %}
+                                    <i class="result__icon far fa-check-circle"></i>
+                                {% else %}
+                                    <i class="result__icon far fa-times-circle"></i>
+                                {% endif %}
+
+                                {# Message #}
+                                <p>{{ submission_result['message'] }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="submitted_code__body">
+                        <h3 class="submitted_code__body__title">
+                            Отправленный код
+                        </h3>
+                        <div class="editor__header">
+                            <div class="header__left_side">
+                                <div class="language">
+                                    <strong>Язык:</strong>
+                                    <img src="{{ language.icon_url }}" alt="Language icon" class="language__icon">
+                                    <p class="language__name">{{ language.fullname }}</p>
+                                </div>
+                            </div>
+                            <div class="header__right_side"></div>
+                        </div>
+                        <div class="editor__body">
+                            <div id="editor"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

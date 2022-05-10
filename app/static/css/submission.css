@@ -1,0 +1,64 @@
+.submission__body .submitted_code {
+    background-color: #212432;
+    padding: 25px;
+}
+
+.submitted_code__header {
+    margin-bottom: 25px;
+}
+
+.submitted_code__header .submission__time {
+    margin-bottom: 8px;
+}
+
+.submission__result, .submission__result__message {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.submission__result__message {
+    margin-left: 10px;
+}
+
+.submission__result__message .result__icon {
+    margin-right: 3px;
+}
+
+.submission__result__message.success {
+    color: var(--green-color)
+}
+
+.submission__result__message.fail {
+    color: var(--fail-color);
+}
+
+
+.submitted_code__body .submitted_code__body__title {
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.submission__body .submitted_code__body #editor {
+    border: 1px solid #676e95;
+}
+
+.submitted_code__body .editor__header {
+    border-top: 1px solid #676e95;
+    border-left: 1px solid #676e95;
+    border-right: 1px solid #676e95;
+}
+
+.submitted_code__body .editor__header .language {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.submitted_code__body .editor__header .language .language__icon {
+    width: 25px;
+    height: auto;
+    margin-right: 3px;
+    margin-left: 8px;
+}
