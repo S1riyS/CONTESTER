@@ -68,11 +68,11 @@ def send_solution():
 def get_submissions():
     if current_user.is_authenticated:
         submissions = db.session.query(Submission).filter(Submission.user_id == current_user.id).all()
+    else:
+        submissions = None
 
-        if submissions:
-            return jsonify(render_template('responses/submissions/list.html', submissions=submissions, languages=languages))
+    return jsonify(render_template('responses/submissions/list.html', submissions=submissions, languages=languages))
 
-    return jsonify(render_template('responses/empty_response.html'))
 
 @api.route('/task/report', methods=['POST'])
 def send_report():
