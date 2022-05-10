@@ -50,7 +50,9 @@
                         {# Time #}
                         <div class="table_row_column time">{{ moment(submission.submission_date).fromNow(refresh=True) }}</div>
                         {# View result #}
-                        <div class="table_row_column view_result">Посмотреть результат</div>
+                        <div class="table_row_column view_result">
+                            <a class="view_result__link" href="#">Посмотреть результат</a>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
