@@ -7,7 +7,7 @@ import aiohttp
 from flask_login import current_user
 
 from app import app, db
-from app.models import Submission, TestResult, Task
+from app.models import Submission, TestResult, Task, Test
 from app.utils.fix_asyncio import silence_event_loop_closed
 
 from .languages import languages
@@ -65,14 +65,19 @@ class Contester:
 
         db.session.commit()
 
-    async def _run_single_test(self, session: aiohttp.ClientSession, data: dict, current_test: dict) -> dict:
+    async def _run_single_test(self, session: aiohttp.ClientSession, data: dict, current_test: Test) -> dict:
         """
         :param session: aiohttp.ClientSession() object
         :param data: params which will be passed in the request
         :param current_test: dictionary with test's data
         :return: Dictionary with result of test
         """
-        response = {'success': None, 'message': None, 'user_output': None, 'test': current_test}
+        response = {
+            'success': None,
+            'message': None,
+            'user_output': None,
+            'test': current_test
+        }
 
         try:
             try:
@@ -155,6 +160,7 @@ class Contester:
                 if not self.TESTING_MODE:
                     self._save_to_database(task=task, code=code, response=response, language=language)
 
+                print(response['tests'][0]['test'])
                 return response
 
         return None
