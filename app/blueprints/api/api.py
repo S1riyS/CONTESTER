@@ -44,13 +44,6 @@ def send_solution():
     path = data['path']
 
     task = get_task(path['grade'], path['topic'], path['task'])
-    # task = db.session.query(Task).filter(
-    #     and_(
-    #         Grade.number == path['grade'],
-    #         Topic.translit_name == path['topic'],
-    #         Task.translit_name == path['task']
-    #     )
-    # ).first()
 
     response = contester.run_tests(code=data['code'], language=data['lang'], task=task)
 
