@@ -43,8 +43,7 @@ class Grade(db.Model):
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     number = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
 
-    def get_topics(self):
-        return db.session.query(Topic).filter(Topic.grade_id == self.id).all()
+    topics = relationship('Topic', backref='grades')
 
 
 class Role(db.Model):
@@ -61,10 +60,11 @@ class Topic(db.Model):
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
 
     grade_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("grades.id"))
-    grade = relationship('Grade')
 
     name = sqlalchemy.Column(sqlalchemy.String)
     translit_name = sqlalchemy.Column(sqlalchemy.String)
+
+    tasks = relationship('Task', backref='topics')
 
     def set_translit_name(self):
         self.translit_name = slugify(self.name)
@@ -79,22 +79,16 @@ class Task(db.Model):
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
 
     topic_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("topics.id"))
-    topic = relationship('Topic')
 
     name = sqlalchemy.Column(sqlalchemy.String)
     translit_name = sqlalchemy.Column(sqlalchemy.String)
     text = sqlalchemy.Column(sqlalchemy.Text)
 
+    example = relationship('Example', uselist=False, backref='tasks')
     tests = relationship('Test', backref='tasks', lazy='subquery')
 
     def set_translit_name(self):
         self.translit_name = slugify(self.name)
-
-    def get_example(self):
-        return db.session.query(Example).filter(Example.task_id == self.id).first()
-
-    def get_tests(self):
-        return db.session.query(Test).filter(Test.task_id == self.id).all()
 
 
 class Example(db.Model):
@@ -103,26 +97,21 @@ class Example(db.Model):
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
 
     task_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("tasks.id"))
-    task = relationship('Task')
 
     example_input = sqlalchemy.Column(sqlalchemy.Text)
     example_output = sqlalchemy.Column(sqlalchemy.Text)
 
 
-class Test(db.Model):
+class Test(BaseModel):
     __tablename__ = "tests"
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
 
     task_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("tasks.id"))
-    task = relationship('Task')
 
     test_input = sqlalchemy.Column(sqlalchemy.Text)
     test_output = sqlalchemy.Column(sqlalchemy.Text)
     is_hidden = sqlalchemy.Column(sqlalchemy.Boolean, default=True)
-
-    def __repr__(self):
-        return f'Test: Input: {self.test_input}, Output: {self.test_output}, Hidden: {self.is_hidden}'
 
 
 class Submission(db.Model):
@@ -141,7 +130,7 @@ class Submission(db.Model):
     source_code = sqlalchemy.Column(sqlalchemy.Text)
     submission_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.utcnow)
 
-    test_results = relationship('TestResult', backref="submission", lazy='subquery')
+    test_results = relationship('TestResult', backref="submissions", lazy='subquery')
 
     def get_result(self) -> dict:
         failed_tests = [result for result in self.test_results if not result.success]
@@ -161,7 +150,6 @@ class TestResult(db.Model):
     test = relationship('Test')
 
     submission_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("submissions.id"))
-
 
     success = sqlalchemy.Column(sqlalchemy.Boolean)
     message = sqlalchemy.Column(sqlalchemy.String)

@@ -85,7 +85,7 @@ def send_report():
 def get_topics():
     data = request.json
     grade = db.session.query(Grade).filter(Grade.id == data['grade_id']).first()
-    topics = grade.get_topics()
+    topics = grade.topics
 
     return jsonify(render_template('admin/dropdown/topic_list.html', topics=topics))
 

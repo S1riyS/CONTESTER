@@ -38,7 +38,7 @@ def home_page():
 @next_url
 def grade_page(grade_number):
     grade = db.session.query(Grade).filter(Grade.number == grade_number).first_or_404()
-    topics = grade.get_topics()
+    topics = grade.topics
 
     return render_template('grade.html', title=f'{grade.number} класс',
                            grade=grade, topics=topics)
