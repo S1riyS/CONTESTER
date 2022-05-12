@@ -201,7 +201,7 @@ def create_task():
     task.set_translit_name()
 
     topic = db.session.query(Topic).filter(Topic.id == data['path']['topic_id']).first()
-    translit_names = [task_.translit_name for task_ in topic.get_tasks()]
+    translit_names = [task_.translit_name for task_ in topic.tasks]
 
     if task.translit_name in translit_names:
         return send_alert(False, 'Задача с таким именем уже существует')

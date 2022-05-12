@@ -36,7 +36,7 @@
             <div class="box-shadow sidebar col-xl-2" id="sidebar">
                 <h3 class="sidebar__title"><i class="sidebar__title__icon fas fa-tasks"></i> Задачи:</h3>
                 <ul class="nav sidebar_nav">
-                    {% for sidebar_task in topic.get_tasks() %}
+                    {% for sidebar_task in topic.tasks %}
                         {% if sidebar_task.id == task.id %}
                             {% set is_active = 'active_task' %}
                         {% endif %}

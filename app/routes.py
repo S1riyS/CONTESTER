@@ -50,7 +50,7 @@ def grade_page(grade_number):
 def topic_page(grade_number, topic_translit_name):
     grade = db.session.query(Grade).filter(Grade.number == grade_number).first_or_404()
     topic = db.session.query(Topic).filter(Topic.translit_name == topic_translit_name).first_or_404()
-    tasks = topic.get_tasks()
+    tasks = topic.tasks
 
     return render_template('topic.html', title=topic.name, grade=grade, topic=topic, tasks=tasks)
 
