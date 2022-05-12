@@ -21,9 +21,11 @@
                 <div class="arrow_up"></div>
                 <div class="info__content__item">
                     <p class="item__title">Общее время тестирования: </p>
-                    <div class="item__content">
-                        <span class="item__content__text">{{ response['time'] }}</span>
-                    </div>
+                    {% if response['time'] %}
+                        <div class="item__content">
+                            <span class="item__content__text">{{ response['time'] }}</span>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="info__content__item">
                     <p class="item__title">Язык программирования: </p>
@@ -68,10 +70,13 @@
                             {% else %}
                                 <i class="far fa-times-circle"></i>
                             {% endif %}
+
                             {# Test #}
                             <p class="item__text"> Тест {{ key }}</p>
+
                             {# Locked test icon #}
-                            {% if value['test'].is_hidden %}
+                            {% set test = value['test'] %}
+                            {% if test.is_hidden %}
                                 <i class="fas locked_test__tab_icon fa-lock"></i>
                             {% endif %}
                         </a>
