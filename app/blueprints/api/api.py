@@ -67,7 +67,14 @@ def send_solution():
 @api.route('/task/submissions', methods=['POST'])
 def get_submissions():
     if current_user.is_authenticated:
-        submissions = db.session.query(Submission).filter(Submission.user_id == current_user.id).all()
+        data = request.json
+        task_path = data['task_path']
+        task = get_task(task_path['grade'], task_path['topic'], task_path['task'])
+
+        submissions = db.session.query(Submission).filter(
+            Submission.user_id == current_user.id,
+            Submission.task_id == task.id
+        ).all()
     else:
         submissions = None
 

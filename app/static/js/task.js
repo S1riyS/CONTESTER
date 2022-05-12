@@ -101,11 +101,15 @@ $('a[data-toggle="tab"]')
 $('#submissions-tab').on('shown.bs.tab', function (e) {
     let submissions = $('#submissions__body')
     let submissionsLoader = $('#submissions__loader')
+    let data = {
+        task_path: getCurrentTask()
+    }
 
     $.ajax({
         url: '/api/task/submissions',
         type: 'POST',
         contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify(data),
         // Before send
         beforeSend(jqXHR, settings) {
             submissions.html('')
