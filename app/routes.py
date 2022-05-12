@@ -70,10 +70,9 @@ def task_page(grade_number, topic_translit_name, task_translit_name):
 @login_required
 def submission_page(submission_id):
     submission = Submission.query.get(submission_id)
-    code = submission.source_code
     language = languages.get_language(submission.language)
 
-    return render_template('submission.html', submission=submission, language=language['language'], code=code)
+    return render_template('submission.html', submission=submission, language=language['language'])
 
 
 @app.route('/profile', methods=['GET', 'POST'])

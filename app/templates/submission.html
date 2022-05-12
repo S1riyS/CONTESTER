@@ -40,7 +40,7 @@
         }
         let editor = document.getElementById("editor");
         let myCodeMirror = CodeMirror(editor, config)
-        myCodeMirror.setValue(`{{ code }}`)
+        myCodeMirror.setValue(`{{ submission.source_code }}`)
     </script>
 {% endblock %}
 
