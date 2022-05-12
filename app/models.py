@@ -85,6 +85,8 @@ class Task(db.Model):
     translit_name = sqlalchemy.Column(sqlalchemy.String)
     text = sqlalchemy.Column(sqlalchemy.Text)
 
+    tests = relationship('Test', backref='tasks', lazy='subquery')
+
     def set_translit_name(self):
         self.translit_name = slugify(self.name)
 
@@ -118,6 +120,9 @@ class Test(db.Model):
     test_input = sqlalchemy.Column(sqlalchemy.Text)
     test_output = sqlalchemy.Column(sqlalchemy.Text)
     is_hidden = sqlalchemy.Column(sqlalchemy.Boolean, default=True)
+
+    def __repr__(self):
+        return f'Test: Input: {self.test_input}, Output: {self.test_output}, Hidden: {self.is_hidden}'
 
 
 class Submission(db.Model):

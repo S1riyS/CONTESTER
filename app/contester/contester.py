@@ -65,6 +65,10 @@ class Contester:
 
         db.session.commit()
 
+    @staticmethod
+    def from_db_to_dict(submission: Submission) -> dict:
+        pass
+
     async def _run_single_test(self, session: aiohttp.ClientSession, data: dict, current_test: Test) -> dict:
         """
         :param session: aiohttp.ClientSession() object
@@ -125,13 +129,12 @@ class Contester:
         if current_language_dict['success']:
             current_language = current_language_dict['language']
             compiler = current_language.compiler  # Getting compiler
-            tests = task.get_tests()
             start_time = time.time()  # Getting time when tests were started
 
             async with aiohttp.ClientSession() as session:
                 tasks = []
 
-                for current_test in tests:
+                for current_test in task.tests:
                     # Forming content of request
                     data = {
                         'code': code,
