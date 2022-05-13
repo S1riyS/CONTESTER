@@ -9,6 +9,7 @@ from app.blueprints.api.api import api
 from app.blueprints.errors.handler import errors
 
 from app.models import Grade, Topic, Task, Submission
+from app.contester.contester import contester
 from app.contester.languages import languages
 from app.utils.routes import next_url
 import app.breadcrumbs as bc
@@ -70,9 +71,14 @@ def task_page(grade_number, topic_translit_name, task_translit_name):
 @login_required
 def submission_page(submission_id):
     submission = Submission.query.get(submission_id)
-    language = languages.get_language(submission.language)
 
-    return render_template('submission.html', submission=submission, language=language['language'])
+    context = {
+        'submission': submission,
+        'language': languages.get_language(submission.language, object_only=True),
+        'response': contester.load_from_db(submission)
+    }
+
+    return render_template('submission.html', **context)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
