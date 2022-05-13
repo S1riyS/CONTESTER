@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Optional, Union
 
 from flask import url_for
 
@@ -68,13 +69,19 @@ class Languages(metaclass=SingletonBaseClass):
         mode='Not found'
     )
 
-    def get_language(self, language: str) -> dict:
+    def get_language(self, language: str, object_only: Optional[bool] = False) -> Union[dict, Language]:
         current_language = self.dictionary.get(language, None)
 
         if current_language is None:
-            return {'success': False, 'language': self._language_not_found}
+            success = False
+            language_object = self._language_not_found
+        else:
+            success = True
+            language_object = current_language
 
-        return {'success': True, 'language': current_language}
+        if object_only:
+            return language_object
+        return {'success': success, 'language': language_object}
 
 
 languages = Languages()
