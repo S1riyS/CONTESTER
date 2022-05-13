@@ -1,5 +1,4 @@
 :root {
-    --code-preview-background: #33384e;
     --table-separator: #33384e;
     --table-hover: #1a1d28;
 }
@@ -108,19 +107,6 @@
 
 .task__header .task__example .output {
     margin-top: 10px;
-}
-
-pre {
-    display: flex;
-    flex-direction: column;
-    padding: 15px;
-    background: var(--code-preview-background);
-    white-space: pre-line;
-    line-height: 1.5;
-    border-radius: 3px;
-    color: var(--text-color);
-    font-size: 14px;
-    font-family: 'Source Code Pro', monospace;
 }
 
 /* Code response loader */
