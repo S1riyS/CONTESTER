@@ -219,8 +219,9 @@ def create_task():
         db.session.add(example)
 
         # Tests
-        tests = zip(data['tests']['inputs'], data['tests']['outputs'], data['tests']['is_hidden'])
-        for test_input, test_output, is_hidden in tests:
+        tests = data['tests']
+        tests_zip = zip(tests['inputs'], tests['outputs'], tests['is_hidden'])
+        for test_input, test_output, is_hidden in tests_zip:
             test = Test(
                 task_id=task.id,
                 test_input=test_input,
