@@ -9,12 +9,13 @@ from flask_login import current_user
 from app import app, db
 from app.models import Submission, TestResult, Task, Test
 from app.utils.fix_asyncio import silence_event_loop_closed
+from app.utils.singleton import SingletonBaseClass
 
 from .languages import languages
 from .errors import ServerResponseError, ExecutionError, WrongAnswerError, TimeLimitError
 
 
-class Contester:
+class Contester(metaclass=SingletonBaseClass):
     def __init__(self, TESTING_MODE=False):
         self.API = 'https://wandbox.org/api/compile.json'  # API URL
         self.HEADERS = {'Content-Type': "application/json;charset=UTF-8"}  # Request headers
@@ -65,9 +66,21 @@ class Contester:
 
         db.session.commit()
 
-    @staticmethod
-    def from_db_to_dict(submission: Submission) -> dict:
-        pass
+    def load_from_db(self, submission: Submission) -> dict:
+        results_array = []
+        for result in submission.test_results:
+            results_array.append({
+                'message': result.message,
+                'success': result.success,
+                'user_output': result.user_output,
+                'test': result.test
+            })
+
+        return {
+            'language': languages.get_language(submission.language)['language'],
+            'tests': results_array,
+            'passed_tests': self._get_number_of_passed_tests(results_array)
+        }
 
     async def _run_single_test(self, session: aiohttp.ClientSession, data: dict, current_test: Test) -> dict:
         """
@@ -163,7 +176,6 @@ class Contester:
                 if not self.TESTING_MODE:
                     self._save_to_database(task=task, code=code, response=response, language=language)
 
-                print(response['tests'][0]['test'])
                 return response
 
         return None
@@ -184,3 +196,5 @@ class Contester:
             pprint.pprint(response, indent=4)
 
         return response
+
+contester = Contester()
