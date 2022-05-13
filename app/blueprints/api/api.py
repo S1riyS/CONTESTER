@@ -3,8 +3,8 @@ from flask_login import login_user, logout_user, current_user
 from flask_mail import Message
 from sqlalchemy import and_
 
-from app import db, serializer
-from app.contester.contester import Contester
+from app import db, serializer, contester
+from app.contester.contester import contester
 from app.contester.languages import languages
 
 from app.models import User, Role, Grade, Topic, Task, Example, Test, Submission
@@ -12,7 +12,6 @@ from app.utils.email import send_email
 from app.utils.db import get_task
 
 api = Blueprint('api', __name__)
-contester = Contester()
 
 
 # TODO: Переименоаить API (api/create/task и т.д.)
