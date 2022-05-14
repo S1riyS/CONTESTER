@@ -77,7 +77,7 @@ class Contester(metaclass=SingletonBaseClass):
             })
 
         return {
-            'language': languages.get_language(submission.language)['language'],
+            'language': languages.get_language(submission.language, object_only=True),
             'tests': results_array,
             'passed_tests': self._get_number_of_passed_tests(results_array)
         }
