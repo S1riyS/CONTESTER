@@ -7,4 +7,4 @@ def get_task(grade_number, topic_translit_name, task_translit_name):
         Grade.number == grade_number,
         Topic.translit_name == topic_translit_name,
         Task.translit_name == task_translit_name
-    ).first()
+    ).first_or_404()
