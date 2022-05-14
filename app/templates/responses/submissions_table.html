@@ -51,7 +51,10 @@
                         <div class="table_row_column time">{{ moment(submission.submission_date).fromNow(refresh=True) }}</div>
                         {# View result #}
                         <div class="table_row_column view_result">
-                            <a class="view_result__link" href="#">Посмотреть результат</a>
+                            <a class="view_result__link" target="_blank"
+                               href="{{ url_for('submission_page', submission_id=submission.id) }}">
+                                Посмотреть результат
+                            </a>
                         </div>
                     </div>
                 </div>
