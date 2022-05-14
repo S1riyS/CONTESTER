@@ -149,7 +149,7 @@
                                             </button>
                                             <div class="dropdown-menu" id="dropdownMenuLanguage"
                                                  aria-labelledby="dropdownMenuButton">
-                                                {% for key, language in languages.dictionary.items() %}
+                                                {% for key, language in language_dict.items() %}
                                                     {% if language.is_default %}
                                                         {% set is_active = 'active' %}
                                                     {% else %}
