@@ -12,6 +12,7 @@ from app.models import Grade, Topic, Task, Submission
 from app.contester.contester import contester
 from app.contester.languages import languages
 from app.utils.routes import next_url
+from app.utils.db import get_task
 import app.breadcrumbs as bc
 
 app.register_blueprint(admin, url_prefix='/admin')
@@ -60,11 +61,18 @@ def topic_page(grade_number, topic_translit_name):
 @register_breadcrumb(app, '.grade.topic.task', '', dynamic_list_constructor=bc.view_task_dlc)
 @next_url
 def task_page(grade_number, topic_translit_name, task_translit_name):
-    grade = db.session.query(Grade).filter(Grade.number == grade_number).first_or_404()
-    topic = db.session.query(Topic).filter(Topic.translit_name == topic_translit_name).first_or_404()
-    task = db.session.query(Task).filter(Task.translit_name == task_translit_name).first_or_404()
+    task = get_task(grade_number, topic_translit_name, task_translit_name)
+    topic = task.topic
+    grade = topic.grade
 
-    return render_template('task.html', title=task.name, grade=grade, topic=topic, task=task, languages=languages)
+    context = {
+        'task': task,
+        'topic': topic,
+        'grade': grade,
+        'language_dict': languages.dictionary
+    }
+
+    return render_template('task.html', title=task.name, **context)
 
 
 @app.route('/submissions/<int:submission_id>', methods=['GET'])
@@ -78,7 +86,7 @@ def submission_page(submission_id):
         'response': contester.load_from_db(submission)
     }
 
-    return render_template('submission.html', **context)
+    return render_template('submission.html', title=f'Отправленное решение ({submission.task.name})', **context)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
