@@ -66,6 +66,8 @@ def get_submissions():
         submissions = db.session.query(Submission).filter(
             Submission.user_id == current_user.id,
             Submission.task_id == task.id
+        ).order_by(
+            Submission.submission_date.desc()
         ).all()
     else:
         submissions = None
