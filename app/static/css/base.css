@@ -490,7 +490,7 @@ ol.breadcrumb {
     background-color: var(--footer-color);
     text-align: center;
     flex-shrink: 0;
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
 .footer .row {
