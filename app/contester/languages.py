@@ -81,7 +81,10 @@ class Languages(metaclass=SingletonBaseClass):
 
         if object_only:
             return language_object
-        return {'success': success, 'language': language_object}
+        return {
+            'success': success,
+            'language': language_object
+        }
 
 
 languages = Languages()
