@@ -51,7 +51,19 @@
                 <div class="col-lg-8 offset-lg-2 col-12">
                     <div class="submitted_code box-shadow">
                         <div class="submission__header">
-                            <p class="submission__time">
+                            {% set task = submission.task %}
+                            {% set topic = task.topic %}
+                            {% set grade = topic.grade %}
+                            <p class="submission__task header__item">
+                                Задача:
+                                <a href="{{ url_for('task_page',
+                                    task_translit_name=task.translit_name,
+                                    topic_translit_name=topic.translit_name,
+                                    grade_number=grade.number) }}" class="task__link">
+                                    {{ task.name }}
+                                </a>
+                            </p>
+                            <p class="submission__time header__item">
                                 Решение было отправлено {{ moment(submission.submission_date).fromNow(refresh=True) }}
                             </p>
 
@@ -64,7 +76,7 @@
                                 {% set result_status = 'fail' %}
                             {% endif %}
 
-                            <div class="submission__result">
+                            <div class="submission__result header__item">
                                 <strong>Результат:</strong>
                                 <div class="submission__result__message {{ result_status }}">
                                     {# Status icon #}

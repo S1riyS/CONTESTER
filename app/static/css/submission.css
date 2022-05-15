@@ -5,11 +5,17 @@
 }
 
 .submission__header {
+    display: flex;
+    flex-direction: column;
     margin-bottom: 25px;
 }
 
-.submission__header .submission__time {
+.submission__header .header__item:not(:last-child) {
     margin-bottom: 8px;
+}
+
+.submission__header .submission__task .task__link {
+    color: var(--purple-color);
 }
 
 .submission__result, .submission__result__message {
