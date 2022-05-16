@@ -39,8 +39,9 @@
             readOnly: true
         }
         let editor = document.getElementById("editor");
-        let myCodeMirror = CodeMirror(editor, config)
-        myCodeMirror.setValue(`{{ submission.source_code }}`)
+        let myCodeMirror = CodeMirror(editor, config);
+        let code = `{{ code|safe }}`;
+        myCodeMirror.setValue(code)
     </script>
 {% endblock %}
 
