@@ -4,6 +4,7 @@ from os import environ
 
 import sqlalchemy
 from sqlalchemy.orm import relationship
+from sqlalchemy.ext.hybrid import hybrid_property
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from transliterate import slugify
@@ -193,6 +194,21 @@ class Submission(BaseModel):
 
     test_results = relationship('TestResult', backref="submission", lazy='subquery')
 
+    @hybrid_property
+    def processed_code(self):
+        # Dictionary with symbols that can break CodeMirror
+        replacements = {
+            '"': r'\"',  # double quote
+            "'": r"\'",  # singe quote
+            "`": r"\`"  # backtick
+        }
+
+        code = repr(self.source_code)[1:-1]
+        for character in replacements.keys():
+            code = code.replace(character, replacements[character])
+
+        return code
+
     def get_result(self) -> dict:
         failed_tests = [result for result in self.test_results if not result.success]
         if any(failed_tests):
@@ -208,6 +224,7 @@ class Submission(BaseModel):
             task=self.task,
             result=self.get_result()['message']
         )
+
 
 class TestResult(BaseModel):
     __tablename__ = "test_result"
@@ -231,6 +248,7 @@ class TestResult(BaseModel):
             message=self.message
         )
 
+
 class Report(BaseModel):
     __tablename__ = "reports"
 
@@ -250,6 +268,7 @@ class Report(BaseModel):
             task=self.task,
             text=self.text
         )
+
 
 def init_db_data():
     # Creating grades

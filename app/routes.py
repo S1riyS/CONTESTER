@@ -83,10 +83,9 @@ def submission_page(submission_id):
     context = {
         'submission': submission,
         'language': languages.get_language(submission.language, object_only=True),
-        'code': repr(submission.source_code)[1:-1],
+        'code': submission.processed_code,
         'response': contester.load_from_db(submission)
     }
-    print(type(submission.source_code), context['code'])
 
     return render_template('submission.html', title=f'Отправленное решение ({submission.task.name})', **context)
 
