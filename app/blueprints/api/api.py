@@ -41,19 +41,31 @@ def send_solution():
 
     data = request.json
     path = data['path']
-
     task = get_task(path['grade'], path['topic'], path['task'])
 
-    response = contester.run_tests(code=data['code'], language=data['lang'], task=task)
+    user_code = data['code'].strip()
+    user_submissions = db.session.query(Submission).filter(
+        Submission.user_id == current_user.id,
+        Submission.task_id == task.id
+    )
+
+    # Validating code
+    if user_code in [submission.source_code for submission in user_submissions]:
+        return jsonify({
+            'result': render_template('responses/solution/failure.html',
+                                      message='Решение с таким же кодом уже было отправлено')
+        })
+
+    response = contester.run_tests(code=user_code, language=data['lang'], task=task)
 
     if response is not None:
         return jsonify({
             'result': render_template('responses/solution/success.html', response=response)
         })
-    else:
-        return jsonify({
-            'result': render_template('responses/solution/failure.html', message='Что-то пошло не так!')
-        })
+
+    return jsonify({
+        'result': render_template('responses/solution/failure.html', message='Что-то пошло не так!')
+    })
 
 
 @api.route('/task/submissions', methods=['POST'])
