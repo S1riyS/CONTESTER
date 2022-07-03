@@ -16,8 +16,10 @@
                     </div>
                     <div class="name__block user__info__block">
                         <i class="fa fa-2x fa-user-o" aria-hidden="true"></i>
-                        <h1 class="name__text">{{ current_user.name }} {{ current_user.surname }},
-                            {{ current_user.grade.number }}{{ current_user.grade_letter }}</h1>
+                        <h1 class="name__text">{{ current_user.name }} {{ current_user.surname }}
+                            {% if current_user.grade.number and current_user.grade_letter %}
+                                ,{{ current_user.grade.number }}{{ current_user.grade_letter }}</h1>
+                            {% endif %}
                     </div>
                     <div class="email__block user__info__block">
                         <i class="fa fa-envelope-o" aria-hidden="true"></i>
