@@ -57,7 +57,7 @@
                             {% set grade = topic.grade %}
                             <p class="submission__task header__item">
                                 Задача:
-                                <a href="{{ url_for('task_page',
+                                <a href="{{ url_for('problems.task_page',
                                     task_translit_name=task.translit_name,
                                     topic_translit_name=topic.translit_name,
                                     grade_number=grade.number) }}" class="task__link">

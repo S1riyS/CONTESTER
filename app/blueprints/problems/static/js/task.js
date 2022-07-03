@@ -1,4 +1,4 @@
-import {getCurrentTask} from "./modules/current_task.js";
+import {getCurrentTask} from "../../../../static/js/modules/current_task.js";
 
 let currentSidebarY = -1;
 

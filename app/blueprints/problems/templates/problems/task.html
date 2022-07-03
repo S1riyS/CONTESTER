@@ -5,10 +5,10 @@
     {% include 'codemirror/css.html' %}
 
     {#  Local CSS  #}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/task.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('problems.static', filename='css/task.css') }}">
+    <link rel="stylesheet" href="{{ url_for('problems.static', filename='css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('problems.static', filename='css/loader.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/editor.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/loader.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/submissions_table.css') }}">
 {% endblock %}
 
@@ -24,8 +24,8 @@
     {% include 'codemirror/fold.html' %}
 
     {#  Local scripts #}
-    <script type="module" src="{{ url_for('static', filename='js/task.js') }}"></script>
-    <script type="module" src="{{ url_for('static', filename='js/editor/editor.js') }}"></script>
+    <script type="module" src="{{ url_for('problems.static', filename='js/task.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/editor.js') }}"></script>
 
 {% endblock %}
 
@@ -43,7 +43,7 @@
 
                         <li class="sidebar__item {{ is_active }}">
                             <a href="{{ url_for(
-                            'task_page',
+                            'problems.task_page',
                             grade_number=grade.number,
                             topic_translit_name=topic.translit_name,
                             task_translit_name=sidebar_task.translit_name) }}"

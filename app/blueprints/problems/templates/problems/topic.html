@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/topic.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/route.css') }}">
+    <link rel="stylesheet" href="{{ url_for('problems.static', filename='css/topic.css') }}">
+    <link rel="stylesheet" href="{{ url_for('problems.static', filename='css/route.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -14,7 +14,7 @@
                     {% if tasks %}
                         {% for task in tasks %}
                             <div class="list_item">
-                                <a href="{{ url_for('task_page',
+                                <a href="{{ url_for('problems.task_page',
                             grade_number=grade.number,
                             topic_translit_name=topic.translit_name,
                             task_translit_name=task.translit_name) }}"

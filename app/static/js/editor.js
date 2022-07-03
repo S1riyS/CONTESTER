@@ -1,5 +1,5 @@
-import {getCurrentTask} from "../modules/current_task.js";
-import {showAlert} from "../modules/alert.js";
+import {getCurrentTask} from "./modules/current_task.js";
+import {showAlert} from "./modules/alert.js";
 
 function loadTaskToLocalStorage() {
     let taskStorage = JSON.parse(localStorage.getItem('taskStorage'));

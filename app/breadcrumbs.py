@@ -7,7 +7,7 @@ from app.models import Grade, Topic, Task
 def view_grade_dlc(*args, **kwargs):
     grade_number = request.view_args['grade_number']
 
-    url = url_for('grade_page', grade_number=grade_number)
+    url = url_for('problems.grade_page', grade_number=grade_number)
     return [{'text': f'{grade_number} класс', 'url': url}]
 
 
@@ -17,7 +17,7 @@ def view_topic_dlc(*args, **kwargs):
     topic_translit_name = request.view_args['topic_translit_name']
     topic = db.session.query(Topic).filter(Topic.translit_name == topic_translit_name).first()
 
-    url = url_for('topic_page', grade_number=grade_number, topic_translit_name=topic_translit_name)
+    url = url_for('problems.topic_page', grade_number=grade_number, topic_translit_name=topic_translit_name)
     return [{'text': topic.name, 'url': url}]
 
 

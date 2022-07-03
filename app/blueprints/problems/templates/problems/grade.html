@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/grade.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/route.css') }}">
+    <link rel="stylesheet" href="{{ url_for('problems.static', filename='css/grade.css') }}">
+    <link rel="stylesheet" href="{{ url_for('problems.static', filename='css/route.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -15,7 +15,7 @@
                         {% for topic in topics %}
                             <div class="list_item">
                                 <a href="{{ url_for(
-                            'topic_page',
+                            'problems.topic_page',
                             grade_number=grade.number,
                             topic_translit_name=topic.translit_name
                             ) }}"
