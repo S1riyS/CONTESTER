@@ -1,0 +1,60 @@
+main {
+    display: flex;
+    align-items: center;
+}
+
+.container-fluid {
+    width: 80%;
+}
+
+.welcome {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 50px;
+}
+
+.welcome .welcome_main {
+    padding: 30px;
+}
+
+.welcome .welcome_main__title {
+    font-size: 65px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 35px;
+}
+
+.welcome .welcome_main__title span {
+    background: linear-gradient(100deg, var(--success-color) 0%, var(--green-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.welcome .welcome_main__text {
+    font-size: 25px;
+    margin-bottom: 50px;
+}
+
+.welcome .welcome_main__text span {
+    font-weight: 600;
+    color: var(--purple-color);
+}
+
+.welcome .welcome_main__button {
+    padding: 12px 20px;
+}
+
+.welcome .welcome_image {
+    width: 610px;
+    height: auto;
+}
+
+.how_to_use {
+    padding: 30px;
+}
+
+.how_to_use__title {
+    font-size: 40px;
+    font-weight: 700;
+}

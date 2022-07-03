@@ -11,7 +11,7 @@ from app.blueprints.errors.handler import errors
 from app.models import Grade, Topic, Task, Submission
 from app.contester.contester import contester
 from app.contester.languages import languages
-from app.utils.routes import next_url
+from app.utils.routes import next_url, grade_compliance_required
 from app.utils.db import get_task
 import app.breadcrumbs as bc
 
@@ -32,11 +32,18 @@ def unauthorized_callback():
 @register_breadcrumb(app, '.', 'Главная')
 @next_url
 def home_page():
-    return render_template('home.html', title='Главная')
+    return render_template('new_home.html', title='Главная')
 
+
+@app.route('/redirect-to-problems', methods=['GET'])
+@login_required
+def redirect_to_problems_page():
+    grade_number = current_user.grade.number
+    return redirect(url_for('grade_page', grade_number=grade_number))
 
 @app.route('/<int:grade_number>', methods=['GET'])
 @register_breadcrumb(app, '.grade', '', dynamic_list_constructor=bc.view_grade_dlc)
+@grade_compliance_required
 @next_url
 def grade_page(grade_number):
     grade = db.session.query(Grade).filter(Grade.number == grade_number).first_or_404()
@@ -48,6 +55,7 @@ def grade_page(grade_number):
 
 @app.route('/<int:grade_number>/<string:topic_translit_name>', methods=['GET'])
 @register_breadcrumb(app, '.grade.topic', '', dynamic_list_constructor=bc.view_topic_dlc)
+@grade_compliance_required
 @next_url
 def topic_page(grade_number, topic_translit_name):
     grade = db.session.query(Grade).filter(Grade.number == grade_number).first_or_404()
@@ -59,6 +67,7 @@ def topic_page(grade_number, topic_translit_name):
 
 @app.route('/<int:grade_number>/<string:topic_translit_name>/<string:task_translit_name>', methods=['GET'])
 @register_breadcrumb(app, '.grade.topic.task', '', dynamic_list_constructor=bc.view_task_dlc)
+@grade_compliance_required
 @next_url
 def task_page(grade_number, topic_translit_name, task_translit_name):
     task = get_task(grade_number, topic_translit_name, task_translit_name)

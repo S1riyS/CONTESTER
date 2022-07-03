@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/new_home.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="welcome">
+                <div class="welcome_main">
+                    <h1 class="welcome_main__title">
+                        Обучайтесь программированию<br>
+                        <span>на практике</span>!
+                    </h1>
+                    <p class="welcome_main__text">
+                        Система тестирования кода для <br>
+                        учеников <span>Гиманзии №17</span>
+                    </p>
+                    <a class="welcome_main__button bordered_button" href="{{ url_for('redirect_to_problems_page') }}">
+                        Перейти к задачам
+                    </a>
+                </div>
+                <div class="welcome_image__wrapper">
+                    <img src="{{ url_for('static', filename='images/home_page_background.png') }}"
+                         alt="Welcome page image" class="welcome_image">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

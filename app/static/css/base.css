@@ -303,6 +303,7 @@ pre {
     border: 2px solid var(--purple-color);
     border-radius: 10px;
     transition: all .2s ease;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.13), 0 10px 10px rgba(0, 0, 0, 0.13) !important;
 }
 
 .bordered_button:hover {
