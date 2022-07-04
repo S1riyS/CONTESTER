@@ -137,15 +137,16 @@
                             <div class="editor">
                                 <div class="editor__header">
                                     <div class="header__left_side">
-                                        <p class="select-language">Язык:</p>
-                                        <div class="dropdown">
+                                        <p class="dropdown__title">Язык:</p>
+                                        <div class="dropdown box-shadow">
                                             <button class="btn btn-secondary dropdown-btn" type="button"
                                                     id="dropdownMenuButton"
                                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span class="dropdownBtn__text" id="dropdownBtn__text">Python 3</span>
+                                                <span class="languageDropdownButton__text"
+                                                      id="languageDropdownButton__text">Python 3</span>
                                                 <span class="arrow">
                                             <span></span><span></span>
-                                        </span>
+                                            </span>
                                             </button>
                                             <div class="dropdown-menu" id="dropdownMenuLanguage"
                                                  aria-labelledby="dropdownMenuButton">
@@ -165,6 +166,32 @@
                                         </div>
                                     </div>
                                     <div class="header__right_side">
+                                        <div class="dropdown box-shadow">
+                                            <button class="btn btn-secondary dropdown-btn" type="button"
+                                                    id="dropdownMenuClassmateButton"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="classmateDropdownButton__text"
+                                                      id="classmateDropdownButton__text">
+                                                    Выберите напарника
+                                                </span>
+                                                <span class="arrow">
+                                                    <span></span><span></span>
+                                                </span>
+                                            </button>
+                                            <div class="dropdown-menu" id="dropdownMenuClassmate"
+                                                 aria-labelledby="dropdownMenuClassmateButton">
+                                                <h6 class="dropdown-header">Одноклассники:</h6>
+                                                {% for classmate in current_user.classmates %}
+                                                    <a class="dropdown-item {{ is_active }}"
+                                                       data-id="{{ classmate.id }}"
+                                                       data-fullname="{{ classmate.surname }} {{ classmate.name }}">
+                                                        {{ classmate.surname }} {{ classmate.name }}
+                                                    </a>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+
+
                                         <button data-tooltip="tooltip" data-placement="top" title="Удалить код"
                                                 class="header__button alert_button" id="reset-code__btn">
                                             <i class="default_button__icon far fa-trash-alt"></i>

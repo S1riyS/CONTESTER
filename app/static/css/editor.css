@@ -20,17 +20,20 @@
 .editor__header .header__right_side {
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
-.editor__header .select-language {
+.editor__header .dropdown__title {
     font-size: 16px;
     margin-right: 10px;
 }
 
 .editor__header .dropdown-menu {
-    padding: 0;
-    border-radius: 5px;
     overflow: hidden;
+}
+
+.editor__header .header__button:first-of-type {
+    margin-left: 8px;
 }
 
 .editor__header .header__button:not(:last-of-type) {
@@ -51,6 +54,10 @@
     outline: none !important;
     box-shadow: none !important;
     background: linear-gradient(135deg, var(--darker-purple-color), var(--purple-color)) !important;
+}
+
+.editor__header #dropdownMenuClassmateButton {
+    min-width: 225px;
 }
 
 .arrow {

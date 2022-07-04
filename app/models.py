@@ -67,6 +67,14 @@ class User(BaseModel, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.hashed_password, password)
 
+    @hybrid_property
+    def classmates(self):
+        return db.session.query(User).filter(
+            User.grade_id == self.grade_id,
+            User.grade_letter == self.grade_letter,
+            User.id != self.id
+        ).all()
+
     def __repr__(self):
         return self._repr(
             id=self.id,

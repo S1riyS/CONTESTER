@@ -2,9 +2,9 @@ import {getCurrentTask} from "./modules/current_task.js";
 import {showAlert} from "./modules/alert.js";
 
 function loadTaskToLocalStorage() {
-    let taskStorage = JSON.parse(localStorage.getItem('taskStorage'));
+    let taskStorage = localStorage.getItem('taskStorage', null);
 
-    if (!taskStorage) {
+    if (taskStorage === null) {
         localStorage.setItem('taskStorage', JSON.stringify({}));
     }
 
@@ -103,7 +103,7 @@ function scrollTo(obj) {
 function setLanguage(language) {
     // Setting chosen language mode to CodeMirror
     let currentLanguage = language[0]
-    let dropdownMenuText = $('#dropdownBtn__text')
+    let dropdownMenuText = $('#languageDropdownButton__text')
     myCodeMirror.setOption("mode", currentLanguage.dataset.mode)
 
     // Setting text
@@ -115,6 +115,10 @@ function setLanguage(language) {
     localStorage.setItem('taskStorage', JSON.stringify(taskStorage));
 }
 
+function setClassmate(classmate) {
+    let dropdownMenuText = $('#classmateDropdownButton__text')
+    dropdownMenuText.html(classmate[0].dataset.fullname)
+}
 
 let myCodeMirror = loadCodeMirror(codeMirrorConfig) // Creating CodeMirror variable
 
@@ -195,13 +199,17 @@ $('#submit-code__btn').click(function () {
 })
 
 // On dropdown child click do...
-$(".dropdown-menu a").click(function () {
-    // Remove any existing 'active' classes...
+$("#dropdownMenuLanguage a").click(function () {
     $(this).closest('.dropdown-menu').find('a').removeClass('active');
-
-    // Add 'active' class to clicked element...
     $(this).addClass('active');
-
     // Setting language
     setLanguage($(this))
+});
+
+
+// On dropdown child click do...
+$("#dropdownMenuClassmate a").click(function () {
+    $(this).closest('.dropdown-menu').find('a').removeClass('active');
+    $(this).addClass('active');
+    setClassmate($(this))
 });
