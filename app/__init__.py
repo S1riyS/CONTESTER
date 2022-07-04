@@ -36,11 +36,9 @@ for key, value in variables.items():
 db.init_app(app)
 
 # Import routes
+from app import routes
+
 with app.app_context():
-    from app import routes
-
     db.create_all()
-
     from app.models import init_db_data
-
     init_db_data()
