@@ -11,6 +11,12 @@ from transliterate import slugify
 
 from app import db, login_manager
 
+user_submission = db.Table(
+    'user_submission',
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+    db.Column('submission_id', db.Integer, db.ForeignKey('submissions.id'))
+)
+
 
 class BaseModel(db.Model):
     __abstract__ = True
@@ -53,7 +59,7 @@ class User(BaseModel, UserMixin):
     hashed_password = sqlalchemy.Column(sqlalchemy.String)
     registration_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.utcnow)
 
-    submissions = relationship('Submission', backref='user')
+    submissions = relationship('Submission', secondary=user_submission, backref='users')
 
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)
@@ -184,7 +190,6 @@ class Submission(BaseModel):
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
 
-    user_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("users.id"))
     task_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("tasks.id"))
 
     language = sqlalchemy.Column(sqlalchemy.String)
