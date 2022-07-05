@@ -7,7 +7,7 @@ import aiohttp
 from flask_login import current_user
 
 from app import app, db
-from app.models import Submission, TestResult, Task, Test
+from app.models import User, Submission, TestResult, Task, Test
 from app.utils.fix_asyncio import silence_event_loop_closed
 from app.utils.singleton import SingletonBaseClass
 
@@ -31,7 +31,7 @@ class Contester(metaclass=SingletonBaseClass):
         return len([result for result in tests if result['success']])
 
     @staticmethod
-    def _save_to_database(task: Task, code: str, response: dict, language: str) -> None:
+    def _save_to_database(task: Task, code: str, response: dict, language: str, partner: User) -> None:
         """
         Method that saves all information about user's submission in database
         :param task: Task object
@@ -43,13 +43,18 @@ class Contester(metaclass=SingletonBaseClass):
         passed_tests = response['passed_tests']
 
         submission = Submission(
-            user_id=current_user.id,
             task_id=task.id,
             language=language,
             passed_tests=passed_tests,
             source_code=code
         )
         db.session.add(submission)
+        db.session.commit()
+
+        current_user.submissions.append(submission)
+        if partner:
+            partner.submissions.append(submission)
+
         db.session.commit()
 
         results = response['tests']
@@ -172,29 +177,32 @@ class Contester(metaclass=SingletonBaseClass):
                 # Number of passed tests
                 response['passed_tests'] = self._get_number_of_passed_tests(response['tests'])
 
-                # Saving results to DB
-                if not self.TESTING_MODE:
-                    self._save_to_database(task=task, code=code, response=response, language=language)
 
                 return response
 
         return None
 
     @silence_event_loop_closed
-    def run_tests(self, code: str, language: str, task: Task) -> dict:
+    def run_tests(self, code: str, language: str, task: Task, partner: User) -> dict:
         """
         :param code: User's code
         :param language: Programming language
         :param task: Task object
+        :param partner: User object (person who helped to write solution)
         :return: Dictionary with the results of testing the program
         """
 
         loop = asyncio.new_event_loop()  # Creating async loop
         response = loop.run_until_complete(self._get_testing_results(code, language, task))
 
+        # Saving results to DB
+        if not self.TESTING_MODE:
+            self._save_to_database(task=task, code=code, response=response, language=language, partner=partner)
+
         if app.config.get('TESTING'):
             pprint.pprint(response, indent=4)
 
         return response
+
 
 contester = Contester()

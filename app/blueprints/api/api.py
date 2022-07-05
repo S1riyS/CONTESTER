@@ -7,7 +7,7 @@ from app import db, serializer, contester
 from app.contester.contester import contester
 from app.contester.languages import languages
 
-from app.models import User, Role, Grade, Topic, Task, Example, Test, Submission
+from app.models import User, Role, Grade, Topic, Task, Example, Test, Submission, load_user
 from app.utils.email import send_email
 from app.utils.db import get_task
 
@@ -40,23 +40,27 @@ def send_solution():
         })
 
     data = request.json
+    # Task
     path = data['path']
     task = get_task(path['grade'], path['topic'], path['task'])
-
+    # Partner
+    partner = load_user(data['partner_id'])
+    # Code
     user_code = data['code'].strip()
-    user_submissions = db.session.query(Submission).filter(
-        Submission.user_id == current_user.id,
-        Submission.task_id == task.id
-    )
 
-    # Validating code
-    if user_code in [submission.source_code for submission in user_submissions]:
-        return jsonify({
-            'result': render_template('responses/solution/failure.html',
-                                      message='Решение с таким же кодом уже было отправлено')
-        })
+    # submissions = db.session.query(Submission).filter(
+    #     Submission.user_id == current_user.id,
+    #     Submission.task_id == task.id
+    # )
+    #
+    # # Validating code
+    # if user_code in [submission.source_code for submission in submissions]:
+    #     return jsonify({
+    #         'result': render_template('responses/solution/failure.html',
+    #                                   message='Решение с таким же кодом уже было отправлено')
+    #     })
 
-    response = contester.run_tests(code=user_code, language=data['lang'], task=task)
+    response = contester.run_tests(code=user_code, language=data['lang'], task=task, partner=partner)
 
     if response is not None:
         return jsonify({
@@ -75,12 +79,10 @@ def get_submissions():
         task_path = data['task_path']
         task = get_task(task_path['grade'], task_path['topic'], task_path['task'])
 
-        submissions = db.session.query(Submission).filter(
-            Submission.user_id == current_user.id,
-            Submission.task_id == task.id
-        ).order_by(
-            Submission.submission_date.desc()
-        ).all()
+        submissions = []
+        for submission in current_user.submissions:
+            if submission.task_id == task.id:
+                submissions.append(submission)
     else:
         submissions = None
 

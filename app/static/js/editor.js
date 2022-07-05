@@ -115,11 +115,6 @@ function setLanguage(language) {
     localStorage.setItem('taskStorage', JSON.stringify(taskStorage));
 }
 
-function setClassmate(classmate) {
-    let dropdownMenuText = $('#classmateDropdownButton__text')
-    dropdownMenuText.html(classmate[0].dataset.fullname)
-}
-
 let myCodeMirror = loadCodeMirror(codeMirrorConfig) // Creating CodeMirror variable
 
 // On click on "reset code" button
@@ -155,11 +150,13 @@ $('#submit-code__btn').click(function () {
         let submitCodeButton = $('#submit-code__btn')
 
         // Collecting request
+        let partner_id = $('#dropdownMenuClassmate .dropdown-item.active').data('id') || null
         let language = getCurrentLanguage();
         let request = {
             code: myCodeMirror.getValue(),
             lang: language.dataset.value,
-            path: getCurrentTask()
+            path: getCurrentTask(),
+            partner_id: partner_id
         };
 
         let codeResponse = $('#code-response__body')
@@ -211,5 +208,7 @@ $("#dropdownMenuLanguage a").click(function () {
 $("#dropdownMenuClassmate a").click(function () {
     $(this).closest('.dropdown-menu').find('a').removeClass('active');
     $(this).addClass('active');
-    setClassmate($(this))
+    let dropdownMenuText = $('#classmateDropdownButton__text');
+    let classmate = $(this)[0]
+    dropdownMenuText.html(classmate.dataset.fullname)
 });
