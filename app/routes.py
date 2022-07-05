@@ -1,5 +1,5 @@
-from flask import render_template, redirect, url_for, request, session
-from flask_login import login_required
+from flask import render_template, redirect, url_for, request, session, abort
+from flask_login import login_required, current_user
 from flask_breadcrumbs import register_breadcrumb
 
 from app import app, login_manager
@@ -38,16 +38,18 @@ def home_page():
 @app.route('/submissions/<int:submission_id>', methods=['GET'])
 @login_required
 def submission_page(submission_id):
-    submission = Submission.query.get(submission_id)
+    submission = Submission.query.get_or_404(submission_id)
 
-    context = {
-        'submission': submission,
-        'language': languages.get_language(submission.language, object_only=True),
-        'code': submission.processed_code,
-        'response': contester.load_from_db(submission)
-    }
+    if submission in current_user.submissions:
+        context = {
+            'submission': submission,
+            'language': languages.get_language(submission.language, object_only=True),
+            'code': submission.processed_code,
+            'response': contester.load_from_db(submission)
+        }
+        return render_template('submission.html', title=f'Отправленное решение ({submission.task.name})', **context)
 
-    return render_template('submission.html', title=f'Отправленное решение ({submission.task.name})', **context)
+    abort(404)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
