@@ -59,7 +59,10 @@ class User(BaseModel, UserMixin):
     hashed_password = sqlalchemy.Column(sqlalchemy.String)
     registration_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.utcnow)
 
-    submissions = relationship('Submission', secondary=user_submission, backref='users')
+    submissions = relationship(
+        'Submission',
+        secondary=user_submission, backref='users',
+        order_by="desc(Submission.submission_date)")
 
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)
