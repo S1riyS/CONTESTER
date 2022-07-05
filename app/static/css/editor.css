@@ -60,35 +60,6 @@
     min-width: 225px;
 }
 
-.arrow {
-    width: 1.25rem;
-    height: 1.25rem;
-    display: inline-block;
-    position: absolute;
-    right: 10px;
-}
-
-.arrow span {
-    top: 50%;
-    transform: translateY(-50%);
-    position: absolute;
-    width: 0.75rem;
-    height: 0.1rem;
-    background-color: var(--text-color);
-    display: inline-block;
-    transition: all 0.2s ease;
-}
-
-.arrow span:first-of-type {
-    left: 0;
-    transform: rotate(45deg);
-}
-
-.arrow span:last-of-type {
-    right: 0;
-    transform: rotate(-45deg);
-}
-
 /* Editor footer */
 .editor__footer {
     display: flex;
