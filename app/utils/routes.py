@@ -18,8 +18,9 @@ def next_url(func):
 def grade_compliance_required(func):
     @wraps(func)
     def wrapper_function(*args, **kwargs):
-        if current_user.grade.number != kwargs.get('grade_number'):
-            abort(403)
+        if current_user.role_id != 2:
+            if current_user.grade.number != kwargs.get('grade_number'):
+                abort(403)
         return func(*args, **kwargs)
 
     return wrapper_function
