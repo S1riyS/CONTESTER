@@ -86,7 +86,7 @@ def get_submissions():
     else:
         submissions = None
 
-    return jsonify(render_template('responses/submissions_table.html', submissions=submissions, languages=languages))
+    return jsonify(render_template('responses/submissions_table.html', submissions=submissions))
 
 
 @api.route('/task/report', methods=['POST'])
