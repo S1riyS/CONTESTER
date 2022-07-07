@@ -61,8 +61,10 @@ class User(BaseModel, UserMixin):
 
     submissions = relationship(
         'Submission',
-        secondary=user_submission, backref='users',
-        order_by="desc(Submission.submission_date)")
+        secondary=user_submission,
+        backref=db.backref('users', lazy='dynamic'),
+        order_by="desc(Submission.submission_date)"
+    )
 
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)
@@ -71,7 +73,7 @@ class User(BaseModel, UserMixin):
         return check_password_hash(self.hashed_password, password)
 
     @hybrid_property
-    def classmates(self):
+    def classmates(self) -> list:
         return db.session.query(User).filter(
             User.grade_id == self.grade_id,
             User.grade_letter == self.grade_letter,
@@ -121,7 +123,7 @@ class Topic(BaseModel):
     name = sqlalchemy.Column(sqlalchemy.String)
     translit_name = sqlalchemy.Column(sqlalchemy.String)
 
-    tasks = relationship('Task', backref='topic')
+    tasks = relationship('Task', backref=db.backref('topic', lazy='joined'), lazy='dynamic')
 
     def set_translit_name(self):
         self.translit_name = slugify(self.name)
@@ -147,8 +149,7 @@ class Task(BaseModel):
 
     example = relationship('Example', uselist=False, backref='task')
     tests = relationship('Test', backref='task', lazy='subquery')
-
-    submissions = relationship('Submission', backref='task')
+    submissions = relationship('Submission', backref=db.backref('task', lazy='joined'), lazy='dynamic')
 
     def set_translit_name(self):
         self.translit_name = slugify(self.name)
@@ -211,7 +212,7 @@ class Submission(BaseModel):
     test_results = relationship('TestResult', backref="submission", lazy='subquery')
 
     @hybrid_property
-    def processed_code(self):
+    def processed_code(self) -> str:
         # Dictionary with symbols that can break CodeMirror
         replacements = {
             '"': r'\"',  # double quote
@@ -236,7 +237,7 @@ class Submission(BaseModel):
     def __repr__(self):
         return self._repr(
             id=self.id,
-            user=self.user,
+            users=self.users,
             task=self.task,
             result=self.get_result()['message']
         )
