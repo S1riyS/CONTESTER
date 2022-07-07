@@ -1,11 +1,16 @@
-/* Submissions */
-.submissions .submissions__body {
-    width: 100%;
+:root {
+    --table-separator: #33384e;
+    --table-hover: #1a1d28;
+}
+
+.submissions_table__wrapper {
     background: #212432;
 }
 
+/* Submissions */
 .submissions_table {
     font-size: 15px;
+    width: 100%;
 }
 
 .submissions_table .table_header__wrapper {
@@ -85,13 +90,4 @@
     width: 25px;
     height: auto;
     margin-right: 5px;
-}
-
-.submissions_table .table_row_column.view_result .view_result__link {
-    color: var(--purple-color);
-    transition: all 0.2s ease;
-}
-
-.submissions_table .table_row_column.view_result .view_result__link:hover {
-    color: var(--darker-purple-color);
 }

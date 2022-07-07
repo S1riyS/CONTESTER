@@ -56,4 +56,8 @@ def submission_page(submission_id):
 @register_breadcrumb(app, '.profile', 'Профиль')
 @login_required
 def profile_page():
-    return render_template('profile.html', title='Профиль')
+    submission_table = {
+        'submissions': current_user.submissions,
+        'show_task': True
+    }
+    return render_template('profile.html', title='Профиль', **submission_table)

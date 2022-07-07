@@ -3,8 +3,23 @@
     --avatar-size: 80px
 }
 
+.profile__title {
+    margin-bottom: 15px;
+    padding: 5px;
+}
+
+.profile__title .profile__title__icon {
+    font-size: 1.5em !important;
+    margin-right: 10px;
+    color: var(--darker-text-color);
+}
+
+.profile__title .profile__title__text {
+    font-size: 24px;
+}
+
 .container-fluid {
-    width: 95%;
+    width: 85%;
 }
 
 .user__info {

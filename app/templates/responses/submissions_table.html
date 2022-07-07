@@ -1,66 +1,91 @@
-{% if submissions %}
-    <div class="submissions_table">
-        <div class="table_header__wrapper">
-            <div class="table_header">
-                {# Result #}
-                <div class="table_header_column result">
-                    <p>РЕЗУЛЬТАТ</p>
+{% with session=session %}
+<div class="submissions_table__wrapper">
+    {% if submissions %}
+        <div class="submissions_table box-shadow">
+            <div class="table_header__wrapper">
+                <div class="table_header">
+                    {# Result #}
+                    <div class="table_header_column result">
+                        <p>РЕЗУЛЬТАТ</p>
+                    </div>
+                    {# Task #}
+                    {% if show_task %}
+                        <div class="table_header_column task">
+                            <p>ЗАДАЧА</p>
+                        </div>
+                    {% endif %}
+                    {# Language #}
+                    <div class="table_header_column language">
+                        <p>ЯЗЫК</p>
+                    </div>
+                    {# Time #}
+                    <div class="table_header_column time">
+                        <p>ВРЕМЯ</p>
+                    </div>
+                    {# View result #}
+                    <div class="table_header_column view_result"></div>
                 </div>
-                {# Language #}
-                <div class="table_header_column language">
-                    <p>ЯЗЫК</p>
-                </div>
-                {# Time #}
-                <div class="table_header_column time">
-                    <p>ВРЕМЯ</p>
-                </div>
-                {# View result #}
-                <div class="table_header_column view_result"></div>
             </div>
-        </div>
 
-        <div class="table_body">
-            {% for submission in submissions %}
-                <div class="table_row__wrapper">
-                    <div class="table_row">
-                        {# Result #}
-                        {% set submission_result = submission.get_result() %}
+            <div class="table_body">
+{#                {{ submissions }}#}
+                {% for submission in submissions %}
+                    <div class="table_row__wrapper">
+                        <div class="table_row">
+                            {# Result #}
+                            {% set submission_result = submission.get_result() %}
 
-                        {% if submission_result['success'] %}
-                            {% set result_status = 'success' %}
-                        {% else %}
-                            {% set result_status = 'fail' %}
-                        {% endif %}
-
-                        <div class="table_row_column result {{ result_status }}">
-                            {# Status icon #}
                             {% if submission_result['success'] %}
-                                <i class="result__icon far fa-check-circle"></i>
+                                {% set result_status = 'success' %}
                             {% else %}
-                                <i class="result__icon far fa-times-circle"></i>
+                                {% set result_status = 'fail' %}
                             {% endif %}
-                            <p>{{ submission_result['message'] }}</p>
-                        </div>
-                        {# Language #}
-                        <div class="table_row_column language">
-                            {% set language = languages.get_language(submission.language)['language'] %}
-                            <img src="{{ language.icon_url }}" alt="Language icon" class="language__icon">
-                            <p class="language__name">{{ language.fullname }}</p>
-                        </div>
-                        {# Time #}
-                        <div class="table_row_column time">{{ moment(submission.submission_date).fromNow(refresh=True) }}</div>
-                        {# View result #}
-                        <div class="table_row_column view_result">
-                            <a class="view_result__link" target="_blank"
-                               href="{{ url_for('submission_page', submission_id=submission.id) }}">
-                                Посмотреть результат
-                            </a>
+                            <div class="table_row_column result {{ result_status }}">
+                                {# Status icon #}
+                                {% if submission_result['success'] %}
+                                    <i class="result__icon far fa-check-circle"></i>
+                                {% else %}
+                                    <i class="result__icon far fa-times-circle"></i>
+                                {% endif %}
+                                <p>{{ submission_result['message'] }}</p>
+                            </div>
+
+                            {# Task #}
+                            {% if show_task %}
+                                <div class="table_row_column task">
+                                    {% set task = submission.task %}
+                                    <a href="{{ get_task_url(task) }}" class="default_link">
+                                        {{ task.name }}
+                                    </a>
+                                </div>
+                            {% endif %}
+
+                            {# Language #}
+                            <div class="table_row_column language">
+                                {% set language = languages.get_language(submission.language)['language'] %}
+                                <img src="{{ language.icon_url }}" alt="Language icon" class="language__icon">
+                                <p class="language__name">{{ language.fullname }}</p>
+                            </div>
+
+                            {# Time #}
+                            <div class="table_row_column time">
+                                {{ moment(submission.submission_date).fromNow(refresh=True) }}
+                            </div>
+
+                            {# View result #}
+                            <div class="table_row_column view_result">
+                                <a class="view_result__link default_link" target="_blank"
+                                   href="{{ url_for('submission_page', submission_id=submission.id) }}">
+                                    Подробнее
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
-    </div>
-{% else %}
-    {% include 'responses/empty_response.html' %}
-{% endif %}
+    {% else %}
+        {% include 'responses/empty_response.html' %}
+    {% endif %}
+</div>
+{% endwith %}
