@@ -42,11 +42,7 @@
                         {% endif %}
 
                         <li class="sidebar__item {{ is_active }}">
-                            <a href="{{ url_for(
-                            'problems.task_page',
-                            grade_number=grade.number,
-                            topic_translit_name=topic.translit_name,
-                            task_translit_name=sidebar_task.translit_name) }}"
+                            <a href="{{ get_task_url(sidebar_task) }}"
                                class="item__link">{{ sidebar_task.name }}</a>
                         </li>
                     {% endfor %}
@@ -240,7 +236,7 @@
                                 <div></div>
                             </div>
                         </div>
-                        <div class="submissions__body box-shadow" id="submissions__body"></div>
+                        <div class="submissions__body" id="submissions__body"></div>
                     </div>
                 </div>
             </div>

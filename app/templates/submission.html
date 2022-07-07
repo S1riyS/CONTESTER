@@ -52,15 +52,10 @@
                 <div class="col-lg-8 offset-lg-2 col-12">
                     <div class="submitted_code box-shadow">
                         <div class="submission__header">
-                            {% set task = submission.task %}
-                            {% set topic = task.topic %}
-                            {% set grade = topic.grade %}
                             <p class="submission__task header__item">
+                                {% set task = submission.task %}
                                 Задача:
-                                <a href="{{ url_for('problems.task_page',
-                                    task_translit_name=task.translit_name,
-                                    topic_translit_name=topic.translit_name,
-                                    grade_number=grade.number) }}" class="task__link">
+                                <a href="{{ get_task_url(task) }}" class="task__link">
                                     {{ task.name }}
                                 </a>
                             </p>
