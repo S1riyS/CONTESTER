@@ -217,6 +217,20 @@ pre {
     opacity: 0.85;
 }
 
+.text_with_icon {
+    display: flex;
+    align-items: center;
+}
+
+.default_link {
+    color: var(--purple-color);
+    transition: all 0.2s ease;
+}
+
+.default_link:hover {
+    color: var(--darker-purple-color);
+}
+
 .block {
     display: flex;
     padding: 15px;
