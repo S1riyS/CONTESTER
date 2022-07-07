@@ -88,3 +88,4 @@ class Languages(metaclass=SingletonBaseClass):
 
 
 languages = Languages()
+app.jinja_env.globals['languages'] = languages
