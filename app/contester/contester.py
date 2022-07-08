@@ -1,6 +1,6 @@
+import typing as t
 import time
 import pprint
-from typing import Optional, List
 
 import asyncio
 import aiohttp
@@ -17,31 +17,40 @@ from .errors import ServerResponseError, ExecutionError, WrongAnswerError, TimeL
 
 class Contester(metaclass=SingletonBaseClass):
     def __init__(self, TESTING_MODE=False):
-        self.API = 'https://wandbox.org/api/compile.json'  # API URL
-        self.HEADERS = {'Content-Type': "application/json;charset=UTF-8"}  # Request headers
+        self.__API = 'https://wandbox.org/api/compile.json'  # API URL
+        self.__HEADERS = {'Content-Type': "application/json;charset=UTF-8"}  # Request headers
         self.TESTING_MODE = TESTING_MODE
 
     @staticmethod
-    def _compare_answers(program_output: str, expected_output: str) -> Optional[WrongAnswerError]:
+    def __compare_answers(program_output: str, expected_output: str) -> t.Optional[WrongAnswerError]:
         if not program_output.strip() == expected_output.strip():
             raise WrongAnswerError
 
     @staticmethod
-    def _get_number_of_passed_tests(tests: List[dict]) -> int:
+    def __get_number_of_passed_tests(tests: t.List[dict]) -> int:
         return len([result for result in tests if result['success']])
 
     @staticmethod
-    def _save_to_database(task: Task, code: str, response: dict, language: str, partner: User) -> None:
+    def __save_to_database(
+            task: Task,
+            code: str,
+            response: dict,
+            language: str,
+            partner: t.Optional[User] = None
+    ) -> None:
         """
         Method that saves all information about user's submission in database
+
         :param task: Task object
         :param code: User's code
         :param response: Dictionary with final response
         :param language: Programming language
+        :param partner: User object (person who helped to write solution)
+
         :return: None
         """
+        # Creating
         passed_tests = response['passed_tests']
-
         submission = Submission(
             task_id=task.id,
             language=language,
@@ -54,11 +63,9 @@ class Contester(metaclass=SingletonBaseClass):
         current_user.submissions.append(submission)
         if partner:
             partner.submissions.append(submission)
-
         db.session.commit()
 
         results = response['tests']
-
         for result in results:
             test_result = TestResult(
                 test_id=result['test'].id,
@@ -72,6 +79,7 @@ class Contester(metaclass=SingletonBaseClass):
         db.session.commit()
 
     def load_from_db(self, submission: Submission) -> dict:
+        """ Returns dictionary with all data of submission"""
         results_array = []
         for result in submission.test_results:
             results_array.append({
@@ -84,10 +92,10 @@ class Contester(metaclass=SingletonBaseClass):
         return {
             'language': languages.get_language(submission.language, object_only=True),
             'tests': results_array,
-            'passed_tests': self._get_number_of_passed_tests(results_array)
+            'passed_tests': self.__get_number_of_passed_tests(results_array)
         }
 
-    async def _run_single_test(self, session: aiohttp.ClientSession, data: dict, current_test: Test) -> dict:
+    async def __run_single_test(self, session: aiohttp.ClientSession, data: dict, current_test: Test) -> dict:
         """
         :param session: aiohttp.ClientSession() object
         :param data: params which will be passed in the request
@@ -103,17 +111,21 @@ class Contester(metaclass=SingletonBaseClass):
 
         try:
             try:
-                async with session.post(url=self.API, headers=self.HEADERS, json=data, timeout=10) as wandbox_response:
+                async with session.post(
+                        url=self.__API,
+                        headers=self.__HEADERS,
+                        json=data,
+                        timeout=10
+                ) as wandbox_response:
                     # Checking status code
                     if wandbox_response.status == 200:
                         result_json = await wandbox_response.json()  # Getting JSON
-
                         # Checking status
                         if result_json['status'] == '0':
                             response['user_output'] = result_json['program_output'].strip()
 
-                            self._compare_answers(program_output=result_json['program_output'],
-                                                  expected_output=current_test.test_output)
+                            self.__compare_answers(program_output=result_json['program_output'],
+                                                   expected_output=current_test.test_output)
                         else:
                             raise ExecutionError  # Raising 'ExecutionError'
                     else:
@@ -126,7 +138,6 @@ class Contester(metaclass=SingletonBaseClass):
         except (ServerResponseError, ExecutionError, WrongAnswerError, TimeLimitError) as error:
             response['success'] = False
             response['message'] = error.message
-
         # If everything OK
         else:
             response['success'] = True
@@ -134,7 +145,7 @@ class Contester(metaclass=SingletonBaseClass):
 
         return response
 
-    async def _get_testing_results(self, code: str, language: str, task: Task) -> dict:
+    async def __get_testing_results(self, code: str, language: str, task: Task) -> dict:
         """
         :param code: User's code
         :param language: Programming language
@@ -146,8 +157,8 @@ class Contester(metaclass=SingletonBaseClass):
 
         if current_language_dict['success']:
             current_language = current_language_dict['language']
-            compiler = current_language.compiler  # Getting compiler
-            start_time = time.time()  # Getting time when tests were started
+            compiler = current_language.compiler
+            start_time = time.time()
 
             async with aiohttp.ClientSession() as session:
                 tasks = []
@@ -161,12 +172,12 @@ class Contester(metaclass=SingletonBaseClass):
                     }
 
                     # Creating asyncio task
-                    asyncio_task = asyncio.ensure_future(self._run_single_test(session, data, current_test))
+                    asyncio_task = asyncio.ensure_future(self.__run_single_test(session, data, current_test))
                     tasks.append(asyncio_task)
 
                 test_results = await asyncio.gather(*tasks)  # Running tasks
 
-                end_time = time.time()  # Getting time when tests were finished
+                end_time = time.time()
 
                 # Results of test
                 response['tests'] = sorted(test_results, key=lambda item: item['success'])
@@ -175,15 +186,20 @@ class Contester(metaclass=SingletonBaseClass):
                 # Total time of testing
                 response['time'] = "{0:.3f} sec".format(end_time - start_time)
                 # Number of passed tests
-                response['passed_tests'] = self._get_number_of_passed_tests(response['tests'])
-
+                response['passed_tests'] = self.__get_number_of_passed_tests(response['tests'])
 
                 return response
 
         return None
 
     @silence_event_loop_closed
-    def run_tests(self, code: str, language: str, task: Task, partner: User) -> dict:
+    def run_tests(
+            self,
+            code: str,
+            language: str,
+            task: Task,
+            partner: t.Optional[User] = None
+    ) -> dict:
         """
         :param code: User's code
         :param language: Programming language
@@ -193,12 +209,12 @@ class Contester(metaclass=SingletonBaseClass):
         """
 
         loop = asyncio.new_event_loop()  # Creating async loop
-        response = loop.run_until_complete(self._get_testing_results(code, language, task))
+        response = loop.run_until_complete(self.__get_testing_results(code, language, task))
 
         # Saving results to DB
         if not self.TESTING_MODE:
-            self._save_to_database(task=task, code=code, response=response, language=language, partner=partner)
-
+            self.__save_to_database(task=task, code=code, response=response, language=language, partner=partner)
+        # Printing response
         if app.config.get('TESTING'):
             pprint.pprint(response, indent=4)
 
