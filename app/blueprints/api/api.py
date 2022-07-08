@@ -27,26 +27,28 @@ def send_alert(success: bool, message: str):
 # API
 @api.route('/task/solution', methods=['POST'])
 def send_solution():
+    # Checking if user is authenticated
     if not current_user.is_authenticated:
         return jsonify({
-            'result': render_template('responses/solution/failure.html',
-                                      message='Для отправки решений необходимо войти в систему')
+            'result': render_template(
+                'responses/solution/failure.html',
+                message='Для отправки решений необходимо войти в систему'
+            )
         })
-
+    # Checking if user's profile is verified
     elif not current_user.verified:
         return jsonify({
-            'result': render_template('responses/solution/failure.html',
-                                      message='Для отправки решений необходимо подтвердить свою почту')
+            'result': render_template(
+                'responses/solution/failure.html',
+                message='Для отправки решений необходимо подтвердить свою почту'
+            )
         })
 
     data = request.json
-    # Task
     path = data['path']
-    task = get_task(path['grade'], path['topic'], path['task'])
-    # Partner
-    partner = load_user(data['partner_id'])
-    # Code
-    user_code = data['code'].strip()
+    current_task = get_task(path['grade'], path['topic'], path['task'])  # Task
+    partner = load_user(data['partner_id'])  # Partner
+    user_code = data['code'].strip()  # Code
 
     # submissions = db.session.query(Submission).filter(
     #     Submission.user_id == current_user.id,
@@ -60,15 +62,26 @@ def send_solution():
     #                                   message='Решение с таким же кодом уже было отправлено')
     #     })
 
-    response = contester.run_tests(code=user_code, language=data['lang'], task=task, partner=partner)
+    response = contester.run_tests(
+        code=user_code,
+        language=data['lang'],
+        task=current_task,
+        partner=partner
+    )
 
     if response is not None:
         return jsonify({
-            'result': render_template('responses/solution/success.html', response=response)
+            'result': render_template(
+                'responses/solution/success.html',
+                response=response
+            )
         })
 
     return jsonify({
-        'result': render_template('responses/solution/failure.html', message='Что-то пошло не так!')
+        'result': render_template(
+            'responses/solution/failure.html',
+            message='Что-то пошло не так!'
+        )
     })
 
 

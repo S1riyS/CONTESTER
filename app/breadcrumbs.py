@@ -13,10 +13,9 @@ def view_grade_dlc(*args, **kwargs):
 
 def view_topic_dlc(*args, **kwargs):
     grade_number = request.view_args['grade_number']
-
     topic_translit_name = request.view_args['topic_translit_name']
-    topic = db.session.query(Topic).filter(Topic.translit_name == topic_translit_name).first()
 
+    topic = db.session.query(Topic).filter(Topic.translit_name == topic_translit_name).first()
     url = url_for('problems.topic_page', grade_number=grade_number, topic_translit_name=topic_translit_name)
     return [{'text': topic.name, 'url': url}]
 
