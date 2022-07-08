@@ -1,5 +1,5 @@
+import typing as t
 from dataclasses import dataclass
-from typing import Optional, Union
 
 from flask import url_for
 
@@ -69,7 +69,7 @@ class Languages(metaclass=SingletonBaseClass):
         mode='Not found'
     )
 
-    def get_language(self, language: str, object_only: Optional[bool] = False) -> Union[dict, Language]:
+    def get_language(self, language: str, object_only: t.Optional[bool] = False) -> t.Union[dict, Language]:
         current_language = self.dictionary.get(language, None)
 
         if current_language is None:
