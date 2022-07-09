@@ -19,15 +19,25 @@
     width: 100%;
 }
 
-.route__body .route__body_title {
+.route__title {
     margin-bottom: 15px;
+    padding: 5px;
+}
+
+.route__title .route__title__icon {
+    font-size: 1.5em !important;
+    margin-right: 10px;
+    color: var(--darker-text-color);
+}
+
+.route__title .route__title__text {
+    font-size: 24px;
 }
 
 .route__body .route__body_list .list_item {
     position: relative;
     background: var(--list-item-background);
-    padding: 15px 20px;
-    border-radius: 5px;
+    padding: 20px 20px;
     box-shadow: none;
     transition: all 0.4s ease;
 }
@@ -39,7 +49,7 @@
 }
 
 .route__body .route__body_list .list_item:not(:last-of-type) {
-    margin-bottom: 10px;
+    border-bottom: 1px solid #33384e
 }
 
 .route__body .route__body_list .list_item .list_item__link {
@@ -51,6 +61,5 @@
 }
 
 .route__body .route__body_list .list_item .list_item_content .item_title {
-    font-size: 24px;
-    font-weight: 600;
+    font-size: 20px;
 }

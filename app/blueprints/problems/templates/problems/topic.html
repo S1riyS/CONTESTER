@@ -9,8 +9,11 @@
     <div class="container-fluid">
         <div class="row">
             <div class="route__body">
-                <h3 class="route__body_title">Задачи:</h3>
-                <div class="route__body_list">
+                <div class="route__title text_with_icon">
+                    <i class="fa fa-2x fa-tasks route__title__icon" aria-hidden="true"></i>
+                    <p class="route__title__text">Задачи:</p>
+                </div>
+                <div class="route__body_list box-shadow">
                     {% if tasks %}
                         {% for task in tasks %}
                             <div class="list_item">
