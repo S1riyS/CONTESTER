@@ -1,5 +1,5 @@
 from flask_mail import Message
-from app import app, mail
+from app import mail
 
 
 def send_email(subject, recipients, text_body, html_body):

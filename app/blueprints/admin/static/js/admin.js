@@ -1,7 +1,8 @@
 function setDropdownItem(item) {
-    let dropdownMenuButton = item.closest('.dropdown-menu').siblings('.dropdown-btn')
-    let dropdownMenuText = dropdownMenuButton.find('.dropdownBtn__text')
-    dropdownMenuText.html(item.text())
+    let dropdownMenuButton = item.closest('.dropdown-menu').siblings('.dropdown-btn');
+    let dropdownMenuText = dropdownMenuButton.find('.dropdownBtn__text');
+    let text = item.text()
+    dropdownMenuText.html(text)
 }
 
 $(document).ready(function () {

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, make_response, jsonify
+from flask import Blueprint, render_template, redirect, url_for, make_response
 from flask_login import current_user
 from itsdangerous import SignatureExpired, BadSignature
 

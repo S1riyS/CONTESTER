@@ -53,24 +53,22 @@ $("#task_from").submit(function (event) {
     let grade_id = $('#dropdownMenuGrade .dropdown-item.active').data('value');
     let topic_id = $('#dropdownMenuTopic .dropdown-item.active').data('value')
 
-
-    let request = {
-        path: {
-            grade_id: grade_id,
-            topic_id: topic_id,
-        },
-        information: {
-            name: $('#task__name').val(),
-            condition: $('#task__condition').val()
-        },
-        example: {
-            input: $('#task__input').val(),
-            output: $('#task__output').val()
-        },
-        tests: getTests()
-    }
-
-    if (topic_id && topic_id) {
+    if (grade_id && topic_id) {
+        let request = {
+            path: {
+                grade_id: grade_id,
+                topic_id: topic_id,
+            },
+            information: {
+                name: $('#task__name').val(),
+                condition: $('#task__condition').val()
+            },
+            example: {
+                input: $('#task__input').val(),
+                output: $('#task__output').val()
+            },
+            tests: getTests()
+        }
 
         $.ajax({
             type: 'POST',

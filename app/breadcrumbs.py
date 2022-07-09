@@ -1,7 +1,7 @@
 from flask import url_for, request
 
 from app import db
-from app.models import Grade, Topic, Task
+from app.models import Topic, Task
 
 
 def view_grade_dlc(*args, **kwargs):
