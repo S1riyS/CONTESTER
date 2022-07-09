@@ -10,36 +10,19 @@
     margin-bottom: 25px;
 }
 
-.submission__header .header__item:not(:last-child) {
-    margin-bottom: 8px;
-}
-
-.submission__header .submission__task .task__link {
-    color: var(--purple-color);
-}
-
-.submission__result, .submission__result__message {
+.submission__header .header__item {
     display: flex;
     align-items: center;
     flex-direction: row;
 }
 
-.submission__result__message {
-    margin-left: 10px;
+.submission__header .header__item .header__item__title {
+    margin-right: 6px;
 }
 
-.submission__result__message .result__icon {
-    margin-right: 3px;
+.submission__header .header__item:not(:last-child) {
+    margin-bottom: 8px;
 }
-
-.submission__result__message.success {
-    color: var(--green-color)
-}
-
-.submission__result__message.fail {
-    color: var(--fail-color);
-}
-
 
 .submission__body .submitted_code__body__title {
     font-weight: 700;
@@ -68,4 +51,23 @@
     height: auto;
     margin-right: 3px;
     margin-left: 8px;
+}
+
+/* Submission result */
+.submission_result {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.submission_result.success {
+    color: var(--green-color)
+}
+
+.submission_result.fail {
+    color: var(--fail-color);
+}
+
+.submission_result .submission_result__icon {
+    margin-right: 6px;
 }

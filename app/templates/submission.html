@@ -1,3 +1,5 @@
+{% import 'responses/submission_result.html' as submission_macros %}
+
 {% extends "base.html" %}
 
 {% block css %}
@@ -52,38 +54,24 @@
                 <div class="col-lg-8 offset-lg-2 col-12">
                     <div class="submitted_code box-shadow">
                         <div class="submission__header">
-                            <p class="submission__task header__item">
+                            <div class="header__item">
                                 {% set task = submission.task %}
-                                Задача:
-                                <a href="{{ get_task_url(task) }}" class="task__link">
+                                <p class="header__item__title">Задача:</p>
+                                <a href="{{ get_task_url(task) }}" class="default_link">
                                     {{ task.name }}
                                 </a>
-                            </p>
-                            <p class="submission__time header__item">
-                                Решение было отправлено {{ moment(submission.submission_date).fromNow(refresh=True) }}
-                            </p>
+                            </div>
+                            <div class="submission__time header__item">
+                                <p>
+                                    Решение было отправлено
+                                    {{ moment(submission.submission_date).fromNow(refresh=True) }}
+                                </p>
+                            </div>
 
-                            {# Result #}
-                            {% set submission_result = submission.get_result() %}
-
-                            {% if submission_result['success'] %}
-                                {% set result_status = 'success' %}
-                            {% else %}
-                                {% set result_status = 'fail' %}
-                            {% endif %}
-
-                            <div class="submission__result header__item">
-                                <strong>Результат:</strong>
-                                <div class="submission__result__message {{ result_status }}">
-                                    {# Status icon #}
-                                    {% if submission_result['success'] %}
-                                        <i class="result__icon far fa-check-circle"></i>
-                                    {% else %}
-                                        <i class="result__icon far fa-times-circle"></i>
-                                    {% endif %}
-
-                                    {# Message #}
-                                    <p>{{ submission_result['message'] }}</p>
+                            <div class="header__item">
+                                <p class="header__item__title">Результат:</p>
+                                <div class="submission__result__message">
+                                    {{ submission_macros.render_result(submission, show_passed_tests=True) }}
                                 </div>
                             </div>
                         </div>
