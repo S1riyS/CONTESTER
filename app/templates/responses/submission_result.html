@@ -1,0 +1,26 @@
+{% macro render_result(submission, show_passed_tests=False) %}
+    {# Result #}
+    {% set result = submission.get_result() %}
+    {% if result['success'] %}
+        {% set result_status = 'success' %}
+    {% else %}
+        {% set result_status = 'fail' %}
+    {% endif %}
+
+    <div class="submission_result {{ result_status }}">
+        {#  Icon  #}
+        {% if result['success'] %}
+            <i class="submission_result__icon far fa-check-circle"></i>
+        {% else %}
+            <i class="submission_result__icon far fa-times-circle"></i>
+        {% endif %}
+        {#  Text  #}
+        <p class="submission_result__message">
+            {{ result['message'] }}
+            {% if show_passed_tests %}
+                {% set number_of_tests = submission.task.tests|length %}
+                ({{ submission.passed_tests }} / {{ number_of_tests }})
+            {% endif %}
+        </p>
+    </div>
+{% endmacro %}

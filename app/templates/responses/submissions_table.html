@@ -1,4 +1,5 @@
-{% with session=session %}
+{% import 'responses/submission_result.html' as submission_macros %}
+
 <div class="submissions_table__wrapper">
     {% if submissions %}
         <div class="submissions_table box-shadow">
@@ -31,23 +32,8 @@
                 {% for submission in submissions %}
                     <div class="table_row__wrapper">
                         <div class="table_row">
-                            {# Result #}
-                            {% set submission_result = submission.get_result() %}
-
-                            {% if submission_result['success'] %}
-                                {% set result_status = 'success' %}
-                            {% else %}
-                                {% set result_status = 'fail' %}
-                            {% endif %}
-                            <div class="table_row_column result {{ result_status }}">
-                                {# Status icon #}
-                                {% if submission_result['success'] %}
-                                    <i class="result__icon far fa-check-circle"></i>
-                                {% else %}
-                                    <i class="result__icon far fa-times-circle"></i>
-                                {% endif %}
-                                {% set number_of_tests = submission.task.tests|length %}
-                                <p>{{ submission_result['message'] }} ({{ submission.passed_tests }} / {{ number_of_tests }})</p>
+                            <div class="table_row_column result">
+                                {{ submission_macros.render_result(submission, show_passed_tests=True) }}
                             </div>
 
                             {# Task #}
@@ -88,4 +74,3 @@
         {% include 'responses/empty_response.html' %}
     {% endif %}
 </div>
-{% endwith %}
