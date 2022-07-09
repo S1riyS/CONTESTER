@@ -147,7 +147,10 @@ def login():
     elif user.check_password(data['password']):
         login_user(user)
 
-        next_url = session['next_url'] or url_for('home_page')
+        if 'next_url' in session:
+            next_url = session['next_url']
+        else:
+            next_url = url_for('home_page')
 
         return make_response(jsonify({'success': True, 'redirect_url': next_url}), 200)
 
