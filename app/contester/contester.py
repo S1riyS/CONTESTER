@@ -13,6 +13,7 @@ from app.utils.singleton import SingletonBaseClass
 
 from .api_service import ApiCall, ApiCallData
 from .languages import Language, languages
+from .utils import get_number_of_passed_tests
 from .exceptions import ContesterError, ApiServiceError, ExecutionError, WrongAnswerError, TimeOutError
 
 
@@ -33,10 +34,6 @@ class ContesterResponse(t.NamedTuple):
 class Contester(metaclass=SingletonBaseClass):
     def __init__(self, TESTING_MODE=False):
         self.TESTING_MODE = TESTING_MODE
-
-    @staticmethod
-    def __get_number_of_passed_tests(tests: t.Iterable[SingleTestResult]) -> int:
-        return len([result for result in tests if result.success])
 
     @staticmethod
     def __save_to_database(
@@ -86,7 +83,7 @@ class Contester(metaclass=SingletonBaseClass):
         return ContesterResponse(
             language=languages.get_language(submission.language, object_only=True),
             tests=results_array,
-            passed_tests=self.__get_number_of_passed_tests(results_array),
+            passed_tests=get_number_of_passed_tests(results_array),
             time='None sec'
         )
 
@@ -152,7 +149,7 @@ class Contester(metaclass=SingletonBaseClass):
                 return ContesterResponse(
                     language=current_language,
                     tests=tests,
-                    passed_tests=self.__get_number_of_passed_tests(tests),
+                    passed_tests=get_number_of_passed_tests(tests),
                     time="{0:.3f} sec".format(end_time - start_time)
                 )
         return None
