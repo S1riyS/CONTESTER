@@ -14,21 +14,8 @@ from app.utils.singleton import SingletonBaseClass
 from .api_service import ApiCall, ApiCallData
 from .languages import Language, languages
 from .utils import get_number_of_passed_tests
+from .types import SingleTestResult, ContesterResponse
 from .exceptions import ContesterError, ApiServiceError, ExecutionError, WrongAnswerError, TimeOutError
-
-
-class SingleTestResult(t.NamedTuple):
-    message: str
-    success: bool
-    test: Test
-    user_output: str
-
-
-class ContesterResponse(t.NamedTuple):
-    language: Language
-    tests: t.Iterable[SingleTestResult]
-    passed_tests: int
-    time: str
 
 
 class Contester(metaclass=SingletonBaseClass):
