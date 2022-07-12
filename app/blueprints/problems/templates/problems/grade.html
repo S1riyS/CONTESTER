@@ -13,8 +13,8 @@
                     <i class="fa fa-2x fa-tasks route__title__icon" aria-hidden="true"></i>
                     <p class="route__title__text">Темы:</p>
                 </div>
-                <div class="route__body_list box-shadow">
-                    {% if topics %}
+                {% if topics %}
+                    <div class="route__body_list box-shadow">
                         {% for topic in topics %}
                             <div class="list_item">
                                 <a href="{{ url_for(
@@ -28,10 +28,10 @@
                                 </div>
                             </div>
                         {% endfor %}
-                    {% else %}
-                        {% include 'responses/empty_response.html' %}
-                    {% endif %}
-                </div>
+                    </div>
+                {% else %}
+                    {% include 'responses/empty_response.html' %}
+                {% endif %}
             </div>
         </div>
     </div>

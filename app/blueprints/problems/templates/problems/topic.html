@@ -13,25 +13,20 @@
                     <i class="fa fa-2x fa-tasks route__title__icon" aria-hidden="true"></i>
                     <p class="route__title__text">Задачи:</p>
                 </div>
-                <div class="route__body_list box-shadow">
-                    {% if tasks %}
-                        {% for task in tasks %}
-                            <div class="list_item">
-                                <a href="{{ url_for('problems.task_page',
-                            grade_number=grade.number,
-                            topic_translit_name=topic.translit_name,
-                            task_translit_name=task.translit_name) }}"
-                                   class="list_item__link"></a>
-                                <div class="list_item_content">
-                                    <p class="item_title">{{ task.name }}</p>
-                                </div>
+                {% if tasks %}
+                    {% for task in tasks %}
+                        <div class="list_item">
+                            <a href="{{ get_task_url(task) }}" class="list_item__link"></a>
+                            <div class="list_item_content">
+                                <p class="item_title">{{ task.name }}</p>
                             </div>
-                        {% endfor %}
-                    {% else %}
-                        {% include 'responses/empty_response.html' %}
-                    {% endif %}
-                </div>
-            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% else %}
+                    {% include 'responses/empty_response.html' %}
+                {% endif %}
         </div>
+    </div>
     </div>
 {% endblock %}
