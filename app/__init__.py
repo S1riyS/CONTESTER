@@ -19,7 +19,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db, render_as_batch=True)
 login_manager = LoginManager(app)
 moment = Moment(app)
-Breadcrumbs(app=app)
+breadcrumbs = Breadcrumbs(app)
 mail = Mail(app)
 serializer = URLSafeTimedSerializer(environ.get('SECRET_KEY'))
 
@@ -32,8 +32,6 @@ variables = {
 }
 for key, value in variables.items():
     app.jinja_env.globals[key] = value
-
-db.init_app(app)
 
 # Import routes
 from app import routes
