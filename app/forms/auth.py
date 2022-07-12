@@ -8,12 +8,9 @@ from app.models import Grade
 
 
 class SignUpForm(FlaskForm):
-    grades = db.session.query(Grade).all()
-    grades_list = [(grade.id, grade.number) for grade in grades]
-
     first_name = StringField('Имя', validators=[DataRequired()])
     last_name = StringField('Фамилия', validators=[DataRequired()])
-    grade = SelectField('Класс', choices=grades_list)
+    grade = SelectField('Класс', choices=[])
     letter = SelectField('Буква', choices=['A', 'Б', 'В', 'Г'])
     email = EmailField('Email', validators=[DataRequired()])
     password = PasswordField('Пароль', validators=[DataRequired(), Length(min=6)])

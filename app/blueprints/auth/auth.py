@@ -17,7 +17,11 @@ def login_page():
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup_page():
+    grades = db.session.query(Grade).all()
+    grades_list = [(grade.id, grade.number) for grade in grades]
+
     form = SignUpForm()
+    form.grade.choices = grades_list
     return render_template('auth/sign_up.html', title='Регистрация', form=form)
 
 
