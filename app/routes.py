@@ -10,7 +10,7 @@ from app.blueprints.errors.handler import errors
 from app.blueprints.problems.problems import problems
 
 from app.models import Submission
-from app.contester.contester import contester
+from app.contester.db_manager import load_from_db
 from app.contester.languages import languages
 from app.utils.routes import next_url
 
@@ -45,7 +45,7 @@ def submission_page(submission_id):
             'submission': submission,
             'language': languages.get_language(submission.language, object_only=True),
             'code': submission.processed_code,
-            'response': contester.load_from_db(submission)
+            'response': load_from_db(submission)
         }
         return render_template('submission.html', title=f'Отправленное решение ({submission.task.name})', **context)
 
