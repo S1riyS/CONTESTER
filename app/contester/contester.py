@@ -5,7 +5,7 @@ import pprint
 import asyncio
 import aiohttp
 
-from app import app # TODO: import app.config as app_config
+from app import app
 from app.models import User, Task, Test
 from app.utils.singleton import SingletonBaseClass
 
