@@ -61,8 +61,9 @@ class ApiCall:
         """
         if response['status'] == '0':
             self.__user_output = response['program_output'].strip()
-            if not self.__compare_answers(self.__user_output, self.__expected_output):
-                raise WrongAnswerError
+            if self.__compare_answers(self.__user_output, self.__expected_output):
+                return
+            raise WrongAnswerError
         raise ExecutionError
 
     async def run(self):
