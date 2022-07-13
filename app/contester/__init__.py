@@ -75,22 +75,16 @@ class Contester:
 
                 test_results = await asyncio.gather(*tasks)  # Running tasks
 
-                end_time = time.time()
+            end_time = time.time()
 
-                # Results of testing
-                tests = sorted(test_results, key=lambda item: item.success)
-                print(ContesterResponse(
-                    language=current_language,
-                    tests=tests,
-                    passed_tests=get_number_of_passed_tests(tests),
-                    time="{0:.3f} sec".format(end_time - start_time)
-                ))
-                return ContesterResponse(
-                    language=current_language,
-                    tests=tests,
-                    passed_tests=get_number_of_passed_tests(tests),
-                    time="{0:.3f} sec".format(end_time - start_time)
-                )
+            # Results of testing
+            tests = sorted(test_results, key=lambda item: item.success)
+            return ContesterResponse(
+                language=current_language,
+                tests=tests,
+                passed_tests=get_number_of_passed_tests(tests),
+                time="{0:.3f} sec".format(end_time - start_time)
+            )
         return None
 
     @silence_event_loop_closed
