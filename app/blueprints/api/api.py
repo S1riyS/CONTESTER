@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, current_user
 from sqlalchemy import and_
 
 from app import db, serializer, contester
-from app.contester.contester import contester
+from app.contester import contester
 
 from app.models import User, Role, Grade, Topic, Task, Example, Test, load_user
 from app.utils.email import send_email

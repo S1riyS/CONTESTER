@@ -3,7 +3,7 @@ This is file with tests for Contester class (core of testing system)
 """
 import unittest
 
-from app.contester.contester import Contester
+from app.contester import Contester
 
 test_code = {
     'python': {
