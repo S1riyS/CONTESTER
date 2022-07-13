@@ -7,7 +7,6 @@ import aiohttp
 
 from app import app
 from app.models import User, Task, Test
-from app.utils.singleton import SingletonBaseClass
 
 from .api_service import ApiCall, ApiCallData
 from .languages import Language, languages
@@ -17,7 +16,7 @@ from .types import SingleTestResult, ContesterResponse
 from .exceptions import ContesterError
 
 
-class Contester(metaclass=SingletonBaseClass):
+class Contester:
     def __init__(self, TESTING_MODE: bool = False):
         self.TESTING_MODE = TESTING_MODE
 
