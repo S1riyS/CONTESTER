@@ -43,7 +43,7 @@ def save_to_database(
     db.session.commit()
 
 
-def load_from_db(submission: Submission) -> ContesterResponse:
+def load_from_database(submission: Submission) -> ContesterResponse:
     """ Returns `ContesterResponse` object with all data of submission"""
     results_array = []
     for result in submission.test_results:
