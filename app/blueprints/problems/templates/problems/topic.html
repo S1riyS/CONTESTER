@@ -14,19 +14,20 @@
                     <p class="route__title__text">Задачи:</p>
                 </div>
                 {% if tasks %}
-                    {% for task in tasks %}
-                        <div class="list_item">
-                            <a href="{{ get_task_url(task) }}" class="list_item__link"></a>
-                            <div class="list_item_content">
-                                <p class="item_title">{{ task.name }}</p>
+                    <div class="route__body_list box-shadow">
+                        {% for task in tasks %}
+                            <div class="list_item">
+                                <a href="{{ get_task_url(task) }}" class="list_item__link"></a>
+                                <div class="list_item_content">
+                                    <p class="item_title">{{ task.name }}</p>
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
                     </div>
                 {% else %}
                     {% include 'responses/empty_response.html' %}
                 {% endif %}
+            </div>
         </div>
-    </div>
     </div>
 {% endblock %}
