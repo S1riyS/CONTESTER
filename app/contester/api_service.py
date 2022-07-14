@@ -2,7 +2,7 @@ import typing as t
 from dataclasses import dataclass, field
 
 import asyncio
-import aiohttp
+from aiohttp import ClientSession
 
 from .exceptions import ApiServiceError, ExecutionError, WrongAnswerError, TimeOutError
 
@@ -18,7 +18,7 @@ class ApiCallData(t.TypedDict):
 
 @dataclass
 class ApiCall:
-    __session: aiohttp.ClientSession
+    __session: ClientSession
     __data: ApiCallData
     __expected_output: str
     __user_output: t.Optional[str] = field(init=False, default=None)
