@@ -4,6 +4,7 @@ from app.models import Test
 
 from .languages import Language
 
+
 class SingleTestResult(t.NamedTuple):
     message: str
     success: bool
