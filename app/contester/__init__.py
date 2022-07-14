@@ -1,9 +1,10 @@
 import typing as t
+from dataclasses import dataclass
 import time
 import pprint
 
 import asyncio
-import aiohttp
+from aiohttp import ClientSession
 
 from app import app
 from app.models import User, Task, Test
@@ -16,16 +17,12 @@ from .types import SingleTestResult, ContesterResponse
 from .exceptions import ContesterError
 
 
+@dataclass
 class Contester:
-    def __init__(self, TESTING_MODE: bool = False):
-        self.TESTING_MODE = TESTING_MODE
+    TESTING_MODE: bool = False
 
     @staticmethod
-    async def __run_single_test(
-            session: aiohttp.ClientSession,
-            data: ApiCallData,
-            current_test: Test
-    ) -> SingleTestResult:
+    async def __run_single_test(session: ClientSession, data: ApiCallData, current_test: Test) -> SingleTestResult:
         """Returns result of a single test"""
         try:
             api_call = ApiCall(session, data, current_test.test_output)
@@ -58,7 +55,7 @@ class Contester:
             compiler = current_language.compiler
             start_time = time.time()
 
-            async with aiohttp.ClientSession() as session:
+            async with ClientSession() as session:
                 tasks = []
 
                 for current_test in task.tests:
