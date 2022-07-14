@@ -181,8 +181,8 @@ class Test(BaseModel):
 
     task_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("tasks.id"))
 
-    test_input = sqlalchemy.Column(sqlalchemy.Text)
-    test_output = sqlalchemy.Column(sqlalchemy.Text)
+    stdin = sqlalchemy.Column(sqlalchemy.Text)
+    stdout = sqlalchemy.Column(sqlalchemy.Text)
     is_hidden = sqlalchemy.Column(sqlalchemy.Boolean, default=True)
 
     def __repr__(self):
@@ -190,8 +190,8 @@ class Test(BaseModel):
             id=self.id,
             task=self.task,
             data={
-                'input': self.test_input,
-                'output': self.test_output,
+                'stdin': self.stdin,
+                'stdout': self.stdout,
                 'hidden': self.is_hidden
             }
         )

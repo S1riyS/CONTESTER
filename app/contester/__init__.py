@@ -22,10 +22,10 @@ class Contester:
     TESTING_MODE: bool = False
 
     @staticmethod
-    async def __run_single_test(session: ClientSession, data: ApiCallData, current_test: Test) -> SingleTestResult:
+    async def __run_single_test(session: ClientSession, data: ApiCallData, test: Test) -> SingleTestResult:
         """Returns result of a single test"""
         try:
-            api_call = ApiCall(session, data, current_test.test_output)
+            api_call = ApiCall(session, data, test.stdout)
             await api_call.run()
 
         # Handling errors
@@ -42,7 +42,7 @@ class Contester:
         return SingleTestResult(
             message=message,
             success=success,
-            test=current_test,
+            test=test,
             user_output=user_output
         )
 
@@ -58,16 +58,16 @@ class Contester:
             async with ClientSession() as session:
                 tasks = []
 
-                for current_test in task.tests:
+                for test in task.tests:
                     # Forming content of request
                     data = ApiCallData({
                         'code': code,
                         'compiler': compiler,
-                        'stdin': current_test.test_input
+                        'stdin': test.stdin
                     })
 
                     # Creating asyncio task
-                    asyncio_task = asyncio.ensure_future(self.__run_single_test(session, data, current_test))
+                    asyncio_task = asyncio.ensure_future(self.__run_single_test(session, data, test))
                     tasks.append(asyncio_task)
 
                 test_results = await asyncio.gather(*tasks)  # Running tasks

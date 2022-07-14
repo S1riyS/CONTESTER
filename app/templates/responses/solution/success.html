@@ -107,11 +107,11 @@
                             {% if not test.is_hidden %}
                                 <div class="stdin tab-content__block">
                                     <p class="tab-content__title">Ввод (stdin)</p>
-                                    <pre>{{ test.test_input }}</pre>
+                                    <pre>{{ test.stdin }}</pre>
                                 </div>
                                 <div class="expected-output tab-content__block">
                                     <p class="tab-content__title">Ожидаемый вывод</p>
-                                    <pre>{{ test.test_output }}</pre>
+                                    <pre>{{ test.stdout }}</pre>
                                 </div>
                             {% else %}
                                 <div class="locked-test">

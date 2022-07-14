@@ -4,8 +4,10 @@ This is file with tests for Contester class (core of testing system)
 import unittest
 
 from app.contester import Contester
+from app.contester.utils import get_number_of_passed_tests
+from app.contester.types import ContesterResponse, SingleTestResult
 
-test_code = {
+TESTING_CODE = {
     'python': {
         'success': """a, b = list(map(int, input().split()))\nprint(a + b)"""
     },
@@ -22,27 +24,49 @@ test_code = {
     }
 }
 
+TESTS = [
+
+]
+
 
 class ContesterTests(unittest.TestCase):
     def setUp(self) -> None:
-        self.contester = Contester()
-
-    def test_compare_answers(self):
-        result = self.contester._compare_answers(program_output=' 1 2 3', expected_output=' 1 2 3 ')
-        self.assertIsNone(result)
+        self.contester = Contester(TESTING_MODE=True)
 
     def test_get_number_of_passed_tests(self):
-        tests = {1: {'success': True, 'message': 'Success', 'info': {'stdin': '1 2', 'expected-output': '3'}},
-                 2: {'success': False, 'message': 'Wrong Answer', 'info': {'stdin': '1 5', 'expected-output': '6'}},
-                 3: {'success': True, 'message': 'Success', 'info': None},
-                 4: {'success': False, 'message': 'Time Limit Error', 'info': None}}
+        test_results = (
+            SingleTestResult(
+                success=True,
+                message='Success',
+                test=None,
+                user_output=None
+            ),
+            SingleTestResult(
+                success=False,
+                message='Wrong Answer',
+                test=None,
+                user_output=None
+            ),
+            SingleTestResult(
+                success=True,
+                message='Success',
+                test=None,
+                user_output=None
+            ),
+            SingleTestResult(
+                success=False,
+                message='Time Limit Error',
+                test=None,
+                user_output=None
+            )
+        )
 
-        result = self.contester._get_number_of_passed_tests(tests)
+        result = get_number_of_passed_tests(test_results)
         self.assertEqual(result, 2)
 
     def test_python_success(self):
         # Problem: sum two numbers (a + b)
-        code = test_code['python']['success']
+        code = TESTING_CODE['python']['success']
         language = 'python'
         tests = [
             {
@@ -59,7 +83,7 @@ class ContesterTests(unittest.TestCase):
 
     def test_pypy_success(self):
         # Problem: sum two numbers (a + b)
-        code = test_code['python']['success']
+        code = TESTING_CODE['python']['success']
         language = 'pypy'
         tests = [
             {
@@ -76,7 +100,7 @@ class ContesterTests(unittest.TestCase):
 
     def test_pascal_success(self):
         # Problem: subtract b from a (a - b)
-        code = test_code['pascal']['success']
+        code = TESTING_CODE['pascal']['success']
         language = 'pascal'
         tests = [
             {
@@ -93,7 +117,7 @@ class ContesterTests(unittest.TestCase):
 
     def test_cpp_success(self):
         # Problem: multiply two numbers (a * b)
-        code = test_code['cpp']['success']
+        code = TESTING_CODE['cpp']['success']
         language = 'cpp'
         tests = [
             {
@@ -110,7 +134,7 @@ class ContesterTests(unittest.TestCase):
 
     def test_csharp_success(self):
         # Problem: sum two numbers (a + b)
-        code = test_code['csharp']['success']
+        code = TESTING_CODE['csharp']['success']
         language = 'csharp'
         tests = [
             {
