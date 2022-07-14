@@ -238,11 +238,11 @@ def create_task():
         # Tests
         tests = data['tests']
         tests_zip = zip(tests['inputs'], tests['outputs'], tests['is_hidden'])
-        for test_input, test_output, is_hidden in tests_zip:
+        for stdin, stdout, is_hidden in tests_zip:
             test = Test(
                 task_id=task.id,
-                test_input=test_input,
-                test_output=test_output,
+                stdin=stdin,
+                stdout=stdout,
                 is_hidden=is_hidden
             )
             db.session.add(test)
