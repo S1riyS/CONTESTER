@@ -30,6 +30,8 @@ def confirm_email(token):
     if not current_user.verified:
         try:
             serializer.loads(token, salt='confirm-email', max_age=3600)
+            current_user.verified = True
+            db.session.commit()
 
         except SignatureExpired:
             return render_template(
