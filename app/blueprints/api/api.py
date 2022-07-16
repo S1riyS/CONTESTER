@@ -175,7 +175,6 @@ def confirm_email():
 
         send_email(subject='Подтвердите адрес электронной почты',
                    recipients=[email],
-                   text_body=f'Ваша ссылка для подтверждения: {link}',
                    html_body=render_template('auth/confirm_email.html', link=link))
 
     except Exception:
