@@ -15,7 +15,7 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + path.join(basedir, 'app', 'db', 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_SERVER = 'smtp.mail.ru'
     MAIL_USERNAME = environ.get('MAIL_USERNAME')
     MAIL_DEFAULT_SENDER = environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = environ.get('MAIL_PASSWORD')
