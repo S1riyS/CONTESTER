@@ -29,6 +29,7 @@ main {
     background: linear-gradient(100deg, var(--success-color) 0%, var(--green-color) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    word-spacing: -15px;
 }
 
 .welcome .welcome_main__text {
