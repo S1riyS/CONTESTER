@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for
-from flask_login import current_user
+from flask_login import current_user, login_required
 from itsdangerous import SignatureExpired, BadSignature
 
 from app import db, serializer
@@ -26,6 +26,7 @@ def signup_page():
 
 
 @auth.route('/confirm-email/<string:token>')
+@login_required
 def confirm_email(token):
     if not current_user.verified:
         try:
