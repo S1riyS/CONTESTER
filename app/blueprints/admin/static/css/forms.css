@@ -1,0 +1,62 @@
+:root {
+    --field-border-color: #8e9fbf;
+    --field-background: #1A1D28;
+    --select-background: #1a1d28;
+    --form-border-color: #89ddff
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 150px var(--field-background) inset;
+    /* можно изменить на любой вариант цвета */
+    -webkit-text-fill-color: #fff;
+    font-family: inherit !important;
+}
+
+.input_field {
+    width: 100%;
+    resize: none;
+    height: 56px;
+    outline: none;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    max-height: 330px;
+    caret-color: #4671EA;
+    color: var(--text-color);
+    border: 1px solid var(--field-border-color);
+    background-color: var(--field-background);
+}
+
+.input_field::placeholder {
+    color: var(--darker-text-color);
+}
+
+.input_field:is(:focus, :valid) {
+    padding: 14px;
+    border: 2px solid var(--blue-color);
+}
+
+.input_field::-webkit-scrollbar {
+    width: 0;
+}
+
+
+.select_field {
+    background: var(--purple-gradient);
+    color: var(--text-color);
+    padding: 6px 12px;
+    border-radius: 0.25rem;
+    margin: 0;
+    min-width: 120px;
+    font-family: inherit;
+    font-size: 16px;
+    cursor: pointer;
+    line-height: inherit;
+    transition: all 150ms ease-in;
+}
+
+.select_field option {
+    background: var(--select-background);
+    color: var(--text-color);
+}

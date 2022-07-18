@@ -4,7 +4,8 @@
 
 {% block css %}
     {{ super() }}
-    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/create_topic.css') }}">
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/topic.css') }}">
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/forms.css') }}">
 {% endblock %}
 
 {% block js %}
@@ -15,23 +16,19 @@
 {% block admin_content %}
     <h2 class="admin__title">Создать тему</h2>
     <form id="create_topic_from" method="post" role="form">
+        {{ form.csrf_token }}
         <div class="grade admin__block">
             <p class="admin__subtitle">Путь до темы:</p>
             <div class="input_block">
                 <p class="input_block__title">Класс:</p>
-                <div class="admin_dropdown">
-                    {{ dropdown.render_grades(rendered_grade_list) }}
-                </div>
-
+                {{ form.grades(class='select_field') }}
             </div>
             <div class="input_block">
                 <p class="input_block__title">Название:</p>
-                <textarea class="input_block__textarea" id="topic__name"
-                          name="topic__name" placeholder="Название темы" required="" spellcheck="false"
-                          type="text"></textarea>
+                {{ form.topic_name(type="text", class='input_field', placeholder='Название темы') }}
             </div>
         </div>
-        <input class="submit_button" id="submit" name="submit" type="submit" value="Создать тему">
+        {{ form.submit(class="btn btn-secondary submit_button", id="submit", type="submit") }}
     </form>
 {% endblock %}
 

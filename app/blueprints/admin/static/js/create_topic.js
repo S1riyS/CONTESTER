@@ -4,8 +4,8 @@ $("#create_topic_from").submit(function (event) {
     event.preventDefault();
 
     let data = {
-        grade_id: $('#dropdown__grade').find('.dropdown-item.active').data('value'),
-        name: $('#topic__name').val()
+        grade_id: $('#grades').val(),
+        name: $('#topic_name').val()
     }
 
     $.ajax({
@@ -23,8 +23,8 @@ $("#create_topic_from").submit(function (event) {
             }
             showAlert(response['message'], type);
         },
-        error: function(xhr, textStatus, error) {
-            showAlert('Что то пошло не так', 'danger');
+        error: function (xhr, textStatus, error) {
+            showAlert('Что-то пошло не так', 'danger');
         }
     });
 });

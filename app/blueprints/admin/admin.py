@@ -2,6 +2,7 @@ from flask import Blueprint, render_template
 
 from app import db
 from app.models import Grade, Topic
+from .forms import TopicForm
 
 admin = Blueprint('admin', __name__, template_folder='templates', static_folder='static')
 
@@ -30,10 +31,14 @@ def edit_task_page():
 @admin.route('/topic/create', methods=['GET', 'POST'])
 def create_topic_page():
     grades = db.session.query(Grade).all()
+    grades_list = [(grade.id, grade.number) for grade in grades]
+
+    form = TopicForm()
+    form.grades.choices = grades_list
+
     rendered_grade_list = render_template('admin/dropdown/grade_list.html', grades=grades)
 
-    return render_template('admin/create_topic.html', title='Создать тему',
-                           rendered_grade_list=rendered_grade_list)
+    return render_template('admin/topic.html', title='Создать тему', form=form)
 
 
 @admin.route('/topic/edit',  methods=['GET', 'POST'])
