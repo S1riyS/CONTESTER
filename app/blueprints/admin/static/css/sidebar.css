@@ -1,5 +1,5 @@
 :root {
-    --sidebar-background: #191c26;;
+    --sidebar-background: #1a1d28;;
     --sidebar-active-tab: #2a2e40;
     --sidebar-item-hover: #4c78f2;
 }
@@ -18,7 +18,7 @@
     left: 0;
     overflow-y: auto;
     transition: 0.2s ease;
-    padding: 82px 12px;
+    padding: 90px 12px;
 }
 
 .sidebar .menu {
@@ -44,7 +44,7 @@
 
 .sidebar .menu .item.active {
     background: var(--sidebar-active-tab);
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .sidebar .menu .item.active .sub-btn {
@@ -57,7 +57,7 @@
     text-decoration: none;
     display: block;
     padding: 12px;
-    border-radius: 10px;
+    border-radius: 5px;
     transition: 0.2s ease;
 }
 
@@ -75,7 +75,7 @@
 
 .sidebar .menu .item .sub-menu {
     display: none;
-    padding: 5px;
+    padding: 3px 7px 7px 7px;
 }
 
 .sidebar .menu .item .sub-menu .sub-item {

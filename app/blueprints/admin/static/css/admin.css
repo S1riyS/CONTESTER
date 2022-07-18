@@ -7,8 +7,17 @@ header {
     top: 0;
 }
 
+main.content__wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+main.content__wrapper .content {
+    width: 90%;
+}
+
 .container-fluid {
-    width: 97%;
+    width: 100%;
 }
 
 .dropdown-menu {
@@ -19,6 +28,8 @@ header {
 
 .admin__title {
     margin-bottom: 15px;
+    font-size: 28px;
+    padding: 6px;
 }
 
 .admin__block {
@@ -26,6 +37,7 @@ header {
     background: var(--defaul-button-color);
     padding: 15px 20px;
     border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.13), 0 10px 10px rgba(0, 0, 0, 0.13) !important;
 }
 
 .admin__subtitle {

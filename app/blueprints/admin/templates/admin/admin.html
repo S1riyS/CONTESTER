@@ -15,11 +15,13 @@
             <div class="sidebar col-2">
                 <div class="menu">
                     <div class="item">
-                        <a class="sub-btn" href="{{ url_for('admin.home_page') }}"><i class="fas fa-tools"></i>Админ панель</a>
+                        <a class="sub-btn" href="{{ url_for('admin.home_page') }}">
+                            <i class="fas fa-tools"></i>Админ панель
+                        </a>
                     </div>
 
                     <div class="item">
-                        <a class="sub-btn"><i class="fas fa-table"></i>Выполненные задачи
+                        <a class="sub-btn"><i class="fas fa-table"></i>Результаты
                             <i class="fas fa-angle-right dropdown"></i></a>
                         <div class="sub-menu">
                             <a href="#" class="sub-item">6 класс</a>
@@ -31,19 +33,26 @@
                         </div>
                     </div>
                     <div class="item">
-                        <a class="sub-btn"><i class="fas fa-cogs"></i>Изменение контента
+                        <a class="sub-btn"><i class="fas fa-cogs"></i>Содержание
                             <i class="fas fa-angle-right dropdown"></i></a>
                         <div class="sub-menu">
+                            <a href="{{ url_for('admin.create_topic_page') }}" class="sub-item">Добавить тему</a>
                             <a href="{{ url_for('admin.create_task_page') }}" class="sub-item">Добавить задачу</a>
-                            <a href="#" class="sub-item">Изменить задачу</a>
-                            <a href="#" class="sub-item">Удалить задачу</a>
                         </div>
+                    </div>
+
+                    <div class="item">
+                        <a class="sub-btn" href="{{ url_for('admin.home_page') }}">
+                            <i class="fa fa-flag" aria-hidden="true"></i>Жалобы
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-8 offset-2">
-                {% block admin_content %}{% endblock %}
-            </div>
+            <main class="content__wrapper col-10 offset-2">
+                <div class="content">
+                    {% block admin_content %}{% endblock %}
+                </div>
+            </main>
         </div>
     </div>
 {% endblock %}
