@@ -2,6 +2,11 @@
     --textarea-color: #1A1D28
 }
 
+header {
+    position: sticky;
+    top: 0;
+}
+
 .container-fluid {
     width: 97%;
 }
