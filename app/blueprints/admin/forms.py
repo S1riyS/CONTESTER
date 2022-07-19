@@ -4,6 +4,6 @@ from wtforms.validators import DataRequired
 
 
 class TopicForm(FlaskForm):
-    grades = SelectField('Класс', choices=[], validators=[DataRequired()])
+    grade = SelectField('Класс', choices=[], validators=[DataRequired()])
     topic_name = StringField('Название', validators=[DataRequired()])
     submit = SubmitField('Создать тему')
