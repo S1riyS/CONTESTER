@@ -15,7 +15,7 @@ $(document).ready(function () {
 });
 
 
-$(".textarea_auto_expand").keyup(function (e) {
+$(".auto_expand").keyup(function (e) {
     $(this).css({'height': '56px'})
     let borderTopWidth = parseFloat($(this).css("borderTopWidth"));
     let borderBottomWidth = parseFloat($(this).css("borderBottomWidth"))
