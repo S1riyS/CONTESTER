@@ -4,7 +4,7 @@ $("#create_topic_from").submit(function (event) {
     event.preventDefault();
 
     let data = {
-        grade_id: $('#grades').val(),
+        grade_id: $('#grade').val(),
         name: $('#topic_name').val()
     }
 
