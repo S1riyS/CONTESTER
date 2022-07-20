@@ -99,9 +99,15 @@ def send_report():
 def get_topics():
     data = request.json
     grade = db.session.query(Grade).filter(Grade.id == data['grade_id']).first()
-    topics = grade.topics
 
-    return jsonify(render_template('admin/dropdown/topic_list.html', topics=topics))
+    topics_array = []
+    for topic in grade.topics:
+        topics_array.append({
+            'id': topic.id,
+            'name': topic.name
+        })
+
+    return jsonify({'topics': topics_array})
 
 
 # Auth api

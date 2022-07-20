@@ -1,5 +1,45 @@
 import {showAlert} from "../../../../static/js/modules/alert.js";
 
+let grade_select = $('#grade')
+let topic_select = $('#topic')
+
+grade_select.change(function () {
+    let grade_id = grade_select.val();
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/topics',
+        contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify({
+            grade_id: grade_id
+        }),
+        success: function (response) {
+            let options = '';
+
+            if (response.topics.length !== 0) {
+                topic_select.removeClass('empty-dropdown')
+                topic_select.removeAttr('disabled');
+                for (let topic of response.topics) {
+                    options += renderOption(topic);
+                }
+            } else {
+                topic_select.addClass('empty-dropdown')
+                topic_select.attr('disabled','disabled');
+            }
+
+            topic_select.html(options);
+        },
+        error: function (error) {
+            showAlert('Что-то пошло не так', 'danger');
+        }
+    })
+})
+
+
+function renderOption(topic) {
+    return '<option value="' + topic.id + '">' + topic.name + '</option>';
+}
+
 let current_test = 1
 
 function createTestBlock() {
@@ -102,17 +142,6 @@ $(document).on('click', '.delete_test__button', function () {
     testBlock.remove();
 })
 
-// On dropdown child click do...
-$(".dropdown-menu a").click(function () {
-    // Remove any existing 'active' classes...
-    $(this).closest('.dropdown-menu').find('a').removeClass('active');
-
-    // Add 'active' class to clicked element...
-    $(this).addClass('active');
-
-    // Setting language
-    // setLanguage($(this))
-});
 
 $(document).ready(function () {
     createTestBlock()

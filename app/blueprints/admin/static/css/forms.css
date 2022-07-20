@@ -13,6 +13,7 @@ input:-webkit-autofill:focus {
     font-family: inherit !important;
 }
 
+/* Input field */
 .input_field {
     width: 100%;
     resize: none;
@@ -41,12 +42,25 @@ input:-webkit-autofill:focus {
     width: 0;
 }
 
+/* Select */
+.select_list {
+    display: flex;
+    width: 100%;
+}
+
+.select_list select:not(:last-of-type)::after {
+    content: '/';
+    margin: 0 10px 0 35px;
+    font-size: 22px;
+    color: var(--darker-text-color);
+}
 
 .select_field {
     background: var(--purple-gradient);
     color: var(--text-color);
     padding: 6px 12px;
     border-radius: 0.25rem;
+    border: none;
     margin: 0;
     min-width: 120px;
     font-family: inherit;
@@ -54,6 +68,10 @@ input:-webkit-autofill:focus {
     cursor: pointer;
     line-height: inherit;
     transition: all 150ms ease-in;
+}
+
+.select_field:focus-visible {
+    outline: none;
 }
 
 .select_field option {

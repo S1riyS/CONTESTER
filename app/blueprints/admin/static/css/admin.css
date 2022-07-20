@@ -46,19 +46,14 @@ main.content__wrapper .content {
 }
 
 /* Dropdown menu */
-.admin_dropdown {
+.select_list {
     display: flex;
     width: 100%;
 }
 
-.admin_dropdown .admin_dropdown__item {
-    display: flex;
-    align-items: center;
-}
-
-.admin_dropdown .admin_dropdown__item:not(:last-of-type)::after {
+.select_list .select_field__wrapper:not(:last-of-type)::after {
     content: '/';
-    margin: 0 10px 0 35px;
+    margin: 0 10px 0 6px;
     font-size: 22px;
     color: var(--darker-text-color);
 }
@@ -91,7 +86,7 @@ main.content__wrapper .content {
     background: linear-gradient(135deg, var(--darker-purple-color), var(--purple-color)) !important;
 }
 
-.dropdown-btn.empty-dropdown {
+.empty-dropdown {
     background: var(--error-color) !important
 }
 
