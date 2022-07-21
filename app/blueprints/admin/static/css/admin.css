@@ -20,12 +20,6 @@ main.content__wrapper .content {
     width: 100%;
 }
 
-.dropdown-menu {
-    padding: 0;
-    border-radius: 5px;
-    overflow: hidden;
-}
-
 .admin__title {
     margin-bottom: 15px;
     font-size: 28px;
@@ -58,41 +52,10 @@ main.content__wrapper .content {
     color: var(--darker-text-color);
 }
 
-.dropdown-menu {
-    padding: 5px;
-}
-
-.dropdown-menu .dropdown-item {
-    border-radius: 3px;
-}
-
-.dropdown-menu .dropdown-item:hover,
-.dropdown-menu .dropdown-item:focus {
-    cursor: pointer;
-    background-color: var(--blue-color);
-}
-
-.dropdown-divider {
-    margin: 0.25rem 0;
-}
-
-.dropdown-btn {
-    width: calc(100% + 25px);
-    position: relative;
-    display: flex;
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-    background: linear-gradient(135deg, var(--darker-purple-color), var(--purple-color)) !important;
-}
-
 .empty-dropdown {
     background: var(--error-color) !important
 }
 
-#dropdown__grade .dropdown-btn {
-    min-width: 80px;
-}
 
 .input_block {
     display: flex;
@@ -108,34 +71,6 @@ main.content__wrapper .content {
     width: 100px;
     margin-right: 15px;
     font-size: 18px;
-}
-
-.input_block__textarea {
-    width: 100%;
-    resize: none;
-    height: 56px;
-    outline: none;
-    padding: 15px;
-    font-size: 16px;
-    border-radius: 5px;
-    max-height: 330px;
-    caret-color: #4671EA;
-    color: var(--text-color);
-    border: 1px solid var(--darker-text-color);
-    background-color: var(--textarea-color);
-}
-
-.input_block__textarea::placeholder {
-    color: var(--darker-text-color);
-}
-
-.input_block__textarea:is(:focus, :valid) {
-    padding: 14px;
-    border: 2px solid var(--blue-color);
-}
-
-.input_block__textarea::-webkit-scrollbar {
-    width: 0;
 }
 
 .submit_button {

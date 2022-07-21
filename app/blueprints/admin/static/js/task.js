@@ -87,6 +87,8 @@ $(document).on('click', '.delete_test__button', function () {
         let testBlock = $(this).closest('.create_task__test_block')
         testBlock.remove();
         testsCounter -= 1;
+    } else {
+        showAlert('По крайней мере, должен быть один тест', 'danger')
     }
 })
 
