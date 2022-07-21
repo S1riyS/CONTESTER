@@ -56,7 +56,7 @@ input:-webkit-autofill:focus {
     color: var(--darker-text-color);
 }
 
-.empty-dropdown {
+.empty_select {
     background: var(--error-color) !important
 }
 

@@ -26,12 +26,12 @@ grade_select.change(function () {
             let options = '';
 
             if (response.topics.length !== 0) {
-                topic_select.removeClass('empty-dropdown')
+                topic_select.removeClass('empty_select')
                 for (let topic of response.topics) {
                     options += renderOption(topic);
                 }
             } else {
-                topic_select.addClass('empty-dropdown')
+                topic_select.addClass('empty_select')
             }
 
             topic_select.html(options);
