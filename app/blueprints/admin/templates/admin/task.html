@@ -57,10 +57,46 @@
                 <p class="admin__subtitle">Тесты:</p>
                 <div class="tests__main" id="tests__main">
                     <div id="all_tests">
-                        {# Tests' inputs will be here #}
+
+
+                        {% for test in form.tests %}
+                            <div class="create_task__test_block">
+                                <div class="test_block__body">
+                                    <div class="input_block">
+                                        <p class="input_block__title">Ввод:</p>
+                                        {{ test.stdin(type="text", class='input_field auto_expand', placeholder='Ввод') }}
+                                    </div>
+                                    <div class="input_block">
+                                        <p class="input_block__title">Вывод:</p>
+                                        {{ test.stdin(type="text", class='input_field auto_expand', placeholder='Вывод') }}
+                                    </div>
+                                </div>
+
+                                <div class="test_block__footer">
+                                    <div class="footer__left">
+                                        <div class="is_hidden check">
+                                            {# <input type="checkbox" id="is_test_hidden_{{ task_number }}" #}
+                                            {# class="task__is_hidden" name="checkbox" checked> #}
+                                            {{ test.is_hidden() }}
+                                        </div>
+                                        <label for="is_test_hidden_{{ task_number }}" class="is_hidden__label">Скрыть
+                                            тест</label>
+                                    </div>
+
+                                    <div class="footer__right">
+                                        <button title="Удалить тест" class="alert_button delete_test__button"
+                                                type="button">
+                                            <i class="default_button__icon far fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+
                     </div>
 
-                    <button class="create_test_button" id="create_test_button" type="button">
+                    <button class="create_test_button" id="createNewTest" type="button">
                         Добавить тест
                     </button>
                 </div>

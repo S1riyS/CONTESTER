@@ -263,9 +263,3 @@ def delete_task():
     print('DELETED', data)
     return jsonify({'status': 'OK'})
 
-
-@api.route('/admin/test_block', methods=['POST'])
-def get_task_input_block():
-    data = request.json
-    print(data)
-    return jsonify(render_template('responses/admin/single_test_block.html', test_number=data['test_number']))
