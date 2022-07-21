@@ -5,6 +5,7 @@
     --form-border-color: #89ddff
 }
 
+/* Field's autofill */
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0 150px var(--field-background) inset;
@@ -42,17 +43,21 @@ input:-webkit-autofill:focus {
     width: 0;
 }
 
-/* Select */
+/* Select field */
 .select_list {
     display: flex;
     width: 100%;
 }
 
-.select_list select:not(:last-of-type)::after {
+.select_list .select_field__wrapper:not(:last-of-type)::after {
     content: '/';
-    margin: 0 10px 0 35px;
+    margin: 0 10px 0 6px;
     font-size: 22px;
     color: var(--darker-text-color);
+}
+
+.empty-dropdown {
+    background: var(--error-color) !important
 }
 
 .select_field {
@@ -77,4 +82,21 @@ input:-webkit-autofill:focus {
 .select_field option {
     background: var(--select-background);
     color: var(--text-color);
+}
+
+/* Submit button */
+.submit_button {
+    display: block;
+    margin: auto;
+    padding: 10px 12px;
+    background: transparent;
+    color: var(--text-color);
+    font-size: 18px;
+    border: 2px solid var(--green-color);
+    border-radius: 10px;
+    transition: all .2s ease;
+}
+
+.submit_button:hover {
+    background-color: var(--green-color);
 }

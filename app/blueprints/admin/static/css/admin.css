@@ -39,24 +39,6 @@ main.content__wrapper .content {
     margin-bottom: 15px;
 }
 
-/* Dropdown menu */
-.select_list {
-    display: flex;
-    width: 100%;
-}
-
-.select_list .select_field__wrapper:not(:last-of-type)::after {
-    content: '/';
-    margin: 0 10px 0 6px;
-    font-size: 22px;
-    color: var(--darker-text-color);
-}
-
-.empty-dropdown {
-    background: var(--error-color) !important
-}
-
-
 .input_block {
     display: flex;
     align-items: center;
@@ -71,20 +53,4 @@ main.content__wrapper .content {
     width: 100px;
     margin-right: 15px;
     font-size: 18px;
-}
-
-.submit_button {
-    display: block;
-    margin: auto;
-    padding: 10px 12px;
-    background: transparent;
-    color: var(--text-color);
-    font-size: 18px;
-    border: 2px solid var(--green-color);
-    border-radius: 10px;
-    transition: all .2s ease;
-}
-
-.submit_button:hover {
-    background-color: var(--green-color);
 }
