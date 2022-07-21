@@ -213,16 +213,17 @@ def create_topic():
 @api.route('/admin/task', methods=['POST'])
 def create_task():
     data = request.json
+    print(data)
 
     # Task
     task = Task(
         topic_id=data['path']['topic_id'],
-        name=data['information']['name'].strip(),
-        text=data['information']['condition'].strip()
+        name=data['info']['name'].strip(),
+        text=data['info']['condition'].strip()
     )
     task.set_translit_name()
 
-    topic = db.session.query(Topic).filter(Topic.id == data['path']['topic_id']).first()
+    topic = db.session.query(Topic).get(data['path']['topic_id'])
     translit_names = [task_.translit_name for task_ in topic.tasks]
 
     if task.translit_name in translit_names:
@@ -235,14 +236,14 @@ def create_task():
         # Example
         example = Example(
             task_id=task.id,
-            example_input=data['example']['input'],
-            example_output=data['example']['output']
+            example_input=data['example']['stdin'],
+            example_output=data['example']['stdout']
         )
         db.session.add(example)
 
         # Tests
         tests = data['tests']
-        tests_zip = zip(tests['inputs'], tests['outputs'], tests['is_hidden'])
+        tests_zip = zip(tests['stdin_list'], tests['stdout_list'], tests['is_hidden_list'])
         for stdin, stdout, is_hidden in tests_zip:
             test = Test(
                 task_id=task.id,

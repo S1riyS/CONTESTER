@@ -51,12 +51,12 @@ $('#createNewTest').click(function () {
                                 <div class="test_block__body">
                                     <div class="input_block">
                                         <p class="input_block__title">Ввод:</p>
-                                        <textarea class="input_field auto_expand" id="tests-${currentTestID}-stdin"
+                                        <textarea class="test_stdin input_field auto_expand" id="tests-${currentTestID}-stdin"
                                          name="tests-${currentTestID}-stdin" placeholder="Ввод" required="" type="text"></textarea>
                                     </div>
                                     <div class="input_block">
                                         <p class="input_block__title">Вывод:</p>
-                                        <textarea class="input_field auto_expand" id="tests-${currentTestID}-stdin" 
+                                        <textarea class="test_stdout input_field auto_expand" id="tests-${currentTestID}-stdin" 
                                         name="tests-${currentTestID}-stdin" placeholder="Вывод" required="" type="text"></textarea>
                                     </div>
                                 </div>
@@ -64,7 +64,7 @@ $('#createNewTest').click(function () {
                                 <div class="test_block__footer">
                                     <div class="footer__left">
                                         <div class="is_hidden check">
-                                            <input checked id="tests-0-is_hidden" name="tests-${currentTestID}-is_hidden" 
+                                            <input class="test_is_hidden" checked id="tests-0-is_hidden" name="tests-${currentTestID}-is_hidden" 
                                             type="checkbox" value="y">
                                         </div>
                                         <label for="is_test_hidden_" class="is_hidden__label">
@@ -93,70 +93,66 @@ $(document).on('click', '.delete_test__button', function () {
 })
 
 function getTests() {
-    let inputsArray = [],
-        outputsArray = [],
+    let stdinList = [],
+        stdoutList = [],
         checkboxesArray = []
 
-    $("textarea[name='test_inputs[]']").each(function () {
-        inputsArray.push($(this).val())
+    $(".test_stdin").each(function () {
+        stdinList.push($(this).val())
     })
 
-    $("textarea[name='test_outputs[]']").each(function () {
-        outputsArray.push($(this).val())
+    $(".test_stdout").each(function () {
+        stdoutList.push($(this).val())
     })
 
-    $(".task__is_hidden").each(function () {
+    $(".test_is_hidden").each(function () {
         checkboxesArray.push($(this).is(':checked'))
     })
 
     return {
-        inputs: inputsArray,
-        outputs: outputsArray,
-        is_hidden: checkboxesArray
+        stdin_list: stdinList,
+        stdout_list: stdoutList,
+        is_hidden_list: checkboxesArray
     }
 }
 
 // Creates task
 $("#task_from").submit(function (event) {
     event.preventDefault();
-    let grade_id = $('#dropdownMenuGrade .dropdown-item.active').data('value');
-    let topic_id = $('#dropdownMenuTopic .dropdown-item.active').data('value')
 
-    if (grade_id && topic_id) {
-        let request = {
-            path: {
-                grade_id: grade_id,
-                topic_id: topic_id,
-            },
-            information: {
-                name: $('#task__name').val(),
-                condition: $('#task__condition').val()
-            },
-            example: {
-                input: $('#task__input').val(),
-                output: $('#task__output').val()
-            },
-            tests: getTests()
-        }
-
-        $.ajax({
-            type: 'POST',
-            url: '/api/admin/task',
-            contentType: 'application/json;charset=UTF-8',
-            data: JSON.stringify(request),
-            success: function (response) {
-                let type;
-
-                if (response['success']) {
-                    type = 'success'
-                } else {
-                    type = 'danger'
-                }
-                showAlert(response['message'], type);
-            },
-            error: function (error) {
-                showAlert('Что-то пошло не так', 'danger');
-            }
-        });
+    let data = {
+        path: {
+            grade_id: $('#grade').val(),
+            topic_id: $('#topic').val(),
+        },
+        info: {
+            name: $('#task_name').val(),
+            condition: $('#condition').val()
+        },
+        example: {
+            stdin: $('#example_stdin').val(),
+            stdout: $('#example_stdout').val()
+        },
+        tests: getTests()
     }
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/admin/task',
+        contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify(data),
+        success: function (response) {
+            let type;
+
+            if (response['success']) {
+                type = 'success'
+            } else {
+                type = 'danger'
+            }
+            showAlert(response['message'], type);
+        },
+        error: function (error) {
+            showAlert('Что-то пошло не так', 'danger');
+        }
+    });
 });

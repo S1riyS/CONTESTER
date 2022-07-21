@@ -64,20 +64,18 @@
                                 <div class="test_block__body">
                                     <div class="input_block">
                                         <p class="input_block__title">Ввод:</p>
-                                        {{ test.stdin(type="text", class='input_field auto_expand', placeholder='Ввод') }}
+                                        {{ test.stdin(type="text", class='test_stdin input_field auto_expand', placeholder='Ввод') }}
                                     </div>
                                     <div class="input_block">
                                         <p class="input_block__title">Вывод:</p>
-                                        {{ test.stdin(type="text", class='input_field auto_expand', placeholder='Вывод') }}
+                                        {{ test.stdin(type="text", class='test_stdout input_field auto_expand', placeholder='Вывод') }}
                                     </div>
                                 </div>
 
                                 <div class="test_block__footer">
                                     <div class="footer__left">
                                         <div class="is_hidden check">
-                                            {# <input type="checkbox" id="is_test_hidden_{{ task_number }}" #}
-                                            {# class="task__is_hidden" name="checkbox" checked> #}
-                                            {{ test.is_hidden() }}
+                                            {{ test.is_hidden(class='test_is_hidden') }}
                                         </div>
                                         <label for="is_test_hidden_{{ task_number }}" class="is_hidden__label">Скрыть
                                             тест</label>
