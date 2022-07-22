@@ -1,16 +1,9 @@
-import {showAlert} from "../../../../static/js/modules/alert.js";
+import {showAlert} from "./alert.js";
 
-$("#create_topic_from").submit(function (event) {
-    event.preventDefault();
-
-    let data = {
-        grade_id: $('#grade').val(),
-        name: $('#topic_name').val()
-    }
-
+export function sendDefaultAjax(requestType, url, data) {
     $.ajax({
-        type: 'POST',
-        url: '/api/admin/topic',
+        type: requestType,
+        url: url,
         contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify(data),
         success: function (response) {
@@ -27,4 +20,4 @@ $("#create_topic_from").submit(function (event) {
             showAlert('Что-то пошло не так', 'danger');
         }
     });
-});
+}

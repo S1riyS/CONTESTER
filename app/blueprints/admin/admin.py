@@ -1,3 +1,5 @@
+from enum import Enum
+
 from flask import Blueprint, render_template, request
 
 from app import db
@@ -6,13 +8,19 @@ from app.utils.forms import init_grades_select, init_topics_select
 
 from .forms import TopicForm, TaskForm
 
+
+class ActionType(str, Enum):
+    CREATE = 'create'
+    EDIT = 'edit'
+
+
 admin = Blueprint('admin', __name__, template_folder='templates', static_folder='static')
 
 
 # Admin
 @admin.route('/')
 def home_page():
-    return render_template('admin/admin.html', title='Админ панель')
+    return render_template('admin/admin.html', title='Админ панель', action=ActionType.CREATE)
 
 
 @admin.route('/task/create', methods=['GET', 'POST'])
@@ -21,7 +29,7 @@ def create_task_page():
     init_grades_select(form=form)
     init_topics_select(form=form)
 
-    return render_template('admin/task.html', title='Создать задачу', form=form)
+    return render_template('admin/task.html', title='Создать задачу', form=form, action=ActionType.CREATE)
 
 
 @admin.route('/task/edit', methods=['GET', 'POST'])
@@ -39,7 +47,7 @@ def edit_task_page():
     init_grades_select(form=form)
     init_topics_select(form=form, grade_id=task.topic.grade_id)
 
-    return render_template('admin/task.html', title='Редактировать задачу', form=form)
+    return render_template('admin/task.html', title='Редактировать задачу', form=form, action=ActionType.EDIT)
 
 
 @admin.route('/topic/create', methods=['GET', 'POST'])
@@ -52,4 +60,10 @@ def create_topic_page():
 
 @admin.route('/topic/edit', methods=['GET', 'POST'])
 def edit_topic_page():
-    ...
+    topic_id = request.args.get('id')
+    topic = db.session.query(Topic).get_or_404(topic_id)
+
+    form = TopicForm(obj=topic)
+    init_grades_select(form=form)
+
+    return render_template('admin/topic.html', title='Редактировать тему', form=form, action=ActionType.EDIT)

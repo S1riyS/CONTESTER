@@ -210,6 +210,20 @@ def create_topic():
         return send_alert(False, 'Тема с таким именем уже существует')
 
 
+@api.route('/admin/topic/<topic_id>', methods=['PUT'])
+def update_topic(topic_id):
+    data = request.json
+
+    try:
+        topic = db.session.query(Topic).get(topic_id)
+        topic.grade_id = data['grade_id']
+        topic.name = data['name']
+        db.session.commit()
+        return send_alert(True, 'Тема успешно обновлена!')
+    except Exception:
+        return send_alert(False, 'Не удалось обновить тему')
+
+
 @api.route('/admin/task', methods=['POST'])
 def create_task():
     data = request.json
@@ -263,4 +277,3 @@ def delete_task():
     data = request.json
     print('DELETED', data)
     return jsonify({'status': 'OK'})
-

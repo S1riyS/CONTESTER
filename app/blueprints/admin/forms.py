@@ -10,9 +10,9 @@ class TestForm(FlaskForm):
 
 
 class TopicForm(FlaskForm):
-    grade = SelectField('Класс', choices=[], validators=[DataRequired()])
-    topic_name = StringField('Название', validators=[DataRequired()])
-    submit = SubmitField('Создать тему')
+    grade_id = SelectField('Класс', choices=[], validators=[DataRequired()])
+    name = StringField('Название', validators=[DataRequired()])
+    submit = SubmitField()
 
 
 class TaskForm(FlaskForm):
