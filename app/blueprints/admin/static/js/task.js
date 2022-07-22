@@ -1,3 +1,4 @@
+import {showAlert} from "../../../../static/js/modules/alert.js";
 import {sendDefaultAjax} from "../../../../static/js/modules/send_ajax.js";
 
 let grade_select = $('#grade_id');
@@ -89,7 +90,7 @@ $(document).on('click', '.delete_test__button', function () {
         testBlock.remove();
         testsCounter -= 1;
     } else {
-        showAlert('По крайней мере, должен быть один тест', 'danger')
+        showAlert('По крайней мере должен быть один тест', 'danger')
     }
 })
 
