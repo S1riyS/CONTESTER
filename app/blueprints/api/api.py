@@ -22,6 +22,7 @@ def send_alert(success: bool, message: str):
 
 
 def tests_to_orm_objects(tests, task):
+    """Saves tests to database and returns list of ORM Test objects"""
     tests_zip = zip(tests['stdin_list'], tests['stdout_list'], tests['is_hidden_list'])
     tests_list = []
     for stdin, stdout, is_hidden in tests_zip:
@@ -31,8 +32,9 @@ def tests_to_orm_objects(tests, task):
             stdout=stdout,
             is_hidden=is_hidden
         )
-        db.session.add(test)
         tests_list.append(test)
+        db.session.add(test)
+
     db.session.commit()
 
     return tests_list
@@ -257,9 +259,9 @@ def create_task():
     )
     task.set_translit_name()
 
+    # Checking whether a task with this name already exists
     topic = db.session.query(Topic).get(data['path']['topic_id'])
     translit_names = [task_.translit_name for task_ in topic.tasks]
-
     if task.translit_name in translit_names:
         return send_alert(False, 'Задача с таким именем уже существует')
 
@@ -276,18 +278,7 @@ def create_task():
         db.session.add(example)
 
         # Tests
-        tests = data['tests']
-        tests_zip = zip(tests['stdin_list'], tests['stdout_list'], tests['is_hidden_list'])
-        for stdin, stdout, is_hidden in tests_zip:
-            test = Test(
-                task_id=task.id,
-                stdin=stdin,
-                stdout=stdout,
-                is_hidden=is_hidden
-            )
-            db.session.add(test)
-
-        db.session.commit()
+        tests_to_orm_objects(data['tests'], task)
 
     return send_alert(True, 'Задача успешно создана')
 
