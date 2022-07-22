@@ -12,9 +12,20 @@
     <script type="module" src="{{ url_for('admin.static', filename='js/task.js') }}"></script>
 {% endblock %}
 
+{% if action == 'create' %}
+    {% set form_id = 'create_task_from' %}
+    {% set submit_button_text = 'Создать задачу' %}
+{% elif action == 'edit' %}
+    {% set form_id = 'edit_task_from' %}
+    {% set submit_button_text = 'Применить изменения' %}
+{% else %}
+    {% set form_id = 'create_task_from' %}
+    {% set submit_button_text = 'Создать задачу' %}
+{% endif %}
+
 {% block admin_content %}
     <div class="task">
-        <form id="task_from" method="post" role="form">
+        <form id="{{ form_id }}" role="form">
             <h2 class="admin__title">{{ title }}</h2>
             <div class="path_to_task admin__block">
                 <p class="admin__subtitle">Путь до задачи:</p>
@@ -95,7 +106,7 @@
                     </button>
                 </div>
             </div>
-            {{ form.submit(class="btn submit_button", id="submit", type="submit") }}
+            {{ form.submit(class="btn submit_button", id="submit", type="submit", value=submit_button_text) }}
         </form>
     </div>
 {% endblock %}

@@ -12,7 +12,6 @@ from app.utils.db import get_task
 api = Blueprint('api', __name__)
 
 
-# TODO: Переименоаить API (api/create/task и т.д.)
 def send_alert(success: bool, message: str):
     return make_response(jsonify(
         {
@@ -20,6 +19,23 @@ def send_alert(success: bool, message: str):
             'message': message
         }
     ), 200)
+
+
+def tests_to_orm_objects(tests, task):
+    tests_zip = zip(tests['stdin_list'], tests['stdout_list'], tests['is_hidden_list'])
+    tests_list = []
+    for stdin, stdout, is_hidden in tests_zip:
+        test = Test(
+            task_id=task.id,
+            stdin=stdin,
+            stdout=stdout,
+            is_hidden=is_hidden
+        )
+        db.session.add(test)
+        tests_list.append(test)
+    db.session.commit()
+
+    return tests_list
 
 
 # API
@@ -216,10 +232,14 @@ def update_topic(topic_id):
 
     try:
         topic = db.session.query(Topic).get(topic_id)
+
+        # Updating general info
         topic.grade_id = data['grade_id']
         topic.name = data['name']
         db.session.commit()
+
         return send_alert(True, 'Тема успешно обновлена!')
+
     except Exception:
         return send_alert(False, 'Не удалось обновить тему')
 
@@ -270,6 +290,38 @@ def create_task():
         db.session.commit()
 
     return send_alert(True, 'Задача успешно создана')
+
+
+@api.route('/admin/task/<task_id>', methods=['PUT'])
+def update_task(task_id):
+    data = request.json
+    try:
+        task = db.session.query(Task).get(task_id)
+
+        # Updating general info
+        task.topic_id = data['path']['topic_id']
+        task.name = data['info']['name'].strip()
+        task.text = data['info']['condition'].strip()
+        task.set_translit_name()
+
+        # Updating example
+        task.example.example_input = data['example']['stdin']
+        task.example.example_output = data['example']['stdout']
+
+        # Deleting old tests
+        for test in task.tests:
+            db.session.delete(test)
+        db.session.commit()
+
+        # Adding new tests
+        for test in tests_to_orm_objects(data['tests'], task):
+            task.tests.append(test)
+        db.session.commit()
+
+        return send_alert(True, 'Задача успешно обновлена')
+
+    except Exception:
+        return send_alert(False, 'Не удалось обновить задачу')
 
 
 @api.route('/admin/task', methods=['DELETE'])

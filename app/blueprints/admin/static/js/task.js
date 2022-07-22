@@ -1,4 +1,4 @@
-import {showAlert} from "../../../../static/js/modules/alert.js";
+import {sendDefaultAjax} from "../../../../static/js/modules/send_ajax.js";
 
 let grade_select = $('#grade_id');
 let topic_select = $('#topic_id');
@@ -93,7 +93,8 @@ $(document).on('click', '.delete_test__button', function () {
     }
 })
 
-function getTests() {
+// Collects data about tests
+function collectTestsData() {
     let stdinList = [],
         stdoutList = [],
         checkboxesArray = []
@@ -117,11 +118,9 @@ function getTests() {
     }
 }
 
-// Creates task
-$("#task_from").submit(function (event) {
-    event.preventDefault();
-
-    let data = {
+// Collects data about task
+function collectTaskData() {
+    return {
         path: {
             grade_id: grade_select.val(),
             topic_id: topic_select.val(),
@@ -134,26 +133,22 @@ $("#task_from").submit(function (event) {
             stdin: $('#example_stdin').val(),
             stdout: $('#example_stdout').val()
         },
-        tests: getTests()
+        tests: collectTestsData()
     }
+}
 
-    $.ajax({
-        type: 'POST',
-        url: '/api/admin/task',
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(data),
-        success: function (response) {
-            let type;
-
-            if (response['success']) {
-                type = 'success'
-            } else {
-                type = 'danger'
-            }
-            showAlert(response['message'], type);
-        },
-        error: function (error) {
-            showAlert('Что-то пошло не так', 'danger');
-        }
-    });
+// Creates task
+$("#create_task_from").submit(function (event) {
+    event.preventDefault();
+    sendDefaultAjax('POST', '/api/admin/task', collectTaskData())
 });
+
+// Edits task
+$("#edit_task_from").submit(function (event) {
+    event.preventDefault();
+    let URLParams = new window.URLSearchParams(window.location.search);
+    if (URLParams.has('id')) {
+        let id = URLParams.get('id')
+        sendDefaultAjax('PUT', `/api/admin/task/${id}`, collectTaskData())
+    }
+})

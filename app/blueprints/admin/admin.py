@@ -20,7 +20,7 @@ admin = Blueprint('admin', __name__, template_folder='templates', static_folder=
 # Admin
 @admin.route('/')
 def home_page():
-    return render_template('admin/admin.html', title='Админ панель', action=ActionType.CREATE)
+    return render_template('admin/admin.html', title='Админ панель')
 
 
 @admin.route('/task/create', methods=['GET', 'POST'])
@@ -55,7 +55,7 @@ def create_topic_page():
     form = TopicForm()
     init_grades_select(form=form)
 
-    return render_template('admin/topic.html', title='Создать тему', form=form)
+    return render_template('admin/topic.html', title='Создать тему', form=form, action=ActionType.CREATE)
 
 
 @admin.route('/topic/edit', methods=['GET', 'POST'])
