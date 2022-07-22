@@ -1,7 +1,9 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 
 from app import db
-from app.models import Grade, Topic
+from app.models import Grade, Topic, Task
+from app.utils.forms import init_grades_select, init_topics_select
+
 from .forms import TopicForm, TaskForm
 
 admin = Blueprint('admin', __name__, template_folder='templates', static_folder='static')
@@ -15,32 +17,35 @@ def home_page():
 
 @admin.route('/task/create', methods=['GET', 'POST'])
 def create_task_page():
-    # Tuple of grades
-    grades = db.session.query(Grade).all()
-    grades_tuple = [(grade.id, grade.number) for grade in grades]
-    # Tuple of topics
-    topics = db.session.query(Topic).filter_by(grade_id=1).all()
-    topics_tuple = [(topic.id, topic.name) for topic in topics]
-    # Initializing form
     form = TaskForm()
-    form.grade.choices = grades_tuple
-    form.topic.choices = topics_tuple
+    init_grades_select(form=form)
+    init_topics_select(form=form)
 
     return render_template('admin/task.html', title='Создать задачу', form=form)
 
 
 @admin.route('/task/edit', methods=['GET', 'POST'])
 def edit_task_page():
-    ...
+    task_id = request.args.get('id')
+    task = db.session.query(Task).get_or_404(task_id)
+
+    form = TaskForm(
+        obj=task,
+        grade_id=task.topic.grade_id,
+        condition=task.text,
+        example_stdin=task.example.example_input,
+        example_stdout=task.example.example_output
+    )
+    init_grades_select(form=form)
+    init_topics_select(form=form, grade_id=task.topic.grade_id)
+
+    return render_template('admin/task.html', title='Редактировать задачу', form=form)
 
 
 @admin.route('/topic/create', methods=['GET', 'POST'])
 def create_topic_page():
-    grades = db.session.query(Grade).all()
-    grades_list = [(grade.id, grade.number) for grade in grades]
-
     form = TopicForm()
-    form.grade.choices = grades_list
+    init_grades_select(form=form)
 
     return render_template('admin/topic.html', title='Создать тему', form=form)
 

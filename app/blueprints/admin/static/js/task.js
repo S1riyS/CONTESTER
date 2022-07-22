@@ -1,10 +1,11 @@
 import {showAlert} from "../../../../static/js/modules/alert.js";
 
-let grade_select = $('#grade');
-let topic_select = $('#topic');
-let testBlockList = $('#all_tests')
-let currentTestID = 1;
-let testsCounter = 1;
+let grade_select = $('#grade_id');
+let topic_select = $('#topic_id');
+let testBlockListParent = $('#all_tests');
+let testBlockList = $('#all_tests .create_task__test_block')
+let currentTestID = testBlockList.length + 1;
+let testsCounter = testBlockList.length;
 
 // Renders single option tag
 function renderOption(topic) {
@@ -78,7 +79,7 @@ $('#createNewTest').click(function () {
                                     </div>
                                 </div>
                             </div>`
-    testBlockList.append(testBlockHTML);
+    testBlockListParent.append(testBlockHTML);
 })
 
 // Deletes task block
@@ -122,11 +123,11 @@ $("#task_from").submit(function (event) {
 
     let data = {
         path: {
-            grade_id: $('#grade').val(),
-            topic_id: $('#topic').val(),
+            grade_id: grade_select.val(),
+            topic_id: topic_select.val(),
         },
         info: {
-            name: $('#task_name').val(),
+            name: $('#name').val(),
             condition: $('#condition').val()
         },
         example: {

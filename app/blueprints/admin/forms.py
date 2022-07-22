@@ -16,9 +16,9 @@ class TopicForm(FlaskForm):
 
 
 class TaskForm(FlaskForm):
-    grade = SelectField('Класс', choices=[], validators=[DataRequired()])
-    topic = SelectField('Тема', choices=[], validators=[DataRequired()])
-    task_name = StringField('Название', validators=[DataRequired()])
+    grade_id = SelectField('Класс', choices=[], validators=[DataRequired()])
+    topic_id = SelectField('Тема', choices=[], validators=[DataRequired()])
+    name = StringField('Название', validators=[DataRequired()])
     condition = TextAreaField('Условие', validators=[DataRequired()])
     example_stdin = TextAreaField('Ввод', validators=[DataRequired()])
     example_stdout = TextAreaField('Вывод', validators=[DataRequired()])

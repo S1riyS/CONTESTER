@@ -15,15 +15,15 @@
 {% block admin_content %}
     <div class="task">
         <form id="task_from" method="post" role="form">
-            <h2 class="admin__title">Создать задачу</h2>
+            <h2 class="admin__title">{{ title }}</h2>
             <div class="path_to_task admin__block">
                 <p class="admin__subtitle">Путь до задачи:</p>
                 <div class="select_list">
                     <div class="select_field__wrapper">
-                        {{ form.grade(class='select_field') }}
+                        {{ form.grade_id(class='select_field') }}
                     </div>
                     <div class="select_field__wrapper">
-                        {{ form.topic(class='select_field') }}
+                        {{ form.topic_id(class='select_field') }}
                     </div>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                 <div class="basic_information__main">
                     <div class="input_block">
                         <p class="input_block__title">Название:</p>
-                        {{ form.task_name(type="text", class='input_field', placeholder='Название задачи') }}
+                        {{ form.name(type="text", class='input_field', placeholder='Название задачи') }}
                     </div>
                     <div class="input_block">
                         <p class="input_block__title">Условие:</p>
@@ -57,8 +57,6 @@
                 <p class="admin__subtitle">Тесты:</p>
                 <div class="tests__main" id="tests__main">
                     <div id="all_tests">
-
-
                         {% for test in form.tests %}
                             <div class="create_task__test_block">
                                 <div class="test_block__body">
@@ -68,7 +66,7 @@
                                     </div>
                                     <div class="input_block">
                                         <p class="input_block__title">Вывод:</p>
-                                        {{ test.stdin(type="text", class='test_stdout input_field auto_expand', placeholder='Вывод') }}
+                                        {{ test.stdout(type="text", class='test_stdout input_field auto_expand', placeholder='Вывод') }}
                                     </div>
                                 </div>
 
@@ -90,8 +88,6 @@
                                 </div>
                             </div>
                         {% endfor %}
-
-
                     </div>
 
                     <button class="create_test_button" id="createNewTest" type="button">
