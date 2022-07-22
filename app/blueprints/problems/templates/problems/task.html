@@ -71,16 +71,16 @@
                             <div class="task__header__buttons">
                                 {% if current_user.is_authenticated %}
                                     {% if current_user.role.name == 'admin' %}
-                                        <button data-tooltip="tooltip" data-placement="top" title="Изменить задачу"
-                                                class="default_button" id="report_task__btn">
+                                        <a href="{{ url_for('admin.edit_task_page', id=task.id) }}" data-tooltip="tooltip" data-placement="top" title="Изменить задачу"
+                                           class="default_button header__button" id="report_task__btn">
                                             <i class="default_button__icon fas fa-pen"></i>
-                                        </button>
+                                        </a>
 
-                                        <button data-toggle="modal" data-target="#deleteModal"
-                                                data-tooltip="tooltip" data-placement="top" title="Удалить задачу"
-                                                class="alert_button" id="report_task__btn">
+                                        <a data-toggle="modal" data-target="#deleteModal"
+                                           data-tooltip="tooltip" data-placement="top" title="Удалить задачу"
+                                           class="alert_button header__button" id="report_task__btn">
                                             <i class="default_button__icon far fa-trash-alt"></i>
-                                        </button>
+                                        </a>
                                     {% endif %}
                                     <button data-toggle="modal" data-target="#reportModal"
                                             data-tooltip="tooltip" data-placement="top" title="Пожаловаться на задачу"
