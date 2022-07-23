@@ -50,7 +50,6 @@ def topic_page(grade_number, topic_translit_name):
         'topic': topic,
         'tasks': tasks
     }
-    print(tasks)
     return render_template('problems/topic.html', title=topic.name, **context)
 
 
