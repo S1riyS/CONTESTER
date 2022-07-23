@@ -19,6 +19,12 @@
     width: 100%;
 }
 
+.route__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .route__title {
     margin-bottom: 15px;
     padding: 5px;

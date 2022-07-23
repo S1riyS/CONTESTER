@@ -9,9 +9,19 @@
     <div class="container-fluid">
         <div class="row">
             <div class="route__body">
-                <div class="route__title text_with_icon">
-                    <i class="fa fa-2x fa-tasks route__title__icon" aria-hidden="true"></i>
-                    <p class="route__title__text">Задачи:</p>
+                <div class="route__header">
+                    <div class="route__title text_with_icon">
+                        <i class="fa fa-2x fa-tasks route__title__icon" aria-hidden="true"></i>
+                        <p class="route__title__text">Задачи:</p>
+                    </div>
+                    {% if current_user.role.name == 'admin' %}
+                        <a href="{{ url_for('admin.edit_topic_page', id=topic.id) }}" data-tooltip="tooltip"
+                           data-placement="top"
+                           title="Изменить тему"
+                           class="default_button">
+                            <i class="default_button__icon fas fa-pen"></i>
+                        </a>
+                    {% endif %}
                 </div>
                 {% if tasks %}
                     <div class="route__body_list box-shadow">
