@@ -1,6 +1,6 @@
-{% import 'responses/submission_result.html' as submission_macros %}
-
 {% extends "base.html" %}
+
+{% import 'macros/all_macros.html' as macros %}
 
 {% block css %}
     {#  ===== CodeMirror =====  #}
@@ -61,6 +61,14 @@
                                     {{ task.name }}
                                 </a>
                             </div>
+
+                            <div class="header__item">
+                                <p class="header__item__title">Автор(ы) решения:</p>
+                                <div class="submission__result__message">
+                                    {{ macros.render_submission_owners(submission) }}
+                                </div>
+                            </div>
+
                             <div class="submission__time header__item">
                                 <p>
                                     Решение было отправлено
@@ -71,7 +79,7 @@
                             <div class="header__item">
                                 <p class="header__item__title">Результат:</p>
                                 <div class="submission__result__message">
-                                    {{ submission_macros.render_result(submission) }}
+                                    {{ macros.render_submission_result(submission) }}
                                 </div>
                             </div>
                         </div>
