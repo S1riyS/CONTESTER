@@ -4,6 +4,7 @@ from datetime import date
 from sqlalchemy import desc, func
 from flask import Blueprint, render_template, request, abort
 from flask_login import current_user
+from flask_breadcrumbs import default_breadcrumb_root, register_breadcrumb
 
 from app import db
 from app.models import Grade, Topic, Task, Submission
@@ -18,7 +19,7 @@ class ActionType(str, Enum):
 
 
 admin = Blueprint('admin', __name__, template_folder='templates', static_folder='static')
-
+default_breadcrumb_root(admin, '.')
 
 @admin.before_request
 def admin_role_required():
@@ -27,6 +28,7 @@ def admin_role_required():
 
 
 @admin.route('/')
+@register_breadcrumb(admin, '.admin', 'Админ панель')
 def home_page():
     submission_table = {
         'submissions': (
@@ -42,6 +44,7 @@ def home_page():
 
 
 @admin.route('/task/create', methods=['GET', 'POST'])
+@register_breadcrumb(admin, '.admin.create_task', 'Создание задачи')
 def create_task_page():
     form = TaskForm()
     init_grades_select(form=form)
@@ -51,6 +54,7 @@ def create_task_page():
 
 
 @admin.route('/task/edit', methods=['GET', 'POST'])
+@register_breadcrumb(admin, '.admin.edit_task', 'Редактирование задачи')
 def edit_task_page():
     task_id = request.args.get('id')
     task = db.session.query(Task).get_or_404(task_id)
@@ -67,8 +71,8 @@ def edit_task_page():
 
     return render_template('admin/task.html', title='Редактировать задачу', form=form, action=ActionType.EDIT)
 
-
 @admin.route('/topic/create', methods=['GET', 'POST'])
+@register_breadcrumb(admin, '.admin.create_topic', 'Создание темы')
 def create_topic_page():
     form = TopicForm()
     init_grades_select(form=form)
@@ -77,6 +81,7 @@ def create_topic_page():
 
 
 @admin.route('/topic/edit', methods=['GET', 'POST'])
+@register_breadcrumb(admin, '.admin.edit_topic', 'Редактирование темы')
 def edit_topic_page():
     topic_id = request.args.get('id')
     topic = db.session.query(Topic).get_or_404(topic_id)
