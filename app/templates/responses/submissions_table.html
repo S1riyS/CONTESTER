@@ -5,6 +5,12 @@
         <div class="submissions_table box-shadow">
             <div class="table_header__wrapper">
                 <div class="table_header">
+                    {# Students #}
+                    {% if show_users %}
+                        <div class="table_header_column students">
+                            <p>УЧЕНИКИ</p>
+                        </div>
+                    {% endif %}
                     {# Result #}
                     <div class="table_header_column result">
                         <p>РЕЗУЛЬТАТ</p>
@@ -32,6 +38,19 @@
                 {% for submission in submissions %}
                     <div class="table_row__wrapper">
                         <div class="table_row">
+                            {# Students #}
+                            {% if show_users %}
+                                <div class="table_row_column students">
+                                {{ submission.users.all }}
+                                    {% set user_list = [] %}
+                                    {% for user in submission.users %}
+                                        {% set user_list = user_list.append(user.surname + ' ' + user.name[0] + '.') %}
+                                    {% endfor %}
+                                    {{ user_list|join(' и ') }}
+                                </div>
+                            {% endif %}
+
+                            {# Result #}
                             <div class="table_row_column result">
                                 {{ submission_macros.render_result(submission, show_passed_tests=True) }}
                             </div>

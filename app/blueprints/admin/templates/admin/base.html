@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/sidebar.css') }}">
+{% endblock %}
+
+{% block js %}
+    <script type="module" src="{{ url_for('admin.static', filename='js/admin.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="sidebar col-2">
+                <div class="menu">
+                    <div class="item">
+                        <a class="sub-btn" href="{{ url_for('admin.home_page') }}">
+                            <i class="fas fa-tools"></i>Админ панель
+                        </a>
+                    </div>
+
+                    <div class="item">
+                        <a class="sub-btn"><i class="fas fa-table"></i>Результаты
+                            <i class="fas fa-angle-right dropdown"></i></a>
+                        <div class="sub-menu">
+                            <a href="#" class="sub-item">6 класс</a>
+                            <a href="#" class="sub-item">7 класс</a>
+                            <a href="#" class="sub-item">8 класс</a>
+                            <a href="#" class="sub-item">9 класс</a>
+                            <a href="#" class="sub-item">10 класс</a>
+                            <a href="#" class="sub-item">11 класс</a>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <a class="sub-btn"><i class="fas fa-cogs"></i>Содержание
+                            <i class="fas fa-angle-right dropdown"></i></a>
+                        <div class="sub-menu">
+                            <a href="{{ url_for('admin.create_topic_page') }}" class="sub-item">Добавить тему</a>
+                            <a href="{{ url_for('admin.create_task_page') }}" class="sub-item">Добавить задачу</a>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <a class="sub-btn" href="{{ url_for('admin.home_page') }}">
+                            <i class="fa fa-flag" aria-hidden="true"></i>Жалобы
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <main class="content__wrapper col-10 offset-2">
+                <div class="content">
+                    {% block admin_content %}{% endblock %}
+                </div>
+            </main>
+        </div>
+    </div>
+{% endblock %}

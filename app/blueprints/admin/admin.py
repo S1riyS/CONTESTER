@@ -1,10 +1,12 @@
 from enum import Enum
+from datetime import date
 
+from sqlalchemy import desc, func
 from flask import Blueprint, render_template, request, abort
 from flask_login import current_user
 
 from app import db
-from app.models import Grade, Topic, Task
+from app.models import Grade, Topic, Task, Submission
 from app.utils.forms import init_grades_select, init_topics_select
 
 from .forms import TopicForm, TaskForm
@@ -26,7 +28,17 @@ def admin_role_required():
 
 @admin.route('/')
 def home_page():
-    return render_template('admin/admin.html', title='Админ панель')
+    submission_table = {
+        'submissions': (
+            db.session.query(Submission)
+                .filter(func.date(Submission.submission_date) == date.today())
+                .order_by(desc(Submission.submission_date))
+                .limit(30).all()
+        ),
+        'show_task': True,
+        'show_users': True
+    }
+    return render_template('admin/admin.html', title='Админ панель', **submission_table)
 
 
 @admin.route('/task/create', methods=['GET', 'POST'])

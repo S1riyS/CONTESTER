@@ -1,0 +1,56 @@
+:root {
+    --textarea-color: #1A1D28
+}
+
+header {
+    position: sticky;
+    top: 0;
+}
+
+main.content__wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+main.content__wrapper .content {
+    width: 90%;
+}
+
+.container-fluid {
+    width: 100%;
+}
+
+.admin__title {
+    margin-bottom: 15px;
+    font-size: 28px;
+    padding: 6px;
+}
+
+.admin__block {
+    margin-bottom: 25px;
+    background: var(--defaul-button-color);
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.13), 0 10px 10px rgba(0, 0, 0, 0.13) !important;
+}
+
+.admin__subtitle {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.input_block {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+* .input_block:last-of-type {
+    margin-bottom: 0;
+}
+
+.input_block__title {
+    width: 100px;
+    margin-right: 15px;
+    font-size: 18px;
+}
