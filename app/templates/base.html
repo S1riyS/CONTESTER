@@ -94,9 +94,18 @@
                                 <i class="fa fa-user-o" aria-hidden="true"></i>
                                 {{ current_user.name }} {{ current_user.surname }}
                             </a>
+
+                            {% if current_user.is_admin %}
+                                <a href="{{ url_for('admin.home_page') }}" id="admin_panel"
+                                   class="header__nav_item header__nav_button">
+                                    Админ панель
+                                </a>
+                            {% endif %}
+
                             <button id="logout" class="header__nav_item header__nav_button">
                                 Выйти
                             </button>
+
                         {% else %}
                             <a href="{{ url_for('auth.login_page') }}" id="login"
                                class="header__nav_item header__nav_button">Войти</a>
