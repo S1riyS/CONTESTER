@@ -73,6 +73,12 @@ class User(BaseModel, UserMixin):
         return check_password_hash(self.hashed_password, password)
 
     @hybrid_property
+    def is_admin(self) -> bool:
+        if self.role.name == 'admin':
+            return True
+        return False
+
+    @hybrid_property
     def classmates(self) -> list:
         return db.session.query(User).filter(
             User.grade_id == self.grade_id,
