@@ -96,7 +96,7 @@ class Grade(BaseModel):
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     number = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
 
-    topics = relationship('Topic', backref='grade')
+    topics = relationship('Topic', backref=db.backref('grade', lazy='joined'), lazy='dynamic')
 
     def __repr__(self):
         return self._repr(number=self.number)
