@@ -50,7 +50,7 @@ class User(BaseModel, UserMixin):
     verified = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
 
     role_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("roles.id"))
-    role = relationship('Role')
+    role = relationship('Role', lazy='joined', uselist=False)
 
     grade_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("grades.id"))
     grade = relationship('Grade')
