@@ -56,6 +56,7 @@
                         <div class="submission__header">
                             <div class="header__item">
                                 {% set task = submission.task %}
+                                <i class="header__item__icon fa fa-tasks" aria-hidden="true"></i>
                                 <p class="header__item__title">Задача:</p>
                                 <a href="{{ get_task_url(task) }}" class="default_link">
                                     {{ task.name }}
@@ -63,6 +64,7 @@
                             </div>
 
                             <div class="header__item">
+                                <i class="header__item__icon fa fa-users" aria-hidden="true"></i>
                                 <p class="header__item__title">Автор(ы) решения:</p>
                                 <div class="submission__result__message">
                                     {{ macros.render_submission_owners(submission) }}
@@ -70,6 +72,7 @@
                             </div>
 
                             <div class="submission__time header__item">
+                                <i class="header__item__icon fa fa-clock-o" aria-hidden="true"></i>
                                 <p>
                                     Решение было отправлено
                                     {{ moment(submission.submission_date).fromNow(refresh=True) }}
@@ -77,6 +80,7 @@
                             </div>
 
                             <div class="header__item">
+                                <i class="header__item__icon fa fa-trophy" aria-hidden="true"></i>
                                 <p class="header__item__title">Результат:</p>
                                 <div class="submission__result__message">
                                     {{ macros.render_submission_result(submission) }}
