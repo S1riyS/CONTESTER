@@ -1,6 +1,7 @@
 from enum import Enum
 
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, abort
+from flask_login import current_user
 
 from app import db
 from app.models import Grade, Topic, Task
@@ -17,7 +18,12 @@ class ActionType(str, Enum):
 admin = Blueprint('admin', __name__, template_folder='templates', static_folder='static')
 
 
-# Admin
+@admin.before_request
+def admin_role_required():
+    if not current_user.is_admin:
+        abort(403)
+
+
 @admin.route('/')
 def home_page():
     return render_template('admin/admin.html', title='Админ панель')
