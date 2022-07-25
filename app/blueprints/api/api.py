@@ -109,23 +109,37 @@ def get_submissions():
 @api.route('/task/report', methods=['POST'])
 def send_report():
     data = request.json
-    print(data)
-    # try:
-    path = data['path']
-    task = get_task(path['grade'], path['topic'], path['task'])
+    try:
+        path = data['path']
+        task = get_task(path['grade'], path['topic'], path['task'])
 
-    report = Report(
-        user_id=current_user.id,
-        task_id=task.id,
-        text=data['text']
-    )
-    db.session.add(report)
-    db.session.commit()
+        report = Report(
+            user_id=current_user.id,
+            task_id=task.id,
+            text=data['text']
+        )
+        db.session.add(report)
+        db.session.commit()
 
-    return send_alert(True, 'Жалоба успешно отправлена')
+        return send_alert(True, 'Жалоба успешно отправлена')
 
-    # except Exception:
-    #     return send_alert(False, 'Не удалось отправить жалобу')
+    except Exception:
+        return send_alert(False, 'Не удалось отправить жалобу')
+
+
+@api.route('/task/report', methods=['DELETE'])
+def delete_report():
+    data = request.json
+    try:
+        report = db.session.query(Report).get(data['report_id'])
+        db.session.delete(report)
+        db.session.commit()
+
+        return send_alert(True, 'Пробема отмечена как решенная')
+
+    except Exception:
+        return send_alert(False, 'Не удалось выполнить дейсвие')
+
 
 @api.route('/topics', methods=['POST'])
 def get_topics():

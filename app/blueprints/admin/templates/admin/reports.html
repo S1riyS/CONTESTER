@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/reports.css') }}">
 {% endblock %}
 
+{% block js %}
+    {{ super() }}
+    <script type="module" src="{{ url_for('admin.static', filename='js/reports.js') }}"></script>
+{% endblock %}
+
 {% block admin_content %}
     <div class="table__wrapper">
 
@@ -44,9 +49,8 @@
                                     {{ report.text }}
                                 </div>
                                 <div class="table_row_column action">
-                                    <button data-toggle="modal" data-target="#reportModal"
-                                            data-tooltip="tooltip" data-placement="top" title="Отметить как решенное"
-                                            class="default_button" id="report_task__btn">
+                                    <button data-tooltip="tooltip" data-placement="top" title="Отметить как решенное"
+                                            data-reportID="{{ report.id }}" class="default_button mark_as_resolved">
                                         <i class="default_button__icon fa fa-check-circle"></i>
                                     </button>
                                 </div>
