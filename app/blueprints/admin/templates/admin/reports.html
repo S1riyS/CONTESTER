@@ -1,0 +1,12 @@
+{% extends "admin/base.html" %}
+
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/reports.css') }}">
+{% endblock %}
+
+{% block admin_content %}
+    {% for report in reports %}
+        <div class="report__body">{{ report }}</div>
+    {% endfor %}
+{% endblock %}

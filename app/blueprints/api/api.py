@@ -5,7 +5,7 @@ from sqlalchemy import and_
 from app import db, serializer, contester
 from app.contester import contester
 
-from app.models import User, Role, Grade, Topic, Task, Example, Test, load_user
+from app.models import User, Role, Grade, Topic, Task, Example, Test, Report, load_user
 from app.utils.email import send_email
 from app.utils.db import get_task
 
@@ -110,8 +110,22 @@ def get_submissions():
 def send_report():
     data = request.json
     print(data)
-    return jsonify({'status': 'OK'})
+    # try:
+    path = data['path']
+    task = get_task(path['grade'], path['topic'], path['task'])
 
+    report = Report(
+        user_id=current_user.id,
+        task_id=task.id,
+        text=data['text']
+    )
+    db.session.add(report)
+    db.session.commit()
+
+    return send_alert(True, 'Жалоба успешно отправлена')
+
+    # except Exception:
+    #     return send_alert(False, 'Не удалось отправить жалобу')
 
 @api.route('/topics', methods=['POST'])
 def get_topics():

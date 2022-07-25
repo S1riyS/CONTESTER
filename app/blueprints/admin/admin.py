@@ -2,12 +2,12 @@ from enum import Enum
 from datetime import date
 
 from sqlalchemy import desc, func
-from flask import Blueprint, render_template, request, abort
+from flask import Blueprint, render_template, request, redirect, url_for, abort
 from flask_login import current_user
 from flask_breadcrumbs import default_breadcrumb_root, register_breadcrumb
 
 from app import db
-from app.models import Grade, Topic, Task, Submission
+from app.models import Grade, Topic, Task, Submission, Report
 from app.utils.forms import init_grades_select, init_topics_select
 
 from .forms import TopicForm, TaskForm
@@ -23,6 +23,8 @@ default_breadcrumb_root(admin, '.')
 
 @admin.before_request
 def admin_role_required():
+    if not current_user.is_authenticated:
+        return redirect(url_for('auth.login_page'))
     if not current_user.is_admin:
         abort(403)
 
@@ -90,3 +92,9 @@ def edit_topic_page():
     init_grades_select(form=form)
 
     return render_template('admin/topic.html', title='Редактировать тему', form=form, action=ActionType.EDIT)
+
+@admin.route('/reports', methods=['GET', 'POST'])
+@register_breadcrumb(admin, '.admin.reports', 'Жалобы')
+def reports_page():
+    reports = db.session.query(Report).all()
+    return render_template('admin/reports.html', reports=reports)

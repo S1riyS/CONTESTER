@@ -1,4 +1,5 @@
 import {getCurrentTask} from "../../../../static/js/modules/current_task.js";
+import {sendDefaultAjax} from "../../../../static/js/modules/send_ajax.js";
 
 let currentSidebarY = -1;
 
@@ -141,24 +142,13 @@ $('#report_form').submit(function (event) {
     //Forming dict with data
     let data = {
         text: reportText.val(),
-        task: getCurrentTask()
+        path: getCurrentTask()
     }
 
     reportText.val('') // Clearing textarea
 
-    // Sending AJAX
-    $.ajax({
-        type: 'POST',
-        url: '/api/task/report',
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(data),
-        success: function (response) {
-            console.log(response);
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
+    sendDefaultAjax('POST', '/api/task/report', data)
+
 })
 
 // Deleting task
