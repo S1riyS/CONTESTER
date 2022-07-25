@@ -2,11 +2,61 @@
 
 {% block css %}
     {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
     <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/reports.css') }}">
 {% endblock %}
 
 {% block admin_content %}
-    {% for report in reports %}
-        <div class="report__body">{{ report }}</div>
-    {% endfor %}
+    <div class="table__wrapper">
+
+        {% if reports %}
+            <div class="table box-shadow">
+                <div class="table_header__wrapper">
+                    <div class="table_header">
+                        <div class="table_header_column sender">
+                            ОТПРАВИТЕЛЬ
+                        </div>
+                        <div class="table_header_column task">
+                            ЗАДАЧА
+                        </div>
+                        <div class="table_header_column text">
+                            ПРОБЛЕМА
+                        </div>
+                        <div class="table_header_column action">
+                            ДЕЙСТВИЕ
+                        </div>
+                    </div>
+                </div>
+                <div class="table_body">
+                    {% for report in reports %}
+                        <div class="table_row__wrapper">
+                            <div class="table_row">
+                                <div class="table_row_column sender">
+                                    {% set sender = report.user %}
+                                    {{ sender.surname }} {{ sender.name }}
+                                    ({{ sender.grade.number }}{{ sender.grade_letter }})
+                                </div>
+                                <div class="table_row_column task">
+                                    <a href="{{ get_task_url(report.task) }}"
+                                       class="default_link">{{ report.task.name }}</a>
+                                </div>
+                                <div class="table_row_column text">
+                                    {{ report.text }}
+                                </div>
+                                <div class="table_row_column action">
+                                    <button data-toggle="modal" data-target="#reportModal"
+                                            data-tooltip="tooltip" data-placement="top" title="Отметить как решенное"
+                                            class="default_button" id="report_task__btn">
+                                        <i class="default_button__icon fa fa-check-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            {% include 'responses/empty_response.html' %}
+        {% endif %}
+    </div>
 {% endblock %}

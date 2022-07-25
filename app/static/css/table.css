@@ -53,7 +53,7 @@
     align-items: center;
     flex-direction: row;
     flex: 1 1 20%;
-    padding: 14px 0;
+    padding: 14px 3px;
     float: left;
     min-width: 0;
     color: var(--text-color);
