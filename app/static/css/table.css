@@ -1,0 +1,62 @@
+:root {
+    --table-separator: #33384e;
+    --table-hover: #1a1d28;
+}
+
+.table__wrapper {
+    background: #212432;
+}
+
+/* Submissions */
+.table {
+    font-size: 15px;
+    width: 100%;
+}
+
+.table .table_header__wrapper {
+    border-bottom: 1px solid var(--table-separator)
+}
+
+.table .table_header {
+    padding: 0 30px;
+    display: flex;
+    color: var(--darker-text-color);
+}
+
+.table .table_header .table_header_column {
+    flex: 1 1 20%;
+    padding: 20px 0;
+    float: left;
+    min-width: 0;
+    letter-spacing: 2px;
+}
+
+.table .table_row__wrapper {
+    padding: 0 30px;
+    transition: all 0.2s ease;
+}
+
+.table .table_row__wrapper:hover {
+    background: var(--table-hover);
+}
+
+.table .table_row__wrapper:not(:last-child) {
+    border-bottom: 1px solid var(--table-separator)
+}
+
+.table .table_row {
+    display: flex;
+}
+
+.table .table_row_column {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex: 1 1 20%;
+    padding: 14px 0;
+    float: left;
+    min-width: 0;
+    color: var(--text-color);
+    font-size: 15px;
+    font-weight: 400;
+}
