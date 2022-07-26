@@ -21,3 +21,18 @@ export function sendDefaultAjax(requestType, url, data) {
         }
     });
 }
+
+export function sendAjaxWithRedirect(requestType, url, data) {
+    $.ajax({
+        type: requestType,
+        url: url,
+        contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify(data),
+        success: function (response) {
+            window.location = response['redirect_url']
+        },
+        error: function (error) {
+            showAlert('Что-то пошло не так', 'danger');
+        }
+    });
+}
