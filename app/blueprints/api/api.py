@@ -346,10 +346,15 @@ def update_task(task_id):
 @api.route('/admin/task', methods=['DELETE'])
 def delete_task():
     data = request.json
+
     task = db.session.query(Task).get(data['task_id'])
     topic_url = url_for(
         'problems.topic_page',
         grade_number=task.topic.grade.number,
         topic_translit_name=task.topic.translit_name
     )
+
+    db.session.delete(task)
+    db.session.commit()
+
     return make_response(jsonify({'success': True, 'redirect_url': topic_url}), 200)

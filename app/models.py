@@ -153,9 +153,11 @@ class Task(BaseModel):
     translit_name = sqlalchemy.Column(sqlalchemy.String)
     text = sqlalchemy.Column(sqlalchemy.Text)
 
-    example = relationship('Example', uselist=False, backref='task')
-    tests = relationship('Test', backref='task', lazy='subquery')
-    submissions = relationship('Submission', backref=db.backref('task', lazy='joined'), lazy='dynamic')
+    example = relationship('Example', uselist=False, backref='task', cascade='all,delete')
+    tests = relationship('Test', backref='task', lazy='subquery', cascade='all,delete')
+    submissions = relationship('Submission', backref=db.backref('task', lazy='joined'), lazy='dynamic', cascade='all,delete')
+
+    reports = relationship('Report', backref='task', cascade='all,delete')
 
     def set_translit_name(self):
         self.translit_name = slugify(self.name)
@@ -215,7 +217,7 @@ class Submission(BaseModel):
     source_code = sqlalchemy.Column(sqlalchemy.Text)
     submission_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.utcnow)
 
-    test_results = relationship('TestResult', backref="submission", lazy='subquery')
+    test_results = relationship('TestResult', backref="submission", lazy='subquery', cascade='all,delete')
 
     @hybrid_property
     def processed_code(self) -> str:
@@ -281,7 +283,6 @@ class Report(BaseModel):
     user = relationship('User')
 
     task_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("tasks.id"))
-    task = relationship('Task')
 
     text = sqlalchemy.Column(sqlalchemy.Text)
 
