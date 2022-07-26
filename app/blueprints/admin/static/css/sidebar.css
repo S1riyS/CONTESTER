@@ -1,6 +1,6 @@
 :root {
-    --sidebar-background: #1a1d28;;
-    --sidebar-active-tab: #2a2e40;
+    --sidebar-background: #1a1d28;
+    --sidebar-active-tab: #2a2e407d;
     --sidebar-item-hover: #4c78f2;
 }
 
@@ -18,7 +18,7 @@
     left: 0;
     overflow-y: auto;
     transition: 0.2s ease;
-    padding: 90px 12px;
+    padding: 90px 12px 5px 12px;
 }
 
 .sidebar .menu {
@@ -38,7 +38,7 @@
 }
 
 .sidebar .menu .item .sub-btn:hover {
-    background: linear-gradient(135deg, var(--darker-purple-color), var(--purple-color))
+    background: var(--darker-purple-color)
 
 }
 
@@ -47,8 +47,8 @@
     border-radius: 5px;
 }
 
-.sidebar .menu .item.active .sub-btn {
-    background: linear-gradient(135deg, var(--darker-purple-color), var(--purple-color))
+.sidebar .menu .item.active .sub-btn.active {
+    background: var(--darker-purple-color)
 }
 
 .sidebar .menu .item a {
@@ -103,6 +103,7 @@
     margin-bottom: 5px;
 }
 
+.sidebar * .item:last-child,
 .sidebar .menu .item .sub-menu .sub-item:last-child {
     margin-bottom: 0;
 }

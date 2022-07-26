@@ -1,7 +1,8 @@
 $(document).ready(function () {
     //jquery for toggle sub menus
     $('.sub-btn').click(function () {
-        $(this).closest('.item').toggleClass('active')
+        $(this).toggleClass('active')
+        $(this).closest('.item').toggleClass('active');
         $(this).next('.sub-menu').slideToggle();
         $(this).find('.dropdown').toggleClass('rotate');
     });

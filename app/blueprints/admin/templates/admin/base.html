@@ -24,12 +24,20 @@
                         <a class="sub-btn"><i class="fas fa-table"></i>Результаты
                             <i class="fas fa-angle-right dropdown"></i></a>
                         <div class="sub-menu">
-                            <a href="#" class="sub-item">6 класс</a>
-                            <a href="#" class="sub-item">7 класс</a>
-                            <a href="#" class="sub-item">8 класс</a>
-                            <a href="#" class="sub-item">9 класс</a>
-                            <a href="#" class="sub-item">10 класс</a>
-                            <a href="#" class="sub-item">11 класс</a>
+                            {% for grade_number in range(6, 12) %}
+                                <div class="item">
+                                    <a class="sub-btn">
+                                        {{ grade_number }} класс <i class="fas fa-angle-right dropdown"></i>
+                                    </a>
+                                    <div class="sub-menu">
+                                        {% for grade_letter in ('А', 'Б', 'В', 'Г') %}
+                                            <a href="#" class="sub-item">
+                                                «{{ grade_letter }}» класс
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="item">
