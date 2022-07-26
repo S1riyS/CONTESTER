@@ -21,6 +21,7 @@ class ActionType(str, Enum):
 admin = Blueprint('admin', __name__, template_folder='templates', static_folder='static')
 default_breadcrumb_root(admin, '.')
 
+
 @admin.before_request
 def admin_role_required():
     if not current_user.is_authenticated:
@@ -28,6 +29,11 @@ def admin_role_required():
     if not current_user.is_admin:
         abort(403)
 
+@admin.add_app_template_global
+def check_for_reports():
+    if db.session.query(Report).first():
+        return True
+    return False
 
 @admin.route('/')
 @register_breadcrumb(admin, '.admin', 'Админ панель')
@@ -73,6 +79,7 @@ def edit_task_page():
 
     return render_template('admin/task.html', title='Редактировать задачу', form=form, action=ActionType.EDIT)
 
+
 @admin.route('/topic/create', methods=['GET', 'POST'])
 @register_breadcrumb(admin, '.admin.create_topic', 'Создание темы')
 def create_topic_page():
@@ -93,8 +100,9 @@ def edit_topic_page():
 
     return render_template('admin/topic.html', title='Редактировать тему', form=form, action=ActionType.EDIT)
 
+
 @admin.route('/reports', methods=['GET', 'POST'])
 @register_breadcrumb(admin, '.admin.reports', 'Жалобы')
 def reports_page():
     reports = db.session.query(Report).all()
-    return render_template('admin/reports.html', reports=reports)
+    return render_template('admin/reports.html', title='Жалобы', reports=reports)

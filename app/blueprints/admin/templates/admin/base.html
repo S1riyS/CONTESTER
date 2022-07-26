@@ -42,9 +42,18 @@
                     </div>
 
                     <div class="item">
-                        <a class="sub-btn" href="{{ url_for('admin.reports_page') }}">
-                            <i class="fa fa-flag" aria-hidden="true"></i>Жалобы
-                        </a>
+                        {% if check_for_reports() %}
+                            <a class="sub-btn reports_button" href="{{ url_for('admin.reports_page') }}">
+                                <i class="fa fa-flag" aria-hidden="true"></i>
+                                <span>Жалобы</span>
+                                <i class="bell_icon fa fa-bell" aria-hidden="true"></i>
+                            </a>
+                        {% else %}
+                            <a class="sub-btn reports_button" href="{{ url_for('admin.reports_page') }}">
+                                <i class="fa fa-flag" aria-hidden="true"></i>
+                                <span>Жалобы</span>
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
