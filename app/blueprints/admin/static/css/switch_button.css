@@ -102,6 +102,7 @@ input[type=radio], input[type=checkbox] {
 }
 
 .check {
+    margin-top: 6px;
     margin-right: 25px;
     margin-left: 15px;
 }

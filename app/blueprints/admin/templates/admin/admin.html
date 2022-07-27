@@ -1,49 +1,13 @@
-{% extends "base.html" %}
+{% extends "admin/base.html" %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/sidebar.css') }}">
+    {{ super() }}
     <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/submissions_table.css') }}">
 {% endblock %}
 
-{% block js %}
-    <script type="module" src="{{ url_for('admin.static', filename='js/admin.js') }}"></script>
-{% endblock %}
-
-{% block content %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="sidebar col-2">
-                <div class="menu">
-                    <div class="item">
-                        <a class="sub-btn" href="{{ url_for('admin.home_page') }}"><i class="fas fa-tools"></i>Админ панель</a>
-                    </div>
-
-                    <div class="item">
-                        <a class="sub-btn"><i class="fas fa-table"></i>Выполненные задачи
-                            <i class="fas fa-angle-right dropdown"></i></a>
-                        <div class="sub-menu">
-                            <a href="#" class="sub-item">6 класс</a>
-                            <a href="#" class="sub-item">7 класс</a>
-                            <a href="#" class="sub-item">8 класс</a>
-                            <a href="#" class="sub-item">9 класс</a>
-                            <a href="#" class="sub-item">10 класс</a>
-                            <a href="#" class="sub-item">11 класс</a>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <a class="sub-btn"><i class="fas fa-cogs"></i>Изменение контента
-                            <i class="fas fa-angle-right dropdown"></i></a>
-                        <div class="sub-menu">
-                            <a href="{{ url_for('admin.create_task_page') }}" class="sub-item">Добавить задачу</a>
-                            <a href="#" class="sub-item">Изменить задачу</a>
-                            <a href="#" class="sub-item">Удалить задачу</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-8 offset-2">
-                {% block admin_content %}{% endblock %}
-            </div>
-        </div>
-    </div>
+{% block admin_content %}
+    <h3 class="table__title">Последние {{ submissions|length }} отправок за сегодня:</h3>
+    {% include 'responses/submissions_table.html' %}
 {% endblock %}

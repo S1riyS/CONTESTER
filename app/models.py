@@ -50,7 +50,7 @@ class User(BaseModel, UserMixin):
     verified = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
 
     role_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("roles.id"))
-    role = relationship('Role')
+    role = relationship('Role', lazy='joined', uselist=False)
 
     grade_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("grades.id"))
     grade = relationship('Grade')
@@ -62,7 +62,7 @@ class User(BaseModel, UserMixin):
     submissions = relationship(
         'Submission',
         secondary=user_submission,
-        backref=db.backref('users', lazy='dynamic'),
+        backref=db.backref('users', lazy='joined'),
         order_by="desc(Submission.submission_date)"
     )
 
@@ -71,6 +71,12 @@ class User(BaseModel, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.hashed_password, password)
+
+    @hybrid_property
+    def is_admin(self) -> bool:
+        if self.role.name == 'admin':
+            return True
+        return False
 
     @hybrid_property
     def classmates(self) -> list:
@@ -96,7 +102,7 @@ class Grade(BaseModel):
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     number = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
 
-    topics = relationship('Topic', backref='grade')
+    topics = relationship('Topic', backref=db.backref('grade', lazy='joined'), lazy='dynamic')
 
     def __repr__(self):
         return self._repr(number=self.number)
@@ -147,9 +153,11 @@ class Task(BaseModel):
     translit_name = sqlalchemy.Column(sqlalchemy.String)
     text = sqlalchemy.Column(sqlalchemy.Text)
 
-    example = relationship('Example', uselist=False, backref='task')
-    tests = relationship('Test', backref='task', lazy='subquery')
-    submissions = relationship('Submission', backref=db.backref('task', lazy='joined'), lazy='dynamic')
+    example = relationship('Example', uselist=False, backref='task', cascade='all,delete')
+    tests = relationship('Test', backref='task', lazy='subquery', cascade='all,delete')
+    submissions = relationship('Submission', backref=db.backref('task', lazy='joined'), lazy='dynamic', cascade='all,delete')
+
+    reports = relationship('Report', backref='task', cascade='all,delete')
 
     def set_translit_name(self):
         self.translit_name = slugify(self.name)
@@ -209,7 +217,7 @@ class Submission(BaseModel):
     source_code = sqlalchemy.Column(sqlalchemy.Text)
     submission_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.utcnow)
 
-    test_results = relationship('TestResult', backref="submission", lazy='subquery')
+    test_results = relationship('TestResult', backref="submission", lazy='subquery', cascade='all,delete')
 
     @hybrid_property
     def processed_code(self) -> str:
@@ -275,7 +283,6 @@ class Report(BaseModel):
     user = relationship('User')
 
     task_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("tasks.id"))
-    task = relationship('Task')
 
     text = sqlalchemy.Column(sqlalchemy.Text)
 

@@ -1,0 +1,112 @@
+{% extends "admin/base.html" %}
+
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/task.css') }}">
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/forms.css') }}">
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/switch_button.css') }}">
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+    <script type="module" src="{{ url_for('admin.static', filename='js/task.js') }}"></script>
+{% endblock %}
+
+{% if action == 'create' %}
+    {% set form_id = 'create_task_from' %}
+    {% set submit_button_text = 'Создать задачу' %}
+{% elif action == 'edit' %}
+    {% set form_id = 'edit_task_from' %}
+    {% set submit_button_text = 'Применить изменения' %}
+{% else %}
+    {% set form_id = 'create_task_from' %}
+    {% set submit_button_text = 'Создать задачу' %}
+{% endif %}
+
+{% block admin_content %}
+    <div class="task">
+        <form id="{{ form_id }}" role="form">
+            <h2 class="admin__title">{{ title }}</h2>
+            <div class="path_to_task admin__block">
+                <p class="admin__subtitle">Путь до задачи:</p>
+                <div class="select_list">
+                    <div class="select_field__wrapper">
+                        {{ form.grade_id(class='select_field') }}
+                    </div>
+                    <div class="select_field__wrapper">
+                        {{ form.topic_id(class='select_field') }}
+                    </div>
+                </div>
+            </div>
+            <div class="basic_information admin__block">
+                <p class="admin__subtitle">Основная информация:</p>
+                <div class="basic_information__main">
+                    <div class="input_block">
+                        <p class="input_block__title">Название:</p>
+                        {{ form.name(type="text", class='input_field', placeholder='Название задачи') }}
+                    </div>
+                    <div class="input_block">
+                        <p class="input_block__title">Условие:</p>
+                        {{ form.condition(type="text", class='input_field auto_expand', placeholder='Условие задачи') }}
+                    </div>
+                </div>
+            </div>
+            <div class="example admin__block">
+                <p class="admin__subtitle">Пример:</p>
+                <div class="example__main">
+                    <div class="input_block">
+                        <p class="input_block__title">Ввод:</p>
+                        {{ form.example_stdin(type="text", class='input_field auto_expand', placeholder='Ввод') }}
+                    </div>
+                    <div class="input_block">
+                        <p class="input_block__title">Вывод:</p>
+                        {{ form.example_stdout(type="text", class='input_field auto_expand', placeholder='Вывод') }}
+                    </div>
+                </div>
+            </div>
+            <div class="tests admin__block">
+                <p class="admin__subtitle">Тесты:</p>
+                <div class="tests__main" id="tests__main">
+                    <div id="all_tests">
+                        {% for test in form.tests %}
+                            <div class="create_task__test_block">
+                                <div class="test_block__body">
+                                    <div class="input_block">
+                                        <p class="input_block__title">Ввод:</p>
+                                        {{ test.stdin(type="text", class='test_stdin input_field auto_expand', placeholder='Ввод') }}
+                                    </div>
+                                    <div class="input_block">
+                                        <p class="input_block__title">Вывод:</p>
+                                        {{ test.stdout(type="text", class='test_stdout input_field auto_expand', placeholder='Вывод') }}
+                                    </div>
+                                </div>
+
+                                <div class="test_block__footer">
+                                    <div class="footer__left">
+                                        <div class="is_hidden check">
+                                            {{ test.is_hidden(class='test_is_hidden') }}
+                                        </div>
+                                        <label for="is_test_hidden_{{ task_number }}" class="is_hidden__label">Скрыть
+                                            тест</label>
+                                    </div>
+
+                                    <div class="footer__right">
+                                        <button title="Удалить тест" class="alert_button delete_test__button"
+                                                type="button">
+                                            <i class="default_button__icon far fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <button class="create_test_button" id="createNewTest" type="button">
+                        Добавить тест
+                    </button>
+                </div>
+            </div>
+            {{ form.submit(class="btn submit_button", id="submit", type="submit", value=submit_button_text) }}
+        </form>
+    </div>
+{% endblock %}

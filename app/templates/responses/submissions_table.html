@@ -1,10 +1,16 @@
-{% import 'responses/submission_result.html' as submission_macros %}
+{% import 'macros/all_macros.html' as macros %}
 
-<div class="submissions_table__wrapper">
+<div class="table__wrapper">
     {% if submissions %}
-        <div class="submissions_table box-shadow">
+        <div class="table box-shadow">
             <div class="table_header__wrapper">
                 <div class="table_header">
+                    {# Students #}
+                    {% if show_users %}
+                        <div class="table_header_column students">
+                            <p>УЧЕНИКИ</p>
+                        </div>
+                    {% endif %}
                     {# Result #}
                     <div class="table_header_column result">
                         <p>РЕЗУЛЬТАТ</p>
@@ -32,8 +38,16 @@
                 {% for submission in submissions %}
                     <div class="table_row__wrapper">
                         <div class="table_row">
+                            {# Students #}
+                            {% if show_users %}
+                                <div class="table_row_column students">
+                                    {{ macros.render_submission_owners(submission) }}
+                                </div>
+                            {% endif %}
+
+                            {# Result #}
                             <div class="table_row_column result">
-                                {{ submission_macros.render_result(submission, show_passed_tests=True) }}
+                                {{ macros.render_submission_result(submission, show_passed_tests=True) }}
                             </div>
 
                             {# Task #}

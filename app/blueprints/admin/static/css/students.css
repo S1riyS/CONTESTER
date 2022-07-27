@@ -1,0 +1,16 @@
+.table_header_column.index, .table_row_column.index {
+    flex-grow: 0 !important;
+}
+
+.table_header_column.verified, .table_row_column.verified {
+    display: flex;
+    justify-content: center;
+}
+
+.table_row_column.verified .verified__icon {
+    color: var(--success-color);
+}
+
+.table_row_column.verified .not_verified__icon {
+    color: var(--error-color);
+}

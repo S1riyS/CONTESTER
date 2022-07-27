@@ -16,6 +16,10 @@
     flex-direction: row;
 }
 
+.submission__header .header__item .header__item__icon {
+    margin-right: 8px;
+}
+
 .submission__header .header__item .header__item__title {
     margin-right: 6px;
 }

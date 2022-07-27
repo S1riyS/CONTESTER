@@ -11,7 +11,7 @@ class SignUpForm(FlaskForm):
     first_name = StringField('Имя', validators=[DataRequired()])
     last_name = StringField('Фамилия', validators=[DataRequired()])
     grade = SelectField('Класс', choices=[])
-    letter = SelectField('Буква', choices=['A', 'Б', 'В', 'Г'])
+    letter = SelectField('Буква', choices=['А', 'Б', 'В', 'Г'])
     email = EmailField('Email', validators=[DataRequired()])
     password = PasswordField('Пароль', validators=[DataRequired(), Length(min=6)])
     password_again = PasswordField('Повторите пароль', validators=[DataRequired()])

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/sidebar.css') }}">
+{% endblock %}
+
+{% block js %}
+    <script type="module" src="{{ url_for('admin.static', filename='js/admin.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="sidebar col-2">
+                <div class="menu">
+                    <div class="item">
+                        <a class="sub-btn" href="{{ url_for('admin.home_page') }}">
+                            <i class="fas fa-tools"></i>Админ панель
+                        </a>
+                    </div>
+
+                    <div class="item">
+                        <a class="sub-btn">
+                            <i class="fa fa-users" aria-hidden="true"></i>Ученики
+                            <i class="fas fa-angle-right dropdown"></i>
+                        </a>
+                        <div class="sub-menu">
+                            {% for grade_number in range(5, 12) %}
+                                <div class="item">
+                                    <a class="sub-btn">
+                                        {{ grade_number }} класс <i class="fas fa-angle-right dropdown"></i>
+                                    </a>
+                                    <div class="sub-menu">
+                                        {% for grade_letter in ('А', 'Б', 'В', 'Г') %}
+                                            <a href="{{ url_for('admin.students_page', number=grade_number, letter=grade_letter) }}" class="sub-item">
+                                                «{{ grade_letter }}» класс
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <a class="sub-btn"><i class="fas fa-cogs"></i>Содержание
+                            <i class="fas fa-angle-right dropdown"></i></a>
+                        <div class="sub-menu">
+                            <a href="{{ url_for('admin.create_topic_page') }}" class="sub-item">Добавить тему</a>
+                            <a href="{{ url_for('admin.create_task_page') }}" class="sub-item">Добавить задачу</a>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        {% if check_for_reports() %}
+                            <a class="sub-btn reports_button" href="{{ url_for('admin.reports_page') }}">
+                                <i class="fa fa-flag" aria-hidden="true"></i>
+                                <span>Жалобы</span>
+                                <i class="bell_icon fa fa-bell" aria-hidden="true"></i>
+                            </a>
+                        {% else %}
+                            <a class="sub-btn reports_button" href="{{ url_for('admin.reports_page') }}">
+                                <i class="fa fa-flag" aria-hidden="true"></i>
+                                <span>Жалобы</span>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <main class="content__wrapper col-10 offset-2">
+                <div class="content">
+                    {% block admin_content %}{% endblock %}
+                </div>
+            </main>
+        </div>
+    </div>
+{% endblock %}

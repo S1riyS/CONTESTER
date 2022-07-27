@@ -1,0 +1,43 @@
+{% extends "admin/base.html" %}
+
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/topic.css') }}">
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/forms.css') }}">
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+    <script type="module" src="{{ url_for('admin.static', filename='js/topic.js') }}"></script>
+{% endblock %}
+
+{% if action == 'create' %}
+    {% set form_id = 'create_topic_from' %}
+    {% set submit_button_text = 'Создать тему' %}
+{% elif action == 'edit' %}
+    {% set form_id = 'edit_topic_from' %}
+    {% set submit_button_text = 'Применить изменения' %}
+{% else %}
+    {% set form_id = 'create_topic_from' %}
+    {% set submit_button_text = 'Создать тему' %}
+{% endif %}
+
+{% block admin_content %}
+    <h2 class="admin__title">{{ title }}</h2>
+    <form id="{{ form_id }}" method="post" role="form">
+        {{ form.csrf_token }}
+        <div class="grade admin__block">
+            <p class="admin__subtitle">Путь до темы:</p>
+            <div class="input_block">
+                <p class="input_block__title">Класс:</p>
+                {{ form.grade_id(class='select_field') }}
+            </div>
+            <div class="input_block">
+                <p class="input_block__title">Название:</p>
+                {{ form.name(type="text", class='input_field', placeholder='Название темы') }}
+            </div>
+        </div>
+        {{ form.submit(class="btn submit_button", id="submit", type="submit", value=submit_button_text) }}
+    </form>
+{% endblock %}
+

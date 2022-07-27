@@ -1,4 +1,5 @@
 import {getCurrentTask} from "../../../../static/js/modules/current_task.js";
+import {sendDefaultAjax, sendAjaxWithRedirect} from "../../../../static/js/modules/send_ajax.js";
 
 let currentSidebarY = -1;
 
@@ -7,10 +8,10 @@ function setScrollBarAttributes() {
     let taskMain = $('#task__main');
 
     let headerHeight = $('#header').outerHeight();
-    let confirmationHeight = $('#confirmation').outerHeight() ;
+    let confirmationHeight = $('#confirmation').outerHeight();
 
     if (typeof confirmationHeight === 'undefined') {
-         confirmationHeight = 0
+        confirmationHeight = 0
     }
 
     let offsetValue = headerHeight + confirmationHeight;
@@ -141,46 +142,23 @@ $('#report_form').submit(function (event) {
     //Forming dict with data
     let data = {
         text: reportText.val(),
-        task: getCurrentTask()
+        path: getCurrentTask()
     }
 
     reportText.val('') // Clearing textarea
 
-    // Sending AJAX
-    $.ajax({
-        type: 'POST',
-        url: '/api/task/report',
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(data),
-        success: function (response) {
-            console.log(response);
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
+    sendDefaultAjax('POST', '/api/task/report', data)
+
 })
 
 // Deleting task
-$('#deleteTaskButton').on('click', function () {
-    //Forming dict with data
+$('#deleteTaskButton').click(function () {
+    console.log($(this).data())
     let data = {
-        task: getCurrentTask()
+        task_id: $(this)[0].dataset.taskid
     }
 
     $('#deleteModal').modal('hide') // Hiding modal
 
-    // Sending AJAX
-    $.ajax({
-        type: 'POST',
-        url: '/api/delete_task',
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(data),
-        success: function (response) {
-            console.log(response);
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
+    sendAjaxWithRedirect('DELETE', '/api/admin/task', data)
 })

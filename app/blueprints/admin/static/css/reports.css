@@ -1,0 +1,10 @@
+.table_header_column.sender, .table_row_column.sender,
+.table_header_column.task, .table_row_column.task,
+.table_header_column.action, .table_row_column.action {
+    flex-grow: 0 !important;
+}
+
+.table_header_column.action, .table_row_column.action {
+    display: flex;
+    justify-content: center;
+}

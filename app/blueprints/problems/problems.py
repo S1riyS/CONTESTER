@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, abort
 from flask_login import current_user, login_required
 from flask_breadcrumbs import default_breadcrumb_root, register_breadcrumb
 
@@ -16,8 +16,17 @@ default_breadcrumb_root(problems, '.')
 @problems.route('/redirect', methods=['GET'])
 @login_required
 def redirect_page():
-    grade_number = current_user.grade.number
-    return redirect(url_for('problems.grade_page', grade_number=grade_number))
+    if current_user.is_admin:
+        return redirect(url_for('problems.all_grades_page'))
+    return redirect(url_for('problems.grade_page', grade_number=current_user.grade.number))
+
+
+@problems.route('/', methods=['GET'])
+@login_required
+def all_grades_page():
+    if current_user.is_admin:
+        return render_template('problems/all_grades.html', title='Все классы', grades=db.session.query(Grade).all())
+    abort(403)
 
 
 @problems.route('/grade-<int:grade_number>', methods=['GET'])
@@ -26,7 +35,7 @@ def redirect_page():
 @grade_compliance_required
 def grade_page(grade_number):
     grade = db.session.query(Grade).filter(Grade.number == grade_number).first_or_404()
-    topics = grade.topics
+    topics = grade.topics.all()
 
     context = {
         'grade': grade,
@@ -50,7 +59,6 @@ def topic_page(grade_number, topic_translit_name):
         'topic': topic,
         'tasks': tasks
     }
-    print(tasks)
     return render_template('problems/topic.html', title=topic.name, **context)
 
 

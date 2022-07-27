@@ -441,10 +441,6 @@ ol.breadcrumb {
     transition: all .2s ease
 }
 
-.header .header__nav .navigation .header__nav_item:not(:last-of-type) {
-    margin-right: 10px;
-}
-
 .header .header__nav .navigation .header__nav_button {
     padding: 6px 24px;
     border: none;
@@ -461,6 +457,7 @@ ol.breadcrumb {
 
 .header .header__nav .navigation #login {
     border: 1px var(--purple-color) solid;
+    margin-right: 10px;
 }
 
 .header .header__nav .navigation #login:hover {
@@ -494,7 +491,17 @@ ol.breadcrumb {
     font-size: 18px;
 }
 
+.header .header__nav .navigation #admin_panel {
+    padding: 4px 20px;
+    border: 2px solid var(--purple-color);
+}
+
+.header .header__nav .navigation #admin_panel:hover {
+    border-color: var(--darker-purple-color);
+}
+
 .header .header__nav .navigation #logout {
+    margin-left: 15px;
     padding: 4px 20px;
     border: 2px var(--error-color) solid;
 }

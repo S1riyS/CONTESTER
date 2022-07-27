@@ -1,0 +1,102 @@
+:root {
+    --field-border-color: #8e9fbf;
+    --field-background: #1A1D28;
+    --select-background: #1a1d28;
+    --form-border-color: #89ddff
+}
+
+/* Field's autofill */
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 150px var(--field-background) inset;
+    /* можно изменить на любой вариант цвета */
+    -webkit-text-fill-color: #fff;
+    font-family: inherit !important;
+}
+
+/* Input field */
+.input_field {
+    width: 100%;
+    resize: none;
+    height: 56px;
+    outline: none;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    max-height: 330px;
+    caret-color: #4671EA;
+    color: var(--text-color);
+    border: 1px solid var(--field-border-color);
+    background-color: var(--field-background);
+}
+
+.input_field::placeholder {
+    color: var(--darker-text-color);
+}
+
+.input_field:is(:focus, :valid) {
+    padding: 14px;
+    border: 2px solid var(--blue-color);
+}
+
+.input_field::-webkit-scrollbar {
+    width: 0;
+}
+
+/* Select field */
+.select_list {
+    display: flex;
+    width: 100%;
+}
+
+.select_list .select_field__wrapper:not(:last-of-type)::after {
+    content: '/';
+    margin: 0 10px 0 6px;
+    font-size: 22px;
+    color: var(--darker-text-color);
+}
+
+.empty_select {
+    background: var(--error-color) !important
+}
+
+.select_field {
+    background: var(--purple-gradient);
+    color: var(--text-color);
+    padding: 6px 12px;
+    border-radius: 0.25rem;
+    border: none;
+    margin: 0;
+    min-width: 120px;
+    font-family: inherit;
+    font-size: 16px;
+    cursor: pointer;
+    line-height: inherit;
+    transition: all 150ms ease-in;
+}
+
+.select_field:focus-visible {
+    outline: none;
+}
+
+.select_field option {
+    background: var(--select-background);
+    color: var(--text-color);
+}
+
+/* Submit button */
+.submit_button {
+    display: block;
+    margin: auto;
+    padding: 10px 12px;
+    background: transparent;
+    color: var(--text-color);
+    font-size: 18px;
+    border: 2px solid var(--green-color);
+    border-radius: 10px;
+    transition: all .2s ease;
+}
+
+.submit_button:hover {
+    background-color: var(--green-color);
+}

@@ -40,7 +40,7 @@ def home_page():
 def submission_page(submission_id):
     submission = Submission.query.get_or_404(submission_id)
 
-    if submission in current_user.submissions:
+    if submission in current_user.submissions or current_user.is_admin:
         context = {
             'submission': submission,
             'language': languages.get_language(submission.language, object_only=True),

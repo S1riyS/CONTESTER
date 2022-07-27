@@ -1,4 +1,4 @@
-{% macro render_result(submission, show_passed_tests=False) %}
+{% macro render_submission_result(submission, show_passed_tests=False) %}
     {# Result #}
     {% set result = submission.get_result() %}
     {% if result['success'] %}
@@ -23,4 +23,12 @@
             {% endif %}
         </p>
     </div>
+{% endmacro %}
+
+{% macro render_submission_owners(submission) %}
+    {% set user_list = [] %}
+    {% for user in submission.users %}
+        {% set user_list = user_list.append(user.surname + ' ' + user.name[0] + '.') %}
+    {% endfor %}
+    {{ user_list|join(' и ') }}
 {% endmacro %}

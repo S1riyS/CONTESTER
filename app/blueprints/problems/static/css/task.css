@@ -71,7 +71,7 @@
     right: 10px;
 }
 
-.task__header .task__header__buttons button:not(:last-child) {
+.task__header .task__header__buttons .header__button:not(:last-child) {
     margin-right: 7px;
 }
 

@@ -7,6 +7,8 @@
     {% set result_status = 'failed' %}
 {% endif %}
 
+{% set current_user_is_admin = current_user.is_admin %}
+
 <div class="code-response__body" id="code-response__body">
     <div class="code-response__header">
         <div class="status {{ result_status }}">
@@ -76,7 +78,7 @@
 
                             {# Locked test icon #}
                             {% set test = value['test'] %}
-                            {% if test.is_hidden %}
+                            {% if test.is_hidden and not current_user_is_admin %}
                                 <i class="fas locked_test__tab_icon fa-lock"></i>
                             {% endif %}
                         </a>
@@ -104,7 +106,12 @@
                             </div>
 
                             {% set test = value['test'] %}
-                            {% if not test.is_hidden %}
+                            {% if test.is_hidden and not current_user_is_admin %}
+                                <div class="locked-test">
+                                    <i class="locked-test__icon fas fa-lock"></i>
+                                    <p class="locked-test__text">Это скрытый тест</p>
+                                </div>
+                            {% else %}
                                 <div class="stdin tab-content__block">
                                     <p class="tab-content__title">Ввод (stdin)</p>
                                     <pre>{{ test.stdin }}</pre>
@@ -112,11 +119,6 @@
                                 <div class="expected-output tab-content__block">
                                     <p class="tab-content__title">Ожидаемый вывод</p>
                                     <pre>{{ test.stdout }}</pre>
-                                </div>
-                            {% else %}
-                                <div class="locked-test">
-                                    <i class="locked-test__icon fas fa-lock"></i>
-                                    <p class="locked-test__text">Это скрытый тест</p>
                                 </div>
                             {% endif %}
                         </div>
