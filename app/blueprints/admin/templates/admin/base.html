@@ -21,17 +21,19 @@
                     </div>
 
                     <div class="item">
-                        <a class="sub-btn"><i class="fas fa-table"></i>Результаты
-                            <i class="fas fa-angle-right dropdown"></i></a>
+                        <a class="sub-btn">
+                            <i class="fa fa-users" aria-hidden="true"></i>Ученики
+                            <i class="fas fa-angle-right dropdown"></i>
+                        </a>
                         <div class="sub-menu">
-                            {% for grade_number in range(6, 12) %}
+                            {% for grade_number in range(5, 12) %}
                                 <div class="item">
                                     <a class="sub-btn">
                                         {{ grade_number }} класс <i class="fas fa-angle-right dropdown"></i>
                                     </a>
                                     <div class="sub-menu">
                                         {% for grade_letter in ('А', 'Б', 'В', 'Г') %}
-                                            <a href="#" class="sub-item">
+                                            <a href="{{ url_for('admin.students_page', number=grade_number, letter=grade_letter) }}" class="sub-item">
                                                 «{{ grade_letter }}» класс
                                             </a>
                                         {% endfor %}

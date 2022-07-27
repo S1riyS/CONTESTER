@@ -1,0 +1,68 @@
+{% extends "admin/base.html" %}
+
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/students.css') }}">
+{% endblock %}
+
+{% block admin_content %}
+    <div class="table__wrapper">
+        {% if table_data %}
+            <div class="table box-shadow">
+                <div class="table_header__wrapper">
+                    <div class="table_header">
+                        <div class="table_header_column index">
+                            №
+                        </div>
+                        <div class="table_header_column name">
+                            УЧЕНИК
+                        </div>
+                        <div class="table_header_column solved_today">
+                            РЕШЕНО СЕГОДНЯ
+                        </div>
+                        <div class="table_header_column email">
+                            E-MAIL
+                        </div>
+                        <div class="table_header_column verified">
+                            ПОДТВЕРЖДЕН
+                        </div>
+                    </div>
+                </div>
+                <div class="table_body">
+                    {% for row in table_data %}
+                        {% set user = row['user'] %}
+
+                        <div class="table_row__wrapper">
+                            <div class="table_row">
+                                <div class="table_row_column index">
+                                    {{ loop.index }}
+                                </div>
+                                <div class="table_row_column name">
+                                    <a href="#" class="default_link">
+                                        {{ user.surname }} {{ user.name }}
+                                    </a>
+                                </div>
+                                <div class="table_row_column solved_today">
+                                    {{ row['solved_today'] }} задач
+                                </div>
+                                <div class="table_row_column email">
+                                    {{ user.email }}
+                                </div>
+                                <div class="table_row_column verified">
+                                    {% if user.verified %}
+                                        <i class="verified__icon fa fa-check" aria-hidden="true"></i>
+                                    {% else %}
+                                        <i class="not_verified__icon fa fa-times" aria-hidden="true"></i>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            {% include 'responses/empty_response.html' %}
+        {% endif %}
+    </div>
+{% endblock %}

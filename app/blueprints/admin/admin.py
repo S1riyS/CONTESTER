@@ -1,13 +1,13 @@
 from enum import Enum
 from datetime import date
 
-from sqlalchemy import desc, func
+from sqlalchemy import asc, desc, func, not_
 from flask import Blueprint, render_template, request, redirect, url_for, abort
 from flask_login import current_user
 from flask_breadcrumbs import default_breadcrumb_root, register_breadcrumb
 
 from app import db
-from app.models import Grade, Topic, Task, Submission, Report
+from app.models import User, Grade, Topic, Task, Submission, Report
 from app.utils.forms import init_grades_select, init_topics_select
 
 from .forms import TopicForm, TaskForm
@@ -29,11 +29,13 @@ def admin_role_required():
     if not current_user.is_admin:
         abort(403)
 
+
 @admin.add_app_template_global
 def check_for_reports():
     if db.session.query(Report).first():
         return True
     return False
+
 
 @admin.route('/')
 @register_breadcrumb(admin, '.admin', 'Админ панель')
@@ -49,6 +51,34 @@ def home_page():
         'show_users': True
     }
     return render_template('admin/admin.html', title='Админ панель', **submission_table)
+
+
+@admin.route('/students', methods=['GET', 'POST'])
+def students_page():
+    number = request.args.get('number')
+    letter = request.args.get('letter')
+
+    users = db.session.query(User).filter(
+        User.grade.has(number=number),
+        User.grade_letter == letter
+    ).order_by(
+        asc(User.surname)
+    ).all()
+
+    table_data = []
+    for user in users:
+        solved_today = db.session.query(Submission).filter(
+            func.date(Submission.submission_date) == date.today(),
+            not_(Submission.test_results.any(success=False)),
+            Submission.users.any(id=user.id)
+        ).count()
+
+        table_data.append({
+            'user': user,
+            'solved_today': solved_today
+        })
+
+    return render_template('admin/students.html', table_data=table_data)
 
 
 @admin.route('/task/create', methods=['GET', 'POST'])
