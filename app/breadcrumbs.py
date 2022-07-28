@@ -1,7 +1,7 @@
 from flask import url_for, request
 
 from app import db
-from app.models import Topic, Task
+from app.models import User, Topic, Task
 
 
 def view_grade_dlc(*args, **kwargs):
@@ -25,3 +25,10 @@ def view_task_dlc(*args, **kwargs):
     task = db.session.query(Task).filter(Task.translit_name == task_translit_name).first()
 
     return [{'text': task.name, 'url': ''}]
+
+
+def view_user_dlc(*args, **kwargs):
+    user_id = request.view_args['user_id']
+    user = db.session.query(User).get(user_id)
+
+    return [{'text': f'{user.surname} {user.name}', 'url': ''}]

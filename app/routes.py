@@ -13,6 +13,8 @@ from app.models import User, Submission
 from app.contester.db_manager import load_from_database
 from app.contester.languages import languages
 from app.utils.routes import next_url
+import app.breadcrumbs as bc
+
 
 app.register_blueprint(admin, url_prefix='/admin')
 app.register_blueprint(auth, url_prefix='/auth')
@@ -67,6 +69,7 @@ def profile_page():
 
 
 @app.route('/user/<int:user_id>', methods=['GET'])
+@register_breadcrumb(app, '.user', '', dynamic_list_constructor=bc.view_user_dlc)
 @login_required
 def user_page(user_id):
     user = db.session.query(User).get_or_404(user_id)
