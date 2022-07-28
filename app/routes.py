@@ -63,18 +63,15 @@ def profile_page(user_id):
     # User identification
     if user_id is not None:
         user: User = db.session.query(User).get_or_404(user_id)
-        edit_permission = False
-
         # Redirecting to /profile if user_id from /user/<user_id> is current user's id
         if user.id == current_user.id:
             return redirect(url_for('profile_page', user_id=None))
+        # Raising error 403 if not an admin tries to access someone else's profile
+        elif not current_user.is_admin:
+            abort(403)
     else:
         user: User = current_user
-        edit_permission = True
 
-    # Giving permission to edit user's profile if current user is admin
-    if current_user.is_admin:
-        edit_permission = True
 
     # Form initialization
     form = EditProfileForm(obj=user)
@@ -99,7 +96,6 @@ def profile_page(user_id):
     context = {
         'user': user,
         'form': form,
-        'edit_permission': edit_permission,
     }
 
     return render_template('profile.html', title=f'{user.surname} {user.name}', **table_data, **context)
