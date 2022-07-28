@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block css %}
+    <link rel="stylesheet" href="{{ url_for('auth.static', filename='css/form.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/submissions_table.css') }}">
@@ -14,16 +15,20 @@
                     <div class="avatar__block">
                         <img src="{{ url_for('static', filename='images/default_avatar.jpg') }}" alt="avatar"
                              class="avatar__image">
-                        <p class="avatar__text">{{ current_user.name[0] }}{{ current_user.surname[0] }}</p>
+                        <p class="avatar__text">{{ user.name[0] }}{{ user.surname[0] }}</p>
                     </div>
                     <div class="name__block user__info__block">
                         <i class="fa fa-2x fa-user-o" aria-hidden="true"></i>
-                        <h1 class="name__text">{{ current_user.name }} {{ current_user.surname }}</h1>
+                        <h1 class="name__text">{{ user.name }} {{ user.surname }}</h1>
                     </div>
                     <div class="email__block user__info__block">
                         <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                        <p class="email__text">{{ current_user.email }}</p>
+                        <p class="email__text">{{ user.email }}</p>
                     </div>
+                    <button data-toggle="modal" data-target="#editProfileModal" class="bordered_button"
+                            id="edit_profile__button">
+                        Редактировать профиль
+                    </button>
                 </div>
             </div>
             <div class="col-lg-9 col-12">
@@ -33,6 +38,62 @@
                         <p class="profile__title__text">Отправки</p>
                     </div>
                     {% include 'responses/submissions_table.html' %}
+                </div>
+            </div>
+            <div class="modal_windows">
+                <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog"
+                     aria-labelledby="editProfileModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editProfileModalLabel">Редакировать профиль</h5>
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form id="edit_profile_form" method="post" role="form">
+                                {{ form.hidden_tag() }}
+                                <div class="modal-body">
+                                    {% if current_user.is_admin %}
+                                        <div class="form__group form__group_dropdowns">
+                                            <div class="dropdown__group">
+                                                <p class="dropdown__group_title">
+                                                    <i class="form__icon fa fa-list-ol" aria-hidden="true"></i>Класс:
+                                                </p>
+                                                {{ form.grade_id }}
+                                            </div>
+                                            <div class="dropdown__group">
+                                                <p class="dropdown__group_title">
+                                                    <i class="form__icon fa fa-list-ul" aria-hidden="true"></i>Буква:
+                                                </p>
+                                                {{ form.grade_letter }}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    <div class="form__group">
+                                        {{ form.name(type="text", class="form__input", placeholder=" ") }}
+                                        <label for="first_name" class="form__label">
+                                            <i class="form__icon fa fa-user" aria-hidden="true"></i>Имя
+                                        </label>
+                                    </div>
+
+                                    <div class="form__group">
+                                        {{ form.surname(type="text", class="form__input", placeholder=" ") }}
+                                        <label for="last_name" class="form__label">
+                                            <i class="form__icon fa fa-user" aria-hidden="true"></i>Фамилия
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Закрыть
+                                    </button>
+                                    {{ form.submit(class="btn btn-success") }}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

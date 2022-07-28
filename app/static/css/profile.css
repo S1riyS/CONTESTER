@@ -1,6 +1,7 @@
 :root {
     --avatar-text-color: #14161a;
-    --avatar-size: 80px
+    --avatar-size: 80px;
+    --form-background-color: var(--modal-backgroung)
 }
 
 .profile__title {
@@ -74,4 +75,16 @@
 
 .user__info .email__block {
     color: var(--darker-text-color);
+}
+
+.user__info #edit_profile__button {
+    width: 100%;
+    margin-top: 12px;
+    padding: 3px 0;
+    border-radius: 5px;
+}
+
+.user__info #edit_profile__button:focus,
+.user__info #edit_profile__button:active {
+    border: 2px solid var(--purple-color);
 }

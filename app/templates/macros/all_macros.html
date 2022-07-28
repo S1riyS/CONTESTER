@@ -26,9 +26,10 @@
 {% endmacro %}
 
 {% macro render_submission_owners(submission) %}
-    {% set user_list = [] %}
     {% for user in submission.users %}
-        {% set user_list = user_list.append(user.surname + ' ' + user.name[0] + '.') %}
+        <a href="{{ url_for('profile_page', user_id=user.id) }}" class="default_link">{{ user.surname }} {{ user.name[0] }}.</a>
+        {% if not loop.last %}
+            <span>&nbsp;и&nbsp;</span>
+        {% endif %}
     {% endfor %}
-    {{ user_list|join(' и ') }}
 {% endmacro %}

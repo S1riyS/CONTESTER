@@ -1,0 +1,195 @@
+:root {
+    --form-background-color: #1a1d28;
+    --form-border-color: #89ddff
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 150px var(--form-background-color) inset;
+    /* можно изменить на любой вариант цвета */
+    -webkit-text-fill-color: #fff;
+    font-family: inherit !important;
+}
+
+.form-wrapper {
+    padding: 0 !important;
+    text-align: center;
+}
+
+.form {
+    padding: 40px;
+    border-radius: 8px;
+    background-color: var(--form-background-color);
+    text-align: center;
+    margin: 0;
+}
+
+.form__title {
+    margin-bottom: 30px;
+    font-size: 28px;
+    text-align: left;
+}
+
+* .form__group:last-of-type {
+    margin-bottom: 0;
+}
+.form__group {
+    position: relative;
+    height: 3rem;
+    margin-bottom: 25px;
+}
+
+.form__group_dropdowns {
+    display: flex;
+    justify-content: space-between;
+    height: fit-content;
+}
+
+.form__group_dropdowns .dropdown__group {
+    width: 49%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.form__group_dropdowns .dropdown__group_title {
+    color: #cfd8dcbf;
+    margin-bottom: 5px;
+}
+
+
+.form__group select {
+    background-color: transparent;
+    color: var(--text-color);
+    border: 2px solid var(--form-border-color);
+    padding: 12px;
+    border-radius: 0.5rem;
+    margin: 0;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+    transition: all 150ms ease-in;
+
+}
+
+.form__group select:focus,
+.form__group select:hover {
+    border-color: #ffcb6b !important;
+}
+
+.form__group select option {
+    background: var(--form-background-color);
+    color: var(--text-color);
+}
+
+.form__input {
+    font-size: 15px;
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--form-border-color);
+    border-radius: 0.5rem;
+    color: inherit;
+    outline: none;
+    background: none;
+    transition: all 150ms ease-in;
+    padding: 20px 35px 20px 20px;
+}
+
+.form__input:hover {
+    border-color: #ffcb6b !important;
+}
+
+.form__input:focus {
+    border-color: #ffcb6b !important;
+}
+
+.form__label {
+    position: absolute;
+    left: 0.8rem;
+    top: 0.8rem;
+    padding: 0 0.5rem;
+    background-color: var(--form-background-color);
+    color: #cfd8dcbf;
+    transition: all 150ms ease-in;
+}
+
+.form__input[type="password"] {
+    position: relative;
+}
+
+.form__icon {
+    margin-right: 4px;
+}
+
+.password-control {
+    border-radius: 3px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0.8rem;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url(/static/images/svg/auth/view.svg) 0 0 no-repeat;
+    color: #fff
+}
+
+.password-control:hover,
+.password-control.view:hover {
+    background-color: #eeffff33
+}
+
+.password-control.view {
+    background: url(/static/images/svg/auth/no-view.svg) 0 0 no-repeat;
+}
+
+.submit-btn {
+    width: 100%;
+    margin-top: 25px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 400;
+    background: var(--purple-gradient);
+    background-size: 300% 100%;
+    transition: all .2s ease;
+}
+
+.submit-btn:hover {
+    background-position: 100% 0;
+}
+
+.submit-btn:hover {
+    box-shadow: none;
+}
+
+.form-text {
+    margin-top: 25px;
+    color: #eeffff;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.form-text-link {
+    color: #c3e88d;
+    transition: 0.2s;
+}
+
+.form-text-link:hover {
+    color: #a9dc76;
+}
+
+.form-error {
+    color: #ff5370;
+}
+
+.form__input:not(:placeholder-shown).form__input:not(:focus) ~ .form__label,
+.form__input:focus ~ .form__label {
+    top: -0.5rem;
+    left: 0.8rem;
+    font-size: 0.8rem;
