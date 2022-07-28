@@ -8,4 +8,4 @@ class EditProfileForm(FlaskForm):
     name = StringField('Фамилия', validators=[DataRequired()])
     grade_id = SelectField('Класс', choices=[], validators=[DataRequired()])
     grade_letter = SelectField('Буква', choices=['А', 'Б', 'В', 'Г'], validators=[DataRequired()])
-    submit = SubmitField('Зарегестрироваться')
+    submit = SubmitField('Отправить')

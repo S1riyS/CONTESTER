@@ -62,6 +62,15 @@ def profile_page():
     form = EditProfileForm(obj=current_user)
     init_grades_select(form)
 
+    if form.validate_on_submit():
+        current_user.surname = form.surname.data.capitalize()
+        current_user.name = form.name.data.capitalize()
+        current_user.grade_id = form.grade_id.data
+        current_user.grade_letter = form.grade_letter.data
+        db.session.commit()
+
+        return redirect(url_for('profile_page'))
+
     context = {
         'submissions': current_user.submissions,
         'show_task': True,
