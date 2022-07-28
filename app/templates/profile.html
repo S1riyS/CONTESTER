@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block css %}
+    <link rel="stylesheet" href="{{ url_for('auth.static', filename='css/form.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/submissions_table.css') }}">
@@ -25,7 +26,7 @@
                         <p class="email__text">{{ user.email }}</p>
                     </div>
                     {% if not visitor_mode %}
-                        <button class="bordered_button" id="edit_profile__button">
+                        <button data-toggle="modal" data-target="#editProfileModal" class="bordered_button" id="edit_profile__button">
                             Редактировать профиль
                         </button>
                     {% endif %}
@@ -39,6 +40,63 @@
                     </div>
                     {% include 'responses/submissions_table.html' %}
                 </div>
+            </div>
+            <div class="modal_windows">
+                {% if not visitor_mode %}
+                    <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog"
+                         aria-labelledby="editProfileModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editProfileModalLabel">Редакировать профиль</h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form id="edit_profile_form" method="post" role="form">
+                                    {{ form.hidden_tag() }}
+                                    <div class="modal-body">
+                                        <div class="form__group form__group_dropdowns">
+                                            <div class="dropdown__group">
+                                                <p class="dropdown__group_title">
+                                                    <i class="form__icon fa fa-list-ol" aria-hidden="true"></i>Класс:
+                                                </p>
+                                                {{ form.grade_id }}
+                                            </div>
+                                            <div class="dropdown__group">
+                                                <p class="dropdown__group_title">
+                                                    <i class="form__icon fa fa-list-ul" aria-hidden="true"></i>Буква:
+                                                </p>
+                                                {{ form.grade_letter }}
+                                            </div>
+                                        </div>
+                                        <div class="form__group">
+                                            {{ form.name(type="text", id="first_name", class="form__input", placeholder=" ") }}
+                                            <label for="first_name" class="form__label">
+                                                <i class="form__icon fa fa-user" aria-hidden="true"></i>Имя
+                                            </label>
+                                        </div>
+
+                                        <div class="form__group">
+                                            {{ form.surname(type="text", id="last_name", class="form__input", placeholder=" ") }}
+                                            <label for="last_name" class="form__label">
+                                                <i class="form__icon fa fa-user" aria-hidden="true"></i>Фамилия
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Закрыть
+                                        </button>
+                                        <input class="btn btn-success" id="send_report"
+                                               name="submit" type="submit" value="Отправить">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

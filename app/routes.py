@@ -13,8 +13,9 @@ from app.models import User, Submission
 from app.contester.db_manager import load_from_database
 from app.contester.languages import languages
 from app.utils.routes import next_url
+from app.utils.forms import init_grades_select
+from app.forms.user import EditProfileForm
 import app.breadcrumbs as bc
-
 
 app.register_blueprint(admin, url_prefix='/admin')
 app.register_blueprint(auth, url_prefix='/auth')
@@ -58,11 +59,15 @@ def submission_page(submission_id):
 @register_breadcrumb(app, '.profile', 'Профиль')
 @login_required
 def profile_page():
+    form = EditProfileForm(obj=current_user)
+    init_grades_select(form)
+
     context = {
         'submissions': current_user.submissions,
         'show_task': True,
         'user': current_user,
-        'visitor_mode': False
+        'visitor_mode': False,
+        'form': form
     }
 
     return render_template('profile.html', title='Профиль', **context)

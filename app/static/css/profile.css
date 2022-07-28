@@ -1,6 +1,7 @@
 :root {
     --avatar-text-color: #14161a;
-    --avatar-size: 80px
+    --avatar-size: 80px;
+    --form-background-color: var(--modal-backgroung)
 }
 
 .profile__title {
