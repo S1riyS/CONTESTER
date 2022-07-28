@@ -38,8 +38,10 @@
                             <div class="table_row">
                                 <div class="table_row_column sender">
                                     {% set sender = report.user %}
-                                    {{ sender.surname }} {{ sender.name }}
-                                    ({{ sender.grade.number }}{{ sender.grade_letter }})
+                                    <a href="{{ url_for('profile_page', user_id=sender.id) }}" class="default_link">
+                                        {{ sender.surname }} {{ sender.name }}
+                                        ({{ sender.grade.number }}{{ sender.grade_letter }})
+                                    </a>
                                 </div>
                                 <div class="table_row_column task">
                                     <a href="{{ get_task_url(report.task) }}"

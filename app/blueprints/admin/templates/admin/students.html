@@ -39,7 +39,7 @@
                                     {{ loop.index }}
                                 </div>
                                 <div class="table_row_column name">
-                                    <a href="#" class="default_link">
+                                    <a href="{{ url_for('profile_page', user_id=user.id) }}" class="default_link">
                                         {{ user.surname }} {{ user.name }}
                                     </a>
                                 </div>
