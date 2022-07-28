@@ -1,3 +1,6 @@
+.table_row_column.students {
+    display: block;
+}
 
 .table .language {
     padding-right: 30px !important;
