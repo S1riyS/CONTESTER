@@ -2,14 +2,14 @@ from flask import render_template, redirect, url_for, request, session, abort
 from flask_login import login_required, current_user
 from flask_breadcrumbs import register_breadcrumb
 
-from app import app, login_manager
+from app import app, db, login_manager
 from app.blueprints.admin.admin import admin
 from app.blueprints.auth.auth import auth
 from app.blueprints.api.api import api
 from app.blueprints.errors.handler import errors
 from app.blueprints.problems.problems import problems
 
-from app.models import Submission
+from app.models import User, Submission
 from app.contester.db_manager import load_from_database
 from app.contester.languages import languages
 from app.utils.routes import next_url
@@ -56,8 +56,11 @@ def submission_page(submission_id):
 @register_breadcrumb(app, '.profile', 'Профиль')
 @login_required
 def profile_page():
-    submission_table = {
+    context = {
         'submissions': current_user.submissions,
-        'show_task': True
+        'show_task': True,
+        'user': current_user,
+        'visitor_mode': False
     }
-    return render_template('profile.html', title='Профиль', **submission_table)
+
+    return render_template('profile.html', title='Профиль', **context)

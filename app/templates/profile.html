@@ -14,16 +14,21 @@
                     <div class="avatar__block">
                         <img src="{{ url_for('static', filename='images/default_avatar.jpg') }}" alt="avatar"
                              class="avatar__image">
-                        <p class="avatar__text">{{ current_user.name[0] }}{{ current_user.surname[0] }}</p>
+                        <p class="avatar__text">{{ user.name[0] }}{{ user.surname[0] }}</p>
                     </div>
                     <div class="name__block user__info__block">
                         <i class="fa fa-2x fa-user-o" aria-hidden="true"></i>
-                        <h1 class="name__text">{{ current_user.name }} {{ current_user.surname }}</h1>
+                        <h1 class="name__text">{{ user.name }} {{ user.surname }}</h1>
                     </div>
                     <div class="email__block user__info__block">
                         <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                        <p class="email__text">{{ current_user.email }}</p>
+                        <p class="email__text">{{ user.email }}</p>
                     </div>
+                    {% if not visitor_mode %}
+                        <button class="bordered_button" id="edit_profile__button">
+                            Редактировать профиль
+                        </button>
+                    {% endif %}
                 </div>
             </div>
             <div class="col-lg-9 col-12">
