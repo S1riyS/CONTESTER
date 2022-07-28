@@ -30,6 +30,9 @@ input:-webkit-autofill:focus {
     text-align: left;
 }
 
+* .form__group:last-of-type {
+    margin-bottom: 0;
+}
 .form__group {
     position: relative;
     height: 3rem;
@@ -145,6 +148,7 @@ input:-webkit-autofill:focus {
 
 .submit-btn {
     width: 100%;
+    margin-top: 25px;
     padding: 12px 24px;
     border: none;
     border-radius: 8px;
