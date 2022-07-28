@@ -78,7 +78,7 @@ def students_page():
             'solved_today': solved_today
         })
 
-    return render_template('admin/students.html', table_data=table_data)
+    return render_template('admin/students.html', title=f'Ученики {number}{letter} класса', table_data=table_data)
 
 
 @admin.route('/task/create', methods=['GET', 'POST'])
