@@ -64,3 +64,21 @@ def profile_page():
     }
 
     return render_template('profile.html', title='Профиль', **context)
+
+
+@app.route('/user/<int:user_id>', methods=['GET'])
+@login_required
+def user_page(user_id):
+    user = db.session.query(User).get_or_404(user_id)
+
+    if user.id == current_user.id:
+        return redirect(url_for('profile_page'))
+
+    context = {
+        'submissions': user.submissions,
+        'show_task': True,
+        'user': user,
+        'visitor_mode': True
+    }
+
+    return render_template('profile.html', title='Ученик', **context)
