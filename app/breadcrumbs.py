@@ -1,4 +1,5 @@
-from flask import url_for, request
+from flask import url_for, request, abort
+from flask_login import current_user
 
 from app import db
 from app.models import User, Topic, Task
@@ -29,6 +30,12 @@ def view_task_dlc(*args, **kwargs):
 
 def view_user_dlc(*args, **kwargs):
     user_id = request.view_args['user_id']
-    user = db.session.query(User).get(user_id)
+    if user_id is not None:
+        user = db.session.query(User).get(user_id)
+    else:
+        user = current_user
+
+    if not user:
+        return [{'text': 'Пользователь не найден', 'url': ''}]
 
     return [{'text': f'{user.surname} {user.name}', 'url': ''}]
