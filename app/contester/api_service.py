@@ -4,22 +4,28 @@ from dataclasses import dataclass, field
 import asyncio
 from aiohttp import ClientSession
 
-from .exceptions import ApiServiceError, ExecutionError, WrongAnswerError, TimeOutError
+from .exceptions import ContesterError, ApiServiceError, ExecutionError, WrongAnswerError, TimeOutError
 
 API_URL = 'https://wandbox.org/api/compile.json'  # API URL
 HEADERS = {'Content-Type': "application/json;charset=UTF-8"}  # Request headers
 
 
-class ApiCallData(t.TypedDict):
+class ApiCallParameters(t.TypedDict):
     code: str
     compiler: str
     stdin: str
 
 
+class ParsedApiResponse(t.NamedTuple):
+    success: bool
+    message: str
+    user_output: t.Optional[str]
+
+
 @dataclass
 class ApiCall:
     __session: ClientSession
-    __data: ApiCallData
+    __data: ApiCallParameters
     __expected_output: str
     __user_output: t.Optional[str] = field(init=False, default=None)
 
@@ -74,3 +80,22 @@ class ApiCall:
     @property
     def user_output(self):
         return self.__user_output
+
+
+async def parse_api_call(call: ApiCall) -> ParsedApiResponse:
+    try:
+        await call.run()
+
+    except ContesterError as error:
+        success = False
+        message = error.message
+
+    else:
+        success = True
+        message = 'Success'
+
+    return ParsedApiResponse(
+        success=success,
+        message=message,
+        user_output=call.user_output
+    )
