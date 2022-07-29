@@ -222,6 +222,10 @@ pre {
     align-items: center;
 }
 
+.text_with_icon i {
+    margin-right: 5px;
+}
+
 .default_link {
     color: var(--purple-color);
     transition: all 0.2s ease;
@@ -406,27 +410,27 @@ ol.breadcrumb {
     align-items: center;
 }
 
-.header .header__logo {
+.logo {
     display: flex;
     align-items: center;
     margin-right: 40px;
 }
 
-.header .header__logo .img {
+.logo .img {
     width: 45px;
     height: auto;
     margin-right: 8px;
     transition: all .2s ease;
 }
 
-.header .header__logo .name {
+.logo .name {
     display: inline;
     font-size: 26px;
     transition: all .2s ease;
     align-self: center;
 }
 
-.header .header__logo:hover .img {
+.logo:hover .img {
     transform: rotateZ(120deg);
 }
 
@@ -556,28 +560,65 @@ ol.breadcrumb {
 }
 
 /* Footer */
-.footer {
-    width: 100%;
-    padding: 15px;
-    background-color: var(--footer-color);
-    text-align: center;
-    flex-shrink: 0;
+.footer__wrapper {
     margin-top: 40px;
 }
 
-.footer .row {
-    justify-content: center;
-    height: 100%;
+.footer__wrapper::before {
+    content: "";
+    display: block;
+    width: 70%;
+    margin: auto;
+    background-color: #21262d;
+    height: 1px
+}
+
+.footer {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.footer .container-fluid {
+    width: 60%;
+}
+
+.footer .footer__body {
     align-items: center;
 }
 
-.footer .row p {
-    display: inline;
+.footer .footer__name {
+    font-size: 18px;
+    font-weight: 600;
 }
 
-.footer .row span {
-    color: var(--cyan-color);
-    margin-left: 3px;
+.footer .footer__name span {
+    color: var(--darker-text-color);
+}
+
+.footer .footer__logo img {
+    width: 60px;
+    height: auto;
+}
+
+.footer__links {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-color);
+}
+
+.footer__links a {
+    justify-content: center;
+    background-color: transparent;
+    padding: 10px;
+}
+
+.footer__links i {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    margin: 0;
 }
 
 .empty_response__body {

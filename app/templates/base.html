@@ -63,7 +63,7 @@
         <div class="row header-row">
             <div class="header__left_side">
                 {# Logo #}
-                <a href="{{ url_for('home_page') }}" class="header__logo">
+                <a href="{{ url_for('home_page') }}" class="logo">
                     <img src="{{ url_for('static', filename='images/svg/logo.svg') }}" alt="logo" class="img">
                     <h2 class="name">CONTESTER</h2>
                 </a>
@@ -147,19 +147,41 @@
 </main>
 
 {# Footer #}
-<footer class="footer" id="footer">
-    <div class="container-fluid">
-        <div class="row">
-            <p class="col-12">© 2021, Гимназия № 17</p>
-            <p class="col-12">614000, г. Пермь, ул. Ленина, 31</p>
-            <p class="col-12">
-                E-mail: <span>Gimnaziya17@obrazovanie.perm.ru</span>
-                Телефон: <span>+7 (342) 210–88–55</span>
-            </p>
+<div class="footer__wrapper">
+    <footer class="footer" id="footer">
+        <div class="container-fluid">
+            <div class="row footer__body">
+                <div class="col-md-4 footer__name">
+                    CONTESTER <span>&copy; 2022</span>
+                </div>
+                <div class="col-md-4 footer__logo">
+                    <img src="{{ url_for('static', filename='images/svg/logo.svg') }}" alt="logo" class="img">
+                </div>
+                <div class="col-md-4 footer__links">
+                    {# Contacts #}
+                    <a data-tooltip="tooltip" data-placement="top" title="Контакты" href="#" class="text_with_icon">
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                    </a>
+                    {# Docs #}
+                    <a href="#" class="text_with_icon" data-tooltip="tooltip" data-placement="top" title="Документация">
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                    </a>
+                    {# Developers #}
+                    <a href="https://github.com/S1riyS/CONTESTER/graphs/contributors" target="_blank"
+                       class="text_with_icon" data-tooltip="tooltip" data-placement="top" title="Разработчики">
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                    </a>
+                    {# GitHub #}
+                    <a href="https://github.com/S1riyS/CONTESTER" target="_blank" class="text_with_icon"
+                       data-tooltip="tooltip" data-placement="top" title="Проект на GitHub">
+                        <i class="fa fa-github" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
         </div>
+    </footer>
+</div>
 
-    </div>
-</footer>
 
 <div class="modals">
     <div class="container-fluid">
