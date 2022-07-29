@@ -21,6 +21,15 @@ def send_alert(success: bool, message: str):
     ), 200)
 
 
+def render_solution_failure(message: str):
+    return make_response(jsonify({
+        'result': render_template(
+            'responses/solution/failure.html',
+            message=message
+        )
+    }), 200)
+
+
 def tests_to_orm_objects(tests, task):
     """Saves tests to database and returns list of ORM Test objects"""
     tests_zip = zip(tests['stdin_list'], tests['stdout_list'], tests['is_hidden_list'])
@@ -45,48 +54,39 @@ def tests_to_orm_objects(tests, task):
 def send_solution():
     # Checking if user is authenticated
     if not current_user.is_authenticated:
-        return jsonify({
-            'result': render_template(
-                'responses/solution/failure.html',
-                message='Для отправки решений необходимо войти в систему'
-            )
-        })
-    # Checking if user's profile is verified
-    elif not current_user.verified:
-        return jsonify({
-            'result': render_template(
-                'responses/solution/failure.html',
-                message='Для отправки решений необходимо подтвердить свою почту'
-            )
-        })
+        return render_solution_failure('Для отправки решений необходимо войти в систему')
 
     data = request.json
     path = data['path']
-    current_task = get_task(path['grade'], path['topic'], path['task'])  # Task
+    task = get_task(path['grade'], path['topic'], path['task'])  # Task
+
     partner = load_user(data['partner_id'])  # Partner
-    user_code = data['code'].strip()  # Code
+
+    # Checking if user's or partners profile is verified
+    if not current_user.verified:
+        return render_solution_failure('Для отправки решений вам необходимо подтвердить свою почту')
+    if partner:
+        if not partner.verified:
+            return render_solution_failure('Для отправки решений вашему партнеру необходимо подтвердить свою почту')
+
+    code = data['code'].strip()  # Code
 
     response = contester.run_tests(
-        code=user_code,
+        code=code,
         language=data['lang'],
-        task=current_task,
+        task=task,
         partner=partner
     )
 
     if response is not None:
-        return jsonify({
+        return make_response(jsonify({
             'result': render_template(
                 'responses/solution/success.html',
                 response=response
             )
-        })
+        }), 200)
 
-    return jsonify({
-        'result': render_template(
-            'responses/solution/failure.html',
-            message='Что-то пошло не так!'
-        )
-    })
+    return render_solution_failure('Что-то пошло не так!')
 
 
 @api.route('/task/submissions', methods=['POST'])
