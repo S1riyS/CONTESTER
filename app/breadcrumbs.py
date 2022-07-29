@@ -1,4 +1,4 @@
-from flask import url_for, request, abort
+from flask import url_for, request
 from flask_login import current_user
 
 from app import db

@@ -7,7 +7,7 @@ from flask_login import current_user
 from flask_breadcrumbs import default_breadcrumb_root, register_breadcrumb
 
 from app import db
-from app.models import User, Grade, Topic, Task, Submission, Report
+from app.models import User, Topic, Task, Submission, Report
 from app.utils.forms import init_grades_select, init_topics_select
 
 from .forms import TopicForm, TaskForm

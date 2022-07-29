@@ -3,9 +3,6 @@ from wtforms import PasswordField, StringField, SubmitField, SelectField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Length
 
-from app import db
-from app.models import Grade
-
 
 class SignUpForm(FlaskForm):
     first_name = StringField('Имя', validators=[DataRequired()])

@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from itsdangerous import SignatureExpired, BadSignature
 
 from app import db, serializer
-from app.models import User, Role, Grade
+from app.models import Grade
 from app.forms.auth import LoginForm, SignUpForm
 
 auth = Blueprint('auth', __name__, template_folder='templates', static_folder='static')
