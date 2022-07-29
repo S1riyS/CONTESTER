@@ -25,10 +25,10 @@
     </div>
 {% endmacro %}
 
-{% macro render_submission_owners(submission) %}
+{% macro render_submission_owners(submission, union=True) %}
     {% for user in submission.users %}
         <a href="{{ url_for('profile_page', user_id=user.id) }}" class="default_link">{{ user.surname }} {{ user.name[0] }}.</a>
-        {% if not loop.last %}
+        {% if not loop.last and union %}
             <span>&nbsp;и&nbsp;</span>
         {% endif %}
     {% endfor %}

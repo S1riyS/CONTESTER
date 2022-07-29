@@ -41,7 +41,7 @@
                             {# Students #}
                             {% if show_users %}
                                 <div class="table_row_column students">
-                                    {{ macros.render_submission_owners(submission) }}
+                                    {{ macros.render_submission_owners(submission, union=False) }}
                                 </div>
                             {% endif %}
 
