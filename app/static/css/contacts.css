@@ -1,0 +1,58 @@
+.container-fluid {
+    width: 90%;
+}
+
+.contacts_block {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.contacts_title {
+    margin: 20px 0;
+    font-weight: 600;
+}
+
+.contacts_list {
+    display: flex;
+    flex-direction: column;
+    padding-left: 3px;
+}
+
+.contacts_list .contacts_item {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.contacts_list .contacts_item:last-of-type {
+    margin-bottom: 0;
+}
+
+.contacts_list .contacts_item p,
+.contacts_list .contacts_item a {
+    color: var(--cyan-color);
+    transition: 0.1s all ease-in;
+}
+
+.contacts_list .contacts_item a:hover {
+    color: var(--blue-color);
+}
+
+.contacts_list .contacts_item i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+@media (min-width: 1540px) {
+    .container-fluid {
+        width: 75%;
+    }
+}
+
+@media (max-width: 1200px) {
+    .contacts_block {
+        text-align: center;
+    }
+
+    .contacts_list .contacts_item {
+        justify-content: center;
+    }
+}

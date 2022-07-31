@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contacts.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-4 col-12">
+                <div class="contacts_block">
+                    <h2 class="contacts_title">Гимназия №17</h2>
+                    <div class="contacts_list">
+                        <div class="text_with_icon contacts_item">
+                            <i class="fa fa-globe" aria-hidden="true"></i>
+                            <a href="https://school17.perm.ru/">school17.perm.ru</a>
+                        </div>
+                        <div class="text_with_icon contacts_item">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            <p>gimnaziya17@permedu.online</p>
+                        </div>
+                        <div class="text_with_icon contacts_item">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                            <p>(342) 210-88-55; (342) 212-91-11</p>
+                        </div>
+                        <div class="text_with_icon contacts_item">
+                            <i class="fa fa-vk" aria-hidden="true"></i>
+                            <a href="https://vk.com/perm_gymnasium17">vk.com/perm_gymnasium17</a>
+                        </div>
+                        <div class="text_with_icon contacts_item">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <a href="https://yandex.ru/profile/1128393242">г.Пермь, ул.Ленина, 31</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-12">
+                <div class="contacts_block">
+                    <h2 class="contacts_title">CONTESTER</h2>
+                    <div class="contacts_list">
+                        <div class="text_with_icon contacts_item">
+                            <i class="fa fa-globe" aria-hidden="true"></i>
+                            <a href="{{ url_for('home_page') }}">contester.ru</a>
+                        </div>
+                        <div class="text_with_icon contacts_item">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            <p>contester.gymnasium17@mail.ru</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-12">
+                <div class="contacts_block">
+                    <h2 class="contacts_title">Разработчики</h2>
+                    <div class="contacts_list">
+                        <div class="text_with_icon contacts_item">
+                            <i class="fa fa-github" aria-hidden="true"></i>
+                            <a href="https://github.com/S1riyS">S1riyS</a>
+                        </div>
+                        <div class="text_with_icon contacts_item">
+                            <i class="fa fa-github" aria-hidden="true"></i>
+                            <a href="https://github.com/anthonyvotinov">anthonyvotinov</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

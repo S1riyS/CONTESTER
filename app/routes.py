@@ -37,6 +37,11 @@ def unauthorized_callback():
 def home_page():
     return render_template('new_home.html', title='Главная')
 
+@app.route('/contacts', methods=['GET'])
+@register_breadcrumb(app, '.contacts', 'Контакты')
+@next_url
+def contacts_page():
+    return render_template('contacts.html', title='Контакты')
 
 @app.route('/submissions/<int:submission_id>', methods=['GET'])
 @login_required
