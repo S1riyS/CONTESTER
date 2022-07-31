@@ -20,7 +20,8 @@ $('#logout').click(function () {
         url: '/api/auth/logout',
         contentType: 'application/json;charset=UTF-8',
         success: function (response) {
-            window.location = response['redirect_url']
+            localStorage.setItem('taskStorage', JSON.stringify({}));
+            window.location = response['redirect_url'];
         },
         error: function (error) {
             showAlert('Что-то пошло не так', 'danger');
@@ -46,7 +47,7 @@ $('#confirmEmailButton').on('click', function () {
 
             showAlert(response['message'], alertType);
         },
-        error: function(xhr, textStatus, error) {
+        error: function (xhr, textStatus, error) {
             showAlert('Что-то пошло не так', 'danger');
         }
     });
