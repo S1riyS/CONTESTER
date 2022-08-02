@@ -60,3 +60,46 @@
     font-size: 15px;
     font-weight: 400;
 }
+
+.pagination {
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.pagination .page-item:not(:last-of-type) {
+    margin-right: 5px;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #484f58;
+}
+
+.pagination .page-item .page-link {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 0.5rem 0.85rem;
+    color: var(--text-color);
+    transition: border-color .2s cubic-bezier(0.3, 0, 0.5, 1);
+}
+
+.pagination .page-item .page-link:focus {
+    box-shadow: none;
+}
+
+.pagination .page-item .page-link.active {
+    background: var(--purple-color);
+    cursor: pointer;
+}
+
+.pagination .page-item .page-link:not(.active):hover {
+    border-color: #30363d;
+}
+
+.pagination .page-item .pagination-next-arrow {
+    margin: 0 0 0 7px;
+}
+
+.pagination .page-item .pagination-prev-arrow {
+    margin: 0 7px 0 0;
+}
