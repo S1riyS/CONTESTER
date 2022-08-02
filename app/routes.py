@@ -93,9 +93,10 @@ def profile_page(user_id):
         return redirect(url_for('profile_page', user_id=user.id))
 
     # Forming table data
+    table_page = request.args.get('table_page', type=int, default=1)
     table_data = {
-        'submissions': user.submissions,
-        'show_task': True
+        'submissions': user.submissions.paginate(per_page=5, page=table_page, error_out=False),
+        'show_task': True,
     }
     # Forming page context
     context = {
