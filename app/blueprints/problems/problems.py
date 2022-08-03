@@ -88,7 +88,7 @@ def task_page(grade_number, topic_translit_name, task_translit_name, tab):
             'language_dict': languages.dictionary
         }
         return render_template(
-            'problems/task_problem.html',
+            'problems/problem.html',
             title=f'{task.name} - Задача',
             **global_context, **local_context
         )
@@ -101,7 +101,7 @@ def task_page(grade_number, topic_translit_name, task_translit_name, tab):
             )
         }
         return render_template(
-            'problems/task_submissions.html',
+            'problems/submissions.html',
             title=f'{task.name} - Отправки',
             **global_context, **local_context
         )
