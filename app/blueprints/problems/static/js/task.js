@@ -34,17 +34,6 @@ function findPosY(obj) {
     return offset.top - $(window).scrollTop()
 }
 
-function setActiveTab() {
-    let activeTabs = window.localStorage.getItem('activeTab');
-
-    if (activeTabs) {
-        let activeTabs = (window.localStorage.getItem('activeTab') ? window.localStorage.getItem('activeTab').split(',') : []);
-        $.each(activeTabs, function (index, element) {
-            $('[data-toggle="tab"][href="' + element + '"]').tab('show');
-        });
-    }
-}
-
 function hideSeparators(tabs) {
     $('#task_tabs .nav-link').removeClass('hide_after')
 
@@ -97,40 +86,6 @@ $('a[data-toggle="tab"]')
         window.localStorage.setItem('activeTab', activeTabs.join(','));
 
     });
-
-// Get submissions tab
-$('#submissions-tab').on('shown.bs.tab', function (e) {
-    let submissions = $('#submissions__body')
-    let submissionsLoader = $('#submissions__loader')
-    let data = {
-        task_path: getCurrentTask()
-    }
-
-    $.ajax({
-        url: '/api/task/submissions',
-        type: 'POST',
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(data),
-        // Before send
-        beforeSend(jqXHR, settings) {
-            submissions.html('')
-            submissionsLoader.css({'display': 'flex'});
-        },
-        // Complete
-        complete: function () {
-            submissionsLoader.css({'display': 'none'});
-        },
-        // Success
-        success: function (response) {
-            submissions.html(response) // Setting generated HTML
-            flask_moment_render_all();
-        },
-        // Error
-        error: function () {
-            console.log('Error')
-        }
-    })
-})
 
 // Sending report
 $('#report_form').submit(function (event) {

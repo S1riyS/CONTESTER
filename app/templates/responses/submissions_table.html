@@ -1,90 +1,153 @@
 {% import 'macros/all_macros.html' as macros %}
 
-<div class="table__wrapper">
-    {% if submissions %}
-        <div class="table box-shadow">
-            <div class="table_header__wrapper">
-                <div class="table_header">
-                    {# Students #}
-                    {% if show_users %}
-                        <div class="table_header_column students">
-                            <p>УЧЕНИКИ</p>
-                        </div>
-                    {% endif %}
-                    {# Result #}
-                    <div class="table_header_column result">
-                        <p>РЕЗУЛЬТАТ</p>
-                    </div>
-                    {# Task #}
-                    {% if show_task %}
-                        <div class="table_header_column task">
-                            <p>ЗАДАЧА</p>
-                        </div>
-                    {% endif %}
-                    {# Language #}
-                    <div class="table_header_column language">
-                        <p>ЯЗЫК</p>
-                    </div>
-                    {# Time #}
-                    <div class="table_header_column time">
-                        <p>ВРЕМЯ</p>
-                    </div>
-                    {# View result #}
-                    <div class="table_header_column view_result"></div>
-                </div>
-            </div>
-
-            <div class="table_body">
-                {% for submission in submissions %}
-                    <div class="table_row__wrapper">
-                        <div class="table_row">
-                            {# Students #}
-                            {% if show_users %}
-                                <div class="table_row_column students">
-                                    {{ macros.render_submission_owners(submission, union=False) }}
-                                </div>
-                            {% endif %}
-
-                            {# Result #}
-                            <div class="table_row_column result">
-                                {{ macros.render_submission_result(submission, show_passed_tests=True) }}
+<div class="table__main">
+    {% if submissions.items %}
+        <div class="table__wrapper">
+            <div class="table box-shadow">
+                <div class="table_header__wrapper">
+                    <div class="table_header">
+                        {# Students #}
+                        {% if show_users %}
+                            <div class="table_header_column students">
+                                <p>УЧЕНИКИ</p>
                             </div>
+                        {% endif %}
+                        {# Result #}
+                        <div class="table_header_column result">
+                            <p>РЕЗУЛЬТАТ</p>
+                        </div>
+                        {# Task #}
+                        {% if show_task %}
+                            <div class="table_header_column task">
+                                <p>ЗАДАЧА</p>
+                            </div>
+                        {% endif %}
+                        {# Language #}
+                        <div class="table_header_column language">
+                            <p>ЯЗЫК</p>
+                        </div>
+                        {# Time #}
+                        <div class="table_header_column time">
+                            <p>ВРЕМЯ</p>
+                        </div>
+                        {# View result #}
+                        <div class="table_header_column view_result"></div>
+                    </div>
+                </div>
+                <div class="table_body">
+                    {% for submission in submissions.items %}
+                        <div class="table_row__wrapper">
+                            <div class="table_row">
+                                {# Students #}
+                                {% if show_users %}
+                                    <div class="table_row_column students">
+                                        {{ macros.render_submission_owners(submission, union=False) }}
+                                    </div>
+                                {% endif %}
 
-                            {# Task #}
-                            {% if show_task %}
-                                <div class="table_row_column task">
-                                    {% set task = submission.task %}
-                                    <a href="{{ get_task_url(task) }}" class="default_link">
-                                        {{ task.name }}
+                                {# Result #}
+                                <div class="table_row_column result">
+                                    {{ macros.render_submission_result(submission, show_passed_tests=True) }}
+                                </div>
+
+                                {# Task #}
+                                {% if show_task %}
+                                    <div class="table_row_column task">
+                                        {% set task = submission.task %}
+                                        <a href="{{ get_task_url(task) }}" class="default_link">
+                                            {{ task.name }}
+                                        </a>
+                                    </div>
+                                {% endif %}
+
+                                {# Language #}
+                                <div class="table_row_column language">
+                                    {% set language = languages.get_language(submission.language)['language'] %}
+                                    <img src="{{ language.icon_url }}" alt="Language icon" class="language__icon">
+                                    <p class="language__name">{{ language.fullname }}</p>
+                                </div>
+
+                                {# Time #}
+                                <div class="table_row_column time">
+                                    {{ moment(submission.submission_date).fromNow(refresh=True) }}
+                                </div>
+
+                                {# View result #}
+                                <div class="table_row_column view_result">
+                                    <a class="view_result__link default_link" target="_blank"
+                                       href="{{ url_for('submission_page', submission_id=submission.id) }}">
+                                        Подробнее
                                     </a>
                                 </div>
-                            {% endif %}
-
-                            {# Language #}
-                            <div class="table_row_column language">
-                                {% set language = languages.get_language(submission.language)['language'] %}
-                                <img src="{{ language.icon_url }}" alt="Language icon" class="language__icon">
-                                <p class="language__name">{{ language.fullname }}</p>
-                            </div>
-
-                            {# Time #}
-                            <div class="table_row_column time">
-                                {{ moment(submission.submission_date).fromNow(refresh=True) }}
-                            </div>
-
-                            {# View result #}
-                            <div class="table_row_column view_result">
-                                <a class="view_result__link default_link" target="_blank"
-                                   href="{{ url_for('submission_page', submission_id=submission.id) }}">
-                                    Подробнее
-                                </a>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
+        <ul class="pagination">
+            {% if submissions.has_prev %}
+                <li class="page-item">
+                    <a class="page-link text_with_icon"
+                       href="{{ url_for(
+                       request.endpoint,
+                       table_page=submissions.prev_num,
+                       **request.view_args
+                       ) }}">
+                        <i class="fa fa-chevron-left pagination-prev-arrow" aria-hidden="true"></i><span>Назад</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                <span class="page-link text_with_icon">
+                    <i class="fa fa-chevron-left pagination-prev-arrow" aria-hidden="true"></i><span>Назад</span>
+                </span>
+            {% endif %}
+            </li>
+
+            {% for page in submissions.iter_pages(left_edge=3, right_edge=3) %}
+                {% if page %}
+                    {% if submissions.page == page %}
+                        <li class="page-item">
+                            <p class="page-link active">{{ page }}</p>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ url_for(
+                            request.endpoint,
+                            table_page=page,
+                            **request.view_args
+                            ) }}">
+                                {{ page }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% else %}
+                    <li class="page-item disabled" id="example_ellipsis"><a href="#" class="page-link">…</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if submissions.has_next %}
+                <li class="page-item">
+                    <a class="page-link text_with_icon"
+                       href="{{ url_for(
+                       request.endpoint,
+                       table_page=submissions.next_num,
+                       **request.view_args
+                       ) }}">
+                        <span>Вперед</span><i class="fa fa-chevron-right pagination-next-arrow" aria-hidden="true"></i>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                <span class="page-link text_with_icon">
+                    <span>Вперед</span><i class="fa fa-chevron-right pagination-next-arrow" aria-hidden="true"></i>
+                </span>
+            {% endif %}
+        </ul>
     {% else %}
-        {% include 'responses/empty_response.html' %}
+        <div class="table__wrapper">
+            {% include 'responses/empty_response.html' %}
+        </div>
     {% endif %}
 </div>

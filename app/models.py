@@ -59,10 +59,11 @@ class User(BaseModel, UserMixin):
     hashed_password = sqlalchemy.Column(sqlalchemy.String)
     registration_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.utcnow)
 
-    submissions = relationship(
+    submissions = db.relationship(
         'Submission',
         secondary=user_submission,
         backref=db.backref('users', lazy='joined'),
+        lazy='dynamic',
         order_by="desc(Submission.submission_date)"
     )
 

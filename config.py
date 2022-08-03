@@ -23,6 +23,8 @@ class Config(object):
     MAIL_USE_SSL = True
     MAIL_USE_TLS = False
 
+    RECORDS_PER_PAGE = 10
+
 
 # Production Config
 class ProdConfig(Config):

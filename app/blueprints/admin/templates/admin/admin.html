@@ -8,6 +8,6 @@
 {% endblock %}
 
 {% block admin_content %}
-    <h3 class="table__title">Последние {{ submissions|length }} отправок за сегодня:</h3>
+    <h3 class="table__title">Последние {{ submissions.items|length }} отправок за сегодня:</h3>
     {% include 'responses/submissions_table.html' %}
 {% endblock %}

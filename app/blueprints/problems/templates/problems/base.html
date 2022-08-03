@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('problems.static', filename='css/task.css') }}">
+    <link rel="stylesheet" href="{{ url_for('problems.static', filename='css/sidebar.css') }}">
+{% endblock %}
+
+{% block js %}
+    <script type="module" src="{{ url_for('problems.static', filename='js/task.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            {# Sidebar #}
+            <div class="box-shadow sidebar col-xl-2" id="sidebar">
+                <h3 class="sidebar__title"><i class="sidebar__title__icon fas fa-tasks"></i> Задачи:</h3>
+                <ul class="nav sidebar_nav">
+                    {% for sidebar_task in topic.tasks %}
+                        {% if sidebar_task.id == task.id %}
+                            {% set is_active = 'active_task' %}
+                        {% endif %}
+
+                        <li class="sidebar__item {{ is_active }}">
+                            <a href="{{ get_task_url(sidebar_task) }}"
+                               class="item__link">{{ sidebar_task.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {# Content #}
+            <div class="task__main col-xl-8" id="task__main">
+                {% block task_content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

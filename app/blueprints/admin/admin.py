@@ -2,7 +2,7 @@ from enum import Enum
 from datetime import date
 
 from sqlalchemy import asc, desc, func, not_
-from flask import Blueprint, render_template, request, redirect, url_for, abort
+from flask import Blueprint, current_app, render_template, request, redirect, url_for, abort
 from flask_login import current_user
 from flask_breadcrumbs import default_breadcrumb_root, register_breadcrumb
 
@@ -40,12 +40,16 @@ def check_for_reports():
 @admin.route('/')
 @register_breadcrumb(admin, '.admin', 'Админ панель')
 def home_page():
+    page = request.args.get('table_page', type=int, default=1)
     submission_table = {
         'submissions': (
-            db.session.query(Submission)
-                .filter(func.date(Submission.submission_date) == date.today())
-                .order_by(desc(Submission.submission_date))
-                .limit(30).all()
+            db.session.query(Submission).filter(
+                func.date(Submission.submission_date) == date.today()
+            ).order_by(
+                desc(Submission.submission_date)
+            ).paginate(
+                per_page=current_app.config['RECORDS_PER_PAGE'], page=page, error_out=False
+            )
         ),
         'show_task': True,
         'show_users': True

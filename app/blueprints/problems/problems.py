@@ -1,9 +1,9 @@
-from flask import Blueprint, render_template, redirect, url_for, abort
+from flask import Blueprint, render_template, current_app, redirect, url_for, request, abort
 from flask_login import current_user, login_required
 from flask_breadcrumbs import default_breadcrumb_root, register_breadcrumb
 
 from app import db
-from app.models import Grade, Topic
+from app.models import Grade, Topic, Submission
 from app.contester.languages import languages
 from app.utils.routes import grade_compliance_required
 from app.utils.db import get_task
@@ -62,20 +62,48 @@ def topic_page(grade_number, topic_translit_name):
     return render_template('problems/topic.html', title=topic.name, **context)
 
 
-@problems.route('/grade-<int:grade_number>/<string:topic_translit_name>/<string:task_translit_name>', methods=['GET'])
+@problems.route(
+    '/grade-<int:grade_number>/<string:topic_translit_name>/<string:task_translit_name>',
+    defaults={'tab': 'problem'},
+    methods=['GET']
+)
+@problems.route(
+    '/grade-<int:grade_number>/<string:topic_translit_name>/<string:task_translit_name>/<string:tab>',
+    methods=['GET']
+)
 @register_breadcrumb(problems, '.grade.topic.task', '', dynamic_list_constructor=bc.view_task_dlc)
 @login_required
 @grade_compliance_required
-def task_page(grade_number, topic_translit_name, task_translit_name):
+def task_page(grade_number, topic_translit_name, task_translit_name, tab):
     task = get_task(grade_number, topic_translit_name, task_translit_name)
     topic = task.topic
-    grade = topic.grade
 
-    context = {
+    global_context = {
         'task': task,
         'topic': topic,
-        'grade': grade,
-        'language_dict': languages.dictionary
     }
 
-    return render_template('problems/task.html', title=task.name, **context)
+    if tab == 'problem':
+        local_context = {
+            'language_dict': languages.dictionary
+        }
+        return render_template(
+            'problems/problem.html',
+            title=f'{task.name} - Задача',
+            **global_context, **local_context
+        )
+
+    elif tab == 'submissions':
+        page = request.args.get('table_page', type=int, default=1)
+        local_context = {
+            'submissions': current_user.submissions.filter(Submission.task_id == task.id).paginate(
+                per_page=current_app.config['RECORDS_PER_PAGE'], page=page, error_out=False
+            )
+        }
+        return render_template(
+            'problems/submissions.html',
+            title=f'{task.name} - Отправки',
+            **global_context, **local_context
+        )
+
+    abort(404)
