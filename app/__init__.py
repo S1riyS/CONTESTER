@@ -55,13 +55,13 @@ def create_app(config_class=CONFIG):
         from app import routes
 
         # Register blueprints
-        from app.blueprints.auth.auth import auth
+        from app.blueprints.auth import auth
         app.register_blueprint(auth, url_prefix='/auth')
 
-        from app.blueprints.problems.problems import problems
+        from app.blueprints.problems import problems
         app.register_blueprint(problems, url_prefix='/problems')
 
-        from app.blueprints.admin.admin import admin
+        from app.blueprints.admin import admin
         app.register_blueprint(admin, url_prefix='/admin')
 
         from app.blueprints.api.api import api

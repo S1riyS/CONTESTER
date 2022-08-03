@@ -5,9 +5,10 @@ from sqlalchemy import asc, desc, func, not_
 from flask import current_app as app
 from flask import Blueprint, render_template, request, redirect, url_for, abort
 from flask_login import current_user
-from flask_breadcrumbs import default_breadcrumb_root, register_breadcrumb
+from flask_breadcrumbs import register_breadcrumb
 
 from app import db
+from app.blueprints.admin import admin
 from app.models import User, Topic, Task, Submission, Report
 from app.utils.forms import init_grades_select, init_topics_select
 
@@ -17,10 +18,6 @@ from .forms import TopicForm, TaskForm
 class ActionType(str, Enum):
     CREATE = 'create'
     EDIT = 'edit'
-
-
-admin = Blueprint('admin', __name__, template_folder='templates', static_folder='static')
-default_breadcrumb_root(admin, '.')
 
 
 @admin.before_request

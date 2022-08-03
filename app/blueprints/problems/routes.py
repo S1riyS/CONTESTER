@@ -1,17 +1,15 @@
 from flask import current_app as app
-from flask import Blueprint, render_template, redirect, url_for, request, abort
+from flask import render_template, redirect, url_for, request, abort
 from flask_login import current_user, login_required
 from flask_breadcrumbs import default_breadcrumb_root, register_breadcrumb
 
 from app import db
+from app.blueprints.problems import problems
 from app.models import Grade, Topic, Submission
 from app.contester.languages import languages
 from app.utils.routes import grade_compliance_required
 from app.utils.db import get_task
 import app.breadcrumbs as bc
-
-problems = Blueprint('problems', __name__, template_folder='templates', static_folder='static')
-default_breadcrumb_root(problems, '.')
 
 
 @problems.route('/redirect', methods=['GET'])
