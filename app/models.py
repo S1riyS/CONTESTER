@@ -62,7 +62,7 @@ class User(BaseModel, UserMixin):
     submissions = db.relationship(
         'Submission',
         secondary=user_submission,
-        backref=db.backref('users', lazy='dynamic'),
+        backref=db.backref('users', lazy='joined'),
         lazy='dynamic',
         order_by="desc(Submission.submission_date)"
     )
