@@ -89,23 +89,6 @@ def send_solution():
     return render_solution_failure('Что-то пошло не так!')
 
 
-@api.route('/task/submissions', methods=['POST'])
-def get_submissions():
-    if current_user.is_authenticated:
-        data = request.json
-        task_path = data['task_path']
-        task = get_task(task_path['grade'], task_path['topic'], task_path['task'])
-
-        submissions = []
-        for submission in current_user.submissions:
-            if submission.task_id == task.id:
-                submissions.append(submission)
-    else:
-        submissions = None
-
-    return jsonify(render_template('responses/submissions_table.html', submissions=submissions))
-
-
 @api.route('/task/report', methods=['POST'])
 def send_report():
     data = request.json
