@@ -34,17 +34,6 @@ function findPosY(obj) {
     return offset.top - $(window).scrollTop()
 }
 
-function setActiveTab() {
-    let activeTabs = window.localStorage.getItem('activeTab');
-
-    if (activeTabs) {
-        let activeTabs = (window.localStorage.getItem('activeTab') ? window.localStorage.getItem('activeTab').split(',') : []);
-        $.each(activeTabs, function (index, element) {
-            $('[data-toggle="tab"][href="' + element + '"]').tab('show');
-        });
-    }
-}
-
 function hideSeparators(tabs) {
     $('#task_tabs .nav-link').removeClass('hide_after')
 
