@@ -44,7 +44,7 @@
 
 .nav-tabs .nav-link:hover {
     color: var(--text-color);
-    background-color: var(--table-hover);
+    background-color: #1a1d28;
 }
 
 .nav-tabs .nav-link.active {
