@@ -78,27 +78,32 @@ def task_page(grade_number, topic_translit_name, task_translit_name, tab):
     task = get_task(grade_number, topic_translit_name, task_translit_name)
     topic = task.topic
 
-    page = request.args.get('table_page', type=int, default=1)
-    print(tab)
+    global_context = {
+        'task': task,
+        'topic': topic,
+    }
 
     if tab == 'problem':
-        context = {
-            'task': task,
-            'topic': topic,
+        local_context = {
             'language_dict': languages.dictionary
         }
-        return render_template('problems/task_problem.html', title=f'{task.name} - Задача', **context)
+        return render_template(
+            'problems/task_problem.html',
+            title=f'{task.name} - Задача',
+            **global_context, **local_context
+        )
 
     elif tab == 'submissions':
-        context = {
-            'task': task,
-            'topic': topic,
-            'submissions': current_user.submissions.filter(
-                Submission.task_id == task.id
-            ).paginate(
+        page = request.args.get('table_page', type=int, default=1)
+        local_context = {
+            'submissions': current_user.submissions.filter(Submission.task_id == task.id).paginate(
                 per_page=current_app.config['RECORDS_PER_PAGE'], page=page, error_out=False
             )
         }
-        return render_template('problems/task_submissions.html', title=f'{task.name} - Отправки', **context)
+        return render_template(
+            'problems/task_submissions.html',
+            title=f'{task.name} - Отправки',
+            **global_context, **local_context
+        )
 
     abort(404)
