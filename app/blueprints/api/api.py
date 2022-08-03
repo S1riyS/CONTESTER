@@ -118,10 +118,10 @@ def delete_report():
         db.session.delete(report)
         db.session.commit()
 
-        return send_alert(True, 'Пробема отмечена как решенная')
+        return send_alert(True, 'Проблема отмечена как решенная')
 
     except Exception:
-        return send_alert(False, 'Не удалось выполнить дейсвие')
+        return send_alert(False, 'Не удалось выполнить действие')
 
 
 @api.route('/topics', methods=['POST'])
@@ -146,7 +146,7 @@ def signup():
     print(data)
 
     if db.session.query(User).filter(User.email == data['email']).first():
-        return send_alert(False, 'Пользователь с этой почтой уже зарегестрирован!')
+        return send_alert(False, 'Пользователь с этой почтой уже зарегистрирован!')
 
     if data['password'] != data['password_again']:
         return send_alert(False, 'Пароли не совпадают')

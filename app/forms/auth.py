@@ -12,7 +12,7 @@ class SignUpForm(FlaskForm):
     email = EmailField('Email', validators=[DataRequired()])
     password = PasswordField('Пароль', validators=[DataRequired(), Length(min=6)])
     password_again = PasswordField('Повторите пароль', validators=[DataRequired()])
-    submit = SubmitField('Зарегестрироваться')
+    submit = SubmitField('Зарегистрироваться')
 
 
 class LoginForm(FlaskForm):
