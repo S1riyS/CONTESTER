@@ -2,7 +2,8 @@ from enum import Enum
 from datetime import date
 
 from sqlalchemy import asc, desc, func, not_
-from flask import Blueprint, current_app, render_template, request, redirect, url_for, abort
+from flask import current_app as app
+from flask import Blueprint, render_template, request, redirect, url_for, abort
 from flask_login import current_user
 from flask_breadcrumbs import default_breadcrumb_root, register_breadcrumb
 
@@ -48,7 +49,7 @@ def home_page():
             ).order_by(
                 desc(Submission.submission_date)
             ).paginate(
-                per_page=current_app.config['RECORDS_PER_PAGE'], page=page, error_out=False
+                per_page=app.config['RECORDS_PER_PAGE'], page=page, error_out=False
             )
         ),
         'show_task': True,

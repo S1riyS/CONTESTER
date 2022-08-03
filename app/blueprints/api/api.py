@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, session, request, jsonify, make_re
 from flask_login import login_user, logout_user, current_user
 from sqlalchemy import and_
 
-from app import db, serializer, contester
+from app import db, serializer
 from app.contester import contester
 
 from app.models import User, Role, Grade, Topic, Task, Example, Test, Report, load_user
