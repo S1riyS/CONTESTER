@@ -1,0 +1,254 @@
+{% extends 'problems/task_base.html' %}
+
+{% block css %}
+    {{ super() }}
+    {% include 'codemirror/css.html' %}
+    <link rel="stylesheet" href="{{ url_for('problems.static', filename='css/loader.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/editor.css') }}">
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+    {#  Codemirror.js  #}
+    {% include 'codemirror/init.html' %}
+    {# == Mods == #}
+    {% include 'codemirror/mods.html' %}
+    {#  == Addons == #}
+    {% include 'codemirror/addons.html' %}
+    {#  Addons/fold  #}
+    {% include 'codemirror/fold.html' %}
+
+    <script type="module" src="{{ url_for('static', filename='js/editor.js') }}"></script>
+{% endblock %}
+
+{% block task_content %}
+    <div class="tabs">
+        <ul class="nav nav-tabs" id="task_tabs" role="tablist">
+            <li class="nav-item">
+                <a href="#task" class="nav-link active" id="task-tab" data-toggle="tab" role="tab"
+                   aria-controls="task" aria-selected="true">Задача</a>
+            </li>
+            <li class="nav-item">
+                <a href="#submissions" class="nav-link hide_after" id="submissions-tab" data-toggle="tab"
+                   role="tab"
+                   aria-controls="task" aria-selected="false">Мои отправки</a>
+            </li>
+        </ul>
+    </div>
+    <div class="task" id="task">
+        <div class="task__header box-shadow">
+            <div class="task__header__buttons">
+                {% if current_user.is_admin %}
+                    <a href="{{ url_for('admin.edit_task_page', id=task.id) }}" data-tooltip="tooltip"
+                       data-placement="top" title="Изменить задачу"
+                       class="default_button header__button" id="report_task__btn">
+                        <i class="default_button__icon fas fa-pen"></i>
+                    </a>
+
+                    <button data-toggle="modal" data-target="#deleteModal"
+                            data-tooltip="tooltip" data-placement="top" title="Удалить задачу"
+                            class="alert_button header__button" id="report_task__btn">
+                        <i class="default_button__icon far fa-trash-alt"></i>
+                    </button>
+                {% endif %}
+                <button data-toggle="modal" data-target="#reportModal"
+                        data-tooltip="tooltip" data-placement="top" title="Пожаловаться на задачу"
+                        class="alert_button" id="report_task__btn">
+                    <i class="default_button__icon fas fa-exclamation-triangle"></i>
+                </button>
+            </div>
+            <p class="task__title">{{ task.name }}</p>
+            <div class="task__condition task__header__block">
+                <h4 class="condition__title task__sub_title">Условие</h4>
+                <p class="condition__text">
+                    {% for line in task.text.split('\n') %}
+                        {{ line }}
+                        {% if not loop.last %}
+                            <br>
+                        {% endif %}
+                    {% endfor %}
+                </p>
+                {# Сюда вставить картинку #}
+            </div>
+
+            {% set example = task.example %}
+            {% if example %}
+                <div class="task__example task__header__block">
+                    <h4 class="example__title task__sub_title">Пример</h4>
+                    <div class="input">
+                        <p class="example__subtitle">Ввод:</p>
+                        <pre>
+                        {% for input_line in example.example_input.split('\n') %}
+                            <span>{{ input_line }}</span>
+                        {% endfor %}
+                    </pre>
+                    </div>
+                    <div class="output">
+                        <p class="example__subtitle">Вывод:</p>
+                        <pre>
+                        {% for output_line in example.example_output.split('\n') %}
+                            <span>{{ output_line }}</span>
+                        {% endfor %}
+                    </pre>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+
+        <div class="task__body box-shadow">
+            {# Editor #}
+            <div class="editor">
+                <div class="editor__header">
+                    <div class="header__left_side">
+                        <p class="dropdown__title">Язык:</p>
+                        <div class="dropdown box-shadow">
+                            <button class="btn btn-secondary dropdown-btn" type="button"
+                                    id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="languageDropdownButton__text"
+                                                      id="languageDropdownButton__text">Python 3</span>
+                                <span class="arrow">
+                                <span></span><span></span>
+                            </span>
+                            </button>
+                            <div class="dropdown-menu" id="dropdownMenuLanguage"
+                                 aria-labelledby="dropdownMenuButton">
+                                {% for key, language in language_dict.items() %}
+                                    {% if language.is_default %}
+                                        {% set is_active = 'active' %}
+                                    {% else %}
+                                        {% set is_active = '' %}
+                                    {% endif %}
+
+                                    <a class="dropdown-item {{ is_active }}" data-value="{{ key }}"
+                                       data-mode="{{ language.mode }}">
+                                        {{ language.name }}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="header__right_side">
+                        <div class="dropdown box-shadow">
+                            <button class="btn btn-secondary dropdown-btn" type="button"
+                                    id="dropdownMenuClassmateButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="classmateDropdownButton__text"
+                                                      id="classmateDropdownButton__text">
+                                                    Выберите напарника
+                                                </span>
+                                <span class="arrow">
+                                <span></span><span></span>
+                            </span>
+                            </button>
+                            <div class="dropdown-menu" id="dropdownMenuClassmate"
+                                 aria-labelledby="dropdownMenuClassmateButton">
+                                <h6 class="dropdown-header">Одноклассники:</h6>
+                                {% for classmate in current_user.classmates %}
+                                    <a class="dropdown-item {{ is_active }}"
+                                       data-id="{{ classmate.id }}"
+                                       data-fullname="{{ classmate.surname }} {{ classmate.name }}">
+                                        {{ classmate.surname }} {{ classmate.name }}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <button data-tooltip="tooltip" data-placement="top" title="Удалить код"
+                                class="header__button alert_button" id="reset-code__btn">
+                            <i class="default_button__icon far fa-trash-alt"></i>
+                        </button>
+                        <button data-tooltip="tooltip" data-placement="top" title="Скопировать код"
+                                class="header__button default_button" id="copy-code__btn">
+                            <i class="default_button__icon far fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="editor__body" id="editor__body"></div>
+                <div class="editor__footer">
+                    <button class="submit-code__btn" id="submit-code__btn">Отправить</button>
+                </div>
+                <div class="code-response">
+                    <div class="code-response__loader" id="code-response__loader">
+                        <div class="lds-roller">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <div class="code-response__body" id="code-response__body">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block modals %}
+    {# Report task Modal #}
+    <div class="modal fade" id="reportModal" tabindex="-1" role="dialog"
+         aria-labelledby="reportModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reportModalLabel">Пожаловаться</h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="report_form" method="post" role="form">
+                    <div class="modal-body">
+                        <div class="form__content">
+                            <p class="form__title">Опишите проблему:</p>
+                            <textarea class="modal_textarea" id="report_text" required
+                                      placeholder="Описание"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">Закрыть
+                        </button>
+                        <input class="btn btn-success" id="send_report"
+                               name="submit" type="submit" value="Отправить">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% if current_user.is_admin %}
+        {# Delete task Modal #}
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+             aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Подтверждение действия</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="form__title">Вы уверены, что хотите удалить задание?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">Закрыть
+                        </button>
+                        <button type="button" id="deleteTaskButton" class="btn btn-danger"
+                                data-taskID="{{ task.id }}">
+                            Удалить
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

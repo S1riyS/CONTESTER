@@ -1,0 +1,28 @@
+{% extends 'problems/task_base.html' %}
+
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/submissions_table.css') }}">
+{% endblock %}
+
+{% block task_content %}
+    <div class="tabs">
+        <ul class="nav nav-tabs" id="task_tabs" role="tablist">
+            <li class="nav-item">
+                <a href="#task" class="nav-link" id="task-tab" data-toggle="tab" role="tab"
+                   aria-controls="task" aria-selected="false">Задача</a>
+            </li>
+            <li class="nav-item">
+                <a href="#submissions" class="nav-link active hide_after" id="submissions-tab" data-toggle="tab"
+                   role="tab"
+                   aria-controls="submissions" aria-selected="true">Мои отправки</a>
+            </li>
+        </ul>
+    </div>
+    <div class="submissions" id="submissions">
+        <div class="submissions__body" id="submissions__body">
+            {% include 'responses/submissions_table.html' %}
+        </div>
+    </div>
+{% endblock %}
