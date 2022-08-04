@@ -56,16 +56,16 @@ def create_app(config_class=CONFIG):
 
         # Register blueprints
         from app.blueprints.auth import auth
-        app.register_blueprint(auth, url_prefix='/auth')
+        app.register_blueprint(auth)
 
         from app.blueprints.problems import problems
-        app.register_blueprint(problems, url_prefix='/problems')
+        app.register_blueprint(problems)
 
         from app.blueprints.admin import admin
-        app.register_blueprint(admin, url_prefix='/admin')
+        app.register_blueprint(admin)
 
         from app.blueprints.api.api import api
-        app.register_blueprint(api, url_prefix='/api')
+        app.register_blueprint(api)
 
         from app.blueprints.errors.handler import errors
         app.register_blueprint(errors)

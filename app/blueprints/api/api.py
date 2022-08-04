@@ -9,7 +9,7 @@ from app.models import User, Role, Grade, Topic, Task, Example, Test, Report, lo
 from app.utils.email import send_email
 from app.utils.db import get_task
 
-api = Blueprint('api', __name__)
+api = Blueprint('api', __name__, url_prefix='/api')
 
 
 def send_alert(success: bool, message: str):
