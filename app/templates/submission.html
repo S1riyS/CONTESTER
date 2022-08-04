@@ -58,7 +58,7 @@
                                 {% set task = submission.task %}
                                 <i class="header__item__icon fa fa-tasks" aria-hidden="true"></i>
                                 <p class="header__item__title">Задача:</p>
-                                <a href="{{ get_task_url(task) }}" class="default_link">
+                                <a href="{{ task.url() }}" class="default_link">
                                     {{ task.name }}
                                 </a>
                             </div>

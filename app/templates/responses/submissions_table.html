@@ -54,7 +54,7 @@
                                 {% if show_task %}
                                     <div class="table_row_column task">
                                         {% set task = submission.task %}
-                                        <a href="{{ get_task_url(task) }}" class="default_link">
+                                        <a href="{{ task.url() }}" class="default_link">
                                             {{ task.name }}
                                         </a>
                                     </div>

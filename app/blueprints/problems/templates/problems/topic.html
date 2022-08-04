@@ -26,7 +26,7 @@
                     <div class="route__body_list box-shadow">
                         {% for task in tasks %}
                             <div class="list_item">
-                                <a href="{{ get_task_url(task) }}" class="list_item__link"></a>
+                                <a href="{{ task.url() }}" class="list_item__link"></a>
                                 <div class="list_item_content">
                                     <p class="item_title">{{ task.name }}</p>
                                 </div>
