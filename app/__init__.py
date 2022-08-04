@@ -64,7 +64,7 @@ def create_app(config_class=CONFIG):
         from app.blueprints.admin import admin
         app.register_blueprint(admin)
 
-        from app.blueprints.api.api import api
+        from app.blueprints.api import api
         app.register_blueprint(api)
 
         from app.blueprints.errors.handler import errors
