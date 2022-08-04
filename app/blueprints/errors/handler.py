@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-errors = Blueprint('errors', __name__, template_folder='templates', static_folder='static')
+errors = Blueprint('errors', __name__, template_folder='templates', static_folder='static', url_prefix='/errors')
 
 errors_data = {
     403: {
