@@ -1,7 +1,9 @@
 import typing as t
+
+from flask import current_app as app
 from flask import url_for
 
-from app import app, db
+from app import db
 from app.models import Grade, Topic, Task
 
 

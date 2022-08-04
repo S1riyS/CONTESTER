@@ -1,9 +1,9 @@
 import typing as t
 from dataclasses import dataclass
 
+from flask import current_app as app
 from flask import url_for
 
-from app import app
 from app.utils.singleton import SingletonBaseClass
 
 

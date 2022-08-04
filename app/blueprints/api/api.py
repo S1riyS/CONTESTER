@@ -2,14 +2,14 @@ from flask import Blueprint, render_template, session, request, jsonify, make_re
 from flask_login import login_user, logout_user, current_user
 from sqlalchemy import and_
 
-from app import db, serializer, contester
+from app import db, serializer
 from app.contester import contester
 
 from app.models import User, Role, Grade, Topic, Task, Example, Test, Report, load_user
 from app.utils.email import send_email
 from app.utils.db import get_task
 
-api = Blueprint('api', __name__)
+api = Blueprint('api', __name__, url_prefix='/api')
 
 
 def send_alert(success: bool, message: str):

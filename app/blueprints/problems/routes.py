@@ -1,16 +1,15 @@
-from flask import Blueprint, render_template, current_app, redirect, url_for, request, abort
+from flask import current_app as app
+from flask import render_template, redirect, url_for, request, abort
 from flask_login import current_user, login_required
 from flask_breadcrumbs import default_breadcrumb_root, register_breadcrumb
 
 from app import db
+from app.blueprints.problems import problems
 from app.models import Grade, Topic, Submission
 from app.contester.languages import languages
 from app.utils.routes import grade_compliance_required
 from app.utils.db import get_task
 import app.breadcrumbs as bc
-
-problems = Blueprint('problems', __name__, template_folder='templates', static_folder='static')
-default_breadcrumb_root(problems, '.')
 
 
 @problems.route('/redirect', methods=['GET'])
@@ -53,6 +52,7 @@ def topic_page(grade_number, topic_translit_name):
     grade = db.session.query(Grade).filter(Grade.number == grade_number).first_or_404()
     topic = db.session.query(Topic).filter(Topic.translit_name == topic_translit_name).first_or_404()
     tasks = topic.tasks.all()
+    print(tasks)
 
     context = {
         'grade': grade,
@@ -97,7 +97,7 @@ def task_page(grade_number, topic_translit_name, task_translit_name, tab):
         page = request.args.get('table_page', type=int, default=1)
         local_context = {
             'submissions': current_user.submissions.filter(Submission.task_id == task.id).paginate(
-                per_page=current_app.config['RECORDS_PER_PAGE'], page=page, error_out=False
+                per_page=app.config['RECORDS_PER_PAGE'], page=page, error_out=False
             )
         }
         return render_template(

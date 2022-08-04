@@ -3,10 +3,10 @@ from dataclasses import dataclass
 import time
 import pprint
 
+from flask import current_app as app
 import asyncio
 from aiohttp import ClientSession
 
-from app import app
 from app.models import User, Task, Test
 
 from .api_service import ApiCall, ApiCallParameters, parse_api_call
@@ -62,7 +62,7 @@ class Contester:
         current_language_dict = languages.get_language(language)
 
         if not current_language_dict['success']:
-            return None # language not found
+            return None  # language not found
 
         # Getting compiler
         current_language = current_language_dict['language']
