@@ -7,7 +7,7 @@ from app import db
 from app.blueprints.problems import problems
 from app.models import Grade, Topic, Submission
 from app.contester.languages import languages
-from app.utils.routes import grade_compliance_required
+from app.utils.routes import grade_compliance_required, admin_required
 from app.utils.db import get_task
 import app.breadcrumbs as bc
 
@@ -22,10 +22,9 @@ def redirect_page():
 
 @problems.route('/', methods=['GET'])
 @login_required
+@admin_required
 def all_grades_page():
-    if current_user.is_admin:
-        return render_template('problems/all_grades.html', title='Все классы', grades=db.session.query(Grade).all())
-    abort(403)
+    return render_template('problems/all_grades.html', title='Все классы', grades=db.session.query(Grade).all())
 
 
 @problems.route('/grade-<int:grade_number>', methods=['GET'])
