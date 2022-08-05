@@ -5,7 +5,7 @@ from itsdangerous import SignatureExpired, BadSignature
 from app import db, serializer
 from app.blueprints.auth import auth
 from app.models import Grade
-from app.forms.auth import LoginForm, SignUpForm
+from .forms import LoginForm, SignUpForm
 
 
 @auth.route('/login', methods=['GET', 'POST'])

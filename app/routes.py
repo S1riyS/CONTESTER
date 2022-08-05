@@ -4,26 +4,14 @@ from flask_login import login_required, current_user
 from flask_breadcrumbs import register_breadcrumb
 
 from app import db, login_manager
-# from app.blueprints.admin.admin import admin
-# from app.blueprints.auth.auth import auth
-# from app.blueprints.api.api import api
-# from app.blueprints.errors.handler import errors
-# from app.blueprints.problems.problems import problems
 
 from app.models import User, Submission
 from app.contester.db_manager import load_from_database
 from app.contester.languages import languages
 from app.utils.routes import next_url
 from app.utils.forms import init_grades_select
-from app.forms.user import EditProfileForm
+from app.forms import EditProfileForm
 import app.breadcrumbs as bc
-
-
-# app.register_blueprint(admin, url_prefix='/admin')
-# app.register_blueprint(auth, url_prefix='/auth')
-# app.register_blueprint(api, url_prefix='/api')
-# app.register_blueprint(errors, url_prefix='/error')
-# app.register_blueprint(problems, url_prefix='/problems')
 
 
 # Unauthorized handler
@@ -39,11 +27,13 @@ def unauthorized_callback():
 def home_page():
     return render_template('new_home.html', title='Главная')
 
+
 @app.route('/contacts', methods=['GET'])
 @register_breadcrumb(app, '.contacts', 'Контакты')
 @next_url
 def contacts_page():
     return render_template('contacts.html', title='Контакты')
+
 
 @app.route('/submissions/<int:submission_id>', methods=['GET'])
 @login_required
@@ -78,7 +68,6 @@ def profile_page(user_id):
             abort(403)
     else:
         user: User = current_user
-
 
     # Form initialization
     form = EditProfileForm(obj=user)
