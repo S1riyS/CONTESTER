@@ -67,7 +67,7 @@ def create_app(config_class=CONFIG):
         from app.blueprints.api import api
         app.register_blueprint(api)
 
-        from app.blueprints.errors.handler import errors
+        from app.blueprints.errors import errors
         app.register_blueprint(errors)
 
     # Jinja2 global variables
