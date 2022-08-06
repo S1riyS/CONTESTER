@@ -1,7 +1,7 @@
 from flask import current_app as app
 from flask import render_template, redirect, url_for, request, abort
 from flask_login import current_user, login_required
-from flask_breadcrumbs import default_breadcrumb_root, register_breadcrumb
+from flask_breadcrumbs import register_breadcrumb
 
 from app import db
 from app.blueprints.problems import problems
