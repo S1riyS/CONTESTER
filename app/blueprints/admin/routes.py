@@ -3,7 +3,7 @@ from datetime import date
 
 from sqlalchemy import asc, desc, func, not_
 from flask import current_app as app
-from flask import Blueprint, render_template, request, redirect, url_for, abort
+from flask import render_template, request, redirect, url_for, abort
 from flask_login import current_user
 from flask_breadcrumbs import register_breadcrumb
 

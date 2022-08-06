@@ -10,12 +10,12 @@
     <div class="tabs">
         <ul class="nav nav-tabs" id="task_tabs" role="tablist">
             <li class="nav-item">
-                <a href="{{ get_task_url(task) }}" class="nav-link" id="task-tab" role="tab" aria-selected="false">
+                <a href="{{ task.url() }}" class="nav-link" id="task-tab" role="tab" aria-selected="false">
                     Задача
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ get_task_url(task, tab='submissions') }}" class="nav-link active hide_after"
+                <a href="{{ task.url(tab='submissions') }}" class="nav-link active hide_after"
                    id="submissions-tab" role="tab" aria-selected="true">
                     Мои отправки
                 </a>

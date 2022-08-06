@@ -22,7 +22,7 @@
                         {% endif %}
 
                         <li class="sidebar__item {{ is_active }}">
-                            <a href="{{ get_task_url(sidebar_task) }}"
+                            <a href="{{ sidebar_task.url() }}"
                                class="item__link">{{ sidebar_task.name }}</a>
                         </li>
                     {% endfor %}

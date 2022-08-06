@@ -24,3 +24,13 @@ def grade_compliance_required(func):
         return func(*args, **kwargs)
 
     return wrapper_function
+
+# Admin role required
+def admin_required(func):
+    @wraps(func)
+    def wrapper_function(*args, **kwargs):
+        if current_user.is_admin:
+            return func(*args, **kwargs)
+        abort(403)
+
+    return wrapper_function

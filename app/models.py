@@ -1,11 +1,12 @@
-import typing
+import typing as t
 import datetime
 from os import environ
 
 import sqlalchemy
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask import url_for
 from flask_login import UserMixin
 from transliterate import slugify
 
@@ -24,7 +25,7 @@ class BaseModel(db.Model):
     def __repr__(self) -> str:
         return self._repr(id=self.id)
 
-    def _repr(self, **fields: typing.Dict[str, typing.Any]) -> str:
+    def _repr(self, **fields: t.Dict[str, t.Any]) -> str:
         field_strings = []
         at_least_one_attached_attribute = False
         for key, field in fields.items():
@@ -156,12 +157,23 @@ class Task(BaseModel):
 
     example = relationship('Example', uselist=False, backref='task', cascade='all,delete')
     tests = relationship('Test', backref='task', lazy='subquery', cascade='all,delete')
-    submissions = relationship('Submission', backref=db.backref('task', lazy='joined'), lazy='dynamic', cascade='all,delete')
+    submissions = relationship('Submission', backref=db.backref('task', lazy='joined'), lazy='dynamic',
+                               cascade='all,delete')
 
     reports = relationship('Report', backref='task', cascade='all,delete')
 
     def set_translit_name(self):
         self.translit_name = slugify(self.name)
+
+    @hybrid_method
+    def url(self, tab: t.Optional[str] = None):
+        return url_for(
+            'problems.task_page',
+            grade_number=self.topic.grade.number,
+            topic_translit_name=self.topic.translit_name,
+            task_translit_name=self.translit_name,
+            tab=tab
+        )
 
     def __repr__(self):
         return self._repr(
