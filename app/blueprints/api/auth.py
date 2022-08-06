@@ -15,7 +15,6 @@ from .utils import send_alert
 @api.route('/auth/sign-up', methods=['POST'])
 def signup():
     data = request.json
-    print(data)
 
     if db.session.query(User).filter(User.email == data['email']).first():
         return send_alert(False, 'Пользователь с этой почтой уже зарегистрирован!')
@@ -43,7 +42,6 @@ def signup():
 @api.route('/auth/login', methods=['POST'])
 def login():
     data = request.json
-    print(data)
 
     user = db.session.query(User).filter(User.email == data['email']).first()
     # Error

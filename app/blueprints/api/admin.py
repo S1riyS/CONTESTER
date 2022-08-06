@@ -28,7 +28,6 @@ def get_topics():
 @api.route('/admin/topic', methods=['POST'])
 def create_topic():
     data = request.json
-    print(data)
 
     topic = Topic(
         grade_id=data['grade_id'],
@@ -66,7 +65,6 @@ def update_topic(topic_id):
 @api.route('/admin/task', methods=['POST'])
 def create_task():
     data = request.json
-    print(data)
 
     # Task
     task = Task(
