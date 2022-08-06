@@ -43,7 +43,7 @@ def create_app(config_class=CONFIG):
     breadcrumbs.init_app(app)
     mail.init_app(app)
 
-    #
+    # Database initialization
     @app.before_request
     def init_db():
         db.create_all()
