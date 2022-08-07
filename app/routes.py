@@ -11,7 +11,7 @@ from app.contester.languages import languages
 from app.utils.routes import next_url
 from app.utils.forms import init_grades_select
 from app.forms import EditProfileForm
-import app.breadcrumbs as bc
+import app.utils.breadcrumbs as bc
 
 
 # Unauthorized handler

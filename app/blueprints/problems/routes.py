@@ -9,7 +9,7 @@ from app.models import Grade, Topic, Submission
 from app.contester.languages import languages
 from app.utils.routes import grade_compliance_required, admin_required
 from app.utils.db import get_task
-import app.breadcrumbs as bc
+import app.utils.breadcrumbs as bc
 
 
 @problems.route('/redirect', methods=['GET'])
