@@ -27,7 +27,7 @@ def render_solution_success(response: ContesterResponse):
     return make_response(jsonify({
         'status': 'OK',
         'result': render_template(
-            'responses/solution/failure.html',
+            'responses/solution/success.html',
             response=response
         )
     }), 200)
