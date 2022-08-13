@@ -15,6 +15,7 @@ from .utils import send_alert
 
 def render_solution_failure(message: str):
     return make_response(jsonify({
+        'status': 'FAILED',
         'result': render_template(
             'responses/solution/failure.html',
             message=message
@@ -24,6 +25,7 @@ def render_solution_failure(message: str):
 
 def render_solution_success(response: ContesterResponse):
     return make_response(jsonify({
+        'status': 'OK',
         'result': render_template(
             'responses/solution/failure.html',
             response=response
@@ -59,7 +61,7 @@ def send_solution():
     )
 
     if response is not None:
-        render_solution_success(response)
+        return render_solution_success(response)
 
     return render_solution_failure('Что-то пошло не так!')
 
