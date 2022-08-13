@@ -1,21 +1,24 @@
-"""
-This is file with tests for Contester class (core of testing system)
-"""
 import unittest
+import typing as t
 
+from app import create_app, db
 from app.contester import Contester
-from app.contester.utils import get_number_of_passed_tests
-from app.contester.types import ContesterResponse, SingleTestResult
+from app.contester.types import ContesterResponse
+from app.models import Task, Test
+from tests import TestConfig
 
 TESTING_CODE = {
     'python': {
         'success': """a, b = list(map(int, input().split()))\nprint(a + b)"""
     },
+    'pypy': {
+        'success': """a, b = list(map(int, input().split()))\nprint(a + b)"""
+    },
     'pascal': {
-        'success': """var\n\ta, b:integer;\nbegin\n\treadln(a, b);\n\twriteln(a - b)\nend.""",
+        'success': """var\n\ta, b:Longint;\nbegin\n\treadln(a, b);\n\twriteln(a + b)\nend.""",
     },
     'cpp': {
-        'success': """#include <iostream>\n\nusing namespace std;\n\nint main() {\n\tint a, b;\n\tcin >> a >> b;\n\tcout << a * b;\n}"""
+        'success': """#include <iostream>\n\nusing namespace std;\n\nint main() {\n\tint a, b;\n\tcin >> a >> b;\n\tcout << a + b;\n}"""
     },
     'csharp': {
         'success': """using System;\n\nnamespace HelloWorld\n{\n\tclass Program\n\t{\n\t\tstatic void Main(string[] args)
@@ -24,130 +27,71 @@ TESTING_CODE = {
     }
 }
 
-TESTS = [
-
-]
-
 
 class ContesterTests(unittest.TestCase):
     def setUp(self) -> None:
+        self.app = create_app(TestConfig)
+        self.app_context = self.app.app_context()
+        self.app_context.push()
+        db.create_all()
+
         self.contester = Contester(TESTING_MODE=True)
 
-    def test_get_number_of_passed_tests(self):
-        test_results = (
-            SingleTestResult(
-                success=True,
-                message='Success',
-                test=None,
-                user_output=None
-            ),
-            SingleTestResult(
-                success=False,
-                message='Wrong Answer',
-                test=None,
-                user_output=None
-            ),
-            SingleTestResult(
-                success=True,
-                message='Success',
-                test=None,
-                user_output=None
-            ),
-            SingleTestResult(
-                success=False,
-                message='Time Limit Error',
-                test=None,
-                user_output=None
-            )
-        )
+        self.task = Task(name='Сложение', text='Сложить два числа')
+        self.task.set_translit_name()
+        db.session.add(self.task)
+        db.session.commit()
 
-        result = get_number_of_passed_tests(test_results)
-        self.assertEqual(result, 2)
+        self.tests = [
+            Test(stdin='2 2', stdout='4', is_hidden=False, task_id=self.task.id),
+            Test(stdin='4 5', stdout='9', is_hidden=False, task_id=self.task.id),
+            Test(stdin='10 -10', stdout='0', is_hidden=True, task_id=self.task.id),
+            Test(stdin='123192834 9829184', stdout='133022018', is_hidden=True, task_id=self.task.id)
+        ]
+        db.session.add_all(self.tests)
+        db.session.commit()
+
+    def tearDown(self):
+        db.session.remove()
+        db.drop_all()
+        self.app_context.pop()
+
+    def __process_result(self, result: ContesterResponse):
+        self.assertIsNotNone(result)  # Testing system has returned correct response
+        self.assertEqual(len(result.tests), len(self.task.tests))  # Response contains results of all tests
+        self.assertEqual(result.passed_tests, len(self.task.tests))  # All tests are passed
+        self.assertIsNotNone(result.language)  # Language is defined
 
     def test_python_success(self):
-        # Problem: sum two numbers (a + b)
-        code = TESTING_CODE['python']['success']
         language = 'python'
-        tests = [
-            {
-                'stdin': '1 2',
-                'output': '3',
-                'hidden': False
-            }
-        ]
-
-        result = self.contester.run_tests(code, language, tests)
-        self.assertIsNotNone(result)
-        status = result['tests'][1]['status']
-        self.assertEqual(status, Status.OK)
+        code = TESTING_CODE[language]['success']
+        result = self.contester.run_tests(code, language, self.task)
+        self.__process_result(result)
 
     def test_pypy_success(self):
-        # Problem: sum two numbers (a + b)
-        code = TESTING_CODE['python']['success']
         language = 'pypy'
-        tests = [
-            {
-                'stdin': '1 2',
-                'output': '3',
-                'hidden': False
-            }
-        ]
-
-        result = self.contester.run_tests(code, language, tests)
-        self.assertIsNotNone(result)
-        status = result['tests'][1]['status']
-        self.assertEqual(status, Status.OK)
+        code = TESTING_CODE[language]['success']
+        result = self.contester.run_tests(code, language, self.task)
+        self.__process_result(result)
 
     def test_pascal_success(self):
-        # Problem: subtract b from a (a - b)
-        code = TESTING_CODE['pascal']['success']
         language = 'pascal'
-        tests = [
-            {
-                'stdin': '21 5',
-                'output': '16',
-                'hidden': False
-            }
-        ]
-
-        result = self.contester.run_tests(code, language, tests)
-        self.assertIsNotNone(result)
-        status = result['tests'][1]['status']
-        self.assertEqual(status, Status.OK)
+        code = TESTING_CODE[language]['success']
+        result = self.contester.run_tests(code, language, self.task)
+        print(result)
+        self.__process_result(result)
 
     def test_cpp_success(self):
-        # Problem: multiply two numbers (a * b)
-        code = TESTING_CODE['cpp']['success']
         language = 'cpp'
-        tests = [
-            {
-                'stdin': '24 3',
-                'output': '72',
-                'hidden': True
-            }
-        ]
-
-        result = self.contester.run_tests(code, language, tests)
-        self.assertIsNotNone(result)
-        status = result['tests'][1]['status']
-        self.assertEqual(status, Status.OK)
+        code = TESTING_CODE[language]['success']
+        result = self.contester.run_tests(code, language, self.task)
+        self.__process_result(result)
 
     def test_csharp_success(self):
-        # Problem: sum two numbers (a + b)
-        code = TESTING_CODE['csharp']['success']
         language = 'csharp'
-        tests = [
-            {
-                'stdin': '55 31',
-                'output': '86',
-                'hidden': True
-            }
-        ]
-
-        result = self.contester.run_tests(code, language, tests)
-        self.assertIsNotNone(result)
-        status = result['tests'][1]['status']
-        self.assertEqual(status, Status.OK)
+        code = TESTING_CODE[language]['success']
+        result = self.contester.run_tests(code, language, self.task)
+        self.__process_result(result)
 
 
 if __name__ == "__main__":
