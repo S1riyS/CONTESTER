@@ -15,7 +15,10 @@ from .db_manager import save_to_database
 from .utils import get_number_of_passed_tests, silence_event_loop_closed
 from .types import SingleTestResult, ContesterResponse
 
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+try:
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+except AttributeError:
+    print('Cannot set asyncio WindowsSelectorEventLoopPolicy')
 
 
 @dataclass
