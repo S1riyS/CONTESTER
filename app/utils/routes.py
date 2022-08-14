@@ -25,6 +25,7 @@ def grade_compliance_required(func):
 
     return wrapper_function
 
+
 # Admin role required
 def admin_required(func):
     @wraps(func)
