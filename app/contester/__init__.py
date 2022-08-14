@@ -15,6 +15,11 @@ from .db_manager import save_to_database
 from .utils import get_number_of_passed_tests, silence_event_loop_closed
 from .types import SingleTestResult, ContesterResponse
 
+try:
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+except AttributeError:
+    print('Cannot set asyncio WindowsSelectorEventLoopPolicy')
+
 
 @dataclass
 class Contester:
@@ -104,7 +109,7 @@ class Contester:
             save_to_database(task=task, code=code, response=response, language=language, partner=partner)
 
         # Printing response
-        if app.config.get('TESTING'):
+        if app.config.get('TESTING') and not self.TESTING_MODE:
             pprint.pprint(response, indent=4)
 
         return response

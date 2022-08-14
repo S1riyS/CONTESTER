@@ -88,4 +88,7 @@ class Languages(metaclass=SingletonBaseClass):
 
 
 languages = Languages()
-app.jinja_env.globals['languages'] = languages
+try:
+    app.jinja_env.globals['languages'] = languages
+except RuntimeError:
+    print('Cannot set jinja2 global variable')

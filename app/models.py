@@ -33,6 +33,8 @@ class BaseModel(db.Model):
                 field_strings.append(f'{key}={field!r}')
             except sqlalchemy.orm.exc.DetachedInstanceError:
                 field_strings.append(f'{key}=DetachedInstanceError')
+            except AttributeError:
+                field_strings.append(f'{key}=Undefined')
             else:
                 at_least_one_attached_attribute = True
         if at_least_one_attached_attribute:
