@@ -18,11 +18,14 @@ TESTING_CODE = {
         'success': """var\n\ta, b:Longint;\nbegin\n\treadln(a, b);\n\twriteln(a + b)\nend.""",
     },
     'cpp': {
-        'success': """#include <iostream>\n\nusing namespace std;\n\nint main() {\n\tint a, b;\n\tcin >> a >> b;\n\tcout << a + b;\n}"""
+        'success': """#include <iostream>\n\nusing namespace std;\n\nint main() 
+        {\n\tint a, b;\n\tcin >> a >> b;\n\tcout << a + b;\n}"""
     },
     'csharp': {
-        'success': """using System;\n\nnamespace HelloWorld\n{\n\tclass Program\n\t{\n\t\tstatic void Main(string[] args)
-        \n\t\t{\n\t\t\tstring[] num = Console.ReadLine().Split(' ');\n\t\t\tint a = int.Parse(num[0]);\n\t\t\tint b = int.Parse(num[1]);
+        'success': """using System;\n\nnamespace HelloWorld\n{\n\tclass Program\n\t{\n\t\t
+        static void Main(string[] args)
+        \n\t\t{\n\t\t\tstring[] num = Console.ReadLine().Split(' ');\n\t\t\t
+        int a = int.Parse(num[0]);\n\t\t\tint b = int.Parse(num[1]);
         \n\t\t\tConsole.WriteLine(a + b);\n\t\t}\n\t}\n}"""
     }
 }

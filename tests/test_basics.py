@@ -6,7 +6,6 @@ from app import create_app, db
 from tests import TestConfig
 
 
-
 class TestBasics(unittest.TestCase):
     def setUp(self):
         self.app = create_app(TestConfig)

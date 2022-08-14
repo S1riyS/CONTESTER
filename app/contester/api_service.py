@@ -3,7 +3,6 @@ from dataclasses import dataclass, field
 
 import asyncio
 from aiohttp import ClientSession
-
 from .exceptions import ContesterError, ApiServiceError, ExecutionError, WrongAnswerError, TimeOutError
 
 API_URL = 'https://wandbox.org/api/compile.json'  # API URL

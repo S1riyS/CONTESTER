@@ -17,6 +17,7 @@ from .types import SingleTestResult, ContesterResponse
 
 asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
+
 @dataclass
 class Contester:
     TESTING_MODE: bool = False
