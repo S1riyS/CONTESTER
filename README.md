@@ -5,10 +5,10 @@
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
-![License](https://img.shields.io/github/license/S1riyS/CONTESTER)
-![Python quality](https://img.shields.io/lgtm/grade/python/github/S1riyS/CONTESTER?logo=LGTM)
-![JavaScript quality](https://img.shields.io/lgtm/grade/javascript/github/S1riyS/CONTESTER?logo=LGTM)
-![Last commit](https://img.shields.io/github/last-commit/S1riyS/CONTESTER?logo=GitHub)
+[![Tests](https://github.com/S1riyS/CONTESTER/actions/workflows/checks.yml/badge.svg?branch=master&style=flat)](https://github.com/S1riyS/CONTESTER/actions/workflows/checks.yml)
+![License](https://img.shields.io/github/license/S1riyS/CONTESTER?labelColor=333a41&style=flat)
+![Python quality](https://img.shields.io/lgtm/grade/python/github/S1riyS/CONTESTER?logo=LGTM&style=flat&labelColor=333a41)
+![JavaScript quality](https://img.shields.io/lgtm/grade/javascript/github/S1riyS/CONTESTER?logo=LGTM&style=flat&labelColor=333a41)
 
      █████╗  █████╗ ███╗  ██╗████████╗███████╗ ██████╗████████╗███████╗██████╗ 
     ██╔══██╗██╔══██╗████╗ ██║╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝██╔════╝██╔══██╗
