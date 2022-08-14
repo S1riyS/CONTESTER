@@ -20,7 +20,7 @@ login_manager = LoginManager()
 moment = Moment()
 breadcrumbs = Breadcrumbs()
 mail = Mail()
-serializer = URLSafeTimedSerializer(environ.get('SECRET_KEY'))
+serializer = URLSafeTimedSerializer(environ.get('SECRET_KEY', 'default_secret_key'))
 
 # Jinja2 global variables
 JINJA2_GLOBAL_VARIABLES = {
