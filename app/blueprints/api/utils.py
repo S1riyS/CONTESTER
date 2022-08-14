@@ -4,7 +4,7 @@ Module with API utils
 
 import typing as t
 
-from flask import make_response, jsonify, render_template
+from flask import make_response, jsonify
 
 from app import db
 from app.models import Task, Test

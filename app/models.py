@@ -42,7 +42,7 @@ class BaseModel(db.Model):
         return f"<{self.__class__.__name__} {id(self)}>"
 
 
-class User(BaseModel, UserMixin):
+class User(BaseModel, UserMixin):  # lgtm [py/missing-equals]
     __tablename__ = "users"
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
