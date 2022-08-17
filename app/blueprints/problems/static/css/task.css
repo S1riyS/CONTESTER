@@ -22,26 +22,6 @@
     transition: all 0.2s ease;
 }
 
-.nav-tabs .nav-item {
-    position: relative;
-}
-
-.nav-tabs .nav-item:not(:first-child) .nav-link::after {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    display: block;
-    width: 1px;
-    height: 20px;
-    background-color: var(--gray-color);
-    content: "";
-    transform: translateY(-50%);
-}
-
-.nav-tabs .nav-item .nav-link.hide_after::after {
-    display: none;
-}
-
 .nav-tabs .nav-link:hover {
     color: var(--text-color);
     background-color: #1a1d28;

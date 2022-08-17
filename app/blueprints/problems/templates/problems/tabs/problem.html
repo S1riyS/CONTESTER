@@ -29,13 +29,13 @@
                    aria-selected="true">Задача</a>
             </li>
             <li class="nav-item">
-                <a href="{{ task.url(tab='submissions') }}" class="nav-link hide_after" id="submissions-tab"
+                <a href="{{ task.url(tab='submissions') }}" class="nav-link" id="submissions-tab"
                    role="tab"
                    aria-selected="false">Мои отправки</a>
             </li>
             {% if current_user.is_admin %}
                 <li class="nav-item">
-                    <a href="{{ task.url(tab='all-submissions') }}" class="nav-link hide_after"
+                    <a href="{{ task.url(tab='all-submissions') }}" class="nav-link"
                        id="submissions-tab" role="tab" aria-selected="false">
                         Все отправки
                     </a>

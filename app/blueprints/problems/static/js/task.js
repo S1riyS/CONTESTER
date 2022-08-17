@@ -34,20 +34,8 @@ function findPosY(obj) {
     return offset.top - $(window).scrollTop()
 }
 
-function hideSeparators(tabs) {
-    $('#task_tabs .nav-link').removeClass('hide_after')
-
-    $(tabs).each(function () {
-        $(this).addClass('hide_after')
-    })
-}
-
 // Hiding tabs separators, setting attributes to scrollbar (on load)
 window.onload = function () {
-    setActiveTab();
-    let activeTab = $('#task_tabs .nav-link.active').first();
-    let nextAfterActiveTab = activeTab.parent().next('.nav-item').children('.nav-link');
-    hideSeparators([activeTab, nextAfterActiveTab]);
     setScrollBarAttributes();
     $(".loader_wrapper").fadeOut("slow");
 }
