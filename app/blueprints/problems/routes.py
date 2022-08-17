@@ -97,7 +97,9 @@ def task_page(grade_number, topic_translit_name, task_translit_name, tab):
     elif tab == 'submissions':
         page = request.args.get('table_page', type=int, default=1)
         local_context = {
-            'submissions': current_user.submissions.filter(Submission.task_id == task.id).paginate(
+            'submissions': current_user.submissions.filter(
+                Submission.task_id == task.id
+            ).paginate(
                 per_page=app.config['RECORDS_PER_PAGE'], page=page, error_out=False
             )
         }
@@ -112,7 +114,9 @@ def task_page(grade_number, topic_translit_name, task_translit_name, tab):
         if current_user.is_admin:
             page = request.args.get('table_page', type=int, default=1)
             local_context = {
-                'submissions': task.submissions.order_by(desc(Submission.submission_date)).paginate(
+                'submissions': task.submissions.order_by(
+                    desc(Submission.submission_date)
+                ).paginate(
                     per_page=app.config['RECORDS_PER_PAGE'], page=page, error_out=False
                 ),
                 'show_users': True
