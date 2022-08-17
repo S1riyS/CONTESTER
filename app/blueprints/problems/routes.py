@@ -86,6 +86,7 @@ def task_page(grade_number, topic_translit_name, task_translit_name, tab):
     page = request.args.get('table_page', type=int, default=1)
 
     if tab == 'problem':
+        # Tab with problem (name, condition, editor etc)
         local_context = {
             'language_dict': languages.dictionary
         }
@@ -97,6 +98,7 @@ def task_page(grade_number, topic_translit_name, task_translit_name, tab):
         )
 
     elif tab == 'submissions':
+        # Tab with user's submissions
         local_context = {
             'submissions': current_user.submissions.filter(
                 Submission.task_id == task.id
@@ -112,6 +114,7 @@ def task_page(grade_number, topic_translit_name, task_translit_name, tab):
         )
 
     elif tab == 'all-submissions':
+        # Tab with all submissions
         if current_user.is_admin:
             local_context = {
                 'submissions': task.submissions.order_by(
@@ -127,6 +130,7 @@ def task_page(grade_number, topic_translit_name, task_translit_name, tab):
                 **global_context,
                 **local_context
             )
+
         abort(403)
 
     abort(404)
