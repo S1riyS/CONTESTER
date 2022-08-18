@@ -45,36 +45,6 @@ $(window).scroll(function () {
     setScrollBarAttributes()
 });
 
-// Tabs events
-$('a[data-toggle="tab"]')
-    .on('shown.bs.tab', function (e) {
-        let currentTab = $(this)
-        let nextTab = $(this).parent().next('.nav-item').children('.nav-link')
-        hideSeparators([currentTab, nextTab])
-    })
-    .on('click', function (e) {
-
-        let theTabId = $(this).attr('href');
-        let activeTabs = (window.localStorage.getItem('activeTab') ? window.localStorage.getItem('activeTab').split(',') : []);
-
-        let $sameLevelTabs = $(e.target).parents('.nav-tabs').find('[data-toggle="tab"]');
-
-        $.each($sameLevelTabs, function (index, element) {
-            let tabId = $(element).attr('href');
-            if (theTabId !== tabId && activeTabs.indexOf(tabId) !== -1) {
-                activeTabs.splice(activeTabs.indexOf(tabId), 1);
-            }
-        });
-
-        //unique tabs
-        if (activeTabs.indexOf($(e.target).attr('href')) === -1) {
-            activeTabs.push($(e.target).attr('href'));
-        }
-
-        window.localStorage.setItem('activeTab', activeTabs.join(','));
-
-    });
-
 // Sending report
 $('#report_form').submit(function (event) {
     event.preventDefault();
