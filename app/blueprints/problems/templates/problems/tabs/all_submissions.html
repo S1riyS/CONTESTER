@@ -15,11 +15,19 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ task.url(tab='submissions') }}" class="nav-link active hide_after"
-                   id="submissions-tab" role="tab" aria-selected="true">
+                <a href="{{ task.url(tab='submissions') }}" class="nav-link"
+                   id="submissions-tab" role="tab" aria-selected="false">
                     Мои отправки
                 </a>
             </li>
+            {% if current_user.is_admin %}
+                <li class="nav-item">
+                    <a href="{{ task.url(tab='all-submissions') }}" class="nav-link active"
+                       id="submissions-tab" role="tab" aria-selected="true">
+                        Все отправки
+                    </a>
+                </li>
+            {% endif %}
         </ul>
     </div>
     <div class="submissions" id="submissions">

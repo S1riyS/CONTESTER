@@ -159,8 +159,12 @@ class Task(BaseModel):
 
     example = relationship('Example', uselist=False, backref='task', cascade='all,delete')
     tests = relationship('Test', backref='task', lazy='subquery', cascade='all,delete')
-    submissions = relationship('Submission', backref=db.backref('task', lazy='joined'), lazy='dynamic',
-                               cascade='all,delete')
+    submissions = db.relationship(
+        'Submission',
+        backref=db.backref('task', lazy='joined'),
+        lazy='dynamic',
+        cascade='all,delete'
+    )
 
     reports = relationship('Report', backref='task', cascade='all,delete')
 

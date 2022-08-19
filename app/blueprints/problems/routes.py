@@ -2,6 +2,7 @@ from flask import current_app as app
 from flask import render_template, redirect, url_for, request, abort
 from flask_login import current_user, login_required
 from flask_breadcrumbs import register_breadcrumb
+from sqlalchemy import desc
 
 from app import db
 from app.blueprints.problems import problems
@@ -82,27 +83,54 @@ def task_page(grade_number, topic_translit_name, task_translit_name, tab):
         'topic': topic,
     }
 
+    page = request.args.get('table_page', type=int, default=1)
+
     if tab == 'problem':
+        # Tab with problem (name, condition, editor etc)
         local_context = {
             'language_dict': languages.dictionary
         }
         return render_template(
-            'problems/problem.html',
+            'problems/tabs/problem.html',
             title=f'{task.name} - Задача',
-            **global_context, **local_context
+            **global_context,
+            **local_context
         )
 
     elif tab == 'submissions':
-        page = request.args.get('table_page', type=int, default=1)
+        # Tab with user's submissions
         local_context = {
-            'submissions': current_user.submissions.filter(Submission.task_id == task.id).paginate(
+            'submissions': current_user.submissions.filter(
+                Submission.task_id == task.id
+            ).paginate(
                 per_page=app.config['RECORDS_PER_PAGE'], page=page, error_out=False
             )
         }
         return render_template(
-            'problems/submissions.html',
-            title=f'{task.name} - Отправки',
-            **global_context, **local_context
+            'problems/tabs/submissions.html',
+            title=f'{task.name} - Мои отправки',
+            **global_context,
+            **local_context
         )
+
+    elif tab == 'all-submissions':
+        # Tab with all submissions
+        if current_user.is_admin:
+            local_context = {
+                'submissions': task.submissions.order_by(
+                    desc(Submission.submission_date)
+                ).paginate(
+                    per_page=app.config['RECORDS_PER_PAGE'], page=page, error_out=False
+                ),
+                'show_users': True
+            }
+            return render_template(
+                'problems/tabs/all_submissions.html',
+                title=f'{task.name} - Все отправки',
+                **global_context,
+                **local_context
+            )
+
+        abort(403)
 
     abort(404)

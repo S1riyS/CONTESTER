@@ -1,0 +1,38 @@
+{% extends 'problems/base.html' %}
+
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/submissions_table.css') }}">
+{% endblock %}
+
+{% block task_content %}
+    <div class="tabs">
+        <ul class="nav nav-tabs" id="task_tabs" role="tablist">
+            <li class="nav-item">
+                <a href="{{ task.url() }}" class="nav-link" id="task-tab" role="tab" aria-selected="false">
+                    Задача
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ task.url(tab='submissions') }}" class="nav-link active"
+                   id="submissions-tab" role="tab" aria-selected="true">
+                    Мои отправки
+                </a>
+            </li>
+            {% if current_user.is_admin %}
+                <li class="nav-item">
+                    <a href="{{ task.url(tab='all-submissions') }}" class="nav-link"
+                       id="submissions-tab" role="tab" aria-selected="false">
+                        Все отправки
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="submissions" id="submissions">
+        <div class="submissions__body" id="submissions__body">
+            {% include 'responses/submissions_table.html' %}
+        </div>
+    </div>
+{% endblock %}
