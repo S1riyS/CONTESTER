@@ -2,9 +2,9 @@
 
 {% block css %}
     {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/switch_button.css') }}">
     <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/task.css') }}">
     <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/forms.css') }}">
-    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/switch_button.css') }}">
 {% endblock %}
 
 {% block js %}
