@@ -5,7 +5,7 @@ from flask_breadcrumbs import register_breadcrumb
 
 from app import db, login_manager
 
-from app.models import User, Submission
+from app.models import User, Role, Submission
 from app.contester.db_manager import load_from_database
 from app.contester.languages import languages
 from app.utils.routes import next_url
@@ -75,10 +75,18 @@ def profile_page(user_id):
 
     # Handling form submission
     if form.validate_on_submit():
+        # General info
         user.surname = form.surname.data.capitalize()
         user.name = form.name.data.capitalize()
         user.grade_id = form.grade_id.data
         user.grade_letter = form.grade_letter.data
+        # Role
+        if form.is_admin.data:
+            role = db.session.query(Role).filter_by(name='admin').first()
+        else:
+            role = db.session.query(Role).filter_by(name='user').first()
+        user.role_id = role.id
+
         db.session.commit()
 
         return redirect(url_for('profile_page', user_id=user.id))

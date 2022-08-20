@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/submissions_table.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/switch_button.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -84,6 +85,17 @@
                                             <i class="form__icon fa fa-user" aria-hidden="true"></i>Фамилия
                                         </label>
                                     </div>
+
+                                    {% if current_user.is_admin and current_user.id != user.id %}
+                                        <div class="form__group form__group_checkbox">
+                                            <div class="is_hidden check">
+                                                {{ form.is_admin(class='is_admin', id='is_admin') }}
+                                            </div>
+                                            <label for="is_admin" class="is_admin__label">
+                                                Права администратора
+                                            </label>
+                                        </div>
+                                    {% endif %}
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
