@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/switch_button.css') }}">
 {% endblock %}
 
+{% block js %}
+    <script type="module" src="{{ url_for('static', filename='js/profile.js') }}"></script>
+{% endblock %}
+
 {% block content %}
     <div class="container-fluid">
         <div class="row">
@@ -26,10 +30,17 @@
                         <i class="fa fa-envelope-o" aria-hidden="true"></i>
                         <p class="email__text">{{ user.email }}</p>
                     </div>
-                    <button data-toggle="modal" data-target="#editProfileModal" class="bordered_button"
+                    <button data-toggle="modal" data-target="#editProfileModal" class="bordered_button profile_button"
                             id="edit_profile__button">
                         Редактировать профиль
                     </button>
+                    {% if current_user.is_admin and current_user.id != user.id %}
+                        <button data-toggle="modal" data-target="#deleteModal" class="bordered_button profile_button"
+                                id="delete_profile__button">
+                            Удалить профиль
+                        </button>
+                    {% endif %}
+
                 </div>
             </div>
             <div class="col-lg-9 col-12">
@@ -41,73 +52,103 @@
                     {% include 'responses/submissions_table.html' %}
                 </div>
             </div>
-            <div class="modal_windows">
-                <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog"
-                     aria-labelledby="editProfileModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editProfileModalLabel">Редактировать профиль</h5>
-                                <button type="button" class="close" data-dismiss="modal"
-                                        aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block modals %}
+    <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog"
+         aria-labelledby="editProfileModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProfileModalLabel">Редактировать профиль</h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="edit_profile_form" method="post" role="form">
+                    {{ form.hidden_tag() }}
+                    <div class="modal-body">
+                        {% if current_user.is_admin %}
+                            <div class="form__group form__group_dropdowns">
+                                <div class="dropdown__group">
+                                    <p class="dropdown__group_title">
+                                        <i class="form__icon fa fa-list-ol" aria-hidden="true"></i>Класс:
+                                    </p>
+                                    {{ form.grade_id }}
+                                </div>
+                                <div class="dropdown__group">
+                                    <p class="dropdown__group_title">
+                                        <i class="form__icon fa fa-list-ul" aria-hidden="true"></i>Буква:
+                                    </p>
+                                    {{ form.grade_letter }}
+                                </div>
                             </div>
-                            <form id="edit_profile_form" method="post" role="form">
-                                {{ form.hidden_tag() }}
-                                <div class="modal-body">
-                                    {% if current_user.is_admin %}
-                                        <div class="form__group form__group_dropdowns">
-                                            <div class="dropdown__group">
-                                                <p class="dropdown__group_title">
-                                                    <i class="form__icon fa fa-list-ol" aria-hidden="true"></i>Класс:
-                                                </p>
-                                                {{ form.grade_id }}
-                                            </div>
-                                            <div class="dropdown__group">
-                                                <p class="dropdown__group_title">
-                                                    <i class="form__icon fa fa-list-ul" aria-hidden="true"></i>Буква:
-                                                </p>
-                                                {{ form.grade_letter }}
-                                            </div>
-                                        </div>
-                                    {% endif %}
-                                    <div class="form__group">
-                                        {{ form.name(type="text", class="form__input", placeholder=" ") }}
-                                        <label for="first_name" class="form__label">
-                                            <i class="form__icon fa fa-user" aria-hidden="true"></i>Имя
-                                        </label>
-                                    </div>
-
-                                    <div class="form__group">
-                                        {{ form.surname(type="text", class="form__input", placeholder=" ") }}
-                                        <label for="last_name" class="form__label">
-                                            <i class="form__icon fa fa-user" aria-hidden="true"></i>Фамилия
-                                        </label>
-                                    </div>
-
-                                    {% if current_user.is_admin and current_user.id != user.id %}
-                                        <div class="form__group form__group_checkbox">
-                                            <div class="is_hidden check">
-                                                {{ form.is_admin(class='is_admin', id='is_admin') }}
-                                            </div>
-                                            <label for="is_admin" class="is_admin__label">
-                                                Права администратора
-                                            </label>
-                                        </div>
-                                    {% endif %}
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Закрыть
-                                    </button>
-                                    {{ form.submit(class="btn btn-success") }}
-                                </div>
-                            </form>
+                        {% endif %}
+                        <div class="form__group">
+                            {{ form.name(type="text", class="form__input", placeholder=" ") }}
+                            <label for="first_name" class="form__label">
+                                <i class="form__icon fa fa-user" aria-hidden="true"></i>Имя
+                            </label>
                         </div>
+
+                        <div class="form__group">
+                            {{ form.surname(type="text", class="form__input", placeholder=" ") }}
+                            <label for="last_name" class="form__label">
+                                <i class="form__icon fa fa-user" aria-hidden="true"></i>Фамилия
+                            </label>
+                        </div>
+
+                        {% if current_user.is_admin and current_user.id != user.id %}
+                            <div class="form__group form__group_checkbox">
+                                <div class="is_hidden check">
+                                    {{ form.is_admin(class='is_admin', id='is_admin') }}
+                                </div>
+                                <label for="is_admin" class="is_admin__label">
+                                    Права администратора
+                                </label>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">Закрыть
+                        </button>
+                        {{ form.submit(class="btn btn-success") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% if current_user.is_admin and current_user.id != user.id %}
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+             aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Подтверждение действия</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="form__title">Вы уверены, что хотите удалить профиль
+                            ({{ user.name }} {{ user.surname }})?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">Закрыть
+                        </button>
+                        <button type="button" id="deleteUserButton" class="btn btn-danger" data-userID="{{ user.id }}">
+                            Удалить
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock %}
