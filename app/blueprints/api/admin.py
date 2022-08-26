@@ -2,10 +2,10 @@
 Module with Admin APIs
 """
 
-from flask import request, make_response, jsonify
+from flask import request, make_response, jsonify, url_for
 
 from app import db
-from app.models import Grade, Topic, Task, Example
+from app.models import Grade, Topic, Task, Example, load_user
 from app.blueprints.api import api
 from .utils import send_alert, tests_to_orm_objects
 
@@ -143,3 +143,12 @@ def delete_task():
     db.session.commit()
 
     return make_response(jsonify({'success': True, 'redirect_url': topic_url}), 200)
+
+
+@api.route('/admin/user/<user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    user = load_user(user_id)
+    db.session.delete(user)
+    db.session.commit()
+
+    return make_response(jsonify({'success': True, 'redirect_url': url_for('home_page')}), 200)

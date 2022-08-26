@@ -58,6 +58,14 @@ input:-webkit-autofill:focus {
     margin-bottom: 5px;
 }
 
+.form__group_checkbox {
+    display: flex;
+    align-items: center;
+}
+
+.form__group_checkbox label {
+    margin: 0;
+}
 
 .form__group select {
     background-color: transparent;

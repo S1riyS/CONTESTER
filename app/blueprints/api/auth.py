@@ -6,7 +6,7 @@ from flask import request, session, make_response, jsonify, render_template, url
 from flask_login import login_user, logout_user, current_user
 
 from app import db, serializer
-from app.models import User
+from app.models import User, Role
 from app.blueprints.api import api
 from app.utils.email import send_email
 from .utils import send_alert
