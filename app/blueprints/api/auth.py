@@ -27,8 +27,8 @@ def signup():
         surname=data['lastname'].strip().capitalize(),
         email=data['email'].strip(),
         role_id=db.session.query(Role).filter(Role.name == 'user').first().id,
-        grade_id=data['grade'],
-        grade_letter=data['letter'],
+        grade_id=data.get('grade_id', None),
+        grade_letter=data.get('letter', None),
     )
     user.set_password(data['password'])
 

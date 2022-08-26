@@ -5,6 +5,7 @@ from itsdangerous import SignatureExpired, BadSignature
 from app import db, serializer
 from app.blueprints.auth import auth
 from app.models import Grade
+from app.utils.forms import init_grades_select
 from .forms import LoginForm, SignUpForm
 
 
@@ -16,12 +17,17 @@ def login_page():
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup_page():
-    grades = db.session.query(Grade).all()
-    grades_list = [(grade.id, grade.number) for grade in grades]
-
     form = SignUpForm()
-    form.grade.choices = grades_list
+    init_grades_select(form)
+
     return render_template('auth/sign_up.html', title='Регистрация', form=form)
+
+
+@auth.route('/signup/admin', methods=['GET', 'POST'])
+def admin_signup_page():
+    form = SignUpForm()
+
+    return render_template('auth/admin_sign_up.html', title='Регистрация администратора', form=form)
 
 
 @auth.route('/confirm-email/<string:token>')

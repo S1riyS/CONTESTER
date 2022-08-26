@@ -16,22 +16,7 @@
             <div class="form-wrapper col-xl-4 offset-xl-4 offset-lg-1 col-lg-10 col-12">
                 <form id="signup_form" action="" method="post" class="form box-shadow" autocomplete="off">
                     {{ form.hidden_tag() }}
-                    <h1 class="form__title">Регистрация</h1>
-
-                    <div class="form__group form__group_dropdowns">
-                        <div class="dropdown__group">
-                            <p class="dropdown__group_title">
-                                <i class="form__icon fa fa-list-ol" aria-hidden="true"></i>Класс:
-                            </p>
-                            {{ form.grade_id }}
-                        </div>
-                        <div class="dropdown__group">
-                            <p class="dropdown__group_title">
-                                <i class="form__icon fa fa-list-ul" aria-hidden="true"></i>Буква:
-                            </p>
-                            {{ form.letter }}
-                        </div>
-                    </div>
+                    <h1 class="form__title">Регистрация администратора</h1>
 
                     <div class="form__group">
                         {{ form.first_name(type="text", id="first_name", class="form__input", placeholder=" ") }}

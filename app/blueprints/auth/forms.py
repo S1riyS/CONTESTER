@@ -7,7 +7,7 @@ from wtforms.validators import DataRequired, Length
 class SignUpForm(FlaskForm):
     first_name = StringField('Имя', validators=[DataRequired()])
     last_name = StringField('Фамилия', validators=[DataRequired()])
-    grade = SelectField('Класс', choices=[])
+    grade_id = SelectField('Класс', choices=[], validators=[DataRequired()])
     letter = SelectField('Буква', choices=['А', 'Б', 'В', 'Г'])
     email = EmailField('Email', validators=[DataRequired()])
     password = PasswordField('Пароль', validators=[DataRequired(), Length(min=6)])
