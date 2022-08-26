@@ -67,7 +67,15 @@ class User(BaseModel, UserMixin):  # lgtm [py/missing-equals]
         secondary=user_submission,
         backref=db.backref('users', lazy='joined'),
         lazy='dynamic',
-        order_by="desc(Submission.submission_date)"
+        order_by="desc(Submission.submission_date)",
+        cascade='all,delete'
+    )
+
+    reports = db.relationship(
+        'Report',
+        backref=db.backref('user', lazy='joined'),
+        lazy='dynamic',
+        cascade='all,delete'
     )
 
     def set_password(self, password):
@@ -299,8 +307,6 @@ class Report(BaseModel):
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
 
     user_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("users.id"))
-    user = relationship('User')
-
     task_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("tasks.id"))
 
     text = sqlalchemy.Column(sqlalchemy.Text)
