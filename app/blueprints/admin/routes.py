@@ -1,7 +1,7 @@
 from enum import Enum
 from datetime import date
 
-from sqlalchemy import asc, desc, func, not_
+from sqlalchemy import asc, desc, func, not_, or_
 from flask import current_app as app
 from flask import render_template, request, redirect, url_for, abort
 from flask_login import current_user
@@ -138,3 +138,13 @@ def edit_topic_page():
 def reports_page():
     reports = db.session.query(Report).all()
     return render_template('admin/reports.html', title='Жалобы', reports=reports)
+
+
+@admin.route('/admins-list', methods=['GET', 'POST'])
+@register_breadcrumb(admin, '.admin.admins_list_page', 'Список администраторов')
+def admins_list_page():
+    admins = db.session.query(User).filter(
+        or_(User.role_id == 2, User.grade_id.is_(None))
+    ).all()
+    print(admins)
+    return render_template('admin/admins_list.html', title='Список администраторов', admins=admins)

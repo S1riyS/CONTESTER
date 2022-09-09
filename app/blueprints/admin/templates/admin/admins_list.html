@@ -1,0 +1,64 @@
+{% extends "admin/base.html" %}
+
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/admin_list.css') }}">
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+{% endblock %}
+
+{% block admin_content %}
+    <div class="table__wrapper">
+        {% if admins %}
+            <div class="table box-shadow">
+                <div class="table_header__wrapper">
+                    <div class="table_header">
+                        <div class="table_header_column index">
+                            №
+                        </div>
+                        <div class="table_header_column name">
+                            ИМЯ
+                        </div>
+                        <div class="table_header_column email">
+                            E-MAIL
+                        </div>
+                        <div class="table_header_column is_admin">
+                            ПРАВА АДМИНИСТРАТОРА
+                        </div>
+                    </div>
+                </div>
+                <div class="table_body">
+                    {% for user in admins %}
+                        <div class="table_row__wrapper">
+                            <div class="table_row">
+                                <div class="table_row_column index">
+                                    {{ loop.index }}
+                                </div>
+                                <div class="table_row_column name">
+                                    <a href="{{ url_for('profile_page', user_id=user.id) }}" class="default_link">
+                                        {{ user.surname }} {{ user.name }}
+                                    </a>
+                                </div>
+                                <div class="table_row_column email">
+                                    {{ user.email }}
+                                </div>
+                                <div class="table_row_column is_admin">
+                                    {% if user.is_admin %}
+                                        <i class="admin_true fa fa-check" aria-hidden="true"></i>
+                                    {% else %}
+                                        <i class="admin_false fa fa-times" aria-hidden="true"></i>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            {% include 'responses/empty_response.html' %}
+        {% endif %}
+    </div>
+{% endblock %}

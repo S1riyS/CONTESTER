@@ -75,22 +75,27 @@ def profile_page(user_id):
 
     # Handling form submission
     if form.validate_on_submit():
+        print(1)
         # General info
         user.surname = form.surname.data.capitalize()
         user.name = form.name.data.capitalize()
-        user.grade_id = form.grade_id.data
-        user.grade_letter = form.grade_letter.data
+
+        if form.grade_id.data and form.grade_letter.data:
+            user.grade_id = form.grade_id.data
+            user.grade_letter = form.grade_letter.data
         # Role
         if form.is_admin.data:
             role = db.session.query(Role).filter_by(name='admin').first()
         else:
             role = db.session.query(Role).filter_by(name='user').first()
+        print(user.role_id, role.id)
         user.role_id = role.id
 
         db.session.commit()
 
         return redirect(url_for('profile_page', user_id=user.id))
-
+    else:
+        print(form.errors)
     # Forming table data
     page = request.args.get('table_page', type=int, default=1)
     table_data = {

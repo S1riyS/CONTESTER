@@ -15,7 +15,7 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 col-12">
+            <div class="col-xl-3 col-12">
                 <div class="user__info">
                     <div class="avatar__block">
                         <img src="{{ url_for('static', filename='images/default_avatar.jpg') }}" alt="avatar"
@@ -43,7 +43,7 @@
 
                 </div>
             </div>
-            <div class="col-lg-9 col-12">
+            <div class="col-xl-9 col-12">
                 <div class="user__submissions">
                     <div class="profile__title text_with_icon">
                         <i class="fa fa-2x fa-book profile__title__icon" aria-hidden="true"></i>
@@ -72,20 +72,22 @@
                     {{ form.hidden_tag() }}
                     <div class="modal-body">
                         {% if current_user.is_admin %}
-                            <div class="form__group form__group_dropdowns">
-                                <div class="dropdown__group">
-                                    <p class="dropdown__group_title">
-                                        <i class="form__icon fa fa-list-ol" aria-hidden="true"></i>Класс:
-                                    </p>
-                                    {{ form.grade_id }}
+                            {% if user.grade_id != None and user.grade_letter != None %}
+                                <div class="form__group form__group_dropdowns">
+                                    <div class="dropdown__group">
+                                        <p class="dropdown__group_title">
+                                            <i class="form__icon fa fa-list-ol" aria-hidden="true"></i>Класс:
+                                        </p>
+                                        {{ form.grade_id }}
+                                    </div>
+                                    <div class="dropdown__group">
+                                        <p class="dropdown__group_title">
+                                            <i class="form__icon fa fa-list-ul" aria-hidden="true"></i>Буква:
+                                        </p>
+                                        {{ form.grade_letter }}
+                                    </div>
                                 </div>
-                                <div class="dropdown__group">
-                                    <p class="dropdown__group_title">
-                                        <i class="form__icon fa fa-list-ul" aria-hidden="true"></i>Буква:
-                                    </p>
-                                    {{ form.grade_letter }}
-                                </div>
-                            </div>
+                            {% endif %}
                         {% endif %}
                         <div class="form__group">
                             {{ form.name(type="text", class="form__input", placeholder=" ") }}

@@ -1,0 +1,16 @@
+.table_header_column.index, .table_row_column.index {
+    flex-grow: 0 !important;
+}
+
+.table_header_column.is_admin, .table_row_column.is_admin {
+    flex-grow: 0 !important;
+    justify-content: center;
+}
+
+.table_row_column.is_admin .admin_true {
+    color: var(--success-color);
+}
+
+.table_row_column.is_admin .admin_false {
+    color: var(--error-color);
+}

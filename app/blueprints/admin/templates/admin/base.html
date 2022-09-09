@@ -33,7 +33,8 @@
                                     </a>
                                     <div class="sub-menu">
                                         {% for grade_letter in ('А', 'Б', 'В', 'Г') %}
-                                            <a href="{{ url_for('admin.students_page', number=grade_number, letter=grade_letter) }}" class="sub-item">
+                                            <a href="{{ url_for('admin.students_page', number=grade_number, letter=grade_letter) }}"
+                                               class="sub-item">
                                                 «{{ grade_letter }}» класс
                                             </a>
                                         {% endfor %}
@@ -64,6 +65,12 @@
                                 <span>Жалобы</span>
                             </a>
                         {% endif %}
+                        <div class="item">
+                            <a class="sub-btn reports_button" href="{{ url_for('admin.admins_list_page') }}">
+                                <i class="fa fa-address-book" aria-hidden="true"></i>
+                                <span>Администраторы</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
