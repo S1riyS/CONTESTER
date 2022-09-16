@@ -6,7 +6,7 @@ $('#signup_form').submit(function (event) {
     let data = {
         firstname: $('#first_name').val(),
         lastname: $('#last_name').val(),
-        grade: $('#grade').val(),
+        grade_id: $('#grade_id').val(),
         letter: $('#letter').val(),
         email: $('#email').val(),
         password: $('#password').val(),
